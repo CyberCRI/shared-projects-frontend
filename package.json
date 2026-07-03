@@ -1,5 +1,5 @@
 {
-  "name": "shared-projects-frontend",
+  "name": "@shared-projects-frontend",
   "version": "1.0.0",
   "type": "module",
   "types": "./index.ts",
