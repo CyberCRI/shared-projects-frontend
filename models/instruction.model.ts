@@ -1,0 +1,47 @@
+import type { PeopleGroupModel } from './people-group.model'
+import type BaseModel from './base.model'
+
+import type { Translated } from '../interfaces/translated'
+import type { Ordering } from '../interfaces/query'
+import { PaginationQuery } from '../interfaces/pagination'
+
+/**
+ * @name NewsModel
+ * @description News of an organization
+ */
+export interface InstructionModel extends BaseModel {
+  id: number
+  title: string
+  content: string
+  publication_date: Date | string
+  people_groups: PeopleGroupModel[]
+  has_to_be_notified: boolean
+  visible_by_all: boolean
+}
+
+// can be id or id in string
+export type InstructionId = InstructionModel['id'] | string
+
+export type InstructionForm = Omit<InstructionModel, 'id' | 'people_groups'> & {
+  id?: number
+  people_groups: any
+}
+
+export type InstructionInput = Required<Omit<InstructionModel, 'id' | 'people_groups'>> & {
+  id?: InstructionModel['id']
+  people_groups: {
+    [key: string]: PeopleGroupModel
+  }
+  organization_code?: string
+  people_groups_ids: string[]
+}
+
+export type TranslatedInstruction = Translated<InstructionModel, 'title' | 'content'>
+
+export type QueryFilterInstruction = Partial<
+  {
+    ordering: Ordering<'publication_date' | 'updated_at' | 'created_at'>
+    from_date: string
+    to_date: string
+  } & PaginationQuery
+>

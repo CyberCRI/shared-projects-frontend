@@ -1,0 +1,22 @@
+import type { SecondaryTagType, TagType } from './types'
+import type { Translated } from '../interfaces/translated'
+import type BaseModel from './base.model'
+
+/**
+ * @name TagModel
+ * @description Tag of an organization or project or project-category
+ */
+export interface TagModel extends BaseModel {
+  id: number
+  title: string
+  title_en: string
+  title_fr: string
+  organization?: string
+  type?: TagType
+  secondary_type?: SecondaryTagType
+  description: string
+  description_en: string
+  description_fr: string
+}
+
+export type TranslatedTag = Translated<TagModel, 'title' | 'description'>
