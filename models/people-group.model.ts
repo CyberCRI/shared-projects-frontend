@@ -4,7 +4,7 @@ import type { Translated } from '../interfaces/translated'
 import type { ImageModel } from './image.model'
 import type { GroupDataRole } from './types'
 import type { TagModel } from './tag.model'
-import { IconImageChoice } from '../constants/icons'
+import { IconTypes } from '../constants/icons'
 
 export type SubGroup = {
   id: number
@@ -58,7 +58,7 @@ export type GeneralLocationPeopleGroup = BaseTranslatedLocationModel & {
   people_group: TranslatedPeopleGroupModel
 }
 
-export const GroupModuleIcon: { [key in PeopleGroupModulesKeys]: IconImageChoice } = {
+export const GroupModuleIcon: { [key in PeopleGroupModulesKeys]: IconTypes['Icon'] } = {
   conferences: 'Article',
   featured_projects: 'Briefcase',
   publications: 'Article',

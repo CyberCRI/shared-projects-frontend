@@ -11,7 +11,7 @@ import type { LocationOutput } from './location.model'
 import type { Translated } from '../interfaces/translated'
 import type { ImageModel } from './image.model'
 import type BaseModel from './base.model'
-import { IconImageChoice } from '../constants/icons'
+import { IconTypes } from '../constants/icons'
 
 /**
  * @name ProjectModel
@@ -62,7 +62,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
 export type ProjectModulesKeys = keyof ProjectModel['modules']
 export type ProjectModuleExtra = ProjectModulesKeys | 'resources'
 
-export const ProjectModuleIcon: { [key in ProjectModuleExtra]: IconImageChoice } = {
+export const ProjectModuleIcon: { [key in ProjectModuleExtra]: IconTypes['Icon'] } = {
   announcements: 'BullhornOutline',
   blogs: 'NewsLine',
   goals: 'TimerLine',

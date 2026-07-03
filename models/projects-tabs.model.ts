@@ -5,7 +5,7 @@ import type { ProjectModel } from './project.model'
 import type { ImageModel } from './image.model'
 import type { ProjectTabType } from './types'
 import type BaseModel from './base.model'
-import type {IconTabImageChoice} from '../constants/icons'
+import { IconTypes } from '../constants/icons'
 
 
 export interface ProjectTab extends BaseModel {
@@ -14,7 +14,7 @@ export interface ProjectTab extends BaseModel {
   title: string;
   type: ProjectTabType;
   description: string | null;
-  icon: IconTabImageChoice | null;
+  icon: IconTypes['TabIcon'] | null;
   images?: ImageModel[];
   show_preview: boolean;
   modules: {
