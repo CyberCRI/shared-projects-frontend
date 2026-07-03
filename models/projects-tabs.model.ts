@@ -5,21 +5,21 @@ import type { ProjectModel } from './project.model'
 import type { ImageModel } from './image.model'
 import type { ProjectTabType } from './types'
 import type BaseModel from './base.model'
-import { IconTabImageChoice } from 'TconTab'
+import type {IconTabImageChoice} from '../constants/icons'
 
 
-export interface ProjectTab extends BaseModel {
-  id?: number
-  project?: ProjectModel
-  title: string
-  type: ProjectTabType
-  description: string | null
-  icon: IconTabImageChoice | null
-  images?: ImageModel[]
-  show_preview: boolean
+export interface ProjectTab<TIcon = IconTabImageChoice> extends BaseModel {
+  id?: number;
+  project?: ProjectModel;
+  title: string;
+  type: ProjectTabType;
+  description: string | null;
+  icon: TIcon | null;
+  images?: ImageModel[];
+  show_preview: boolean;
   modules: {
-    items: number
-  }
+    items: number;
+  };
 }
 
 export type ProjectTabForm = Partial<

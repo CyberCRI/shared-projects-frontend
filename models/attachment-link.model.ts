@@ -19,7 +19,7 @@ export interface AttachmentLinkModel extends BaseModel {
 
 export type AttachmentLinkId = AttachmentLinkModel['id']
 
-export type AttachmentFileForm = Omit<AttachmentLinkModel, 'id'> & {
+export type AttachmentLinkForm = Omit<AttachmentLinkModel, 'id'> & {
   id?: number
   link?: string
 }
