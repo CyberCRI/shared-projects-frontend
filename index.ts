@@ -1,6 +1,3 @@
-// constants
-export * from './constants/icons.ts'
-
 // interfaces
 export * from './interfaces/colaboratives.ts'
 export * from './interfaces/gallery.ts'
@@ -11,6 +8,7 @@ export * from './interfaces/researcher.ts'
 export * from './interfaces/tiptap.ts'
 export * from './interfaces/translated.ts'
 export * from './interfaces/utils.ts'
+export * from './interfaces/icons.ts'
 
 // models
 export * from './models/agent.model.ts'
