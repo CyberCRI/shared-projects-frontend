@@ -4,7 +4,6 @@ import type { Translated } from '../interfaces/translated'
 import type { ImageModel } from './image.model'
 import type { GroupDataRole } from './types'
 import type { TagModel } from './tag.model'
-import { IconTypes } from '../constants/icons'
 
 export type SubGroup = {
   id: number
@@ -56,32 +55,6 @@ export type TranslatedPeopleGroupModel = Omit<
 
 export type GeneralLocationPeopleGroup = BaseTranslatedLocationModel & {
   people_group: TranslatedPeopleGroupModel
-}
-
-export const GroupModuleIcon: { [key in PeopleGroupModulesKeys]: IconTypes['Icon'] } = {
-  conferences: 'Article',
-  featured_projects: 'Briefcase',
-  publications: 'Article',
-  members: 'Users',
-  similars: 'PeopleGroup',
-  subgroups: 'nodeTree',
-  locations: 'Map',
-  gallery: 'Gallery',
-  news: 'NewsLine',
-  event: 'Calendar',
-}
-
-export const GroupModuleTitle: { [key in PeopleGroupModulesKeys]: string } = {
-  conferences: 'group.conferences',
-  featured_projects: 'group.projects',
-  publications: 'group.publications',
-  members: 'group.members',
-  similars: 'group.similars',
-  subgroups: 'group.subgroups',
-  locations: 'group.locations',
-  gallery: 'gallery.pictures',
-  news: 'group.news',
-  event: 'group.event',
 }
 
 export type QueryFilterGroup = Partial<{

@@ -11,7 +11,6 @@ import type { LocationOutput } from './location.model'
 import type { Translated } from '../interfaces/translated'
 import type { ImageModel } from './image.model'
 import type BaseModel from './base.model'
-import { IconTypes } from '../constants/icons'
 
 /**
  * @name ProjectModel
@@ -61,44 +60,6 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
 
 export type ProjectModulesKeys = keyof ProjectModel['modules']
 export type ProjectModuleExtra = ProjectModulesKeys | 'resources'
-
-export const ProjectModuleIcon: { [key in ProjectModuleExtra]: IconTypes['Icon'] } = {
-  announcements: 'BullhornOutline',
-  blogs: 'NewsLine',
-  goals: 'TimerLine',
-  members: 'Users',
-  similars: 'Briefcase',
-  locations: 'Map',
-  links: 'Paperclip',
-  files: 'Globe',
-  resources: 'Globe',
-  linked_projects: 'LinkRotated',
-  comments: 'ChatBubble',
-  groups: 'PeopleGroup',
-  reviews: 'Feedback',
-  messages: 'ChatBubble',
-  tabs: 'Tab',
-}
-
-export const ProjectModuleTitle: { [key in ProjectModuleExtra]: string } = {
-  announcements: 'home.announcements',
-  blogs: 'blog.title',
-  goals: 'goal.goals',
-  members: 'team.team',
-  similars: 'project.similars',
-  locations: 'project.add-to-project.location',
-  files: 'project.files',
-  links: 'project.links',
-
-  resources: 'resource.resources',
-
-  linked_projects: 'project.linked-projects',
-  comments: 'comment.comments',
-  groups: 'project.groups',
-  reviews: 'project.reviews',
-  messages: 'comment.private-exchange.tab',
-  tabs: 'tab.tab.label',
-}
 
 export type TranslatedProject = Translated<
   Omit<ProjectModel, 'template' | 'categories' | 'tags'>,

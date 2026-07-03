@@ -5,16 +5,15 @@ import type { ProjectModel } from './project.model'
 import type { ImageModel } from './image.model'
 import type { ProjectTabType } from './types'
 import type BaseModel from './base.model'
-import { IconTypes } from '../constants/icons'
 
 
-export interface ProjectTab extends BaseModel {
+export interface ProjectTab<Icon extends string = string> extends BaseModel {
   id?: number;
   project?: ProjectModel;
   title: string;
   type: ProjectTabType;
   description: string | null;
-  icon: IconTypes['TabIcon'] | null;
+  icon: Icon | null;
   images?: ImageModel[];
   show_preview: boolean;
   modules: {
