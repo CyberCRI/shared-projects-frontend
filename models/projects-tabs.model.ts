@@ -8,13 +8,13 @@ import type BaseModel from './base.model'
 import type {IconTabImageChoice} from '../constants/icons'
 
 
-export interface ProjectTab<TIcon = IconTabImageChoice> extends BaseModel {
+export interface ProjectTab extends BaseModel {
   id?: number;
   project?: ProjectModel;
   title: string;
   type: ProjectTabType;
   description: string | null;
-  icon: TIcon | null;
+  icon: IconTabImageChoice | null;
   images?: ImageModel[];
   show_preview: boolean;
   modules: {

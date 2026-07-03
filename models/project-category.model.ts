@@ -1,9 +1,8 @@
 import type { TemplateModel, TranslatedTemplate } from './template.model'
 import type { OrganizationModel } from './organization.model'
-import type { ImageSizeConverted } from '~/functs/imageSizesUtils'
 import type { TagModel, TranslatedTag } from './tag.model'
 import type { Translated } from '../interfaces/translated'
-import type { ImageModel } from './image.model'
+import type { ImageModel, ImageSize } from './image.model'
 import type BaseModel from './base.model'
 
 /**
@@ -75,5 +74,5 @@ export type ProjectCategoryOutput = BaseModel &
 
 export type ProjectCategoryForm = Omit<ProjectCategoryModel, 'parent'> & {
   parent: number
-  imageSizes?: ImageSizeConverted
+  imageSizes?: ImageSize
 }

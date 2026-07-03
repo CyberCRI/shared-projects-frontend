@@ -9,9 +9,9 @@ import type { TemplateModel, TranslatedTemplate } from './template.model'
 import type { TagModel, TranslatedTag } from './tag.model'
 import type { LocationOutput } from './location.model'
 import type { Translated } from '../interfaces/translated'
-import type { IconImageChoice } from '@/functs/IconImage'
 import type { ImageModel } from './image.model'
 import type BaseModel from './base.model'
+import { IconImageChoice } from '../constants/icons'
 
 /**
  * @name ProjectModel

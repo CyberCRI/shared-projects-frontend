@@ -1,10 +1,10 @@
 import type { BaseLocationModel, BaseTranslatedLocationModel } from './location.model'
 import type { OrganizationModel } from './organization.model'
 import type { Translated } from '../interfaces/translated'
-import type { IconImageChoice } from '~/functs/IconImage'
 import type { ImageModel } from './image.model'
 import type { GroupDataRole } from './types'
 import type { TagModel } from './tag.model'
+import { IconImageChoice } from '../constants/icons'
 
 export type SubGroup = {
   id: number
