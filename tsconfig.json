@@ -1,17 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es2025",
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "strict": false,
-    "esModuleInterop": true,
-    "noImplicitAny": false
+    "target": "ES2020",
+    "module": "ESNext",
+    "declaration": true,
+    "declarationMap": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "moduleResolution": "Bundler",
+    "outDir": "dist",
+    "rootDir": "src"
   },
   "include": [
-    "models/**/*",
-    "interfaces/**/*",
-    "lib/**/*",
-    "./index.ts",
-    "./eslint.config.ts",
-  ],
+    "src"
+  ]
 }

@@ -31,7 +31,7 @@ for dir in GENERATES:
         if not file.is_file():
             continue
         exports[name] = out
-        inline.append(f"export * from '{out}'")
+        inline.append(f"export * from '{name}'")
 
 with open("index.ts", "w") as f:
     f.write("\n".join(inline))
