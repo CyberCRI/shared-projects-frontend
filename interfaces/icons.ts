@@ -1,4 +1,2 @@
-export interface Icons {
-    Icon: string;
-    IconTab: string
-}
+export interface Icon {}
+export interface IconTab {}
