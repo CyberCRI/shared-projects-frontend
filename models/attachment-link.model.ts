@@ -1,7 +1,7 @@
 import type { AttachmentType } from './types'
-import type BaseModel from './base.model'
 
 import type { Translated } from '../interfaces/translated'
+import BaseModel from './base.model'
 
 /**
  * @name AttachmentLinkModel

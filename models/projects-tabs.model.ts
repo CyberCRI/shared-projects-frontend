@@ -8,7 +8,7 @@ import type BaseModel from "./base.model";
 import { IconTab } from "../interfaces/icons";
 
 export interface ProjectTab extends BaseModel {
-  id?: number;
+  id: number;
   project?: ProjectModel;
   title: string;
   type: ProjectTabType;
@@ -22,7 +22,8 @@ export interface ProjectTab extends BaseModel {
 }
 
 export type ProjectTabForm = Partial<
-  Omit<ProjectTab, "modules" | "images"> & {
+  Omit<ProjectTab, "id" | "modules" | "images"> & {
+    id?: ProjectTab['id']
     images_ids: number[];
   }
 >;
