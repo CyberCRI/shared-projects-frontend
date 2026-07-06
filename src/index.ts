@@ -12,7 +12,6 @@ export * from './interfaces/icons'
 export * from './interfaces/permissions'
 
 // models
-export * from './models/agent.model'
 export * from './models/announcement.model'
 export * from './models/attachment-file.model'
 export * from './models/attachment-link.model'
