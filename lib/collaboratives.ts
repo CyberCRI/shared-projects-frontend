@@ -25,7 +25,6 @@ export const roomKeyFromParams = (params: ProviderParams): string | null => {
       break;
     }
     case "project-tab": {
-      params.tabId
       keys.push(["Project", params.projectId], ["Tab", params.tabId]);
       break;
     }

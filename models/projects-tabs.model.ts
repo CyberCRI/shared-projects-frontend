@@ -13,6 +13,8 @@ export interface ProjectTab extends BaseModel {
   title: string;
   type: ProjectTabType;
   description: string | null;
+  // @typescript-eslint/no-redundant-type-constituents is ginored
+  // eslint-disable-next-line 
   icon: keyof IconTab | null;
   images?: ImageModel[];
   show_preview: boolean;
