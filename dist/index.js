@@ -94,12 +94,12 @@ var canPermission = (rights, organizationId, elementType, identification = null,
 
 // src/lib/tiptap/options.ts
 import TableHeader from "@tiptap/extension-table-header";
-import { TextStyle } from "@tiptap/extension-text-style";
+import TextStyle from "@tiptap/extension-text-style";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import TableRow from "@tiptap/extension-table-row";
 import StarterKit from "@tiptap/starter-kit";
-import { Table } from "@tiptap/extension-table";
+import Table from "@tiptap/extension-table";
 import Color from "@tiptap/extension-color";
 import Link from "@tiptap/extension-link";
 
