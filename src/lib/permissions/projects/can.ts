@@ -47,7 +47,7 @@ export const canDeleteProject = (
   );
 };
 
-export const canAddReview = (
+export const canCreateReview = (
   rights: Right,
   organizationId: OrganizationModel["id"],
   projectId: ProjectModel["id"],

@@ -37,10 +37,10 @@ var roomKeyFromParams = (params) => {
 };
 
 // src/lib/permissions/utils.ts
-function hasPermission(permissions, app, permissionName, pk = null) {
+function hasPermission(permissions, app, permissionName, identification = null) {
   let perm = `${app}.${permissionName}`;
-  if (pk) {
-    perm += `.${pk}`;
+  if (identification !== null && identification !== void 0 && identification !== "") {
+    perm += `.${identification}`;
   }
   return !!permissions[perm];
 }
@@ -76,9 +76,14 @@ var isUser = (rights, organizationId) => {
 };
 
 // src/lib/permissions/can.ts
-var canPermission = (rights, organizationId, elementType, elementId, perrmissionName) => {
+var canPermission = (rights, organizationId, elementType, identification = null, perrmissionName) => {
   return isAdmin(rights, organizationId) || // check objects permissions
-  hasPermission(rights.permissions, elementType, perrmissionName, elementId) || hasPermission(rights.permissions, elementType, perrmissionName) || // check organizations permissions
+  hasPermission(
+    rights.permissions,
+    elementType,
+    perrmissionName,
+    identification
+  ) || hasPermission(rights.permissions, elementType, perrmissionName) || // check organizations permissions
   hasPermission(
     rights.permissions,
     "organizations",
@@ -130,7 +135,7 @@ var canDeleteProject = (rights, organizationId, projectId) => {
     "delete_project"
   );
 };
-var canAddReview = (rights, organizationId, projectId) => {
+var canCreateReview = (rights, organizationId, projectId) => {
   return canPermissionProject(rights, organizationId, projectId, "add_review");
 };
 var canEditReview = (rights, organizationId, projectId) => {
@@ -235,13 +240,13 @@ var canDeleteInstruction = (rights, organizationId, instructionId) => {
   return isAdminOrFacilitator(rights, organizationId);
 };
 export {
-  canAddReview,
   canCreateComment,
   canCreateEvent,
   canCreateGroup,
   canCreateInstruction,
   canCreateNews,
   canCreateProject,
+  canCreateReview,
   canDeleteComment,
   canDeleteEvent,
   canDeleteInstruction,
