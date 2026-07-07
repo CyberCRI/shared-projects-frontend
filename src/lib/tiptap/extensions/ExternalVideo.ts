@@ -1,24 +1,26 @@
 import { Node, mergeAttributes } from '@tiptap/core'
 import { ImageVariations } from '../../../models/image.model'
+import { Attrs } from '@tiptap/pm/model';
 
 type Option = {
   size?: ImageVariations;
   src: string;
   aligns?: "left" | "center" | "right";
 };
+
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     ExternalVideo: {
-      setExternalVideo: (option: Option) => ReturnType
-      deleteExternalVideo: () => ReturnType
-      setAlign: () => ReturnType
-    }
+      setExternalVideo: (option: Option) => ReturnType;
+      deleteExternalVideo: () => ReturnType;
+      setAlign: (attributes: Attrs) => ReturnType;
+    };
   }
 }
 
 export const getFormatedVideoSrc = (newVideoId: string) => {
-  let resolvedid: string
-  let link: string
+  let resolvedid: string = ""
+  let link: string = ""
 
   if (newVideoId.includes('vimeo.com/')) {
     const spliturl = newVideoId.split('/')
@@ -42,7 +44,7 @@ export const getFormatedVideoSrc = (newVideoId: string) => {
         urlstr = 'https://' + newVideoId
       }
       const surl = new URL(urlstr)
-      resolvedid = surl.searchParams.get('v')
+      resolvedid = surl.searchParams.get('v') || ""
       link = 'https://www.youtube.com/embed/' + resolvedid + ytOptions
     }
   }
@@ -226,6 +228,7 @@ export default Node.create({
           const { selection } = tr;
 
           const options = {
+            // @ts-expect-error , node not exists, check Why
             ...selection.node.attrs,
             ...attributes,
           };
@@ -235,6 +238,7 @@ export default Node.create({
           if (dispatch) {
             tr.replaceRangeWith(selection.from, selection.to, node);
           }
+          return true
         },
     };
   },

@@ -1,3 +1,12 @@
+import * as _tiptap_extension_underline from '@tiptap/extension-underline';
+import * as _tiptap_extension_color from '@tiptap/extension-color';
+import * as _tiptap_extension_table_cell from '@tiptap/extension-table-cell';
+import * as _tiptap_core from '@tiptap/core';
+import { Extension } from '@tiptap/core';
+import { StarterKitOptions } from '@tiptap/starter-kit';
+import { Attrs } from '@tiptap/pm/model';
+import { CodeBlockLowlightOptions } from '@tiptap/extension-code-block-lowlight';
+
 /**
  * Type to modify interface with auto translate fields
  * use like Translated<BlogEntries, 'title' | 'content'>
@@ -845,6 +854,173 @@ type ProviderParams = {
     organizationId: string | number;
 } & ProviderParamsChoices;
 
+/**
+ * genereate roomRoomKey form params provided to hocuspocus
+ *
+ * @function
+ * @name roomKeyFromParams
+ * @kind variable
+ * @param {ProviderParams} params
+ * @returns {string | null}
+ * @exports
+ */
+declare const roomKeyFromParams: (params: ProviderParams) => string | null;
+
+type Right = {
+    permissions: {
+        [key: string]: boolean;
+    };
+    roles: string[];
+};
+
+type PermissionType = "access_admin" | "view_stat" | "view_org_project" | "view_org_projectuser" | "view_org_peoplegroup" | "lock_project" | "duplicate_project" | "change_locked_project" | "manage_accessrequest" | "view_project" | "add_project" | "change_project" | "delete_project" | "view_projectmessage" | "add_projectmessage" | "change_projectmessage" | "delete_projectmessage" | "view_projectuser" | "add_projectuser" | "change_projectuser" | "delete_projectuser" | "view_peoplegroup" | "add_peoplegroup" | "change_peoplegroup" | "delete_peoplegroup" | "view_news" | "add_news" | "change_news" | "delete_news" | "view_event" | "add_event" | "change_event" | "delete_event" | "view_instruction" | "add_instruction" | "change_instruction" | "delete_instruction" | "view_organizationattachmentfile" | "add_organizationattachmentfile" | "change_organizationattachmentfile" | "delete_organizationattachmentfile" | "add_tag" | "change_tag" | "delete_tag" | "add_tagclassification" | "change_tagclassification" | "delete_tagclassification" | "add_projectcategory" | "change_projectcategory" | "delete_projectcategory" | "add_template" | "change_template" | "delete_template" | "add_invitation" | "change_invitation" | "delete_invitation" | "add_review" | "change_review" | "delete_review" | "add_comment" | "change_comment" | "delete_comment" | "add_follow" | "change_follow" | "delete_follow";
+
+declare function hasPermission(permissions: Right["permissions"], app: "organizations" | "projects" | "accounts" | "peoplegroup", permissionName: PermissionType, identification?: number | string | Roles | null): boolean;
+
+declare const isAdmin: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+
+declare const isAdminOrFacilitator: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+
+declare const isSuperAdmin: (rights: Right) => boolean;
+
+declare const isFacilitator: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+
+declare const isViewer: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+
+declare const isUser: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+
+declare const canPermission: (rights: Right, organizationId: OrganizationModel["id"], elementType: "projects" | "accounts" | "peoplegroup", identification: (number | string | Roles | null) | undefined, perrmissionName: PermissionType) => boolean;
+
+declare const getExtensions: (options?: Partial<StarterKitOptions>) => (_tiptap_core.Node<{
+    inline: boolean;
+    HTMLAttributes: {};
+    sizes: ImageVariations[];
+    aligns: string[];
+}, any> | _tiptap_core.Node<_tiptap_extension_table_cell.TableCellOptions, any> | _tiptap_core.Node<{
+    inline: boolean;
+    HTMLAttributes: {};
+    sizes: ImageVariations[];
+    allowBase64: boolean;
+}, any> | _tiptap_core.Extension<StarterKitOptions, any> | _tiptap_core.Extension<_tiptap_extension_color.ColorOptions, any> | _tiptap_core.Mark<_tiptap_extension_underline.UnderlineOptions, any>)[];
+
+declare module '@tiptap/core' {
+    interface Commands<ReturnType> {
+        clearhistoryws: {
+            /**
+             * clear history
+             */
+            clearHistoryWS: () => ReturnType;
+        };
+    }
+}
+declare const ClearHistoryWS: Extension<{}, any>;
+
+type Options = {
+    src: string;
+    alt?: string;
+    title?: string;
+    width?: number;
+    height?: number;
+    size?: ImageVariations;
+};
+declare module '@tiptap/core' {
+    interface Commands<ReturnType> {
+        CustomImage: {
+            setImage: (options: Options) => ReturnType;
+        };
+    }
+}
+
+type Option = {
+    size?: ImageVariations;
+    src: string;
+    aligns?: "left" | "center" | "right";
+};
+declare module '@tiptap/core' {
+    interface Commands<ReturnType> {
+        ExternalVideo: {
+            setExternalVideo: (option: Option) => ReturnType;
+            deleteExternalVideo: () => ReturnType;
+            setAlign: (attributes: Attrs) => ReturnType;
+        };
+    }
+}
+declare const getFormatedVideoSrc: (newVideoId: string) => string;
+
+declare const DEFAULT_LANGUAGE = "plaintext";
+declare const DEFAULT_THEME = "dark";
+declare const DEFAULT_TAB = 2;
+interface LpiBlockOptions extends CodeBlockLowlightOptions {
+    tabClassPrefix: string;
+    themeClassPrefix: string;
+    defaultTheme: string | null | undefined;
+}
+
+declare const isOwner: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+
+declare const isMember: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+
+declare const canPermissionProject: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"], perrmissionName: PermissionType) => boolean;
+declare const canCreateProject: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+declare const canEditProject: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+declare const canDeleteProject: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+declare const canCreateReview: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+declare const canEditReview: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+declare const canDeleteReview: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+declare const canCreateComment: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+declare const canEditComment: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+declare const canDeleteComment: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+
+declare const canCreateGroup: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+declare const canEditGroup: (rights: Right, organizationId: OrganizationModel["id"], groupId: PeopleGroupModel["id"]) => boolean;
+
+declare const canEditUser: (rights: Right, organizationId: OrganizationModel["id"], userId: UserModel["id"]) => boolean;
+
+declare const canCreateNews: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+declare const canEditNews: (rights: Right, organizationId: OrganizationModel["id"], newsId: NewsModel["id"]) => boolean;
+declare const canDeleteNews: (rights: Right, organizationId: OrganizationModel["id"], newsId: NewsModel["id"]) => boolean;
+
+declare const canCreateEvent: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+declare const canEditEvent: (rights: Right, organizationId: OrganizationModel["id"], eventId: EventModel["id"]) => boolean;
+declare const canDeleteEvent: (rights: Right, organizationId: OrganizationModel["id"], eventId: EventModel["id"]) => boolean;
+
+/**
+ * @name NewsModel
+ * @description News of an organization
+ */
+interface InstructionModel extends BaseModel {
+    id: number;
+    title: string;
+    content: string;
+    publication_date: Date | string;
+    people_groups: PeopleGroupModel[];
+    has_to_be_notified: boolean;
+    visible_by_all: boolean;
+}
+type InstructionId = InstructionModel['id'] | string;
+type InstructionForm = Omit<InstructionModel, 'id' | 'people_groups'> & {
+    id?: number;
+    people_groups: any;
+};
+type InstructionInput = Required<Omit<InstructionModel, 'id' | 'people_groups'>> & {
+    id?: InstructionModel['id'];
+    people_groups: {
+        [key: string]: PeopleGroupModel;
+    };
+    organization_code?: string;
+    people_groups_ids: string[];
+};
+type TranslatedInstruction = Translated<InstructionModel, 'title' | 'content'>;
+type QueryFilterInstruction = Partial<{
+    ordering: Ordering<'publication_date' | 'updated_at' | 'created_at'>;
+    from_date: string;
+    to_date: string;
+} & PaginationQuery>;
+
+declare const canCreateInstruction: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+declare const canEditInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
+declare const canDeleteInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
+
 type ImageGalleryForm = {
     files: {
         file: File;
@@ -871,13 +1047,6 @@ type CollaborativeUser = {
     color: string;
     pid: number;
     profile_picture: ImageModel;
-};
-
-type Right = {
-    permissions: {
-        [key: string]: boolean;
-    };
-    roles: string[];
 };
 
 interface AnnouncementModel extends BaseModel {
@@ -1113,39 +1282,6 @@ interface RemoveGroupMember {
 interface PostGroupProjects {
     featured_projects: ProjectSlugOrId[];
 }
-
-/**
- * @name NewsModel
- * @description News of an organization
- */
-interface InstructionModel extends BaseModel {
-    id: number;
-    title: string;
-    content: string;
-    publication_date: Date | string;
-    people_groups: PeopleGroupModel[];
-    has_to_be_notified: boolean;
-    visible_by_all: boolean;
-}
-type InstructionId = InstructionModel['id'] | string;
-type InstructionForm = Omit<InstructionModel, 'id' | 'people_groups'> & {
-    id?: number;
-    people_groups: any;
-};
-type InstructionInput = Required<Omit<InstructionModel, 'id' | 'people_groups'>> & {
-    id?: InstructionModel['id'];
-    people_groups: {
-        [key: string]: PeopleGroupModel;
-    };
-    organization_code?: string;
-    people_groups_ids: string[];
-};
-type TranslatedInstruction = Translated<InstructionModel, 'title' | 'content'>;
-type QueryFilterInstruction = Partial<{
-    ordering: Ordering<'publication_date' | 'updated_at' | 'created_at'>;
-    from_date: string;
-    to_date: string;
-} & PaginationQuery>;
 
 interface InvitationUserModel {
     owner: {
@@ -1520,66 +1656,4 @@ type QueryFilterTagClassification = Partial<{
     language: LanguageType;
 } & PaginationQuery>;
 
-type PermissionType = "access_admin" | "view_stat" | "view_org_project" | "view_org_projectuser" | "view_org_peoplegroup" | "lock_project" | "duplicate_project" | "change_locked_project" | "manage_accessrequest" | "view_project" | "add_project" | "change_project" | "delete_project" | "view_projectmessage" | "add_projectmessage" | "change_projectmessage" | "delete_projectmessage" | "view_projectuser" | "add_projectuser" | "change_projectuser" | "delete_projectuser" | "view_peoplegroup" | "add_peoplegroup" | "change_peoplegroup" | "delete_peoplegroup" | "view_news" | "add_news" | "change_news" | "delete_news" | "view_event" | "add_event" | "change_event" | "delete_event" | "view_instruction" | "add_instruction" | "change_instruction" | "delete_instruction" | "view_organizationattachmentfile" | "add_organizationattachmentfile" | "change_organizationattachmentfile" | "delete_organizationattachmentfile" | "add_tag" | "change_tag" | "delete_tag" | "add_tagclassification" | "change_tagclassification" | "delete_tagclassification" | "add_projectcategory" | "change_projectcategory" | "delete_projectcategory" | "add_template" | "change_template" | "delete_template" | "add_invitation" | "change_invitation" | "delete_invitation" | "add_review" | "change_review" | "delete_review" | "add_comment" | "change_comment" | "delete_comment" | "add_follow" | "change_follow" | "delete_follow";
-
-/**
- * genereate roomRoomKey form params provided to hocuspocus
- *
- * @function
- * @name roomKeyFromParams
- * @kind variable
- * @param {ProviderParams} params
- * @returns {string | null}
- * @exports
- */
-declare const roomKeyFromParams: (params: ProviderParams) => string | null;
-
-declare function hasPermission(permissions: Right["permissions"], app: "organizations" | "projects" | "accounts" | "peoplegroup", permissionName: PermissionType, identification?: number | string | Roles | null): boolean;
-
-declare const isAdmin: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-
-declare const isAdminOrFacilitator: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-
-declare const isSuperAdmin: (rights: Right) => boolean;
-
-declare const isFacilitator: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-
-declare const isViewer: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-
-declare const isUser: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-
-declare const canPermission: (rights: Right, organizationId: OrganizationModel["id"], elementType: "projects" | "accounts" | "peoplegroup", identification: (number | string | Roles | null) | undefined, perrmissionName: PermissionType) => boolean;
-
-declare const isOwner: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-
-declare const isMember: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-
-declare const canPermissionProject: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"], perrmissionName: PermissionType) => boolean;
-declare const canCreateProject: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-declare const canEditProject: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-declare const canDeleteProject: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-declare const canCreateReview: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-declare const canEditReview: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-declare const canDeleteReview: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-declare const canCreateComment: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-declare const canEditComment: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-declare const canDeleteComment: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-
-declare const canCreateGroup: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-declare const canEditGroup: (rights: Right, organizationId: OrganizationModel["id"], groupId: PeopleGroupModel["id"]) => boolean;
-
-declare const canEditUser: (rights: Right, organizationId: OrganizationModel["id"], userId: UserModel["id"]) => boolean;
-
-declare const canCreateNews: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-declare const canEditNews: (rights: Right, organizationId: OrganizationModel["id"], newsId: NewsModel["id"]) => boolean;
-declare const canDeleteNews: (rights: Right, organizationId: OrganizationModel["id"], newsId: NewsModel["id"]) => boolean;
-
-declare const canCreateEvent: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-declare const canEditEvent: (rights: Right, organizationId: OrganizationModel["id"], eventId: EventModel["id"]) => boolean;
-declare const canDeleteEvent: (rights: Right, organizationId: OrganizationModel["id"], eventId: EventModel["id"]) => boolean;
-
-declare const canCreateInstruction: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-declare const canEditInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
-declare const canDeleteInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
-
-export { type AddGroupMembers, type AddManyFollowedProject, type AddManyLinkedProjectInput, type AddParentGroupModelInput, type AnnouncementApplyForm, type AnnouncementApplyInput, type AnnouncementForm, type AnnouncementId, type AnnouncementInput, type AnnouncementModel, type AnyLocation, type AnyProject, type AnyTranslatedLocation, type AttachmentFileForm, type AttachmentFileId, type AttachmentFileInput, type AttachmentFileModel, type AttachmentForm, type AttachmentLinkForm, type AttachmentLinkId, type AttachmentLinkInput, type AttachmentLinkModel, type AttachmentLinkOutput, type AttachmentType, type BaseLocationModel, type BaseSearchResult, type BaseTranslatedLocationModel, type BlogEntryForm, type BlogEntryId, type BlogEntryModel, type CollaborativeUser, type CommentModel, type ContactForm, type ContactModel, type Document, type DocumentCrisalidType, type DocumentType, type EventForm, type EventIdOrSlug, type EventInput, type EventLocation, type EventModel, type FaqImageModel, type FaqInput, type FaqModel, type FollowCategoryInput, type FollowInput, type FollowManyOutput, type FollowModel, type FollowOutput, type FollowOutputList, type FollowProjectOutput, type FollowedProjectRef, type GeneralLocationPeopleGroup, type Geocoding, type GoalForm, type GoalModel, type GroupDataRole, type GroupMember, type GroupMemberRoleType, type GroupModel, type GroupModelInput, type GroupOuput, type HarvesterType, type HierarchyGroupModel, type Icon, type IconTab, type Identifier, type ImageGalleryForm, type ImageInput, type ImageModealCreated, type ImageModel, type ImageOrganizationInput, type ImageSize, type ImageTemplateInput, type ImageVariations, type InstructionForm, type InstructionId, type InstructionInput, type InstructionModel, type InvitationModel, type InvitationModelInput, type Language, type LanguageType, type LinkedProject, type LinkedProjectRef, type LocationForm, type LocationGeneral, type LocationId, type LocationInput, type LocationModel, type LocationOutput, type LocationType, type MapPointerOption, type Mentoring, type MentoringContactForm, type NewsForm, type NewsImageModel, type NewsInput, type NewsLocation, type NewsModel, type NewsOutput, type NewsfeedModel, type NotificationModel, type NotificationType, type NotificationsSettings, type Optional, type Ordering, type OrganizationDirectoryModel, type OrganizationModel, type OrganizationOutput, type OrganizationPatchInput, type PaginationQuery, type PeopleGroupIdOrSlug, type PeopleGroupModel, type PeopleGroupModulesKeys, type PeopleModel, type PermissionType, type PostGroupData, type PostGroupProjects, type PrivacySettings, type PrivacyValue, type ProjectCategoryCreateInput, type ProjectCategoryForm, type ProjectCategoryModel, type ProjectCategoryOutput, type ProjectCategoryPatchInput, type ProjectCategoryPutInput, type ProjectForm, type ProjectGroupRoleType, type ProjectLocationForm, type ProjectMemberModel, type ProjectMemberOutput, type ProjectMemberPeopleGroupOutput, type ProjectMemberRoleType, type ProjectMembersAddEntry, type ProjectMembersAddInput, type ProjectMembersDeleteInput, type ProjectMessageForm, type ProjectMessageInputModel, type ProjectMessageModel, type ProjectModel, type ProjectModuleExtra, type ProjectModulesKeys, type ProjectOutput, type ProjectPublicationStatusType, type ProjectRoleType, type ProjectSlugOrId, type ProjectStatusType, type ProjectTab, type ProjectTabForm, type ProjectTabItem, type ProjectTabItemForm, type ProjectTabType, type ProjectTeamModel, type ProjectTeamOutput, type ProviderParams, type QueryFilterAnnouncement, type QueryFilterBlogEntry, type QueryFilterComments, type QueryFilterDocument, type QueryFilterEvent, type QueryFilterGroup, type QueryFilterGroupHierarchy, type QueryFilterInstruction, type QueryFilterNews, type QueryFilterProject, type QueryFilterProjectMembers, type QueryFilterProjectMessage, type QueryFilterProjectSimilars, type QueryFilterProjectTab, type QueryFilterProjectTabItem, type QueryFilterResearcher, type QueryFilterReviews, type QueryFilterSearch, type QueryFilterTagClassification, type Relators, type RemoveGroupMember, type RemoveGroupModelInput, type RemoveLinkedProjectInput, type ReportForm, type ReportModel, type Researcher, type ResearcherDocumentAnalytics, type ResearcherLight, type ReviewForm, type ReviewId, type ReviewModel, type Right, type Roles, type SdgModel, type SearchObjectType, type SearchResultAll, type SearchResultGroup, type SearchResultProject, type SearchResultUser, type SecondaryTagType, type SkillModel, type StatusType, type SubGroup, type TagClassificationModel, type TagModel, type TagType, type TemplateForm, type TemplateId, type TemplateModel, type TermsAndConditions, type Translated, type TranslatedAnnouncement, type TranslatedAttachmentFile, type TranslatedAttachmentLink, type TranslatedBlogEntry, type TranslatedComment, type TranslatedDocument, type TranslatedEventLocation, type TranslatedEventModel, type TranslatedGoal, type TranslatedGroupMember, type TranslatedInstruction, type TranslatedLinkedProject, type TranslatedLocation, type TranslatedLocationGeneral, type TranslatedNews, type TranslatedNewsLocation, type TranslatedNewsfeed, type TranslatedOrganizationModel, type TranslatedPeopleGroupModel, type TranslatedPeopleModel, type TranslatedProject, type TranslatedProjectCategory, type TranslatedProjectMember, type TranslatedProjectMessage, type TranslatedProjectTab, type TranslatedProjectTabItem, type TranslatedReview, type TranslatedSearchResultAll, type TranslatedSearchResultGroup, type TranslatedSearchResultProject, type TranslatedSearchResultUser, type TranslatedTag, type TranslatedTemplate, type TranslatedUserModel, type TrasnlatedHierarchyGroupModel, type UnfollowCategoryInput, type UserFromJWTModel, type UserModel, type UserPatchModel, type UserPostData, type UserPrivacyPatchModel, type UserSkillModel, canCreateComment, canCreateEvent, canCreateGroup, canCreateInstruction, canCreateNews, canCreateProject, canCreateReview, canDeleteComment, canDeleteEvent, canDeleteInstruction, canDeleteNews, canDeleteProject, canDeleteReview, canEditComment, canEditEvent, canEditGroup, canEditInstruction, canEditNews, canEditProject, canEditReview, canEditUser, canPermission, canPermissionProject, hasPermission, isAdmin, isAdminOrFacilitator, isFacilitator, isMember, isOwner, isSuperAdmin, isUser, isViewer, roomKeyFromParams };
+export { type AddGroupMembers, type AddManyFollowedProject, type AddManyLinkedProjectInput, type AddParentGroupModelInput, type AnnouncementApplyForm, type AnnouncementApplyInput, type AnnouncementForm, type AnnouncementId, type AnnouncementInput, type AnnouncementModel, type AnyLocation, type AnyProject, type AnyTranslatedLocation, type AttachmentFileForm, type AttachmentFileId, type AttachmentFileInput, type AttachmentFileModel, type AttachmentForm, type AttachmentLinkForm, type AttachmentLinkId, type AttachmentLinkInput, type AttachmentLinkModel, type AttachmentLinkOutput, type AttachmentType, type BaseLocationModel, type BaseSearchResult, type BaseTranslatedLocationModel, type BlogEntryForm, type BlogEntryId, type BlogEntryModel, ClearHistoryWS, type CollaborativeUser, type CommentModel, type ContactForm, type ContactModel, DEFAULT_LANGUAGE, DEFAULT_TAB, DEFAULT_THEME, type Document, type DocumentCrisalidType, type DocumentType, type EventForm, type EventIdOrSlug, type EventInput, type EventLocation, type EventModel, type FaqImageModel, type FaqInput, type FaqModel, type FollowCategoryInput, type FollowInput, type FollowManyOutput, type FollowModel, type FollowOutput, type FollowOutputList, type FollowProjectOutput, type FollowedProjectRef, type GeneralLocationPeopleGroup, type Geocoding, type GoalForm, type GoalModel, type GroupDataRole, type GroupMember, type GroupMemberRoleType, type GroupModel, type GroupModelInput, type GroupOuput, type HarvesterType, type HierarchyGroupModel, type Icon, type IconTab, type Identifier, type ImageGalleryForm, type ImageInput, type ImageModealCreated, type ImageModel, type ImageOrganizationInput, type ImageSize, type ImageTemplateInput, type ImageVariations, type InstructionForm, type InstructionId, type InstructionInput, type InstructionModel, type InvitationModel, type InvitationModelInput, type Language, type LanguageType, type LinkedProject, type LinkedProjectRef, type LocationForm, type LocationGeneral, type LocationId, type LocationInput, type LocationModel, type LocationOutput, type LocationType, type LpiBlockOptions, type MapPointerOption, type Mentoring, type MentoringContactForm, type NewsForm, type NewsImageModel, type NewsInput, type NewsLocation, type NewsModel, type NewsOutput, type NewsfeedModel, type NotificationModel, type NotificationType, type NotificationsSettings, type Optional, type Ordering, type OrganizationDirectoryModel, type OrganizationModel, type OrganizationOutput, type OrganizationPatchInput, type PaginationQuery, type PeopleGroupIdOrSlug, type PeopleGroupModel, type PeopleGroupModulesKeys, type PeopleModel, type PermissionType, type PostGroupData, type PostGroupProjects, type PrivacySettings, type PrivacyValue, type ProjectCategoryCreateInput, type ProjectCategoryForm, type ProjectCategoryModel, type ProjectCategoryOutput, type ProjectCategoryPatchInput, type ProjectCategoryPutInput, type ProjectForm, type ProjectGroupRoleType, type ProjectLocationForm, type ProjectMemberModel, type ProjectMemberOutput, type ProjectMemberPeopleGroupOutput, type ProjectMemberRoleType, type ProjectMembersAddEntry, type ProjectMembersAddInput, type ProjectMembersDeleteInput, type ProjectMessageForm, type ProjectMessageInputModel, type ProjectMessageModel, type ProjectModel, type ProjectModuleExtra, type ProjectModulesKeys, type ProjectOutput, type ProjectPublicationStatusType, type ProjectRoleType, type ProjectSlugOrId, type ProjectStatusType, type ProjectTab, type ProjectTabForm, type ProjectTabItem, type ProjectTabItemForm, type ProjectTabType, type ProjectTeamModel, type ProjectTeamOutput, type ProviderParams, type QueryFilterAnnouncement, type QueryFilterBlogEntry, type QueryFilterComments, type QueryFilterDocument, type QueryFilterEvent, type QueryFilterGroup, type QueryFilterGroupHierarchy, type QueryFilterInstruction, type QueryFilterNews, type QueryFilterProject, type QueryFilterProjectMembers, type QueryFilterProjectMessage, type QueryFilterProjectSimilars, type QueryFilterProjectTab, type QueryFilterProjectTabItem, type QueryFilterResearcher, type QueryFilterReviews, type QueryFilterSearch, type QueryFilterTagClassification, type Relators, type RemoveGroupMember, type RemoveGroupModelInput, type RemoveLinkedProjectInput, type ReportForm, type ReportModel, type Researcher, type ResearcherDocumentAnalytics, type ResearcherLight, type ReviewForm, type ReviewId, type ReviewModel, type Right, type Roles, type SdgModel, type SearchObjectType, type SearchResultAll, type SearchResultGroup, type SearchResultProject, type SearchResultUser, type SecondaryTagType, type SkillModel, type StatusType, type SubGroup, type TagClassificationModel, type TagModel, type TagType, type TemplateForm, type TemplateId, type TemplateModel, type TermsAndConditions, type Translated, type TranslatedAnnouncement, type TranslatedAttachmentFile, type TranslatedAttachmentLink, type TranslatedBlogEntry, type TranslatedComment, type TranslatedDocument, type TranslatedEventLocation, type TranslatedEventModel, type TranslatedGoal, type TranslatedGroupMember, type TranslatedInstruction, type TranslatedLinkedProject, type TranslatedLocation, type TranslatedLocationGeneral, type TranslatedNews, type TranslatedNewsLocation, type TranslatedNewsfeed, type TranslatedOrganizationModel, type TranslatedPeopleGroupModel, type TranslatedPeopleModel, type TranslatedProject, type TranslatedProjectCategory, type TranslatedProjectMember, type TranslatedProjectMessage, type TranslatedProjectTab, type TranslatedProjectTabItem, type TranslatedReview, type TranslatedSearchResultAll, type TranslatedSearchResultGroup, type TranslatedSearchResultProject, type TranslatedSearchResultUser, type TranslatedTag, type TranslatedTemplate, type TranslatedUserModel, type TrasnlatedHierarchyGroupModel, type UnfollowCategoryInput, type UserFromJWTModel, type UserModel, type UserPatchModel, type UserPostData, type UserPrivacyPatchModel, type UserSkillModel, canCreateComment, canCreateEvent, canCreateGroup, canCreateInstruction, canCreateNews, canCreateProject, canCreateReview, canDeleteComment, canDeleteEvent, canDeleteInstruction, canDeleteNews, canDeleteProject, canDeleteReview, canEditComment, canEditEvent, canEditGroup, canEditInstruction, canEditNews, canEditProject, canEditReview, canEditUser, canPermission, canPermissionProject, getExtensions, getFormatedVideoSrc, hasPermission, isAdmin, isAdminOrFacilitator, isFacilitator, isMember, isOwner, isSuperAdmin, isUser, isViewer, roomKeyFromParams };
