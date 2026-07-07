@@ -106,7 +106,6 @@ import Link from "@tiptap/extension-link";
 // src/lib/tiptap/lowlight.ts
 import { common, createLowlight } from "lowlight";
 var lowlight = createLowlight(common);
-var lowlight_default = lowlight;
 
 // src/lib/tiptap/extensions/ExternalVideo.ts
 import { Node, mergeAttributes } from "@tiptap/core";
@@ -511,7 +510,7 @@ var getExtensions = (options = {}) => [
   CustomTableCell_default,
   CustomImage_default,
   LpiCodeBlock_default.configure({
-    lowlight: lowlight_default
+    lowlight
   })
 ];
 
@@ -729,6 +728,7 @@ export {
   isSuperAdmin,
   isUser,
   isViewer,
+  lowlight,
   roomKeyFromParams
 };
 //# sourceMappingURL=index.js.map

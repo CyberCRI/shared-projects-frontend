@@ -106,9 +106,9 @@ export default Image.extend({
         }
       });
       return {
-        src: (dom as HTMLElement).getAttribute("src"),
-        title: (dom as HTMLElement).getAttribute("title"),
-        alt: (dom as HTMLElement).getAttribute("alt"),
+        src: (dom).getAttribute("src"),
+        title: (dom).getAttribute("title"),
+        alt: (dom).getAttribute("alt"),
         size: size,
       };
     };

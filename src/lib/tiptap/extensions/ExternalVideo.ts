@@ -118,15 +118,15 @@ export default Node.create({
         // old version for retro compatibility
         tag: 'iframe',
         getAttrs: (node) => {
-          if ((node as HTMLElement).classList.contains('custom-video')) {
+          if ((node).classList.contains('custom-video')) {
             return false
           }
           return {
-            src: (node as HTMLElement).getAttribute('src'),
-            title: (node as HTMLElement).getAttribute('title'),
-            frameborder: (node as HTMLElement).getAttribute('frameborder'),
-            allow: (node as HTMLElement).getAttribute('allow'),
-            allowfullscreen: (node as HTMLElement).getAttribute('allowfullscreen'),
+            src: (node).getAttribute('src'),
+            title: (node).getAttribute('title'),
+            frameborder: (node).getAttribute('frameborder'),
+            allow: (node).getAttribute('allow'),
+            allowfullscreen: (node).getAttribute('allowfullscreen'),
             size: 'large',
             align: 'center',
           }
@@ -136,12 +136,12 @@ export default Node.create({
         // new version
         tag: 'div.custom-video-wrapper',
         getAttrs: (wrapper) => {
-          const node = (wrapper as HTMLElement).querySelector('.custom-video')
+          const node = (wrapper).querySelector('.custom-video')
           if (!node) return false
 
           let size = 'large'
           this.options.sizes.forEach((s) => {
-            const hasSize = (wrapper as HTMLElement).classList.contains('custom-video-wrapper-' + s)
+            const hasSize = (wrapper).classList.contains('custom-video-wrapper-' + s)
             if (hasSize) {
               size = s
             }
@@ -149,7 +149,7 @@ export default Node.create({
 
           let align = 'center'
           this.options.aligns.forEach((s) => {
-            const hasAlign = (wrapper as HTMLElement).classList.contains(
+            const hasAlign = (wrapper).classList.contains(
               'custom-video-wrapper-' + s
             )
             if (hasAlign) {

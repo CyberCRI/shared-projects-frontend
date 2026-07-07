@@ -1,5 +1,3 @@
 import { common, createLowlight } from "lowlight";
 
-const lowlight = createLowlight(common);
-
-export default lowlight;
+export const lowlight = createLowlight(common);

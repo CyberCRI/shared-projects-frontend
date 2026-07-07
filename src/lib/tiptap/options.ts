@@ -9,7 +9,7 @@ import {Table} from "@tiptap/extension-table";
 import Color from "@tiptap/extension-color";
 import Link from "@tiptap/extension-link";
 
-import lowlight from "./lowlight";
+import {lowlight} from "./lowlight";
 import ExternalVideo from "./extensions/ExternalVideo";
 import CustomTableCell from "./extensions/CustomTableCell";
 import CustomImage from "./extensions/CustomImage";

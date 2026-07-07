@@ -45,6 +45,6 @@ export const ClearHistoryWS = Extension.create<{}>({
           undoManager?.clear()
           return true
         },
-    } as Partial<RawCommands>
+    }
   },
 })
