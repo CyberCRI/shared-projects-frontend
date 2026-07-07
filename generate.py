@@ -1,14 +1,10 @@
 import json
-import pathlib
-from genericpath import isfile
 from pathlib import Path
 
 BASE = Path(__file__).resolve().absolute().parent
 
 GENERATES = [
-    "interfaces",
-    "models",
-    "lib"
+    "src"
 ]
 
 def without_base(path: Path) -> Path:
@@ -26,20 +22,20 @@ for dir in GENERATES:
     print("-------\n")
     for file in Path(BASE / dir).rglob("**/*"):
         print(file, without_base(file))
-        name = "." + str(without_base(file).with_suffix(""))
-        out = "." + str(without_base(file))
+        name = "src/" + str(without_base(file).with_suffix(""))
+        out = "src/" + str(without_base(file))
         if not file.is_file():
             continue
         exports[name] = out
         inline.append(f"export * from '{name}'")
 
-with open("index.ts", "w") as f:
+with open("../index.ts", "w") as f:
     f.write("\n".join(inline))
 
-with open("package.json") as f:
-    packages = json.load(f)
+# with open("package.json") as f:
+#     packages = json.load(f)
 
-packages["exports"] = exports
+# packages["exports"] = exports
 
-with open("package.json", "w") as f:
-    json.dump(packages, f, indent=2)
+# with open("package.json", "w") as f:
+#     json.dump(packages, f, indent=2)
