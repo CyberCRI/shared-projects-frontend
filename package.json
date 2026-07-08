@@ -5,19 +5,23 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    "src/lib": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./lib": {
       "types": "./dist/lib/index.d.ts",
       "default": "./dist/lib/index.js"
     },
-    "src/interfaces": {
+    "./interfaces": {
       "types": "./dist/interfaces/index.d.ts",
       "default": "./dist/interfaces/index.js"
     },
-    "src/models": {
+    "./models": {
       "types": "./dist/models/index.d.ts",
       "default": "./dist/models/index.js"
     },
-    "src/apis": {
+    "./apis": {
       "types": "./dist/apis/index.d.ts",
       "default": "./dist/apis/index.js"
     }

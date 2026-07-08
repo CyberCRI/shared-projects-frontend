@@ -1,6 +1,6 @@
 import { P as ProviderParams, R as Right } from '../permissions-BKtXZsbf.js';
 import { P as PermissionType } from '../permissions.model-DInEkk3h.js';
-import { a5 as Roles, O as OrganizationModel, a6 as ImageVariations, k as ProjectModel, i as PeopleGroupModel, U as UserModel, N as NewsModel, e as EventModel } from '../location.model-DyvAbm5g.js';
+import { a5 as Roles, O as OrganizationModel, a6 as ImageVariations, l as ProjectModel, j as PeopleGroupModel, U as UserModel, N as NewsModel, f as EventModel } from '../location.model-B6Qp53Z2.js';
 import { StarterKitOptions } from '@tiptap/starter-kit';
 import { Extensions, Extension } from '@tiptap/core';
 import * as highlight_js from 'highlight.js';
@@ -8,7 +8,7 @@ import * as hast from 'hast';
 import * as _lowlight from 'lowlight';
 import { Attrs } from '@tiptap/pm/model';
 import { CodeBlockLowlightOptions } from '@tiptap/extension-code-block-lowlight';
-import { a as InstructionModel } from '../instruction.model-BoGdkHm9.js';
+import { a as InstructionModel } from '../instruction.model-DOaO9ybH.js';
 import 'zod';
 
 /**

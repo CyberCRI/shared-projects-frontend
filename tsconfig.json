@@ -11,6 +11,9 @@
     "rootDir": "src",
   "ignoreDeprecations": "6.0"
   },
+  "exclude": [
+    "./dist",
+  ],
   "include": [
     "src"
   ]

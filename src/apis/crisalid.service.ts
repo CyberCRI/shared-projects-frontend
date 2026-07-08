@@ -1,4 +1,4 @@
-import { Document, PaginationResult, QueryFilterResearcher, Researcher, ResearcherDocumentAnalytics } from '../interfaces'
+import { Document, DocumentType, PaginationResult, QueryFilterResearcher, Researcher, ResearcherDocumentAnalytics } from '../interfaces'
 import { OrganizationModel, PeopleGroupIdOrSlug } from '../models'
 import { clientAPI, clientAPIOptions } from './client'
 

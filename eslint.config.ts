@@ -19,6 +19,9 @@ export default defineConfig({
     '@typescript-eslint/no-dynamic-delete': 'off',
   },
   extends: [tseslint.configs.recommendedTypeChecked],
+  ignores: [
+    "./dist",
+  ],
   languageOptions: {
     parserOptions: {
       projectService: true,
