@@ -14,9 +14,11 @@ import ExternalVideo from "./extensions/ExternalVideo";
 import CustomTableCell from "./extensions/CustomTableCell";
 import CustomImage from "./extensions/CustomImage";
 import LpiCodeBlock from "./extensions/LpiCodeBlock";
+import { AnyExtension, Extensions } from "@tiptap/core";
 
-export const getExtensions = (options: Partial<StarterKitOptions> = {}) => [
-  StarterKit.configure({ ...options, codeBlock: false }),
+export const getExtensions = (options: Partial<StarterKitOptions> = {}): Extensions => [
+  // StarterKit.configure no return a type satisfied AnyExtension, why ?
+  StarterKit.configure({ ...options, codeBlock: false }) as AnyExtension,
   Link.configure({
     openOnClick: false,
   }),

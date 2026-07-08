@@ -1,44 +1,46 @@
-import type { ProjectTab, ProjectTabItem } from '../models/projects-tabs.model'
-import type { ProjectSlugOrId } from '../models/project.model'
-import type { BlogEntryId } from '../models/blog-entry.model'
-import type { GoalModel } from '../models/goal.model'
+import { z } from "zod";
 
-interface ProviderParamsContentType<T extends string> {
-  type: T
-}
+const BaseSchema = z.object({
+  organizationId: z.union([z.string(), z.number()]),
+});
 
-interface ProjectParams extends ProviderParamsContentType<'project-description'> {
-  projectId: ProjectSlugOrId
-}
+const ProjectParamsSchema = BaseSchema.extend({
+  type: z.literal("project-description"),
+  projectId: z.string(),
+});
 
-interface ProjectTabParams extends ProviderParamsContentType<'project-tab'> {
-  projectId: ProjectSlugOrId
-  tabId: ProjectTab['id']
-}
+const ProjectTabParamsSchema = BaseSchema.extend({
+  type: z.literal("project-tab"),
+  projectId: z.string(),
+  tabId: z.string(),
+});
 
-interface ProjectTabItemParams extends ProviderParamsContentType<'project-tab-item'> {
-  projectId: ProjectSlugOrId
-  tabId: ProjectTab['id']
-  tabItemId: ProjectTabItem['id']
-}
+const ProjectTabItemParamsSchema = BaseSchema.extend({
+  type: z.literal("project-tab-item"),
+  projectId: z.string(),
+  tabId: z.string(),
+  tabItemId: z.string(),
+});
 
-interface ProjectBlogParams extends ProviderParamsContentType<'project-blog'> {
-  projectId: ProjectSlugOrId
-  blogId: BlogEntryId
-}
+const ProjectBlogParamsSchema = BaseSchema.extend({
+  type: z.literal("project-blog"),
+  projectId: z.string(),
+  blogId: z.string(),
+});
 
-interface ProjectGoalParams extends ProviderParamsContentType<'project-goal'> {
-  projectId: ProjectSlugOrId
-  goalId: GoalModel['id']
-}
+const ProjectGoalParamsSchema = BaseSchema.extend({
+  type: z.literal("project-goal"),
+  projectId: z.string(),
+  goalId: z.string(),
+});
 
-type ProviderParamsChoices =
-  | ProjectParams
-  | ProjectTabParams
-  | ProjectTabItemParams
-  | ProjectBlogParams
-  | ProjectGoalParams
+// provide a schema
+export const ProviderParamsSchema = z.discriminatedUnion("type", [
+  ProjectParamsSchema,
+  ProjectTabParamsSchema,
+  ProjectTabItemParamsSchema,
+  ProjectBlogParamsSchema,
+  ProjectGoalParamsSchema,
+]);
 
-export type ProviderParams = {
-  organizationId: string | number
-} & ProviderParamsChoices
+export type ProviderParams = z.infer<typeof ProviderParamsSchema>;

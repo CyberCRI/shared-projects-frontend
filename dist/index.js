@@ -489,6 +489,7 @@ var LpiCodeBlock_default = CodeBlockLowlight.extend({
 
 // src/lib/tiptap/options.ts
 var getExtensions = (options = {}) => [
+  // StarterKit.configure no return a type satisfied AnyExtension, why ?
   StarterKit.configure({ ...options, codeBlock: false }),
   Link.configure({
     openOnClick: false
@@ -689,11 +690,50 @@ var canEditInstruction = (rights, organizationId, instructionId) => {
 var canDeleteInstruction = (rights, organizationId, instructionId) => {
   return isAdminOrFacilitator(rights, organizationId);
 };
+
+// src/interfaces/colaboratives.ts
+import { z } from "zod";
+var BaseSchema = z.object({
+  organizationId: z.union([z.string(), z.number()])
+});
+var ProjectParamsSchema = BaseSchema.extend({
+  type: z.literal("project-description"),
+  projectId: z.string()
+});
+var ProjectTabParamsSchema = BaseSchema.extend({
+  type: z.literal("project-tab"),
+  projectId: z.string(),
+  tabId: z.string()
+});
+var ProjectTabItemParamsSchema = BaseSchema.extend({
+  type: z.literal("project-tab-item"),
+  projectId: z.string(),
+  tabId: z.string(),
+  tabItemId: z.string()
+});
+var ProjectBlogParamsSchema = BaseSchema.extend({
+  type: z.literal("project-blog"),
+  projectId: z.string(),
+  blogId: z.string()
+});
+var ProjectGoalParamsSchema = BaseSchema.extend({
+  type: z.literal("project-goal"),
+  projectId: z.string(),
+  goalId: z.string()
+});
+var ProviderParamsSchema = z.discriminatedUnion("type", [
+  ProjectParamsSchema,
+  ProjectTabParamsSchema,
+  ProjectTabItemParamsSchema,
+  ProjectBlogParamsSchema,
+  ProjectGoalParamsSchema
+]);
 export {
   ClearHistoryWS,
   DEFAULT_LANGUAGE,
   DEFAULT_TAB,
   DEFAULT_THEME,
+  ProviderParamsSchema,
   canCreateComment,
   canCreateEvent,
   canCreateGroup,

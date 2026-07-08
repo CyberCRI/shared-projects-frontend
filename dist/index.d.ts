@@ -1,36 +1,60 @@
-import * as _tiptap_extension_underline from '@tiptap/extension-underline';
-import * as _tiptap_extension_color from '@tiptap/extension-color';
-import * as _tiptap_extension_table_cell from '@tiptap/extension-table-cell';
-import * as _tiptap_core from '@tiptap/core';
-import { Extension } from '@tiptap/core';
+import { z } from 'zod';
 import { StarterKitOptions } from '@tiptap/starter-kit';
-import { Attrs } from '@tiptap/pm/model';
+import { Extensions, Extension } from '@tiptap/core';
 import * as highlight_js from 'highlight.js';
 import * as hast from 'hast';
 import * as _lowlight from 'lowlight';
+import { Attrs } from '@tiptap/pm/model';
 import { CodeBlockLowlightOptions } from '@tiptap/extension-code-block-lowlight';
 
+declare const ProviderParamsSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
+    organizationId: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+    type: z.ZodLiteral<"project-description">;
+    projectId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    organizationId: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+    type: z.ZodLiteral<"project-tab">;
+    projectId: z.ZodString;
+    tabId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    organizationId: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+    type: z.ZodLiteral<"project-tab-item">;
+    projectId: z.ZodString;
+    tabId: z.ZodString;
+    tabItemId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    organizationId: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+    type: z.ZodLiteral<"project-blog">;
+    projectId: z.ZodString;
+    blogId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    organizationId: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+    type: z.ZodLiteral<"project-goal">;
+    projectId: z.ZodString;
+    goalId: z.ZodString;
+}, z.core.$strip>], "type">;
+type ProviderParams = z.infer<typeof ProviderParamsSchema>;
+
 /**
- * Type to modify interface with auto translate fields
- * use like Translated<BlogEntries, 'title' | 'content'>
+ * genereate roomRoomKey form params provided to hocuspocus
  *
- * @typedef
- * @name Translated
+ * @function
+ * @name roomKeyFromParams
  * @kind variable
- * @param {unknown} Model
- * @param {unknown} Fields
+ * @param {ProviderParams} params
+ * @returns {string | null}
  * @exports
  */
-type Translated<Model, Fields extends keyof Model> = Model & {
-    $t: Pick<Model, Fields>;
+declare const roomKeyFromParams: (params: ProviderParams) => string | null;
+
+type Right = {
+    permissions: {
+        [key: string]: boolean;
+    };
+    roles: string[];
 };
 
-type PaginationQuery = {
-    limit: number;
-    offset: number;
-};
-
-type Ordering<T extends string> = `-${T}` | T;
+type PermissionType = "access_admin" | "view_stat" | "view_org_project" | "view_org_projectuser" | "view_org_peoplegroup" | "lock_project" | "duplicate_project" | "change_locked_project" | "manage_accessrequest" | "view_project" | "add_project" | "change_project" | "delete_project" | "view_projectmessage" | "add_projectmessage" | "change_projectmessage" | "delete_projectmessage" | "view_projectuser" | "add_projectuser" | "change_projectuser" | "delete_projectuser" | "view_peoplegroup" | "add_peoplegroup" | "change_peoplegroup" | "delete_peoplegroup" | "view_news" | "add_news" | "change_news" | "delete_news" | "view_event" | "add_event" | "change_event" | "delete_event" | "view_instruction" | "add_instruction" | "change_instruction" | "delete_instruction" | "view_organizationattachmentfile" | "add_organizationattachmentfile" | "change_organizationattachmentfile" | "delete_organizationattachmentfile" | "add_tag" | "change_tag" | "delete_tag" | "add_tagclassification" | "change_tagclassification" | "delete_tagclassification" | "add_projectcategory" | "change_projectcategory" | "delete_projectcategory" | "add_template" | "change_template" | "delete_template" | "add_invitation" | "change_invitation" | "delete_invitation" | "add_review" | "change_review" | "delete_review" | "add_comment" | "change_comment" | "delete_comment" | "add_follow" | "change_follow" | "delete_follow";
 
 type LanguageType = string;
 type AttachmentType = 'file' | 'image' | 'video';
@@ -50,6 +74,8 @@ type StatusType = 'na' | 'ongoing' | 'complete' | 'cancel';
 type LocationType = 'team' | 'impact' | 'address' | 'news' | 'event';
 type Language = 'en' | 'fr' | 'de' | 'nl' | 'et' | 'ca' | 'es';
 type ProjectTabType = 'text' | 'blog';
+
+declare function hasPermission(permissions: Right["permissions"], app: "organizations" | "projects" | "accounts" | "peoplegroup", permissionName: PermissionType, identification?: number | string | Roles | null): boolean;
 
 interface BaseModel {
 }
@@ -124,7 +150,227 @@ type FaqInput = Required<FaqModel> & {
     organization_code: string;
 };
 
+/**
+ * Type to modify interface with auto translate fields
+ * use like Translated<BlogEntries, 'title' | 'content'>
+ *
+ * @typedef
+ * @name Translated
+ * @kind variable
+ * @param {unknown} Model
+ * @param {unknown} Fields
+ * @exports
+ */
+type Translated<Model, Fields extends keyof Model> = Model & {
+    $t: Pick<Model, Fields>;
+};
+
+/**
+ * @name TagModel
+ * @description Tag of an organization or project or project-category
+ */
+interface TagModel extends BaseModel {
+    id: number;
+    title: string;
+    title_en: string;
+    title_fr: string;
+    organization?: string;
+    type?: TagType;
+    secondary_type?: SecondaryTagType;
+    description: string;
+    description_en: string;
+    description_fr: string;
+}
+type TranslatedTag = Translated<TagModel, 'title' | 'description'>;
+
+/**
+ * @name TemplateModel
+ * @description Template of a category
+ */
+interface TemplateModel extends BaseModel {
+    id: number;
+    name: string;
+    description: string;
+    language: LanguageType;
+    images: ImageModel[];
+    organization: OrganizationModel;
+    categories: ProjectCategoryModel[];
+    project_title: string;
+    project_description: string;
+    project_purpose: string;
+    project_tags: TagModel[];
+    blogentry_title: string;
+    blogentry_content: string;
+    goal_title: string;
+    goal_description: string;
+    review_title: string;
+    review_description: string;
+    comment_content: string;
+}
+type TemplateId = TemplateModel['id'];
+type TranslatedTemplate = Omit<Translated<TemplateModel, 'name' | 'description' | 'project_title' | 'project_description' | 'project_purpose' | 'project_tags' | 'blogentry_title' | 'blogentry_content' | 'goal_title' | 'goal_description' | 'review_title' | 'review_description' | 'comment_content'>, 'project_tags'> & {
+    project_tags: TranslatedTag[];
+};
+type TemplateForm = Partial<TemplateModel> & {
+    project_categories_ids: number[];
+};
+
+/**
+ * @name ProjectCategoryModel
+ * @description Category of an organization or project
+ */
+interface ProjectCategoryModel extends BaseModel {
+    id: number;
+    name: string;
+    slug: string;
+    outdated_slugs?: string[];
+    description: string;
+    background_image: ImageModel | null;
+    organization: OrganizationModel | OrganizationModel['code'];
+    is_reviewable: boolean;
+    order_index: number;
+    tags: TagModel[];
+    only_reviewer_can_publish: boolean;
+    is_root: boolean;
+    parent: ProjectCategoryModel | null;
+    background_color: string;
+    foreground_color: string;
+    children?: ProjectCategoryModel[];
+    projects_count?: number;
+    hierarchy?: ProjectCategoryModel[];
+    templates: TemplateModel[];
+}
+type TranslatedProjectCategory = Translated<ProjectCategoryModel, 'name' | 'description' | 'hierarchy' | 'templates'> & {
+    hierarchy?: TranslatedProjectCategory[];
+    children?: TranslatedProjectCategory[];
+    templates?: TranslatedTemplate[];
+    tags?: TranslatedTag[];
+};
+type ProjectCategoryCreateInput = Required<Omit<ProjectCategoryModel, 'tags'>> & {
+    organization_code: string;
+    tags?: number[];
+};
+type ProjectCategoryPutInput = Required<Omit<ProjectCategoryModel, 'tags'>> & {
+    tags: number[];
+};
+type ProjectCategoryPatchInput = Partial<Omit<ProjectCategoryModel, 'tags'>> & {
+    tags?: number[];
+};
+type ProjectCategoryOutput = BaseModel & Required<Omit<ProjectCategoryModel, 'tags'>> & {
+    template: TemplateModel;
+    organization: OrganizationModel['code'];
+    tags: TagModel[];
+};
+type ProjectCategoryForm = Omit<ProjectCategoryModel, 'parent'> & {
+    parent: number;
+    imageSizes?: ImageSize;
+};
+
+/**
+ * @name ProjectModel
+ * @description Project
+ */
+interface ProjectModel extends Omit<BaseModel, 'id'> {
+    id: string;
+    title: string;
+    description: string;
+    header_image: ImageModel;
+    is_locked: boolean;
+    is_shareable: boolean;
+    purpose: string;
+    categories: ProjectCategoryModel[];
+    organizations: OrganizationModel[];
+    language: LanguageType;
+    publication_status: ProjectPublicationStatusType;
+    life_status: ProjectStatusType;
+    tags: TagModel[];
+    sdgs: number[];
+    is_followed: {
+        is_followed: boolean;
+        follow_id: number;
+    };
+    slug: string;
+    updated_at: string;
+    created_at: string;
+    views?: number;
+    modules: {
+        members: number;
+        groups: number;
+        linked_projects: number;
+        similars: number;
+        locations: number;
+        comments: number;
+        goals: number;
+        blogs: number;
+        announcements: number;
+        links: number;
+        files: number;
+        reviews: number;
+        messages: number;
+        tabs: number;
+    };
+    template?: TemplateModel;
+}
+type ProjectModulesKeys = keyof ProjectModel['modules'];
+type ProjectModuleExtra = ProjectModulesKeys | 'resources';
+type TranslatedProject = Translated<Omit<ProjectModel, 'template' | 'categories' | 'tags'>, 'title' | 'description' | 'purpose'> & {
+    template?: TranslatedTemplate;
+    categories: TranslatedProjectCategory[];
+    tags: TranslatedTag[];
+};
+type ProjectSlugOrId = ProjectModel['id'];
+type LinkedProject = {
+    id: number;
+    project: ProjectModel;
+    target?: ProjectModel;
+};
+type TranslatedLinkedProject = LinkedProject & {
+    project: TranslatedProject;
+    target?: TranslatedProject;
+};
+type LinkedProjectRef = {
+    project_id: string;
+    target_id: string;
+};
+type AddManyLinkedProjectInput = LinkedProjectRef[];
+type RemoveLinkedProjectInput = {
+    project_ids: string[];
+};
+type ProjectOutput = Required<ProjectModel> & {
+    organizations: OrganizationOutput[];
+    categories: ProjectCategoryOutput[];
+    geolocation_coordinates: LocationOutput;
+    tags: TagModel[];
+    sdgs: number[];
+    images: ImageModel[];
+    views: number;
+    template: TemplateModel;
+    slug: string;
+};
+type ProjectForm = Partial<Pick<ProjectModel, 'id' | 'title' | 'purpose' | 'language' | 'description' | 'sdgs' | 'is_locked' | 'is_shareable' | 'publication_status' | 'life_status' | 'template'> & {
+    imageSizes: any;
+    file: ImageModel | File;
+    organizations_codes: OrganizationModel['code'][];
+    categories: TranslatedProjectCategory | ProjectCategoryModel;
+    categorie: TranslatedProjectCategory;
+    project_categories_ids: TranslatedProjectCategory['id'][];
+    template_id: number;
+    tags: TranslatedTag[];
+}>;
+type AnyProject = ProjectModel | TranslatedProject;
+type QueryFilterProjectSimilars = {
+    organizations: OrganizationModel['code'][];
+    threshold?: number;
+};
+
 type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
+type Ordering<T extends string> = `-${T}` | T;
+
+type PaginationQuery = {
+    limit: number;
+    offset: number;
+};
 
 /**
  * @name NewsModel
@@ -250,24 +496,6 @@ type AnyTranslatedLocation = Omit<BaseTranslatedLocationModel, '$t'> & {
     $t?: BaseTranslatedLocationModel['$t'];
     [key: string]: any;
 };
-
-/**
- * @name TagModel
- * @description Tag of an organization or project or project-category
- */
-interface TagModel extends BaseModel {
-    id: number;
-    title: string;
-    title_en: string;
-    title_fr: string;
-    organization?: string;
-    type?: TagType;
-    secondary_type?: SecondaryTagType;
-    description: string;
-    description_en: string;
-    description_fr: string;
-}
-type TranslatedTag = Translated<TagModel, 'title' | 'description'>;
 
 type SubGroup = {
     id: number;
@@ -563,323 +791,6 @@ type OrganizationOutput = BaseModel & Required<OrganizationModel> & {
 };
 type TranslatedOrganizationModel = Translated<OrganizationOutput, 'name' | 'dashboard_title' | 'dashboard_subtitle' | 'description' | 'chat_button_text'>;
 
-/**
- * @name TemplateModel
- * @description Template of a category
- */
-interface TemplateModel extends BaseModel {
-    id: number;
-    name: string;
-    description: string;
-    language: LanguageType;
-    images: ImageModel[];
-    organization: OrganizationModel;
-    categories: ProjectCategoryModel[];
-    project_title: string;
-    project_description: string;
-    project_purpose: string;
-    project_tags: TagModel[];
-    blogentry_title: string;
-    blogentry_content: string;
-    goal_title: string;
-    goal_description: string;
-    review_title: string;
-    review_description: string;
-    comment_content: string;
-}
-type TemplateId = TemplateModel['id'];
-type TranslatedTemplate = Omit<Translated<TemplateModel, 'name' | 'description' | 'project_title' | 'project_description' | 'project_purpose' | 'project_tags' | 'blogentry_title' | 'blogentry_content' | 'goal_title' | 'goal_description' | 'review_title' | 'review_description' | 'comment_content'>, 'project_tags'> & {
-    project_tags: TranslatedTag[];
-};
-type TemplateForm = Partial<TemplateModel> & {
-    project_categories_ids: number[];
-};
-
-/**
- * @name ProjectCategoryModel
- * @description Category of an organization or project
- */
-interface ProjectCategoryModel extends BaseModel {
-    id: number;
-    name: string;
-    slug: string;
-    outdated_slugs?: string[];
-    description: string;
-    background_image: ImageModel | null;
-    organization: OrganizationModel | OrganizationModel['code'];
-    is_reviewable: boolean;
-    order_index: number;
-    tags: TagModel[];
-    only_reviewer_can_publish: boolean;
-    is_root: boolean;
-    parent: ProjectCategoryModel | null;
-    background_color: string;
-    foreground_color: string;
-    children?: ProjectCategoryModel[];
-    projects_count?: number;
-    hierarchy?: ProjectCategoryModel[];
-    templates: TemplateModel[];
-}
-type TranslatedProjectCategory = Translated<ProjectCategoryModel, 'name' | 'description' | 'hierarchy' | 'templates'> & {
-    hierarchy?: TranslatedProjectCategory[];
-    children?: TranslatedProjectCategory[];
-    templates?: TranslatedTemplate[];
-    tags?: TranslatedTag[];
-};
-type ProjectCategoryCreateInput = Required<Omit<ProjectCategoryModel, 'tags'>> & {
-    organization_code: string;
-    tags?: number[];
-};
-type ProjectCategoryPutInput = Required<Omit<ProjectCategoryModel, 'tags'>> & {
-    tags: number[];
-};
-type ProjectCategoryPatchInput = Partial<Omit<ProjectCategoryModel, 'tags'>> & {
-    tags?: number[];
-};
-type ProjectCategoryOutput = BaseModel & Required<Omit<ProjectCategoryModel, 'tags'>> & {
-    template: TemplateModel;
-    organization: OrganizationModel['code'];
-    tags: TagModel[];
-};
-type ProjectCategoryForm = Omit<ProjectCategoryModel, 'parent'> & {
-    parent: number;
-    imageSizes?: ImageSize;
-};
-
-/**
- * @name ProjectModel
- * @description Project
- */
-interface ProjectModel extends Omit<BaseModel, 'id'> {
-    id: string;
-    title: string;
-    description: string;
-    header_image: ImageModel;
-    is_locked: boolean;
-    is_shareable: boolean;
-    purpose: string;
-    categories: ProjectCategoryModel[];
-    organizations: OrganizationModel[];
-    language: LanguageType;
-    publication_status: ProjectPublicationStatusType;
-    life_status: ProjectStatusType;
-    tags: TagModel[];
-    sdgs: number[];
-    is_followed: {
-        is_followed: boolean;
-        follow_id: number;
-    };
-    slug: string;
-    updated_at: string;
-    created_at: string;
-    views?: number;
-    modules: {
-        members: number;
-        groups: number;
-        linked_projects: number;
-        similars: number;
-        locations: number;
-        comments: number;
-        goals: number;
-        blogs: number;
-        announcements: number;
-        links: number;
-        files: number;
-        reviews: number;
-        messages: number;
-        tabs: number;
-    };
-    template?: TemplateModel;
-}
-type ProjectModulesKeys = keyof ProjectModel['modules'];
-type ProjectModuleExtra = ProjectModulesKeys | 'resources';
-type TranslatedProject = Translated<Omit<ProjectModel, 'template' | 'categories' | 'tags'>, 'title' | 'description' | 'purpose'> & {
-    template?: TranslatedTemplate;
-    categories: TranslatedProjectCategory[];
-    tags: TranslatedTag[];
-};
-type ProjectSlugOrId = ProjectModel['id'];
-type LinkedProject = {
-    id: number;
-    project: ProjectModel;
-    target?: ProjectModel;
-};
-type TranslatedLinkedProject = LinkedProject & {
-    project: TranslatedProject;
-    target?: TranslatedProject;
-};
-type LinkedProjectRef = {
-    project_id: string;
-    target_id: string;
-};
-type AddManyLinkedProjectInput = LinkedProjectRef[];
-type RemoveLinkedProjectInput = {
-    project_ids: string[];
-};
-type ProjectOutput = Required<ProjectModel> & {
-    organizations: OrganizationOutput[];
-    categories: ProjectCategoryOutput[];
-    geolocation_coordinates: LocationOutput;
-    tags: TagModel[];
-    sdgs: number[];
-    images: ImageModel[];
-    views: number;
-    template: TemplateModel;
-    slug: string;
-};
-type ProjectForm = Partial<Pick<ProjectModel, 'id' | 'title' | 'purpose' | 'language' | 'description' | 'sdgs' | 'is_locked' | 'is_shareable' | 'publication_status' | 'life_status' | 'template'> & {
-    imageSizes: any;
-    file: ImageModel | File;
-    organizations_codes: OrganizationModel['code'][];
-    categories: TranslatedProjectCategory | ProjectCategoryModel;
-    categorie: TranslatedProjectCategory;
-    project_categories_ids: TranslatedProjectCategory['id'][];
-    template_id: number;
-    tags: TranslatedTag[];
-}>;
-type AnyProject = ProjectModel | TranslatedProject;
-type QueryFilterProjectSimilars = {
-    organizations: OrganizationModel['code'][];
-    threshold?: number;
-};
-
-interface Icon {
-}
-interface IconTab {
-}
-
-interface ProjectTab extends BaseModel {
-    id: number;
-    project?: ProjectModel;
-    title: string;
-    type: ProjectTabType;
-    description: string | null;
-    icon: keyof IconTab | null;
-    images?: ImageModel[];
-    show_preview: boolean;
-    modules: {
-        items: number;
-    };
-}
-type ProjectTabForm = Partial<Omit<ProjectTab, "id" | "modules" | "images"> & {
-    id?: ProjectTab['id'];
-    images_ids: number[];
-}>;
-type TranslatedProjectTab = Translated<ProjectTab, "title" | "description">;
-interface ProjectTabItem extends BaseModel {
-    id: number;
-    tab?: ProjectTab;
-    title: string;
-    content: string;
-    images?: number[];
-    created_at: string;
-    updated_at: string;
-}
-type TranslatedProjectTabItem = Translated<ProjectTabItem, "title" | "content">;
-type ProjectTabItemForm = Partial<ProjectTabItem & {
-    images_ids: number[];
-}>;
-type QueryFilterProjectTab = Partial<{
-    type: ProjectTabType;
-    show_preview: boolean;
-} & PaginationQuery>;
-type QueryFilterProjectTabItem = Partial<{
-    ordering: Ordering<"created_at" | "updated_at">;
-    from_date: string;
-    to_date: string;
-} & PaginationQuery>;
-
-/**
- * @name BlogEntryModel
- * @description Article/Blog attached to a project
- */
-interface BlogEntryModel extends BaseModel {
-    id: number;
-    title: string;
-    content: string;
-    created_at: string;
-    updated_at: string;
-    images?: number[];
-}
-type BlogEntryId = BlogEntryModel['id'];
-type TranslatedBlogEntry = Translated<BlogEntryModel, 'title' | 'content'>;
-type QueryFilterBlogEntry = Partial<{
-    ordering: Ordering<'created_at' | 'updated_at'>;
-} & PaginationQuery>;
-type BlogEntryForm = Omit<BlogEntryModel, 'id' | 'created_at' | 'updated_at'> & {
-    id?: BlogEntryModel['id'];
-    created_at?: Date | string;
-    images_ids: number[];
-    project_id?: ProjectSlugOrId;
-};
-
-/**
- * @name GoalModel
- * @description Goal of a project
- */
-interface GoalModel extends BaseModel {
-    id: number;
-    title: string;
-    description: string;
-    deadline_at: string;
-    status: StatusType;
-}
-type TranslatedGoal = Translated<GoalModel, 'title' | 'description'>;
-type GoalForm = Partial<GoalModel> & {
-    project_id?: ProjectSlugOrId;
-};
-
-interface ProviderParamsContentType<T extends string> {
-    type: T;
-}
-interface ProjectParams extends ProviderParamsContentType<'project-description'> {
-    projectId: ProjectSlugOrId;
-}
-interface ProjectTabParams extends ProviderParamsContentType<'project-tab'> {
-    projectId: ProjectSlugOrId;
-    tabId: ProjectTab['id'];
-}
-interface ProjectTabItemParams extends ProviderParamsContentType<'project-tab-item'> {
-    projectId: ProjectSlugOrId;
-    tabId: ProjectTab['id'];
-    tabItemId: ProjectTabItem['id'];
-}
-interface ProjectBlogParams extends ProviderParamsContentType<'project-blog'> {
-    projectId: ProjectSlugOrId;
-    blogId: BlogEntryId;
-}
-interface ProjectGoalParams extends ProviderParamsContentType<'project-goal'> {
-    projectId: ProjectSlugOrId;
-    goalId: GoalModel['id'];
-}
-type ProviderParamsChoices = ProjectParams | ProjectTabParams | ProjectTabItemParams | ProjectBlogParams | ProjectGoalParams;
-type ProviderParams = {
-    organizationId: string | number;
-} & ProviderParamsChoices;
-
-/**
- * genereate roomRoomKey form params provided to hocuspocus
- *
- * @function
- * @name roomKeyFromParams
- * @kind variable
- * @param {ProviderParams} params
- * @returns {string | null}
- * @exports
- */
-declare const roomKeyFromParams: (params: ProviderParams) => string | null;
-
-type Right = {
-    permissions: {
-        [key: string]: boolean;
-    };
-    roles: string[];
-};
-
-type PermissionType = "access_admin" | "view_stat" | "view_org_project" | "view_org_projectuser" | "view_org_peoplegroup" | "lock_project" | "duplicate_project" | "change_locked_project" | "manage_accessrequest" | "view_project" | "add_project" | "change_project" | "delete_project" | "view_projectmessage" | "add_projectmessage" | "change_projectmessage" | "delete_projectmessage" | "view_projectuser" | "add_projectuser" | "change_projectuser" | "delete_projectuser" | "view_peoplegroup" | "add_peoplegroup" | "change_peoplegroup" | "delete_peoplegroup" | "view_news" | "add_news" | "change_news" | "delete_news" | "view_event" | "add_event" | "change_event" | "delete_event" | "view_instruction" | "add_instruction" | "change_instruction" | "delete_instruction" | "view_organizationattachmentfile" | "add_organizationattachmentfile" | "change_organizationattachmentfile" | "delete_organizationattachmentfile" | "add_tag" | "change_tag" | "delete_tag" | "add_tagclassification" | "change_tagclassification" | "delete_tagclassification" | "add_projectcategory" | "change_projectcategory" | "delete_projectcategory" | "add_template" | "change_template" | "delete_template" | "add_invitation" | "change_invitation" | "delete_invitation" | "add_review" | "change_review" | "delete_review" | "add_comment" | "change_comment" | "delete_comment" | "add_follow" | "change_follow" | "delete_follow";
-
-declare function hasPermission(permissions: Right["permissions"], app: "organizations" | "projects" | "accounts" | "peoplegroup", permissionName: PermissionType, identification?: number | string | Roles | null): boolean;
-
 declare const isAdmin: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
 
 declare const isAdminOrFacilitator: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
@@ -894,17 +805,7 @@ declare const isUser: (rights: Right, organizationId: OrganizationModel["id"]) =
 
 declare const canPermission: (rights: Right, organizationId: OrganizationModel["id"], elementType: "projects" | "accounts" | "peoplegroup", identification: (number | string | Roles | null) | undefined, perrmissionName: PermissionType) => boolean;
 
-declare const getExtensions: (options?: Partial<StarterKitOptions>) => (_tiptap_core.Node<{
-    inline: boolean;
-    HTMLAttributes: {};
-    sizes: ImageVariations[];
-    aligns: string[];
-}, any> | _tiptap_core.Node<_tiptap_extension_table_cell.TableCellOptions, any> | _tiptap_core.Node<{
-    inline: boolean;
-    HTMLAttributes: {};
-    sizes: ImageVariations[];
-    allowBase64: boolean;
-}, any> | _tiptap_core.Extension<StarterKitOptions, any> | _tiptap_core.Extension<_tiptap_extension_color.ColorOptions, any> | _tiptap_core.Mark<_tiptap_extension_underline.UnderlineOptions, any>)[];
+declare const getExtensions: (options?: Partial<StarterKitOptions>) => Extensions;
 
 declare const lowlight: {
     highlight: (language: string, value: string, options?: Readonly<_lowlight.Options> | null | undefined) => hast.Root;
@@ -1067,6 +968,11 @@ type CollaborativeUser = {
     profile_picture: ImageModel;
 };
 
+interface Icon {
+}
+interface IconTab {
+}
+
 interface AnnouncementModel extends BaseModel {
     id: number;
     description: string;
@@ -1173,6 +1079,30 @@ type AttachmentForm = {
 };
 
 /**
+ * @name BlogEntryModel
+ * @description Article/Blog attached to a project
+ */
+interface BlogEntryModel extends BaseModel {
+    id: number;
+    title: string;
+    content: string;
+    created_at: string;
+    updated_at: string;
+    images?: number[];
+}
+type BlogEntryId = BlogEntryModel['id'];
+type TranslatedBlogEntry = Translated<BlogEntryModel, 'title' | 'content'>;
+type QueryFilterBlogEntry = Partial<{
+    ordering: Ordering<'created_at' | 'updated_at'>;
+} & PaginationQuery>;
+type BlogEntryForm = Omit<BlogEntryModel, 'id' | 'created_at' | 'updated_at'> & {
+    id?: BlogEntryModel['id'];
+    created_at?: Date | string;
+    images_ids: number[];
+    project_id?: ProjectSlugOrId;
+};
+
+/**
  * @name CommentModel
  * @description Comment of a project
  * */
@@ -1236,6 +1166,22 @@ type FollowProjectOutput = Required<FollowOutput> & {
     project: ProjectModel;
 };
 type FollowOutputList = FollowManyOutput[];
+
+/**
+ * @name GoalModel
+ * @description Goal of a project
+ */
+interface GoalModel extends BaseModel {
+    id: number;
+    title: string;
+    description: string;
+    deadline_at: string;
+    status: StatusType;
+}
+type TranslatedGoal = Translated<GoalModel, 'title' | 'description'>;
+type GoalForm = Partial<GoalModel> & {
+    project_id?: ProjectSlugOrId;
+};
 
 /**
  * @name GroupModel
@@ -1536,6 +1482,47 @@ type QueryFilterProjectMessage = Partial<{
     ordering: Ordering<'created_at' | 'updated_at'>;
 } & PaginationQuery>;
 
+interface ProjectTab extends BaseModel {
+    id: number;
+    project?: ProjectModel;
+    title: string;
+    type: ProjectTabType;
+    description: string | null;
+    icon: keyof IconTab | null;
+    images?: ImageModel[];
+    show_preview: boolean;
+    modules: {
+        items: number;
+    };
+}
+type ProjectTabForm = Partial<Omit<ProjectTab, "id" | "modules" | "images"> & {
+    id?: ProjectTab['id'];
+    images_ids: number[];
+}>;
+type TranslatedProjectTab = Translated<ProjectTab, "title" | "description">;
+interface ProjectTabItem extends BaseModel {
+    id: number;
+    tab?: ProjectTab;
+    title: string;
+    content: string;
+    images?: number[];
+    created_at: string;
+    updated_at: string;
+}
+type TranslatedProjectTabItem = Translated<ProjectTabItem, "title" | "content">;
+type ProjectTabItemForm = Partial<ProjectTabItem & {
+    images_ids: number[];
+}>;
+type QueryFilterProjectTab = Partial<{
+    type: ProjectTabType;
+    show_preview: boolean;
+} & PaginationQuery>;
+type QueryFilterProjectTabItem = Partial<{
+    ordering: Ordering<"created_at" | "updated_at">;
+    from_date: string;
+    to_date: string;
+} & PaginationQuery>;
+
 interface ReportModel extends BaseModel {
     id: number;
     title: string;
@@ -1674,4 +1661,4 @@ type QueryFilterTagClassification = Partial<{
     language: LanguageType;
 } & PaginationQuery>;
 
-export { type AddGroupMembers, type AddManyFollowedProject, type AddManyLinkedProjectInput, type AddParentGroupModelInput, type AnnouncementApplyForm, type AnnouncementApplyInput, type AnnouncementForm, type AnnouncementId, type AnnouncementInput, type AnnouncementModel, type AnyLocation, type AnyProject, type AnyTranslatedLocation, type AttachmentFileForm, type AttachmentFileId, type AttachmentFileInput, type AttachmentFileModel, type AttachmentForm, type AttachmentLinkForm, type AttachmentLinkId, type AttachmentLinkInput, type AttachmentLinkModel, type AttachmentLinkOutput, type AttachmentType, type BaseLocationModel, type BaseSearchResult, type BaseTranslatedLocationModel, type BlogEntryForm, type BlogEntryId, type BlogEntryModel, ClearHistoryWS, type CollaborativeUser, type CommentModel, type ContactForm, type ContactModel, DEFAULT_LANGUAGE, DEFAULT_TAB, DEFAULT_THEME, type Document, type DocumentCrisalidType, type DocumentType, type EventForm, type EventIdOrSlug, type EventInput, type EventLocation, type EventModel, type FaqImageModel, type FaqInput, type FaqModel, type FollowCategoryInput, type FollowInput, type FollowManyOutput, type FollowModel, type FollowOutput, type FollowOutputList, type FollowProjectOutput, type FollowedProjectRef, type GeneralLocationPeopleGroup, type Geocoding, type GoalForm, type GoalModel, type GroupDataRole, type GroupMember, type GroupMemberRoleType, type GroupModel, type GroupModelInput, type GroupOuput, type HarvesterType, type HierarchyGroupModel, type Icon, type IconTab, type Identifier, type ImageGalleryForm, type ImageInput, type ImageModealCreated, type ImageModel, type ImageOrganizationInput, type ImageSize, type ImageTemplateInput, type ImageVariations, type InstructionForm, type InstructionId, type InstructionInput, type InstructionModel, type InvitationModel, type InvitationModelInput, type Language, type LanguageType, type LinkedProject, type LinkedProjectRef, type LocationForm, type LocationGeneral, type LocationId, type LocationInput, type LocationModel, type LocationOutput, type LocationType, type LpiBlockOptions, type MapPointerOption, type Mentoring, type MentoringContactForm, type NewsForm, type NewsImageModel, type NewsInput, type NewsLocation, type NewsModel, type NewsOutput, type NewsfeedModel, type NotificationModel, type NotificationType, type NotificationsSettings, type Optional, type Ordering, type OrganizationDirectoryModel, type OrganizationModel, type OrganizationOutput, type OrganizationPatchInput, type PaginationQuery, type PeopleGroupIdOrSlug, type PeopleGroupModel, type PeopleGroupModulesKeys, type PeopleModel, type PermissionType, type PostGroupData, type PostGroupProjects, type PrivacySettings, type PrivacyValue, type ProjectCategoryCreateInput, type ProjectCategoryForm, type ProjectCategoryModel, type ProjectCategoryOutput, type ProjectCategoryPatchInput, type ProjectCategoryPutInput, type ProjectForm, type ProjectGroupRoleType, type ProjectLocationForm, type ProjectMemberModel, type ProjectMemberOutput, type ProjectMemberPeopleGroupOutput, type ProjectMemberRoleType, type ProjectMembersAddEntry, type ProjectMembersAddInput, type ProjectMembersDeleteInput, type ProjectMessageForm, type ProjectMessageInputModel, type ProjectMessageModel, type ProjectModel, type ProjectModuleExtra, type ProjectModulesKeys, type ProjectOutput, type ProjectPublicationStatusType, type ProjectRoleType, type ProjectSlugOrId, type ProjectStatusType, type ProjectTab, type ProjectTabForm, type ProjectTabItem, type ProjectTabItemForm, type ProjectTabType, type ProjectTeamModel, type ProjectTeamOutput, type ProviderParams, type QueryFilterAnnouncement, type QueryFilterBlogEntry, type QueryFilterComments, type QueryFilterDocument, type QueryFilterEvent, type QueryFilterGroup, type QueryFilterGroupHierarchy, type QueryFilterInstruction, type QueryFilterNews, type QueryFilterProject, type QueryFilterProjectMembers, type QueryFilterProjectMessage, type QueryFilterProjectSimilars, type QueryFilterProjectTab, type QueryFilterProjectTabItem, type QueryFilterResearcher, type QueryFilterReviews, type QueryFilterSearch, type QueryFilterTagClassification, type Relators, type RemoveGroupMember, type RemoveGroupModelInput, type RemoveLinkedProjectInput, type ReportForm, type ReportModel, type Researcher, type ResearcherDocumentAnalytics, type ResearcherLight, type ReviewForm, type ReviewId, type ReviewModel, type Right, type Roles, type SdgModel, type SearchObjectType, type SearchResultAll, type SearchResultGroup, type SearchResultProject, type SearchResultUser, type SecondaryTagType, type SkillModel, type StatusType, type SubGroup, type TagClassificationModel, type TagModel, type TagType, type TemplateForm, type TemplateId, type TemplateModel, type TermsAndConditions, type Translated, type TranslatedAnnouncement, type TranslatedAttachmentFile, type TranslatedAttachmentLink, type TranslatedBlogEntry, type TranslatedComment, type TranslatedDocument, type TranslatedEventLocation, type TranslatedEventModel, type TranslatedGoal, type TranslatedGroupMember, type TranslatedInstruction, type TranslatedLinkedProject, type TranslatedLocation, type TranslatedLocationGeneral, type TranslatedNews, type TranslatedNewsLocation, type TranslatedNewsfeed, type TranslatedOrganizationModel, type TranslatedPeopleGroupModel, type TranslatedPeopleModel, type TranslatedProject, type TranslatedProjectCategory, type TranslatedProjectMember, type TranslatedProjectMessage, type TranslatedProjectTab, type TranslatedProjectTabItem, type TranslatedReview, type TranslatedSearchResultAll, type TranslatedSearchResultGroup, type TranslatedSearchResultProject, type TranslatedSearchResultUser, type TranslatedTag, type TranslatedTemplate, type TranslatedUserModel, type TrasnlatedHierarchyGroupModel, type UnfollowCategoryInput, type UserFromJWTModel, type UserModel, type UserPatchModel, type UserPostData, type UserPrivacyPatchModel, type UserSkillModel, canCreateComment, canCreateEvent, canCreateGroup, canCreateInstruction, canCreateNews, canCreateProject, canCreateReview, canDeleteComment, canDeleteEvent, canDeleteInstruction, canDeleteNews, canDeleteProject, canDeleteReview, canEditComment, canEditEvent, canEditGroup, canEditInstruction, canEditNews, canEditProject, canEditReview, canEditUser, canPermission, canPermissionProject, getExtensions, getFormatedVideoSrc, hasPermission, isAdmin, isAdminOrFacilitator, isFacilitator, isMember, isOwner, isSuperAdmin, isUser, isViewer, lowlight, roomKeyFromParams };
+export { type AddGroupMembers, type AddManyFollowedProject, type AddManyLinkedProjectInput, type AddParentGroupModelInput, type AnnouncementApplyForm, type AnnouncementApplyInput, type AnnouncementForm, type AnnouncementId, type AnnouncementInput, type AnnouncementModel, type AnyLocation, type AnyProject, type AnyTranslatedLocation, type AttachmentFileForm, type AttachmentFileId, type AttachmentFileInput, type AttachmentFileModel, type AttachmentForm, type AttachmentLinkForm, type AttachmentLinkId, type AttachmentLinkInput, type AttachmentLinkModel, type AttachmentLinkOutput, type AttachmentType, type BaseLocationModel, type BaseSearchResult, type BaseTranslatedLocationModel, type BlogEntryForm, type BlogEntryId, type BlogEntryModel, ClearHistoryWS, type CollaborativeUser, type CommentModel, type ContactForm, type ContactModel, DEFAULT_LANGUAGE, DEFAULT_TAB, DEFAULT_THEME, type Document, type DocumentCrisalidType, type DocumentType, type EventForm, type EventIdOrSlug, type EventInput, type EventLocation, type EventModel, type FaqImageModel, type FaqInput, type FaqModel, type FollowCategoryInput, type FollowInput, type FollowManyOutput, type FollowModel, type FollowOutput, type FollowOutputList, type FollowProjectOutput, type FollowedProjectRef, type GeneralLocationPeopleGroup, type Geocoding, type GoalForm, type GoalModel, type GroupDataRole, type GroupMember, type GroupMemberRoleType, type GroupModel, type GroupModelInput, type GroupOuput, type HarvesterType, type HierarchyGroupModel, type Icon, type IconTab, type Identifier, type ImageGalleryForm, type ImageInput, type ImageModealCreated, type ImageModel, type ImageOrganizationInput, type ImageSize, type ImageTemplateInput, type ImageVariations, type InstructionForm, type InstructionId, type InstructionInput, type InstructionModel, type InvitationModel, type InvitationModelInput, type Language, type LanguageType, type LinkedProject, type LinkedProjectRef, type LocationForm, type LocationGeneral, type LocationId, type LocationInput, type LocationModel, type LocationOutput, type LocationType, type LpiBlockOptions, type MapPointerOption, type Mentoring, type MentoringContactForm, type NewsForm, type NewsImageModel, type NewsInput, type NewsLocation, type NewsModel, type NewsOutput, type NewsfeedModel, type NotificationModel, type NotificationType, type NotificationsSettings, type Optional, type Ordering, type OrganizationDirectoryModel, type OrganizationModel, type OrganizationOutput, type OrganizationPatchInput, type PaginationQuery, type PeopleGroupIdOrSlug, type PeopleGroupModel, type PeopleGroupModulesKeys, type PeopleModel, type PermissionType, type PostGroupData, type PostGroupProjects, type PrivacySettings, type PrivacyValue, type ProjectCategoryCreateInput, type ProjectCategoryForm, type ProjectCategoryModel, type ProjectCategoryOutput, type ProjectCategoryPatchInput, type ProjectCategoryPutInput, type ProjectForm, type ProjectGroupRoleType, type ProjectLocationForm, type ProjectMemberModel, type ProjectMemberOutput, type ProjectMemberPeopleGroupOutput, type ProjectMemberRoleType, type ProjectMembersAddEntry, type ProjectMembersAddInput, type ProjectMembersDeleteInput, type ProjectMessageForm, type ProjectMessageInputModel, type ProjectMessageModel, type ProjectModel, type ProjectModuleExtra, type ProjectModulesKeys, type ProjectOutput, type ProjectPublicationStatusType, type ProjectRoleType, type ProjectSlugOrId, type ProjectStatusType, type ProjectTab, type ProjectTabForm, type ProjectTabItem, type ProjectTabItemForm, type ProjectTabType, type ProjectTeamModel, type ProjectTeamOutput, type ProviderParams, ProviderParamsSchema, type QueryFilterAnnouncement, type QueryFilterBlogEntry, type QueryFilterComments, type QueryFilterDocument, type QueryFilterEvent, type QueryFilterGroup, type QueryFilterGroupHierarchy, type QueryFilterInstruction, type QueryFilterNews, type QueryFilterProject, type QueryFilterProjectMembers, type QueryFilterProjectMessage, type QueryFilterProjectSimilars, type QueryFilterProjectTab, type QueryFilterProjectTabItem, type QueryFilterResearcher, type QueryFilterReviews, type QueryFilterSearch, type QueryFilterTagClassification, type Relators, type RemoveGroupMember, type RemoveGroupModelInput, type RemoveLinkedProjectInput, type ReportForm, type ReportModel, type Researcher, type ResearcherDocumentAnalytics, type ResearcherLight, type ReviewForm, type ReviewId, type ReviewModel, type Right, type Roles, type SdgModel, type SearchObjectType, type SearchResultAll, type SearchResultGroup, type SearchResultProject, type SearchResultUser, type SecondaryTagType, type SkillModel, type StatusType, type SubGroup, type TagClassificationModel, type TagModel, type TagType, type TemplateForm, type TemplateId, type TemplateModel, type TermsAndConditions, type Translated, type TranslatedAnnouncement, type TranslatedAttachmentFile, type TranslatedAttachmentLink, type TranslatedBlogEntry, type TranslatedComment, type TranslatedDocument, type TranslatedEventLocation, type TranslatedEventModel, type TranslatedGoal, type TranslatedGroupMember, type TranslatedInstruction, type TranslatedLinkedProject, type TranslatedLocation, type TranslatedLocationGeneral, type TranslatedNews, type TranslatedNewsLocation, type TranslatedNewsfeed, type TranslatedOrganizationModel, type TranslatedPeopleGroupModel, type TranslatedPeopleModel, type TranslatedProject, type TranslatedProjectCategory, type TranslatedProjectMember, type TranslatedProjectMessage, type TranslatedProjectTab, type TranslatedProjectTabItem, type TranslatedReview, type TranslatedSearchResultAll, type TranslatedSearchResultGroup, type TranslatedSearchResultProject, type TranslatedSearchResultUser, type TranslatedTag, type TranslatedTemplate, type TranslatedUserModel, type TrasnlatedHierarchyGroupModel, type UnfollowCategoryInput, type UserFromJWTModel, type UserModel, type UserPatchModel, type UserPostData, type UserPrivacyPatchModel, type UserSkillModel, canCreateComment, canCreateEvent, canCreateGroup, canCreateInstruction, canCreateNews, canCreateProject, canCreateReview, canDeleteComment, canDeleteEvent, canDeleteInstruction, canDeleteNews, canDeleteProject, canDeleteReview, canEditComment, canEditEvent, canEditGroup, canEditInstruction, canEditNews, canEditProject, canEditReview, canEditUser, canPermission, canPermissionProject, getExtensions, getFormatedVideoSrc, hasPermission, isAdmin, isAdminOrFacilitator, isFacilitator, isMember, isOwner, isSuperAdmin, isUser, isViewer, lowlight, roomKeyFromParams };
