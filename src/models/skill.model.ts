@@ -7,3 +7,7 @@ export interface SkillModel {
   level: number
   level_to_reach: number
 }
+
+export type QueryFilterSkill = Partial<{
+  search: string
+}>

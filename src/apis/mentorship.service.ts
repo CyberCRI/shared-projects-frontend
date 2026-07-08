@@ -1,0 +1,57 @@
+import { PaginationResult } from '../interfaces'
+import { Mentoring, OrganizationModel, SkillModel } from '../models'
+import { clientAPI } from './client'
+
+// fetch mentorshup demand and offer for currentr user
+export async function getUserMentorship(organizationCode: OrganizationModel['code'], config = {}) {
+  return await clientAPI<PaginationResult<Mentoring>>(
+    `organization/${organizationCode}/mentoring/`,
+    config
+  )
+}
+
+// fetch mentorshup demand and offer for currentr user
+export async function getMentorshipDetails(
+  organizationCode: OrganizationModel['code'],
+  mentorshipId: any,
+  payload: any
+) {
+  return await clientAPI(`organization/${organizationCode}/mentoring/${mentorshipId}/`, {
+    params: payload,
+  })
+}
+
+// offer mentroship fro a skill
+export async function offerMentorship(
+  organizationCode: OrganizationModel['code'],
+  skill: SkillModel,
+  payload: any
+) {
+  return await clientAPI(`organization/${organizationCode}/mentoring/contact-mentoree/${skill.id}/`, {
+    body: payload,
+    method: 'POST',
+  })
+}
+
+// ask mentorship for a skill
+export async function askMentorship(
+  organizationCode: OrganizationModel['code'],
+  skill: SkillModel,
+  payload: any
+) {
+  return await clientAPI(`organization/${organizationCode}/mentoring/contact-mentor/${skill.id}/`, {
+    body: payload,
+    method: 'POST',
+  })
+}
+// respond to mentroship offer
+export async function respondMentorship(
+  organizationCode: OrganizationModel['code'],
+  mentorshipId: Mentoring['id'],
+  payload: any
+) {
+  return await clientAPI(`organization/${organizationCode}/mentoring/${mentorshipId}/respond/`, {
+    body: payload,
+    method: 'POST',
+  })
+}

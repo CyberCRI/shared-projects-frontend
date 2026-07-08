@@ -62,6 +62,8 @@ export interface UserModel extends BaseModel {
   website: string | null
 }
 
+export type UserIdOrSlug = UserModel['id'] | UserModel['slug']
+
 export interface UserFromJWTModel {
   id: string
   given_name: string
