@@ -9,29 +9,24 @@ const ProjectParamsSchema = BaseSchema.extend({
   projectId: z.string(),
 });
 
-const ProjectTabParamsSchema = BaseSchema.extend({
+const ProjectTabParamsSchema = ProjectParamsSchema.extend({
   type: z.literal("project-tab"),
-  projectId: z.string(),
-  tabId: z.string(),
+  tabId: z.number(),
 });
 
-const ProjectTabItemParamsSchema = BaseSchema.extend({
+const ProjectTabItemParamsSchema = ProjectTabParamsSchema.extend({
   type: z.literal("project-tab-item"),
-  projectId: z.string(),
-  tabId: z.string(),
-  tabItemId: z.string(),
+  tabItemId: z.number(),
 });
 
-const ProjectBlogParamsSchema = BaseSchema.extend({
+const ProjectBlogParamsSchema = ProjectParamsSchema.extend({
   type: z.literal("project-blog"),
-  projectId: z.string(),
-  blogId: z.string(),
+  blogId: z.number(),
 });
 
-const ProjectGoalParamsSchema = BaseSchema.extend({
+const ProjectGoalParamsSchema = ProjectParamsSchema.extend({
   type: z.literal("project-goal"),
-  projectId: z.string(),
-  goalId: z.string(),
+  goalId: z.number(),
 });
 
 // provide a schema

@@ -13,25 +13,25 @@ declare const ProviderParamsSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     projectId: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
     organizationId: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+    projectId: z.ZodString;
     type: z.ZodLiteral<"project-tab">;
-    projectId: z.ZodString;
-    tabId: z.ZodString;
+    tabId: z.ZodNumber;
 }, z.core.$strip>, z.ZodObject<{
     organizationId: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+    projectId: z.ZodString;
+    tabId: z.ZodNumber;
     type: z.ZodLiteral<"project-tab-item">;
-    projectId: z.ZodString;
-    tabId: z.ZodString;
-    tabItemId: z.ZodString;
+    tabItemId: z.ZodNumber;
 }, z.core.$strip>, z.ZodObject<{
     organizationId: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+    projectId: z.ZodString;
     type: z.ZodLiteral<"project-blog">;
-    projectId: z.ZodString;
-    blogId: z.ZodString;
+    blogId: z.ZodNumber;
 }, z.core.$strip>, z.ZodObject<{
     organizationId: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
-    type: z.ZodLiteral<"project-goal">;
     projectId: z.ZodString;
-    goalId: z.ZodString;
+    type: z.ZodLiteral<"project-goal">;
+    goalId: z.ZodNumber;
 }, z.core.$strip>], "type">;
 type ProviderParams = z.infer<typeof ProviderParamsSchema>;
 

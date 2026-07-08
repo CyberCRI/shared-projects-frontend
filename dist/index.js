@@ -700,26 +700,21 @@ var ProjectParamsSchema = BaseSchema.extend({
   type: z.literal("project-description"),
   projectId: z.string()
 });
-var ProjectTabParamsSchema = BaseSchema.extend({
+var ProjectTabParamsSchema = ProjectParamsSchema.extend({
   type: z.literal("project-tab"),
-  projectId: z.string(),
-  tabId: z.string()
+  tabId: z.number()
 });
-var ProjectTabItemParamsSchema = BaseSchema.extend({
+var ProjectTabItemParamsSchema = ProjectTabParamsSchema.extend({
   type: z.literal("project-tab-item"),
-  projectId: z.string(),
-  tabId: z.string(),
-  tabItemId: z.string()
+  tabItemId: z.number()
 });
-var ProjectBlogParamsSchema = BaseSchema.extend({
+var ProjectBlogParamsSchema = ProjectParamsSchema.extend({
   type: z.literal("project-blog"),
-  projectId: z.string(),
-  blogId: z.string()
+  blogId: z.number()
 });
-var ProjectGoalParamsSchema = BaseSchema.extend({
+var ProjectGoalParamsSchema = ProjectParamsSchema.extend({
   type: z.literal("project-goal"),
-  projectId: z.string(),
-  goalId: z.string()
+  goalId: z.number()
 });
 var ProviderParamsSchema = z.discriminatedUnion("type", [
   ProjectParamsSchema,
