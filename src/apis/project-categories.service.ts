@@ -92,20 +92,20 @@ export async function deleteProjectCategoryBackground(
   organizationCode: OrganizationModel['code'],
   { category_id, id }: { category_id: ProjectCategoryModel['id'], id: any }
 ) {
-  return await clientAPI(
+  return await clientAPI<undefined>(
     `organization/${organizationCode}/category/${category_id}/background/${id}/`,
     { method: 'DELETE' }
   )
 }
 
 export async function getProjectCategoriesFollow(userId: number) {
-  return await clientAPI(`user/${userId}/category-follow/`)
+  return await clientAPI<PaginationResult<ProjectCategoryModel>>(`user/${userId}/category-follow/`)
 }
 
 export async function postProjectCategoryFollow(userId: number, category_id: number) {
-  return await clientAPI(`user/${userId}/category-follow/`, { body: { category_id }, method: 'POST' })
+  return await clientAPI<ProjectCategoryModel>(`user/${userId}/category-follow/`, { body: { category_id }, method: 'POST' })
 }
 
 export async function deleteProjectCategoryFollow(userId: number, category_follow_id: number) {
-  return await clientAPI(`user/${userId}/category-follow/${category_follow_id}/`, { method: 'DELETE' })
+  return await clientAPI<undefined>(`user/${userId}/category-follow/${category_follow_id}/`, { method: 'DELETE' })
 }

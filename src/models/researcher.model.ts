@@ -1,7 +1,7 @@
-import { UserModel } from "../models/user.model"
-import { PaginationQuery } from "./pagination"
-import { Ordering } from "./query"
-import { Translated } from "./translated"
+import { UserModel } from "./user.model"
+import { PaginationQuery } from "../interfaces/pagination"
+import { Ordering } from "../interfaces/query"
+import { Translated } from "../interfaces/translated"
 
 export type Relators =
   | 'abr'

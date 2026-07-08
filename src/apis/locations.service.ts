@@ -1,4 +1,4 @@
-import { LocationGeneral } from '../interfaces'
+import { LocationGeneral } from '../models/location.model'
 import { LocationId, LocationModel, ProjectLocationForm, ProjectSlugOrId } from '../models'
 import { clientAPI, clientAPIOptions } from './client'
 

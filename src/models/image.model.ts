@@ -31,7 +31,7 @@ export type ImageModel = BaseModel &
 export type ImageVariations = keyof ImageModel['variations']
 
 // when created return static_url
-export type ImageModealCreated = ImageModel & {
+export type ImageModelCreated = ImageModel & {
   static_url: string
 }
 

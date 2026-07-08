@@ -1,5 +1,5 @@
 import { PaginationResult } from '../interfaces'
-import { ImageModealCreated, ProjectSlugOrId, ProjectTab, ProjectTabForm, ProjectTabItem, ProjectTabItemForm, QueryFilterProjectTab, QueryFilterProjectTabItem } from '../models'
+import { ImageModelCreated, ProjectSlugOrId, ProjectTab, ProjectTabForm, ProjectTabItem, ProjectTabItemForm, QueryFilterProjectTab, QueryFilterProjectTabItem } from '../models'
 import { clientAPI, clientAPIOptions } from './client'
 
 type Config = clientAPIOptions
@@ -130,7 +130,7 @@ export async function createProjectTabImage(
   body: FormData,
   config: Config = {}
 ) {
-  return await clientAPI<ImageModealCreated>(`project/${projectId}/tab-image/`, {
+  return await clientAPI<ImageModelCreated>(`project/${projectId}/tab-image/`, {
     method: 'POST',
     body,
     ...config,
@@ -143,7 +143,7 @@ export async function createProjectTabItemImage(
   body: FormData,
   config: Config = {}
 ) {
-  return await clientAPI<ImageModealCreated>(`project/${projectId}/tab/${projectTabId}/item-image/`, {
+  return await clientAPI<ImageModelCreated>(`project/${projectId}/tab/${projectTabId}/item-image/`, {
     method: 'POST',
     body,
     ...config,

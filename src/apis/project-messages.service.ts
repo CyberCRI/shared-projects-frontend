@@ -1,5 +1,5 @@
 import { PaginationResult } from '../interfaces'
-import { ImageModealCreated, ProjectMessageForm, ProjectMessageInputModel, ProjectMessageModel, ProjectSlugOrId, QueryFilterProjectMessage } from '../models'
+import { ImageModelCreated, ProjectMessageForm, ProjectMessageInputModel, ProjectMessageModel, ProjectSlugOrId, QueryFilterProjectMessage } from '../models'
 import { clientAPI, clientAPIOptions } from './client'
 
 type Config = clientAPIOptions<QueryFilterProjectMessage>
@@ -52,7 +52,7 @@ export async function postProjectMessageImage(
   body: FormData,
   config: Config = {}
 ): Promise<any> {
-  return await clientAPI<ImageModealCreated>(`project/${projectId}/project-message-image/`, {
+  return await clientAPI<ImageModelCreated>(`project/${projectId}/project-message-image/`, {
     body,
     method: 'POST',
     ...config,

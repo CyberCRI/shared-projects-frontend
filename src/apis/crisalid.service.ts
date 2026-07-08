@@ -1,6 +1,7 @@
-import { Document, DocumentType, PaginationResult, QueryFilterResearcher, Researcher, ResearcherDocumentAnalytics } from '../interfaces'
+import { Document, DocumentType, QueryFilterResearcher, Researcher, ResearcherDocumentAnalytics } from '../models/researcher.model'
 import { OrganizationModel, PeopleGroupIdOrSlug } from '../models'
 import { clientAPI, clientAPIOptions } from './client'
+import { PaginationResult } from '../interfaces/pagination'
 
 export async function getOwnResearchDocument(
   organisationCode: string,

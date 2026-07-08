@@ -1,5 +1,5 @@
 import { PaginationQuery, PaginationResult } from '../interfaces'
-import { OrganizationModel, TemplateId, TemplateModel } from '../models'
+import { ImageModelCreated, OrganizationModel, TemplateId, TemplateModel } from '../models'
 import {clientAPI, type clientAPIOptions } from './client'
 
 export function getTemplates(
@@ -43,7 +43,7 @@ export function postTemplateImage(
 ) {
   const body = new FormData()
   body.append('file', file, file.name)
-  return clientAPI(`organization/${organizationCode}/template/${templateId}/image/`, {
+  return clientAPI<ImageModelCreated>(`organization/${organizationCode}/template/${templateId}/image/`, {
     body,
     method: 'POST',
   })

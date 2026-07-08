@@ -8,6 +8,10 @@ export async function getProjectGoals(projectId: ProjectSlugOrId, config: Config
   return await clientAPI<PaginationResult<GoalModel>>(`project/${projectId}/goal/`, config)
 }
 
+export async function getProjectGoal(projectId: ProjectSlugOrId, goalId: GoalModel['id'], config: ConfigGoal = {}) {
+  return await clientAPI<PaginationResult<GoalModel>>(`project/${projectId}/goal/${goalId}/`, config)
+}
+
 export async function createProjectGoal(projectId: ProjectSlugOrId, body: GoalForm, config = {}) {
   return await clientAPI<GoalModel>(`project/${projectId}/goal/`, { ...config, body, method: 'POST' })
 }

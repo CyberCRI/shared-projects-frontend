@@ -1,5 +1,5 @@
 import { PaginationResult } from '../interfaces'
-import { AddGroupMembers, AddParentGroupModelInput, BaseLocationModel, EventModel, GroupMember, HierarchyGroupModel, ImageModealCreated, ImageModel, LocationModel, NewsModel, OrganizationModel, PeopleGroupIdOrSlug, PeopleGroupModel, PostGroupData, PostGroupProjects, ProjectModel, QueryFilterGroup, QueryFilterGroupHierarchy, RemoveGroupMember } from '../models'
+import { AddGroupMembers, AddParentGroupModelInput, BaseLocationModel, EventModel, GroupMember, HierarchyGroupModel, ImageModelCreated, ImageModel, LocationModel, NewsModel, OrganizationModel, PeopleGroupIdOrSlug, PeopleGroupModel, PostGroupData, PostGroupProjects, ProjectModel, QueryFilterGroup, QueryFilterGroupHierarchy, RemoveGroupMember } from '../models'
 import {clientAPI, type clientAPIOptions } from './client'
 
 // HIERARCHY
@@ -17,7 +17,7 @@ export async function postGroup(
   organizationCode: OrganizationModel['code'],
   groupData: PostGroupData
 ) {
-  return await clientAPI(`organization/${organizationCode}/people-group/`, {
+  return await clientAPI<PeopleGroupModel>(`organization/${organizationCode}/people-group/`, {
     body: groupData,
     method: 'POST',
   })
@@ -48,7 +48,7 @@ export async function patchGroup(
   groupId: PeopleGroupIdOrSlug,
   groupData: Partial<PostGroupData>
 ) {
-  return await clientAPI(`organization/${organizationCode}/people-group/${groupId}/`, {
+  return await clientAPI<PeopleGroupModel>(`organization/${organizationCode}/people-group/${groupId}/`, {
     body: groupData,
     method: 'PATCH',
   })
@@ -58,7 +58,7 @@ export async function deleteGroup(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug
 ) {
-  return await clientAPI(`organization/${organizationCode}/people-group/${groupId}/`, {
+  return await clientAPI<undefined>(`organization/${organizationCode}/people-group/${groupId}/`, {
     method: 'DELETE',
   })
 }
@@ -283,7 +283,7 @@ export function postGroupGallery(
   body: FormData,
   config = {}
 ) {
-  return clientAPI<ImageModealCreated>(
+  return clientAPI<ImageModelCreated>(
     `organization/${organizationCode}/people-group/${groupId}/gallery/`,
     {
       ...config,

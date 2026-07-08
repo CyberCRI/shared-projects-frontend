@@ -1,5 +1,5 @@
 import { PaginationResult } from '../interfaces'
-import { GroupModelInput, ImageOrganizationInput, OrganizationModel, OrganizationPatchInput, ProjectModel, ProjectSlugOrId, RemoveGroupModelInput } from '../models'
+import { GroupModelInput, ImageModelCreated, ImageOrganizationInput, OrganizationModel, OrganizationPatchInput, ProjectModel, ProjectSlugOrId, RemoveGroupModelInput } from '../models'
 import { clientAPI, clientAPIOptions } from './client'
 import { _adaptParamsToGetQuery } from './utils.service'
 
@@ -117,7 +117,7 @@ export async function removeFeaturedProject(
 }
 
 export async function postOrganizationImage({ orgCode, body }: {orgCode: OrganizationModel['code'], body: any}) {
-  return await clientAPI(`organization/${orgCode}/image/`, { body, method: 'POST' })
+  return await clientAPI<ImageModelCreated>(`organization/${orgCode}/image/`, { body, method: 'POST' })
 }
 
 export async function patchTermsAndConditions(organization: OrganizationModel, content: string) {

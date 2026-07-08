@@ -5,7 +5,7 @@
 import type { PeopleGroupModel, TranslatedPeopleGroupModel } from './people-group.model'
 import type { ImageModel } from './image.model'
 
-import type { ResearcherLight } from '../interfaces/researcher'
+import type { ResearcherLight } from './researcher.model'
 import type { Translated } from '../interfaces/translated'
 
 import type BaseModel from './base.model'

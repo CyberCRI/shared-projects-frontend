@@ -1,5 +1,5 @@
 import { PaginationResult } from '../interfaces'
-import { OrganizationModel, PeopleModel, UserIdOrSlug, UserModel, UserPatchModel, UserPrivacyPatchModel, UserSkillModel } from '../models'
+import { ImageModelCreated, OrganizationModel, PeopleModel, UserIdOrSlug, UserModel, UserPatchModel, UserPrivacyPatchModel, UserSkillModel } from '../models'
 import {clientAPI, type clientAPIOptions } from './client'
 import { _adaptParamsToGetQuery } from './utils.service'
 
@@ -58,11 +58,11 @@ export async function searchPeopleAdmin(organizationId: OrganizationModel['id'],
 
 export async function searchPeopleByExactMail(email: string, params: object) {
   const adaptedParams = params ? _adaptParamsToGetQuery(params) : {}
-  return await clientAPI(`user/get-by-email/${email}/`, { ...adaptedParams })
+  return await clientAPI<UserModel>(`user/get-by-email/${email}/`, { ...adaptedParams })
 }
 
 export async function patchUser(id: string | number, body: UserPatchModel) {
-  return await clientAPI(`user/${id}/`, { body, method: 'PATCH' })
+  return await clientAPI<UserModel>(`user/${id}/`, { body, method: 'PATCH' })
 }
 
 export async function patchUserPicture(id: string | number, pictureId: string, body: FormData) {
@@ -70,11 +70,11 @@ export async function patchUserPicture(id: string | number, pictureId: string, b
 }
 
 export async function deleteUser(id: string) {
-  return await clientAPI(`user/${id}/`, { method: 'DELETE' })
+  return await clientAPI<undefined>(`user/${id}/`, { method: 'DELETE' })
 }
 
 export async function postUserPicture(id: string, body: FormData) {
-  return await clientAPI(`user/${id}/profile-picture/`, { body, method: 'POST' })
+  return await clientAPI<ImageModelCreated>(`user/${id}/profile-picture/`, { body, method: 'POST' })
 }
 
 export async function patchUserPrivacy(id: string | number, body: UserPrivacyPatchModel) {

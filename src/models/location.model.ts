@@ -64,3 +64,11 @@ export type AnyTranslatedLocation = Omit<BaseTranslatedLocationModel, '$t'> & {
   $t?: BaseTranslatedLocationModel['$t']
   [key: string]: any
 }
+
+
+export type LocationGeneral = BaseLocationModel & {
+  content_id: string
+  content_type: 'project' | 'people_group' | 'event' | 'news'
+}
+
+export type TranslatedLocationGeneral = Translated<LocationGeneral, 'title' | 'description'>

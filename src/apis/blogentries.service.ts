@@ -1,5 +1,5 @@
 import { PaginationResult } from '../interfaces'
-import { BlogEntryForm, BlogEntryId, BlogEntryModel, ImageModealCreated, ProjectSlugOrId, QueryFilterBlogEntry } from '../models'
+import { BlogEntryForm, BlogEntryId, BlogEntryModel, ImageModelCreated, ProjectSlugOrId, QueryFilterBlogEntry } from '../models'
 import { clientAPI, type clientAPIOptions } from './client'
 
 type ConfigBlogEntry = clientAPIOptions
@@ -46,7 +46,7 @@ export async function postBlogEntryImage(
   body: FormData,
   config: ConfigBlogEntry = {}
 ) {
-  return await clientAPI<ImageModealCreated>(`project/${projectId}/blog-entry-image/`, {
+  return await clientAPI<ImageModelCreated>(`project/${projectId}/blog-entry-image/`, {
     ...config,
     body,
     method: 'POST',

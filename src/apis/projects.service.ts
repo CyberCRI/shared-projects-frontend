@@ -1,5 +1,5 @@
 import { PaginationQuery, PaginationResult } from '../interfaces'
-import { AddManyLinkedProjectInput, ImageModealCreated, ImageModel, LinkedProject, PeopleGroupModel, ProjectForm, ProjectMemberModel, ProjectModel, ProjectSlugOrId, QueryFilterProject, QueryFilterProjectMembers, QueryFilterProjectSimilars } from '../models'
+import { AddManyLinkedProjectInput, ImageModelCreated, ImageModel, LinkedProject, PeopleGroupModel, ProjectForm, ProjectMemberModel, ProjectModel, ProjectSlugOrId, QueryFilterProject, QueryFilterProjectMembers, QueryFilterProjectSimilars } from '../models'
 import type { clientAPIOptions } from './client'
 import { clientAPI } from './client'
 
@@ -65,11 +65,11 @@ export async function getProjectMembers(
 }
 
 export async function postProjectImage(projectId: ProjectSlugOrId, body: FormData) {
-  return await clientAPI<ImageModealCreated>(`project/${projectId}/image/`, { body, method: 'POST' })
+  return await clientAPI<ImageModelCreated>(`project/${projectId}/image/`, { body, method: 'POST' })
 }
 
 export async function postProjectHeader(projectId: ProjectSlugOrId, body: any) {
-  return await clientAPI<ImageModealCreated>(`project/${projectId}/header/`, {
+  return await clientAPI<ImageModelCreated>(`project/${projectId}/header/`, {
     body,
     method: 'POST',
   })
@@ -87,7 +87,7 @@ export async function patchProjectHeader(
 }
 
 export async function lockUnlockProject({ project_id, context }: {project_id: ProjectSlugOrId, context: 'lock' | 'unlock'}) {
-  return await clientAPI(`project/${project_id}/${context}/`, { method: 'POST' })
+  return await clientAPI<null>(`project/${project_id}/${context}/`, { method: 'POST' })
 }
 
 export type ConfigSimilar = clientAPIOptions<QueryFilterProjectSimilars>

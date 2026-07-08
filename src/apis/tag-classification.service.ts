@@ -101,12 +101,14 @@ export async function getTags(ids: number[], config: Config = {}) {
   })
 }
 
-export async function getAllTagsById(ids: number[], config: Config = {}) {
+export async function getAllTagsById(ids: number[], config: Config = {}): Promise<PaginationResult<TagModel>> {
+  const tags = await Promise.all(ids.map(async (id) => await clientAPI<TagModel>(`tag/${id}/`, config)))
+
   return {
-    count: -1,
+    count: tags.length,
     next: null,
     previous: null,
-    results: await Promise.all(ids.map(async (id) => await clientAPI(`tag/${id}/`, config))),
+    results: tags
   }
 }
 
