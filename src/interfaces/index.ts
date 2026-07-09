@@ -1,5 +1,4 @@
 export * from './colaboratives'
-export * from './maps'
 export * from './pagination'
 export * from './query'
 export * from './tiptap'

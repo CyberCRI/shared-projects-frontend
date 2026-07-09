@@ -7,7 +7,7 @@ export async function patchOrganization(
   code: string,
   organization: OrganizationPatchInput | FormData
 ) {
-  return await clientAPI(`organization/${code}/`, {
+  return await clientAPI<OrganizationModel>(`organization/${code}/`, {
     body: organization,
     method: 'PATCH',
   })

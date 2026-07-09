@@ -1,14 +1,14 @@
 import { P as ProviderParams, R as Right } from '../permissions-BKtXZsbf.js';
 import { P as PermissionType } from '../permissions.model-DInEkk3h.js';
-import { aF as Roles, a3 as OrganizationModel, z as ImageVariations, ak as ProjectModel, P as PeopleGroupModel, b5 as UserModel, _ as NewsModel, o as EventModel } from '../location.model-OhKDYxPT.js';
+import { ax as Roles, S as OrganizationModel, a8 as ProjectModel, W as PeopleGroupModel, a_ as UserModel, M as NewsModel, i as EventModel, p as InstructionModel } from '../instruction.model-8r_Dg5-c.js';
 import { StarterKitOptions } from '@tiptap/starter-kit';
 import { Extensions, Extension } from '@tiptap/core';
 import * as highlight_js from 'highlight.js';
 import * as hast from 'hast';
 import * as _lowlight from 'lowlight';
+import { h as ImageVariations } from '../utils-CGQ8Ykiw.js';
 import { Attrs } from '@tiptap/pm/model';
 import { CodeBlockLowlightOptions } from '@tiptap/extension-code-block-lowlight';
-import { c as InstructionModel } from '../instruction.model-B6Wf--Vx.js';
 import 'zod';
 
 /**

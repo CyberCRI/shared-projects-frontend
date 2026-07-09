@@ -15,8 +15,8 @@ export async function getProject(projectSlugOrId: ProjectSlugOrId, config: Confi
   return await clientAPI<ProjectModel>(`project/${projectSlugOrId}/`, config)
 }
 
-export function postProject(body: ProjectForm) {
-  return clientAPI(`project/`, { body, method: 'POST' })
+export function postProject(body: ProjectForm, config: clientAPIOptions={}) {
+  return clientAPI<ProjectModel>(`project/`, { ...config, body, method: 'POST' })
 }
 
 export async function patchProject(projectId: ProjectSlugOrId, project: ProjectForm) {

@@ -386,7 +386,7 @@ export type HarvesterType =
   | 'uri'
   | 'wos'
 
-export type Identifier = {
+export type ResearcherIdentifier = {
   id: number
   value: string
   harvester: HarvesterType
@@ -396,7 +396,7 @@ export type Researcher = {
   id: number
   user: null | UserModel
   display_name: string
-  identifiers: Identifier[]
+  identifiers: ResearcherIdentifier[]
 }
 
 export type ResearcherLight = Researcher & {
@@ -407,20 +407,20 @@ export type ResearcherLight = Researcher & {
   }
 }
 
-export type DocumentType = keyof ResearcherLight['documents']
+export type ResearcherDocumentType = keyof ResearcherLight['documents']
 
-export type Document = {
+export type ResearcherDocument = {
   id: number
   title: string
   description: string
   document_type: null | string
   contributors: Researcher[]
-  identifiers: Identifier[]
+  identifiers: ResearcherIdentifier[]
   publication_date: string | null | Date
   similars: number
 }
 
-export type TranslatedDocument = Translated<Document, 'title' | 'description'>
+export type TranslatedResearcherDocument = Translated<ResearcherDocument, 'title' | 'description'>
 
 export type ResearcherDocumentAnalytics = {
   document_types: { [key in DocumentCrisalidType]?: number }

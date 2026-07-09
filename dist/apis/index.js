@@ -200,27 +200,27 @@ async function postCommentImage(projectId, body) {
 }
 
 // src/apis/crisalid.service.ts
-async function getOwnResearchDocument(organisationCode, researchId, documentType, config = {}) {
+async function getOwnResearchDocument(organisationCode, researchId, ResearcherdocumentType, config = {}) {
   return await clientAPI(
-    `crisalid/organization/${organisationCode}/researcher/${researchId}/${documentType}/`,
+    `crisalid/organization/${organisationCode}/researcher/${researchId}/${ResearcherdocumentType}/`,
     config
   );
 }
-async function getGroupResearchDocument(organisationCode, groupId, documentType, config = {}) {
+async function getGroupResearchDocument(organisationCode, groupId, ResearcherdocumentType, config = {}) {
   return await clientAPI(
-    `crisalid/organization/${organisationCode}/people-group/${groupId}/${documentType}/`,
+    `crisalid/organization/${organisationCode}/people-group/${groupId}/${ResearcherdocumentType}/`,
     config
   );
 }
-async function getOwnResearchDocumentAnalytics(organisationCode, researchId, documentType, config = {}) {
+async function getOwnResearchDocumentAnalytics(organisationCode, researchId, ResearcherdocumentType, config = {}) {
   return await clientAPI(
-    `crisalid/organization/${organisationCode}/researcher/${researchId}/${documentType}/analytics/`,
+    `crisalid/organization/${organisationCode}/researcher/${researchId}/${ResearcherdocumentType}/analytics/`,
     config
   );
 }
-async function getGroupResearchDocumentAnalytics(organisationCode, groupId, documentType, config = {}) {
+async function getGroupResearchDocumentAnalytics(organisationCode, groupId, ResearcherdocumentType, config = {}) {
   return await clientAPI(
-    `crisalid/organization/${organisationCode}/people-group/${groupId}/${documentType}/analytics/`,
+    `crisalid/organization/${organisationCode}/people-group/${groupId}/${ResearcherdocumentType}/analytics/`,
     config
   );
 }
@@ -698,6 +698,12 @@ async function getNotifications(params, organisationCode) {
     { params }
   );
 }
+async function getUserNotificationSettings(userId, config = {}) {
+  return await clientAPI(`notifications-setting/${userId}/`, config);
+}
+async function patchUserNotificationSettings(userId, body, config = {}) {
+  return await clientAPI(`notifications-setting/${userId}/`, { ...config, body, method: "PATCH" });
+}
 
 // src/apis/organization-files.service.ts
 async function getOrganizationFiles(organizationCode, config = {}) {
@@ -1031,8 +1037,8 @@ async function getAllProjects(config = {}) {
 async function getProject(projectSlugOrId, config = {}) {
   return await clientAPI(`project/${projectSlugOrId}/`, config);
 }
-function postProject(body) {
-  return clientAPI(`project/`, { body, method: "POST" });
+function postProject(body, config = {}) {
+  return clientAPI(`project/`, { ...config, body, method: "POST" });
 }
 async function patchProject(projectId, project) {
   return await clientAPI(`project/${projectId}/`, { body: project, method: "PATCH" });
@@ -1568,6 +1574,7 @@ export {
   getUserAttachmentLink,
   getUserFollows,
   getUserMentorship,
+  getUserNotificationSettings,
   getUsersRecommendationsForUser,
   lockUnlockProject,
   offerMentorship,
@@ -1602,6 +1609,7 @@ export {
   patchUser,
   patchUserAttachmentFile,
   patchUserAttachmentLink,
+  patchUserNotificationSettings,
   patchUserPicture,
   patchUserPrivacy,
   patchUserSkill,
