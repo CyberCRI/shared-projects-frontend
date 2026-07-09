@@ -1,5 +1,18 @@
+import {
+  AddManyLinkedProjectInput,
+  ImageModelCreated,
+  ImageModel,
+  LinkedProject,
+  PeopleGroupModel,
+  ProjectForm,
+  ProjectMemberModel,
+  ProjectModel,
+  ProjectSlugOrId,
+  QueryFilterProject,
+  QueryFilterProjectMembers,
+  QueryFilterProjectSimilars,
+} from '../models'
 import { PaginationQuery, PaginationResult } from '../interfaces'
-import { AddManyLinkedProjectInput, ImageModelCreated, ImageModel, LinkedProject, PeopleGroupModel, ProjectForm, ProjectMemberModel, ProjectModel, ProjectSlugOrId, QueryFilterProject, QueryFilterProjectMembers, QueryFilterProjectSimilars } from '../models'
 import type { clientAPIOptions } from './client'
 import { clientAPI } from './client'
 
@@ -15,7 +28,7 @@ export async function getProject(projectSlugOrId: ProjectSlugOrId, config: Confi
   return await clientAPI<ProjectModel>(`project/${projectSlugOrId}/`, config)
 }
 
-export function postProject(body: ProjectForm, config: clientAPIOptions={}) {
+export function postProject(body: ProjectForm, config: clientAPIOptions = {}) {
   return clientAPI<ProjectModel>(`project/`, { ...config, body, method: 'POST' })
 }
 
@@ -45,10 +58,16 @@ export async function addLinkedProject(
   projectId: ProjectSlugOrId,
   body: AddManyLinkedProjectInput
 ) {
-  return await clientAPI<LinkedProject[]>(`project/${projectId}/linked-project/add-many/`, { body, method: 'POST' })
+  return await clientAPI<LinkedProject[]>(`project/${projectId}/linked-project/add-many/`, {
+    body,
+    method: 'POST',
+  })
 }
 
-export async function deleteLinkedProject(projectId: ProjectSlugOrId, linkedProjectId: LinkedProject['id']) {
+export async function deleteLinkedProject(
+  projectId: ProjectSlugOrId,
+  linkedProjectId: LinkedProject['id']
+) {
   await clientAPI(`project/${projectId}/linked-project/${linkedProjectId}/`, {
     method: 'DELETE',
   })
@@ -86,7 +105,13 @@ export async function patchProjectHeader(
   })
 }
 
-export async function lockUnlockProject({ project_id, context }: {project_id: ProjectSlugOrId, context: 'lock' | 'unlock'}) {
+export async function lockUnlockProject({
+  project_id,
+  context,
+}: {
+  project_id: ProjectSlugOrId
+  context: 'lock' | 'unlock'
+}) {
   return await clientAPI<null>(`project/${project_id}/${context}/`, { method: 'POST' })
 }
 

@@ -1,26 +1,26 @@
-import { Node, mergeAttributes } from '@tiptap/core'
 import { ImageVariations } from '../../../models/image.model'
-import { Attrs } from '@tiptap/pm/model';
+import { Node, mergeAttributes } from '@tiptap/core'
+import { Attrs } from '@tiptap/pm/model'
 
 type Option = {
-  size?: ImageVariations;
-  src: string;
-  aligns?: "left" | "center" | "right";
-};
+  size?: ImageVariations
+  src: string
+  aligns?: 'left' | 'center' | 'right'
+}
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
     ExternalVideo: {
-      setExternalVideo: (option: Option) => ReturnType;
-      deleteExternalVideo: () => ReturnType;
-      setAlign: (attributes: Attrs) => ReturnType;
-    };
+      setExternalVideo: (option: Option) => ReturnType
+      deleteExternalVideo: () => ReturnType
+      setAlign: (attributes: Attrs) => ReturnType
+    }
   }
 }
 
 export const getFormatedVideoSrc = (newVideoId: string) => {
-  let resolvedid: string = ""
-  let link: string = ""
+  let resolvedid: string = ''
+  let link: string = ''
 
   if (newVideoId.includes('vimeo.com/')) {
     const spliturl = newVideoId.split('/')
@@ -44,7 +44,7 @@ export const getFormatedVideoSrc = (newVideoId: string) => {
         urlstr = 'https://' + newVideoId
       }
       const surl = new URL(urlstr)
-      resolvedid = surl.searchParams.get('v') || ""
+      resolvedid = surl.searchParams.get('v') || ''
       link = 'https://www.youtube.com/embed/' + resolvedid + ytOptions
     }
   }
@@ -118,15 +118,15 @@ export default Node.create({
         // old version for retro compatibility
         tag: 'iframe',
         getAttrs: (node) => {
-          if ((node).classList.contains('custom-video')) {
+          if (node.classList.contains('custom-video')) {
             return false
           }
           return {
-            src: (node).getAttribute('src'),
-            title: (node).getAttribute('title'),
-            frameborder: (node).getAttribute('frameborder'),
-            allow: (node).getAttribute('allow'),
-            allowfullscreen: (node).getAttribute('allowfullscreen'),
+            src: node.getAttribute('src'),
+            title: node.getAttribute('title'),
+            frameborder: node.getAttribute('frameborder'),
+            allow: node.getAttribute('allow'),
+            allowfullscreen: node.getAttribute('allowfullscreen'),
             size: 'large',
             align: 'center',
           }
@@ -136,12 +136,12 @@ export default Node.create({
         // new version
         tag: 'div.custom-video-wrapper',
         getAttrs: (wrapper) => {
-          const node = (wrapper).querySelector('.custom-video')
+          const node = wrapper.querySelector('.custom-video')
           if (!node) return false
 
           let size = 'large'
           this.options.sizes.forEach((s) => {
-            const hasSize = (wrapper).classList.contains('custom-video-wrapper-' + s)
+            const hasSize = wrapper.classList.contains('custom-video-wrapper-' + s)
             if (hasSize) {
               size = s
             }
@@ -149,9 +149,7 @@ export default Node.create({
 
           let align = 'center'
           this.options.aligns.forEach((s) => {
-            const hasAlign = (wrapper).classList.contains(
-              'custom-video-wrapper-' + s
-            )
+            const hasAlign = wrapper.classList.contains('custom-video-wrapper-' + s)
             if (hasAlign) {
               align = s
             }
@@ -210,36 +208,36 @@ export default Node.create({
           return commands.insertContent({
             type: this.name,
             attrs: options,
-          });
+          })
         },
       deleteExternalVideo:
         () =>
         ({ commands }) => {
-          return commands.deleteSelection();
+          return commands.deleteSelection()
         },
       setAlign:
         (attributes) =>
         ({ tr, dispatch }) => {
           // Check it's a valid size option
           if (!this.options.aligns.includes(attributes.align)) {
-            return false;
+            return false
           }
 
-          const { selection } = tr;
+          const { selection } = tr
 
           const options = {
             // @ts-expect-error , node not exists, check Why
             ...selection.node.attrs,
             ...attributes,
-          };
+          }
 
-          const node = this.type.create(options);
+          const node = this.type.create(options)
 
           if (dispatch) {
-            tr.replaceRangeWith(selection.from, selection.to, node);
+            tr.replaceRangeWith(selection.from, selection.to, node)
           }
           return true
         },
-    };
+    }
   },
 })

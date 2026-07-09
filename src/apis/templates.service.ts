@@ -1,6 +1,6 @@
-import { PaginationQuery, PaginationResult } from '../interfaces'
 import { ImageModelCreated, OrganizationModel, TemplateId, TemplateModel } from '../models'
-import {clientAPI, type clientAPIOptions } from './client'
+import { PaginationQuery, PaginationResult } from '../interfaces'
+import { clientAPI, type clientAPIOptions } from './client'
 
 export function getTemplates(
   organizationCode: OrganizationModel['code'],
@@ -17,7 +17,10 @@ export function getTemplate(
   templateId: TemplateId,
   config: clientAPIOptions = {}
 ) {
-  return clientAPI<TemplateModel>(`organization/${organizationCode}/template/${templateId}/`, config)
+  return clientAPI<TemplateModel>(
+    `organization/${organizationCode}/template/${templateId}/`,
+    config
+  )
 }
 
 export async function deleteTemplate(
@@ -43,10 +46,13 @@ export function postTemplateImage(
 ) {
   const body = new FormData()
   body.append('file', file, file.name)
-  return clientAPI<ImageModelCreated>(`organization/${organizationCode}/template/${templateId}/image/`, {
-    body,
-    method: 'POST',
-  })
+  return clientAPI<ImageModelCreated>(
+    `organization/${organizationCode}/template/${templateId}/image/`,
+    {
+      body,
+      method: 'POST',
+    }
+  )
 }
 
 export function patchTemplate(

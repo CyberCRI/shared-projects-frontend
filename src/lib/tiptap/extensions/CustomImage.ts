@@ -1,15 +1,15 @@
+import { ImageVariations } from '../../../models/image.model'
 import { mergeAttributes } from '@tiptap/core'
 import Image from '@tiptap/extension-image'
-import { ImageVariations } from '../../../models/image.model'
 
 type Options = {
-  src: string;
-  alt?: string;
-  title?: string;
-  width?: number;
-  height?: number;
-  size?: ImageVariations;
-};
+  src: string
+  alt?: string
+  title?: string
+  width?: number
+  height?: number
+  size?: ImageVariations
+}
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -63,22 +63,22 @@ export default Image.extend({
       setImage:
         (options: Options) =>
         ({ tr, dispatch }) => {
-          if (!options["size"]) {
+          if (!options['size']) {
             options = {
               ...options,
-              size: "original",
-            } as any; // TODO: fix ts type
+              size: 'original',
+            } as any // TODO: fix ts type
           }
-          const { selection } = tr;
-          const node = this.type.create(options);
+          const { selection } = tr
+          const node = this.type.create(options)
 
           if (dispatch) {
-            tr.replaceRangeWith(selection.from, selection.to, node);
+            tr.replaceRangeWith(selection.from, selection.to, node)
           }
 
-          return true;
+          return true
         },
-    };
+    }
   },
 
   renderHTML({ node, HTMLAttributes }) {
@@ -94,24 +94,22 @@ export default Image.extend({
 
   parseHTML() {
     const getAttrs = (dom: HTMLElement) => {
-      let size: ImageVariations = "original";
-      const sizes = (this.options as any).sizes as ImageVariations[];
+      let size: ImageVariations = 'original'
+      const sizes = (this.options as any).sizes as ImageVariations[]
 
       sizes.forEach((s) => {
-        const hasSize = (dom).classList.contains(
-          "custom-image-" + s,
-        );
+        const hasSize = dom.classList.contains('custom-image-' + s)
         if (hasSize) {
-          size = s;
+          size = s
         }
-      });
+      })
       return {
-        src: (dom).getAttribute("src"),
-        title: (dom).getAttribute("title"),
-        alt: (dom).getAttribute("alt"),
+        src: dom.getAttribute('src'),
+        title: dom.getAttribute('title'),
+        alt: dom.getAttribute('alt'),
         size: size,
-      };
-    };
+      }
+    }
     return [
       {
         tag: 'img[src]',

@@ -1,5 +1,5 @@
-import { LocationGeneral } from '../models/location.model'
 import { LocationId, LocationModel, ProjectLocationForm, ProjectSlugOrId } from '../models'
+import { LocationGeneral } from '../models/location.model'
 import { clientAPI, clientAPIOptions } from './client'
 
 type Config = clientAPIOptions

@@ -1,7 +1,7 @@
 import type { PeopleGroupModel, TranslatedPeopleGroupModel } from './people-group.model'
 import type { UserFromJWTModel, UserModel } from './user.model'
-import type { ProjectSlugOrId } from './project.model'
 import type { Translated } from '../interfaces/translated'
+import type { ProjectSlugOrId } from './project.model'
 import type { GroupMemberRoleType } from './types'
 
 /**

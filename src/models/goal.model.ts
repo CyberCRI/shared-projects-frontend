@@ -1,8 +1,8 @@
 import type BaseModel from './base.model'
 import type { StatusType } from './types'
 
-import type { ProjectSlugOrId } from './project.model'
 import type { Translated } from '../interfaces/translated'
+import type { ProjectSlugOrId } from './project.model'
 
 /**
  * @name GoalModel

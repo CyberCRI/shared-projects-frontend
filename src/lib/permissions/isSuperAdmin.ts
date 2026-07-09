@@ -1,5 +1,5 @@
-import {Right} from "../../interfaces/permissions"
+import { Right } from '../../interfaces/permissions'
 
 export const isSuperAdmin = (rights: Right): boolean => {
-  return rights.roles.includes("superadmins")
-};
+  return rights.roles.includes('superadmins')
+}

@@ -1,6 +1,12 @@
+import {
+  EventIdOrSlug,
+  EventInput,
+  EventModel,
+  OrganizationModel,
+  QueryFilterEvent,
+} from '../models'
+import { clientAPI, type clientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
-import { EventIdOrSlug, EventInput, EventModel, OrganizationModel, QueryFilterEvent } from '../models'
-import {clientAPI, type clientAPIOptions } from './client'
 
 type ConfigEvent = clientAPIOptions<QueryFilterEvent>
 

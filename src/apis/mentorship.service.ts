@@ -1,9 +1,12 @@
-import { PaginationResult } from '../interfaces'
 import { Mentoring, OrganizationModel, SkillModel } from '../models'
-import { clientAPI } from './client'
+import { clientAPI, clientAPIOptions } from './client'
+import { PaginationResult } from '../interfaces'
 
 // fetch mentorshup demand and offer for currentr user
-export async function getUserMentorship(organizationCode: OrganizationModel['code'], config = {}) {
+export async function getUserMentorship(
+  organizationCode: OrganizationModel['code'],
+  config: clientAPIOptions = {}
+) {
   return await clientAPI<PaginationResult<Mentoring>>(
     `organization/${organizationCode}/mentoring/`,
     config
@@ -27,10 +30,13 @@ export async function offerMentorship(
   skill: SkillModel,
   payload: any
 ) {
-  return await clientAPI(`organization/${organizationCode}/mentoring/contact-mentoree/${skill.id}/`, {
-    body: payload,
-    method: 'POST',
-  })
+  return await clientAPI(
+    `organization/${organizationCode}/mentoring/contact-mentoree/${skill.id}/`,
+    {
+      body: payload,
+      method: 'POST',
+    }
+  )
 }
 
 // ask mentorship for a skill

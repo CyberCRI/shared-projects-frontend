@@ -1,0 +1,8 @@
+printWidth: 100
+trailingComma: 'es5'
+tabWidth: 2
+semi: false
+singleQuote: true
+htmlWhitespaceSensitivity: 'ignore'
+plugins:
+  - 'prettier-plugin-sort-imports'

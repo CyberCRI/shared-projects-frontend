@@ -1,8 +1,8 @@
 import type { OrganizationModel } from './organization.model'
+import { PaginationQuery } from '../interfaces/pagination'
 import type { LanguageType, TagType } from './types'
 import type { TagModel } from './tag.model'
 import type BaseModel from './base.model'
-import { PaginationQuery } from '../interfaces/pagination'
 
 export type TagClassificationModel = BaseModel & {
   id: number

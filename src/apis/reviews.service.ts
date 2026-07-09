@@ -1,6 +1,6 @@
-import { PaginationResult } from '../interfaces'
 import { ProjectSlugOrId, QueryFilterReviews, ReviewForm, ReviewId, ReviewModel } from '../models'
 import { clientAPI, clientAPIOptions } from './client'
+import { PaginationResult } from '../interfaces'
 
 type Config = clientAPIOptions<QueryFilterReviews>
 

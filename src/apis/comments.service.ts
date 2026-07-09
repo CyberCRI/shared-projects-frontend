@@ -1,6 +1,12 @@
-import { PaginationResult } from '../interfaces'
-import { CommentModel, ProjectMessageForm, ProjectSlugOrId, QueryFilterComments } from '../models'
+import {
+  CommentModel,
+  ImageModelCreated,
+  ProjectMessageForm,
+  ProjectSlugOrId,
+  QueryFilterComments,
+} from '../models'
 import { clientAPI, type clientAPIOptions } from './client'
+import { PaginationResult } from '../interfaces'
 
 type Config = clientAPIOptions<QueryFilterComments>
 
@@ -31,9 +37,11 @@ export async function getComment(
 export async function patchComment(
   projectId: ProjectSlugOrId,
   commentId: CommentModel['id'],
-  body: ProjectMessageForm
+  body: ProjectMessageForm,
+  config: Config = {}
 ) {
   return await clientAPI<CommentModel>(`project/${projectId}/comment/${commentId}/`, {
+    ...config,
     body,
     method: 'PATCH',
   })
@@ -50,6 +58,14 @@ export async function deleteComment(
   })
 }
 
-export async function postCommentImage(projectId: ProjectSlugOrId, body: any) {
-  return await clientAPI(`project/${projectId}/comment-image/`, { body, method: 'POST' })
+export async function postCommentImage(
+  projectId: ProjectSlugOrId,
+  body: FormData,
+  config: Config = {}
+) {
+  return await clientAPI<ImageModelCreated>(`project/${projectId}/comment-image/`, {
+    ...config,
+    body,
+    method: 'POST',
+  })
 }

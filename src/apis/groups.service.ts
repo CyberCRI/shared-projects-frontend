@@ -1,6 +1,26 @@
+import {
+  AddGroupMembers,
+  AddParentGroupModelInput,
+  BaseLocationModel,
+  EventModel,
+  GroupMember,
+  HierarchyGroupModel,
+  ImageModelCreated,
+  ImageModel,
+  LocationModel,
+  NewsModel,
+  OrganizationModel,
+  PeopleGroupIdOrSlug,
+  PeopleGroupModel,
+  PostGroupData,
+  PostGroupProjects,
+  ProjectModel,
+  QueryFilterGroup,
+  QueryFilterGroupHierarchy,
+  RemoveGroupMember,
+} from '../models'
+import { clientAPI, type clientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
-import { AddGroupMembers, AddParentGroupModelInput, BaseLocationModel, EventModel, GroupMember, HierarchyGroupModel, ImageModelCreated, ImageModel, LocationModel, NewsModel, OrganizationModel, PeopleGroupIdOrSlug, PeopleGroupModel, PostGroupData, PostGroupProjects, ProjectModel, QueryFilterGroup, QueryFilterGroupHierarchy, RemoveGroupMember } from '../models'
-import {clientAPI, type clientAPIOptions } from './client'
 
 // HIERARCHY
 export async function getHierarchyGroups(
@@ -25,11 +45,14 @@ export async function postGroup(
 
 // GROUP
 export async function addParentGroup(
-  orgId: string,
+  organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   body: AddParentGroupModelInput
 ) {
-  return await clientAPI(`organization/${orgId}/people-group/${groupId}/`, { body, method: 'PATCH' })
+  return await clientAPI(`organization/${organizationCode}/people-group/${groupId}/`, {
+    body,
+    method: 'PATCH',
+  })
 }
 
 export function getGroup(
@@ -48,10 +71,13 @@ export async function patchGroup(
   groupId: PeopleGroupIdOrSlug,
   groupData: Partial<PostGroupData>
 ) {
-  return await clientAPI<PeopleGroupModel>(`organization/${organizationCode}/people-group/${groupId}/`, {
-    body: groupData,
-    method: 'PATCH',
-  })
+  return await clientAPI<PeopleGroupModel>(
+    `organization/${organizationCode}/people-group/${groupId}/`,
+    {
+      body: groupData,
+      method: 'PATCH',
+    }
+  )
 }
 
 export async function deleteGroup(
@@ -68,7 +94,7 @@ export async function deleteGroup(
 export async function getGroupMember(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<PaginationResult<GroupMember>>(
     `organization/${organizationCode}/people-group/${groupId}/member/`,
@@ -92,10 +118,13 @@ export async function removeGroupMember(
   groupId: PeopleGroupIdOrSlug,
   body: RemoveGroupMember
 ) {
-  return await clientAPI(`organization/${organizationCode}/people-group/${groupId}/member/remove/`, {
-    body,
-    method: 'POST',
-  })
+  return await clientAPI(
+    `organization/${organizationCode}/people-group/${groupId}/member/remove/`,
+    {
+      body,
+      method: 'POST',
+    }
+  )
 }
 
 // GROUP PROJECTS
@@ -103,7 +132,7 @@ export async function removeGroupMember(
 export async function getGroupProject(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<PaginationResult<ProjectModel>>(
     `organization/${organizationCode}/people-group/${groupId}/project/`,
@@ -127,10 +156,13 @@ export async function removeGroupProject(
   groupId: PeopleGroupIdOrSlug,
   projectsData: PostGroupProjects
 ) {
-  return await clientAPI(`organization/${organizationCode}/people-group/${groupId}/project/remove/`, {
-    body: projectsData,
-    method: 'POST',
-  })
+  return await clientAPI(
+    `organization/${organizationCode}/people-group/${groupId}/project/remove/`,
+    {
+      body: projectsData,
+      method: 'POST',
+    }
+  )
 }
 
 // GROUP HEADER
@@ -160,7 +192,7 @@ export async function patchGroupHeader(
 export async function getGroupSimilar(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<PaginationResult<PeopleGroupModel>>(
     `organization/${organizationCode}/people-group/${groupId}/similars/`,
@@ -171,7 +203,7 @@ export async function getGroupSimilar(
 export async function getSubGroup(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<PaginationResult<PeopleGroupModel>>(
     `organization/${organizationCode}/people-group/${groupId}/subgroups/`,
@@ -182,7 +214,7 @@ export async function getSubGroup(
 export async function getGroupAllLocations(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<LocationModel[]>(
     `organization/${organizationCode}/people-group/${groupId}/all-locations/`,
@@ -193,7 +225,7 @@ export async function getGroupAllLocations(
 export async function getGroupLocation(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<PaginationResult<LocationModel>>(
     `organization/${organizationCode}/people-group/${groupId}/locations/`,
@@ -205,7 +237,7 @@ export async function removeGroupLocation(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   locationId: number,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<PaginationResult<LocationModel>>(
     `organization/${organizationCode}/people-group/${groupId}/locations/${locationId}/`,
@@ -221,7 +253,7 @@ export async function patchGroupLocation(
   groupId: PeopleGroupIdOrSlug,
   locationId: number,
   payload: Partial<BaseLocationModel>,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<PaginationResult<LocationModel>>(
     `organization/${organizationCode}/people-group/${groupId}/locations/${locationId}/`,
@@ -237,7 +269,7 @@ export async function postGroupLocation(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   payload: BaseLocationModel,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<PaginationResult<LocationModel>>(
     `organization/${organizationCode}/people-group/${groupId}/locations/`,
@@ -252,7 +284,7 @@ export async function postGroupLocation(
 export function getGroupGallery(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return clientAPI<PaginationResult<ImageModel>>(
     `organization/${organizationCode}/people-group/${groupId}/gallery/`,
@@ -266,22 +298,19 @@ export async function deleteGroupGallery(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   imageId: number,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
-  await clientAPI(
-    `organization/${organizationCode}/people-group/${groupId}/gallery/${imageId}/`,
-    {
-      ...config,
-      method: 'DELETE',
-    }
-  )
+  await clientAPI(`organization/${organizationCode}/people-group/${groupId}/gallery/${imageId}/`, {
+    ...config,
+    method: 'DELETE',
+  })
 }
 
 export function postGroupGallery(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   body: FormData,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return clientAPI<ImageModelCreated>(
     `organization/${organizationCode}/people-group/${groupId}/gallery/`,
@@ -296,7 +325,7 @@ export function postGroupGallery(
 export async function getGroupNews(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<PaginationResult<NewsModel>>(
     `organization/${organizationCode}/people-group/${groupId}/news/`,
@@ -310,7 +339,7 @@ export async function getGroupNews(
 export async function getGroupEvent(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<PaginationResult<EventModel>>(
     `organization/${organizationCode}/people-group/${groupId}/event/`,

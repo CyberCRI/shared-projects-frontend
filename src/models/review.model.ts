@@ -1,9 +1,9 @@
-import type { ProjectSlugOrId } from './project.model'
 import type { Translated } from '../interfaces/translated'
-import type { UserModel } from './user.model'
-import type { Ordering } from '../interfaces/query'
-import type BaseModel from './base.model'
 import { PaginationQuery } from '../interfaces/pagination'
+import type { ProjectSlugOrId } from './project.model'
+import type { Ordering } from '../interfaces/query'
+import type { UserModel } from './user.model'
+import type BaseModel from './base.model'
 
 /**
  * @name ReviewModel

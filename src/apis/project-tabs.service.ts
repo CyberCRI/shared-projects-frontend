@@ -1,6 +1,15 @@
-import { PaginationResult } from '../interfaces'
-import { ImageModelCreated, ProjectSlugOrId, ProjectTab, ProjectTabForm, ProjectTabItem, ProjectTabItemForm, QueryFilterProjectTab, QueryFilterProjectTabItem } from '../models'
+import {
+  ImageModelCreated,
+  ProjectSlugOrId,
+  ProjectTab,
+  ProjectTabForm,
+  ProjectTabItem,
+  ProjectTabItemForm,
+  QueryFilterProjectTab,
+  QueryFilterProjectTabItem,
+} from '../models'
 import { clientAPI, clientAPIOptions } from './client'
+import { PaginationResult } from '../interfaces'
 
 type Config = clientAPIOptions
 type ConfigTab = clientAPIOptions<QueryFilterProjectTab>
@@ -116,13 +125,10 @@ export async function deleteProjectTabItem(
   projectTabItemId: ProjectTabItem['id'],
   config: Config = {}
 ) {
-  await clientAPI(
-    `project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`,
-    {
-      method: 'DELETE',
-      ...config,
-    }
-  )
+  await clientAPI(`project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`, {
+    method: 'DELETE',
+    ...config,
+  })
 }
 
 export async function createProjectTabImage(
@@ -143,9 +149,12 @@ export async function createProjectTabItemImage(
   body: FormData,
   config: Config = {}
 ) {
-  return await clientAPI<ImageModelCreated>(`project/${projectId}/tab/${projectTabId}/item-image/`, {
-    method: 'POST',
-    body,
-    ...config,
-  })
+  return await clientAPI<ImageModelCreated>(
+    `project/${projectId}/tab/${projectTabId}/item-image/`,
+    {
+      method: 'POST',
+      body,
+      ...config,
+    }
+  )
 }

@@ -1,5 +1,5 @@
-import { Ordering } from "../interfaces"
-import { LanguageType, ProjectMemberRoleType, ProjectModel } from "../models"
+import { LanguageType, ProjectMemberRoleType, ProjectModel } from '../models'
+import { Ordering } from '../interfaces'
 
 // TODO legacy
 export interface APIParams {

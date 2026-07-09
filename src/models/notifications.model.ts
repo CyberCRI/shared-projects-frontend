@@ -26,7 +26,6 @@ export interface NotificationModel extends BaseModel {
   invitation: InvitationModel
 }
 
-
 export interface NotificationSettingsModel extends BaseModel {
   id: number
   notify_added_to_project: boolean

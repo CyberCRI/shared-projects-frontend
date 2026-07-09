@@ -1,12 +1,12 @@
 import { P as ProviderParams, R as Right } from '../permissions-BKtXZsbf.js';
-import { P as PermissionType } from '../permissions.model-DInEkk3h.js';
-import { ax as Roles, S as OrganizationModel, a8 as ProjectModel, W as PeopleGroupModel, a_ as UserModel, M as NewsModel, i as EventModel, p as InstructionModel } from '../instruction.model-8r_Dg5-c.js';
+import { P as PermissionType } from '../permissions.model-DCQ_saKg.js';
+import { ax as Roles, S as OrganizationModel, a8 as ProjectModel, W as PeopleGroupModel, aZ as UserModel, M as NewsModel, i as EventModel, p as InstructionModel } from '../instruction.model-DXpttXWL.js';
 import { StarterKitOptions } from '@tiptap/starter-kit';
 import { Extensions, Extension } from '@tiptap/core';
 import * as highlight_js from 'highlight.js';
 import * as hast from 'hast';
 import * as _lowlight from 'lowlight';
-import { h as ImageVariations } from '../utils-CGQ8Ykiw.js';
+import { h as ImageVariations } from '../query-vMMsxjBM.js';
 import { Attrs } from '@tiptap/pm/model';
 import { CodeBlockLowlightOptions } from '@tiptap/extension-code-block-lowlight';
 import 'zod';
@@ -23,7 +23,7 @@ import 'zod';
  */
 declare const roomKeyFromParams: (params: ProviderParams) => string | null;
 
-declare function hasPermission(permissions: Right["permissions"], app: "organizations" | "projects" | "accounts" | "peoplegroup", permissionName: PermissionType, identification?: number | string | Roles | null): boolean;
+declare function hasPermission(permissions: Right['permissions'], app: 'organizations' | 'projects' | 'accounts' | 'peoplegroup', permissionName: PermissionType, identification?: number | string | Roles | null): boolean;
 
 declare const isAdmin: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
 
@@ -87,7 +87,7 @@ declare module '@tiptap/core' {
 type Option = {
     size?: ImageVariations;
     src: string;
-    aligns?: "left" | "center" | "right";
+    aligns?: 'left' | 'center' | 'right';
 };
 declare module '@tiptap/core' {
     interface Commands<ReturnType> {

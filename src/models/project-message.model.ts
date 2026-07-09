@@ -1,10 +1,10 @@
-import type { ProjectSlugOrId } from './project.model'
 import type { Translated } from '../interfaces/translated'
+import { PaginationQuery } from '../interfaces/pagination'
+import type { ProjectSlugOrId } from './project.model'
+import type { Ordering } from '../interfaces/query'
 import type { ImageModel } from './image.model'
 import type { UserModel } from './user.model'
-import type { Ordering } from '../interfaces/query'
 import type BaseModel from './base.model'
-import { PaginationQuery } from '../interfaces/pagination'
 
 /**
  * @name CommentModel

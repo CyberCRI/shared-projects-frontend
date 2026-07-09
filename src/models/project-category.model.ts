@@ -1,8 +1,8 @@
 import type { TemplateModel, TranslatedTemplate } from './template.model'
 import type { OrganizationModel } from './organization.model'
-import type { TagModel, TranslatedTag } from './tag.model'
 import type { Translated } from '../interfaces/translated'
 import type { ImageModel, ImageSize } from './image.model'
+import type { TagModel, TranslatedTag } from './tag.model'
 import type BaseModel from './base.model'
 
 /**

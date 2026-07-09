@@ -1,5 +1,7 @@
 import { defineConfig } from 'eslint/config'
 import tseslint from 'typescript-eslint'
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
+
 
 export default defineConfig({
   rules: {
@@ -18,7 +20,7 @@ export default defineConfig({
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-dynamic-delete': 'off',
   },
-  extends: [tseslint.configs.recommendedTypeChecked],
+  extends: [tseslint.configs.recommendedTypeChecked, eslintPluginPrettierRecommended],
   ignores: [
     "./dist",
   ],

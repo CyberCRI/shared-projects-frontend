@@ -2,8 +2,8 @@ import type { PeopleGroupModel } from './people-group.model'
 import type BaseModel from './base.model'
 
 import type { Translated } from '../interfaces/translated'
-import type { Ordering } from '../interfaces/query'
 import { PaginationQuery } from '../interfaces/pagination'
+import type { Ordering } from '../interfaces/query'
 
 /**
  * @name NewsModel

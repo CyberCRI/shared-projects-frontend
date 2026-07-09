@@ -1,8 +1,6 @@
 // src/lib/collaboratives.ts
 var roomKeyFromParams = (params) => {
-  const keys = [
-    ["Organization", params.organizationId]
-  ];
+  const keys = [["Organization", params.organizationId]];
   switch (params.type) {
     case "project-description": {
       keys.push(["Project", params.projectId]);
@@ -17,11 +15,7 @@ var roomKeyFromParams = (params) => {
       break;
     }
     case "project-tab-item": {
-      keys.push(
-        ["Project", params.projectId],
-        ["Tab", params.tabId],
-        ["Item", params.tabItemId]
-      );
+      keys.push(["Project", params.projectId], ["Tab", params.tabId], ["Item", params.tabItemId]);
       break;
     }
     case "project-goal": {
@@ -78,18 +72,8 @@ var isUser = (rights, organizationId) => {
 // src/lib/permissions/can.ts
 var canPermission = (rights, organizationId, elementType, identification = null, perrmissionName) => {
   return isAdmin(rights, organizationId) || // check objects permissions
-  hasPermission(
-    rights.permissions,
-    elementType,
-    perrmissionName,
-    identification
-  ) || hasPermission(rights.permissions, elementType, perrmissionName) || // check organizations permissions
-  hasPermission(
-    rights.permissions,
-    "organizations",
-    perrmissionName,
-    organizationId
-  ) || hasPermission(rights.permissions, "organizations", perrmissionName);
+  hasPermission(rights.permissions, elementType, perrmissionName, identification) || hasPermission(rights.permissions, elementType, perrmissionName) || // check organizations permissions
+  hasPermission(rights.permissions, "organizations", perrmissionName, organizationId) || hasPermission(rights.permissions, "organizations", perrmissionName);
 };
 
 // src/lib/tiptap/options.ts
@@ -103,9 +87,30 @@ import Table from "@tiptap/extension-table";
 import Color from "@tiptap/extension-color";
 import Link from "@tiptap/extension-link";
 
-// src/lib/tiptap/lowlight.ts
-import { common, createLowlight } from "lowlight";
-var lowlight = createLowlight(common);
+// src/lib/tiptap/extensions/CustomTableCell.ts
+import TableCell from "@tiptap/extension-table-cell";
+var CustomTableCell = TableCell.extend({
+  name: "tableCell",
+  addAttributes() {
+    return {
+      // extend the existing attributes …
+      //...(this.parent ? this.parent() : {}),
+      ...TableCell?.config?.addAttributes?.call(this) || {},
+      // and add a new one …
+      backgroundColor: {
+        default: null,
+        parseHTML: (element) => element.getAttribute("data-background-color"),
+        renderHTML: (attributes) => {
+          return {
+            "data-background-color": attributes.backgroundColor,
+            style: `background-color: ${attributes.backgroundColor}`
+          };
+        }
+      }
+    };
+  }
+});
+var CustomTableCell_default = CustomTableCell;
 
 // src/lib/tiptap/extensions/ExternalVideo.ts
 import { Node, mergeAttributes } from "@tiptap/core";
@@ -221,9 +226,7 @@ var ExternalVideo_default = Node.create({
           });
           let align = "center";
           this.options.aligns.forEach((s) => {
-            const hasAlign = wrapper.classList.contains(
-              "custom-video-wrapper-" + s
-            );
+            const hasAlign = wrapper.classList.contains("custom-video-wrapper-" + s);
             if (hasAlign) {
               align = s;
             }
@@ -295,121 +298,9 @@ var ExternalVideo_default = Node.create({
   }
 });
 
-// src/lib/tiptap/extensions/CustomTableCell.ts
-import TableCell from "@tiptap/extension-table-cell";
-var CustomTableCell = TableCell.extend({
-  name: "tableCell",
-  addAttributes() {
-    return {
-      // extend the existing attributes …
-      //...(this.parent ? this.parent() : {}),
-      ...TableCell?.config?.addAttributes?.call(this) || {},
-      // and add a new one …
-      backgroundColor: {
-        default: null,
-        parseHTML: (element) => element.getAttribute("data-background-color"),
-        renderHTML: (attributes) => {
-          return {
-            "data-background-color": attributes.backgroundColor,
-            style: `background-color: ${attributes.backgroundColor}`
-          };
-        }
-      }
-    };
-  }
-});
-var CustomTableCell_default = CustomTableCell;
-
-// src/lib/tiptap/extensions/CustomImage.ts
-import { mergeAttributes as mergeAttributes2 } from "@tiptap/core";
-import Image from "@tiptap/extension-image";
-var CustomImage_default = Image.extend({
-  name: "image",
-  addAttributes() {
-    return {
-      ...Image?.config?.addAttributes?.call(this) || {},
-      size: {
-        default: null,
-        rendered: false
-      }
-    };
-  },
-  addOptions() {
-    return {
-      ...Image.options,
-      inline: true,
-      HTMLAttributes: {},
-      sizes: ["small", "medium", "large", "full", "custom", "original"],
-      allowBase64: false
-    };
-  },
-  inline() {
-    return this.options.inline;
-  },
-  group() {
-    return this.options.inline ? "inline" : "block";
-  },
-  draggable: true,
-  addCommands() {
-    return {
-      // This is unchanged from the original
-      // Image setImage function
-      // However, if I extended addComands in
-      // the same way as addAttributes `this`
-      // seemed to lose context, so I've just
-      // copied it in here directly
-      setImage: (options) => ({ tr, dispatch }) => {
-        if (!options["size"]) {
-          options = {
-            ...options,
-            size: "original"
-          };
-        }
-        const { selection } = tr;
-        const node = this.type.create(options);
-        if (dispatch) {
-          tr.replaceRangeWith(selection.from, selection.to, node);
-        }
-        return true;
-      }
-    };
-  },
-  renderHTML({ node, HTMLAttributes }) {
-    const size = node.attrs.size;
-    HTMLAttributes.class = " custom-image-" + size;
-    return ["img", mergeAttributes2(this.options.HTMLAttributes, HTMLAttributes)];
-  },
-  parseHTML() {
-    const getAttrs = (dom) => {
-      let size = "original";
-      const sizes = this.options.sizes;
-      sizes.forEach((s) => {
-        const hasSize = dom.classList.contains(
-          "custom-image-" + s
-        );
-        if (hasSize) {
-          size = s;
-        }
-      });
-      return {
-        src: dom.getAttribute("src"),
-        title: dom.getAttribute("title"),
-        alt: dom.getAttribute("alt"),
-        size
-      };
-    };
-    return [
-      {
-        tag: "img[src]",
-        getAttrs
-      }
-    ];
-  }
-});
-
 // src/lib/tiptap/extensions/LpiCodeBlock.ts
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
-import { mergeAttributes as mergeAttributes3 } from "@tiptap/core";
+import { mergeAttributes as mergeAttributes2 } from "@tiptap/core";
 import { PluginKey } from "@tiptap/pm/state";
 var DEFAULT_LANGUAGE = "plaintext";
 var DEFAULT_THEME = "dark";
@@ -472,7 +363,7 @@ var LpiCodeBlock_default = CodeBlockLowlight.extend({
     const tabClass = node.attrs.tab ? this.options.tabClassPrefix + node.attrs.tab : this.options.tabClassPrefix + DEFAULT_TAB.toString();
     return [
       "pre",
-      mergeAttributes3(this.options.HTMLAttributes, HTMLAttributes, {
+      mergeAttributes2(this.options.HTMLAttributes, HTMLAttributes, {
         class: `lpi-code-block ${themeClass} ${tabClass}`
       }),
       [
@@ -486,6 +377,95 @@ var LpiCodeBlock_default = CodeBlockLowlight.extend({
     ];
   }
 });
+
+// src/lib/tiptap/extensions/CustomImage.ts
+import { mergeAttributes as mergeAttributes3 } from "@tiptap/core";
+import Image from "@tiptap/extension-image";
+var CustomImage_default = Image.extend({
+  name: "image",
+  addAttributes() {
+    return {
+      ...Image?.config?.addAttributes?.call(this) || {},
+      size: {
+        default: null,
+        rendered: false
+      }
+    };
+  },
+  addOptions() {
+    return {
+      ...Image.options,
+      inline: true,
+      HTMLAttributes: {},
+      sizes: ["small", "medium", "large", "full", "custom", "original"],
+      allowBase64: false
+    };
+  },
+  inline() {
+    return this.options.inline;
+  },
+  group() {
+    return this.options.inline ? "inline" : "block";
+  },
+  draggable: true,
+  addCommands() {
+    return {
+      // This is unchanged from the original
+      // Image setImage function
+      // However, if I extended addComands in
+      // the same way as addAttributes `this`
+      // seemed to lose context, so I've just
+      // copied it in here directly
+      setImage: (options) => ({ tr, dispatch }) => {
+        if (!options["size"]) {
+          options = {
+            ...options,
+            size: "original"
+          };
+        }
+        const { selection } = tr;
+        const node = this.type.create(options);
+        if (dispatch) {
+          tr.replaceRangeWith(selection.from, selection.to, node);
+        }
+        return true;
+      }
+    };
+  },
+  renderHTML({ node, HTMLAttributes }) {
+    const size = node.attrs.size;
+    HTMLAttributes.class = " custom-image-" + size;
+    return ["img", mergeAttributes3(this.options.HTMLAttributes, HTMLAttributes)];
+  },
+  parseHTML() {
+    const getAttrs = (dom) => {
+      let size = "original";
+      const sizes = this.options.sizes;
+      sizes.forEach((s) => {
+        const hasSize = dom.classList.contains("custom-image-" + s);
+        if (hasSize) {
+          size = s;
+        }
+      });
+      return {
+        src: dom.getAttribute("src"),
+        title: dom.getAttribute("title"),
+        alt: dom.getAttribute("alt"),
+        size
+      };
+    };
+    return [
+      {
+        tag: "img[src]",
+        getAttrs
+      }
+    ];
+  }
+});
+
+// src/lib/tiptap/lowlight.ts
+import { common, createLowlight } from "lowlight";
+var lowlight = createLowlight(common);
 
 // src/lib/tiptap/options.ts
 var getExtensions = (options = {}) => [
@@ -545,17 +525,7 @@ var ClearHistoryWS = Extension.create({
 
 // src/lib/permissions/projects/isOwner.ts
 var isOwner = (rights, organizationId, projectId) => {
-  return hasPermission(
-    rights.permissions,
-    "projects",
-    "delete_project",
-    projectId
-  ) || hasPermission(
-    rights.permissions,
-    "organizations",
-    "delete_project",
-    organizationId
-  ) || hasPermission(rights.permissions, "projects", "delete_project");
+  return hasPermission(rights.permissions, "projects", "delete_project", projectId) || hasPermission(rights.permissions, "organizations", "delete_project", organizationId) || hasPermission(rights.permissions, "projects", "delete_project");
 };
 
 // src/lib/permissions/projects/isMember.ts
@@ -571,86 +541,36 @@ var canCreateProject = (rights, organizationId) => {
   return isViewer(rights, organizationId);
 };
 var canEditProject = (rights, organizationId, projectId) => {
-  return canPermissionProject(
-    rights,
-    organizationId,
-    projectId,
-    "change_project"
-  );
+  return canPermissionProject(rights, organizationId, projectId, "change_project");
 };
 var canDeleteProject = (rights, organizationId, projectId) => {
-  return canPermissionProject(
-    rights,
-    organizationId,
-    projectId,
-    "delete_project"
-  );
+  return canPermissionProject(rights, organizationId, projectId, "delete_project");
 };
 var canCreateReview = (rights, organizationId, projectId) => {
   return canPermissionProject(rights, organizationId, projectId, "add_review");
 };
 var canEditReview = (rights, organizationId, projectId) => {
-  return canPermissionProject(
-    rights,
-    organizationId,
-    projectId,
-    "change_review"
-  );
+  return canPermissionProject(rights, organizationId, projectId, "change_review");
 };
 var canDeleteReview = (rights, organizationId, projectId) => {
-  return canPermissionProject(
-    rights,
-    organizationId,
-    projectId,
-    "delete_review"
-  );
+  return canPermissionProject(rights, organizationId, projectId, "delete_review");
 };
 var canCreateComment = (rights, organizationId, projectId) => {
-  return canPermissionProject(
-    rights,
-    organizationId,
-    projectId,
-    "delete_comment"
-  );
+  return canPermissionProject(rights, organizationId, projectId, "delete_comment");
 };
 var canEditComment = (rights, organizationId, projectId) => {
-  return canPermissionProject(
-    rights,
-    organizationId,
-    projectId,
-    "change_comment"
-  );
+  return canPermissionProject(rights, organizationId, projectId, "change_comment");
 };
 var canDeleteComment = (rights, organizationId, projectId) => {
-  return canPermissionProject(
-    rights,
-    organizationId,
-    projectId,
-    "delete_comment"
-  );
+  return canPermissionProject(rights, organizationId, projectId, "delete_comment");
 };
 
 // src/lib/permissions/groups/can.ts
 var canCreateGroup = (rights, organizationId) => {
-  return isAdmin(rights, organizationId) || hasPermission(rights.permissions, "peoplegroup", "add_peoplegroup") || hasPermission(
-    rights.permissions,
-    "organizations",
-    "add_peoplegroup",
-    organizationId
-  ) || hasPermission(rights.permissions, "organizations", "add_peoplegroup");
+  return isAdmin(rights, organizationId) || hasPermission(rights.permissions, "peoplegroup", "add_peoplegroup") || hasPermission(rights.permissions, "organizations", "add_peoplegroup", organizationId) || hasPermission(rights.permissions, "organizations", "add_peoplegroup");
 };
 var canEditGroup = (rights, organizationId, groupId) => {
-  return isAdmin(rights, organizationId) || hasPermission(
-    rights.permissions,
-    "peoplegroup",
-    "change_peoplegroup",
-    groupId
-  ) || hasPermission(rights.permissions, "peoplegroup", "change_peoplegroup") || hasPermission(
-    rights.permissions,
-    "organizations",
-    "change_peoplegroup",
-    organizationId
-  ) || hasPermission(rights.permissions, "organizations", "change_peoplegroup");
+  return isAdmin(rights, organizationId) || hasPermission(rights.permissions, "peoplegroup", "change_peoplegroup", groupId) || hasPermission(rights.permissions, "peoplegroup", "change_peoplegroup") || hasPermission(rights.permissions, "organizations", "change_peoplegroup", organizationId) || hasPermission(rights.permissions, "organizations", "change_peoplegroup");
 };
 
 // src/lib/permissions/user/can.ts

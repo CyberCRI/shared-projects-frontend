@@ -1,6 +1,13 @@
-import { PaginationResult } from '../interfaces'
-import { ImageModelCreated, ProjectMessageForm, ProjectMessageInputModel, ProjectMessageModel, ProjectSlugOrId, QueryFilterProjectMessage } from '../models'
+import {
+  ImageModelCreated,
+  ProjectMessageForm,
+  ProjectMessageInputModel,
+  ProjectMessageModel,
+  ProjectSlugOrId,
+  QueryFilterProjectMessage,
+} from '../models'
 import { clientAPI, clientAPIOptions } from './client'
+import { PaginationResult } from '../interfaces'
 
 type Config = clientAPIOptions<QueryFilterProjectMessage>
 
@@ -30,10 +37,13 @@ export async function patchProjectMessage(
   messageId: ProjectMessageModel['id'],
   body: ProjectMessageForm
 ) {
-  return await clientAPI<ProjectMessageModel>(`project/${projectId}/project-message/${messageId}/`, {
-    body,
-    method: 'PATCH',
-  })
+  return await clientAPI<ProjectMessageModel>(
+    `project/${projectId}/project-message/${messageId}/`,
+    {
+      body,
+      method: 'PATCH',
+    }
+  )
 }
 
 export async function deleteProjectMessage(

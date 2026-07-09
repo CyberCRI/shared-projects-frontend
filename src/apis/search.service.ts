@@ -1,6 +1,12 @@
+import {
+  QueryFilterSearch,
+  SearchResultAll,
+  SearchResultGroup,
+  SearchResultProject,
+  SearchResultUser,
+} from '../models'
+import { clientAPI, type clientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
-import { QueryFilterSearch, SearchResultAll, SearchResultGroup, SearchResultProject, SearchResultUser } from '../models'
-import {clientAPI, type clientAPIOptions } from './client'
 
 type Config = clientAPIOptions<QueryFilterSearch>
 

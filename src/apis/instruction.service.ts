@@ -1,6 +1,12 @@
+import {
+  InstructionId,
+  InstructionInput,
+  InstructionModel,
+  OrganizationModel,
+  QueryFilterInstruction,
+} from '../models'
+import { clientAPI, type clientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
-import { InstructionId, InstructionInput, InstructionModel, OrganizationModel, QueryFilterInstruction } from '../models'
-import {clientAPI, type clientAPIOptions } from './client'
 
 type ConfigEvent = clientAPIOptions<QueryFilterInstruction>
 

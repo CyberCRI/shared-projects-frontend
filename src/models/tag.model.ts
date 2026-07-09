@@ -1,5 +1,5 @@
-import type { SecondaryTagType, TagType } from './types'
 import type { Translated } from '../interfaces/translated'
+import type { SecondaryTagType, TagType } from './types'
 import type BaseModel from './base.model'
 
 /**

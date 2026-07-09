@@ -1,12 +1,22 @@
-import { PaginationResult } from '../interfaces'
-import { BlogEntryForm, BlogEntryId, BlogEntryModel, ImageModelCreated, ProjectSlugOrId, QueryFilterBlogEntry } from '../models'
+import {
+  BlogEntryForm,
+  BlogEntryId,
+  BlogEntryModel,
+  ImageModelCreated,
+  ProjectSlugOrId,
+  QueryFilterBlogEntry,
+} from '../models'
 import { clientAPI, type clientAPIOptions } from './client'
+import { PaginationResult } from '../interfaces'
 
 type ConfigBlogEntry = clientAPIOptions
 type ConfigBlogEntries = clientAPIOptions<QueryFilterBlogEntry>
 
 export async function getBlogEntries(projectId: ProjectSlugOrId, config: ConfigBlogEntries = {}) {
-  return await clientAPI<PaginationResult<BlogEntryModel>>(`project/${projectId}/blog-entry/`, config)
+  return await clientAPI<PaginationResult<BlogEntryModel>>(
+    `project/${projectId}/blog-entry/`,
+    config
+  )
 }
 
 export async function getBlogEntry(

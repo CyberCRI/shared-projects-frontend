@@ -1,4 +1,4 @@
 export type QueryFilterRecomendation = Partial<{
-    count: number
-    pool: number
+  count: number
+  pool: number
 }>

@@ -1,8 +1,8 @@
 import type { ProjectModel, ProjectSlugOrId, TranslatedProject } from './project.model'
 import type { OrganizationModel } from './organization.model'
-import BaseModel from './base.model'
 import { Translated } from '../interfaces/translated'
 import { Ordering } from '../interfaces/query'
+import BaseModel from './base.model'
 
 export interface AnnouncementModel extends BaseModel {
   id: number

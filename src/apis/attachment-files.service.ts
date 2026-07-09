@@ -1,11 +1,21 @@
+import {
+  AttachmentFileId,
+  AttachmentFileInput,
+  AttachmentFileModel,
+  AttachmentForm,
+  ProjectSlugOrId,
+  UserSlugOrId,
+} from '../models'
 import { PaginationQuery, PaginationResult } from '../interfaces'
-import { AttachmentFileId, AttachmentFileInput, AttachmentFileModel, AttachmentForm, ProjectSlugOrId, UserIdOrSlug } from '../models'
-import {clientAPI, type clientAPIOptions } from './client'
+import { clientAPI, type clientAPIOptions } from './client'
 
 type Config = clientAPIOptions<Partial<PaginationQuery>>
 
 export async function getProjectAttachmentFiles(projectId: ProjectSlugOrId, config: Config = {}) {
-  return await clientAPI<PaginationResult<AttachmentFileModel>>(`project/${projectId}/file/`, config)
+  return await clientAPI<PaginationResult<AttachmentFileModel>>(
+    `project/${projectId}/file/`,
+    config
+  )
 }
 
 export async function getProjectAttachmentFile(body: AttachmentFileInput) {
@@ -43,11 +53,11 @@ export async function deleteProjectAttachmentFile(
 }
 
 // -- user
-export function getUserAttachmentFile(userId: UserIdOrSlug, options: any) {
+export function getUserAttachmentFile(userId: UserSlugOrId, options: any) {
   return clientAPI<PaginationResult<AttachmentFileModel>>(`user/${userId}/file/`, options)
 }
 
-export async function postUserAttachmentFile(userId: UserIdOrSlug, data: AttachmentForm) {
+export async function postUserAttachmentFile(userId: UserSlugOrId, data: AttachmentForm) {
   const body = new FormData()
   body.set('description', data.description)
   body.set('title', data.title)
@@ -60,7 +70,7 @@ export async function postUserAttachmentFile(userId: UserIdOrSlug, data: Attachm
 }
 
 export async function patchUserAttachmentFile(
-  userId: UserIdOrSlug,
+  userId: UserSlugOrId,
   fileId: number,
   data: Partial<AttachmentFileModel>
 ) {
@@ -78,6 +88,6 @@ export async function patchUserAttachmentFile(
   })
 }
 
-export async function deleteUserAttachmentFile(userId: UserIdOrSlug, fileId: number) {
+export async function deleteUserAttachmentFile(userId: UserSlugOrId, fileId: number) {
   await clientAPI(`user/${userId}/file/${fileId}/`, { method: 'DELETE' })
 }

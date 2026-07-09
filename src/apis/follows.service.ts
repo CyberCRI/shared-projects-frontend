@@ -1,4 +1,4 @@
-import { AddManyFollowedProject, FollowInput, FollowModel, FollowProjectOutput } from '../models';
+import { AddManyFollowedProject, FollowInput, FollowModel, FollowProjectOutput } from '../models'
 import { clientAPI } from './client'
 
 export async function getProjectFollows(body: FollowInput) {

@@ -6,9 +6,9 @@ import type {
 import type { LanguageType, ProjectPublicationStatusType, ProjectStatusType } from './types'
 import type { OrganizationModel, OrganizationOutput } from './organization.model'
 import type { TemplateModel, TranslatedTemplate } from './template.model'
+import type { Translated } from '../interfaces/translated'
 import type { TagModel, TranslatedTag } from './tag.model'
 import type { LocationOutput } from './location.model'
-import type { Translated } from '../interfaces/translated'
 import type { ImageModel } from './image.model'
 import type BaseModel from './base.model'
 
@@ -70,7 +70,7 @@ export type TranslatedProject = Translated<
   tags: TranslatedTag[]
 }
 
-export type ProjectSlugOrId = ProjectModel['id']  
+export type ProjectSlugOrId = ProjectModel['id']
 
 export type LinkedProject = {
   id: number

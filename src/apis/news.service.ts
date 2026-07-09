@@ -1,6 +1,13 @@
+import {
+  ImageModel,
+  ImageModelCreated,
+  NewsInput,
+  NewsModel,
+  OrganizationModel,
+  QueryFilterNews,
+} from '../models'
+import { clientAPI, type clientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
-import { ImageModel, NewsInput, NewsModel, OrganizationModel, QueryFilterNews } from '../models'
-import {clientAPI, type clientAPIOptions } from './client'
 
 type ConfigNews = clientAPIOptions<QueryFilterNews>
 
@@ -8,27 +15,40 @@ export async function getAllNews(
   organizationCode: OrganizationModel['code'],
   config: ConfigNews = {}
 ) {
-  return await clientAPI<PaginationResult<NewsModel>>(`organization/${organizationCode}/news/`, config)
+  return await clientAPI<PaginationResult<NewsModel>>(
+    `organization/${organizationCode}/news/`,
+    config
+  )
 }
 
 export async function getNews(
   organizationCode: OrganizationModel['code'],
   newsId: NewsModel['id'],
-  config: ConfigNews = {}
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<NewsModel>(`organization/${organizationCode}/news/${newsId}/`, config)
 }
 
-export async function createNews(organizationCode: OrganizationModel['code'], body: NewsInput) {
-  return await clientAPI<NewsModel>(`organization/${organizationCode}/news/`, { body, method: 'POST' })
+export async function createNews(
+  organizationCode: OrganizationModel['code'],
+  body: NewsInput,
+  config: clientAPIOptions = {}
+) {
+  return await clientAPI<NewsModel>(`organization/${organizationCode}/news/`, {
+    ...config,
+    body,
+    method: 'POST',
+  })
 }
 
 export async function putNews(
   organizationCode: OrganizationModel['code'],
   newsId: NewsModel['id'],
-  body: NewsInput
+  body: NewsInput,
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<NewsModel>(`organization/${organizationCode}/news/${newsId}/`, {
+    ...config,
     body,
     method: 'PUT',
   })
@@ -37,9 +57,11 @@ export async function putNews(
 export async function patchNews(
   organizationCode: OrganizationModel['code'],
   newsId: NewsModel['id'],
-  body: NewsInput
+  body: NewsInput,
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<NewsModel>(`organization/${organizationCode}/news/${newsId}/`, {
+    ...config,
     body,
     method: 'PATCH',
   })
@@ -47,30 +69,44 @@ export async function patchNews(
 
 export async function deleteNews(
   organizationCode: OrganizationModel['code'],
-  newsId: NewsModel['id']
+  newsId: NewsModel['id'],
+  config: clientAPIOptions = {}
 ) {
-  await clientAPI(`organization/${organizationCode}/news/${newsId}/`, { method: 'DELETE' })
+  await clientAPI(`organization/${organizationCode}/news/${newsId}/`, {
+    ...config,
+    method: 'DELETE',
+  })
 }
 
 export async function postNewsHeader(
   organizationCode: OrganizationModel['code'],
   newsId: NewsModel['id'],
-  body: any
+  body: FormData,
+  config: clientAPIOptions = {}
 ) {
-  return await clientAPI(`organization/${organizationCode}/news/${newsId}/header/`, {
-    body,
-    method: 'POST',
-  })
+  return await clientAPI<ImageModelCreated>(
+    `organization/${organizationCode}/news/${newsId}/header/`,
+    {
+      ...config,
+      body,
+      method: 'POST',
+    }
+  )
 }
 
 export async function patchNewsHeader(
   organizationCode: OrganizationModel['code'],
   newsId: NewsModel['id'],
   imageId: ImageModel['id'],
-  body: any
+  body: FormData,
+  config: clientAPIOptions = {}
 ) {
-  return await clientAPI(`organization/${organizationCode}/news/${newsId}/header/${imageId}/`, {
-    body,
-    method: 'PATCH',
-  })
+  return await clientAPI<ImageModelCreated>(
+    `organization/${organizationCode}/news/${newsId}/header/${imageId}/`,
+    {
+      ...config,
+      body,
+      method: 'PATCH',
+    }
+  )
 }

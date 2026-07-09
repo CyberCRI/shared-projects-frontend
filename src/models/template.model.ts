@@ -1,7 +1,7 @@
 import type { ProjectCategoryModel } from './project-category.model'
 import type { OrganizationModel } from './organization.model'
-import type { TagModel, TranslatedTag } from './tag.model'
 import type { Translated } from '../interfaces/translated'
+import type { TagModel, TranslatedTag } from './tag.model'
 import type { ImageModel } from './image.model'
 import type { LanguageType } from './types'
 import type BaseModel from './base.model'

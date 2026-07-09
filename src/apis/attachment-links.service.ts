@@ -1,15 +1,28 @@
+import {
+  AttachmentForm,
+  AttachmentLinkId,
+  AttachmentLinkInput,
+  AttachmentLinkModel,
+  ProjectSlugOrId,
+  UserSlugOrId,
+} from '../models'
 import { PaginationQuery, PaginationResult } from '../interfaces'
-import { AttachmentForm, AttachmentLinkId, AttachmentLinkInput, AttachmentLinkModel, ProjectSlugOrId, UserIdOrSlug } from '../models'
-import {clientAPI, type clientAPIOptions } from './client'
+import { clientAPI, type clientAPIOptions } from './client'
 
 type Config = clientAPIOptions<Partial<PaginationQuery>>
 
 export async function getProjectAttachmentLinks(projectId: ProjectSlugOrId, config: Config = {}) {
-  return await clientAPI<PaginationResult<AttachmentLinkModel>>(`project/${projectId}/link/`, config)
+  return await clientAPI<PaginationResult<AttachmentLinkModel>>(
+    `project/${projectId}/link/`,
+    config
+  )
 }
 
 export async function getProjectAttachmentLink(body: AttachmentLinkInput) {
-  return await clientAPI<AttachmentLinkModel>(`project/${body.project_id}/link/${body.link_id}/`, {})
+  return await clientAPI<AttachmentLinkModel>(
+    `project/${body.project_id}/link/${body.link_id}/`,
+    {}
+  )
 }
 
 export async function postProjectAttachmentLinks(projectId: ProjectSlugOrId, body: AttachmentForm) {
@@ -39,16 +52,20 @@ export async function deleteProjectAttachmentLink(
 
 // --- user
 
-export function getUserAttachmentLink(userId: UserIdOrSlug, options: clientAPIOptions = {}) {
+export function getUserAttachmentLink(userId: UserSlugOrId, options: clientAPIOptions = {}) {
   return clientAPI<PaginationResult<AttachmentLinkModel>>(`user/${userId}/link/`, options)
 }
 
-export async function postUserAttachmentLink(userId: UserIdOrSlug, body: AttachmentLinkModel, options: clientAPIOptions = {}) {
+export async function postUserAttachmentLink(
+  userId: UserSlugOrId,
+  body: AttachmentLinkModel,
+  options: clientAPIOptions = {}
+) {
   return await clientAPI<AttachmentLinkModel>(`user/${userId}/link/`, { body, method: 'POST' })
 }
 
 export async function patchUserAttachmentLink(
-  userId: UserIdOrSlug,
+  userId: UserSlugOrId,
   linkId: number,
   body: Partial<AttachmentLinkModel>
 ) {
@@ -58,6 +75,6 @@ export async function patchUserAttachmentLink(
   })
 }
 
-export async function deleteUserAttachmentLink(userId: UserIdOrSlug, linkId: number) {
+export async function deleteUserAttachmentLink(userId: UserSlugOrId, linkId: number) {
   await clientAPI(`user/${userId}/link/${linkId}/`, { method: 'DELETE' })
 }

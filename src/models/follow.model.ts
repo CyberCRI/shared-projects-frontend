@@ -12,7 +12,7 @@ export interface FollowModel extends BaseModel {
     email: string
     given_name: string
     family_name: string
-  },
+  }
   project: ProjectModel
 }
 

@@ -1,29 +1,38 @@
 import { ContactForm, OrganizationModel, ReportForm, ReportModel } from '../models'
-import { clientAPI } from './client'
+import { clientAPI, clientAPIOptions } from './client'
 
-export async function reportBug(organizationCode: OrganizationModel['code'], formData: ReportForm) {
-  return await clientAPI<ReportModel>(`organization/${organizationCode}/report/bug/`, {
-    body: formData,
+export async function reportBug(
+  organizationCode: OrganizationModel['code'],
+  body: ReportForm,
+  config: clientAPIOptions = {}
+) {
+  await clientAPI<ReportModel>(`organization/${organizationCode}/report/bug/`, {
+    ...config,
+    body,
     method: 'POST',
   })
 }
 
 export async function reportAbuse(
   organizationCode: OrganizationModel['code'],
-  formData: ReportForm
+  body: ReportForm,
+  config: clientAPIOptions = {}
 ) {
-  return await clientAPI<ReportModel>(`organization/${organizationCode}/report/abuse/`, {
-    body: formData,
+  await clientAPI<ReportModel>(`organization/${organizationCode}/report/abuse/`, {
+    ...config,
+    body,
     method: 'POST',
   })
 }
 
 export async function contactUs(
   organizationCode: OrganizationModel['code'],
-  formData: ContactForm
+  body: ContactForm,
+  config: clientAPIOptions = {}
 ) {
-  return await clientAPI(`organization/${organizationCode}/contact/us/`, {
-    body: formData,
+  await clientAPI(`organization/${organizationCode}/contact/us/`, {
+    ...config,
+    body,
     method: 'POST',
   })
 }

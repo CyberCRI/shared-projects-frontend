@@ -30,8 +30,9 @@
     }
   },
   "scripts": {
-    "build": "tsup",
-    "lint": "eslint --ext .ts --fix"
+    "build-index": "python3 utils/generate.py",
+    "build": "yarn build-index && tsup",
+    "lint": "eslint --ext .ts --fix ./src"
   },
   "dependencies": {
     "@tiptap/core": "2.26.3",
@@ -67,8 +68,10 @@
     "@typescript-eslint/eslint-plugin": "8.46.0",
     "@typescript-eslint/parser": "8.46.0",
     "eslint": "^10.6.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
     "jiti": "^2.7.0",
+    "prettier-plugin-sort-imports": "^1.8.11",
     "tsup": "^8.5.1",
     "typescript-eslint": "^8.62.1"
   }

@@ -1,6 +1,11 @@
+import {
+  OrganizationModel,
+  QueryFilterTagClassification,
+  TagClassificationModel,
+  TagModel,
+} from '../models'
 import { PaginationQuery, PaginationResult } from '../interfaces'
-import { OrganizationModel, QueryFilterTagClassification, TagClassificationModel, TagModel } from '../models'
-import {clientAPI, type clientAPIOptions } from './client'
+import { clientAPI, type clientAPIOptions } from './client'
 
 export type Config = clientAPIOptions<PaginationQuery>
 
@@ -70,12 +75,9 @@ export async function deleteOrgClassification(
   organizationCode: OrganizationModel['code'],
   classificationId: TagClassificationModel['id']
 ) {
-  await clientAPI(
-    `organization/${organizationCode}/tag-classification/${classificationId}/`,
-    {
-      method: 'DELETE',
-    }
-  )
+  await clientAPI(`organization/${organizationCode}/tag-classification/${classificationId}/`, {
+    method: 'DELETE',
+  })
 }
 
 type ConfigClassification = clientAPIOptions<QueryFilterTagClassification>
@@ -101,14 +103,19 @@ export async function getTags(ids: number[], config: Config = {}) {
   })
 }
 
-export async function getAllTagsById(ids: number[], config: Config = {}): Promise<PaginationResult<TagModel>> {
-  const tags = await Promise.all(ids.map(async (id) => await clientAPI<TagModel>(`tag/${id}/`, config)))
+export async function getAllTagsById(
+  ids: number[],
+  config: Config = {}
+): Promise<PaginationResult<TagModel>> {
+  const tags = await Promise.all(
+    ids.map(async (id) => await clientAPI<TagModel>(`tag/${id}/`, config))
+  )
 
   return {
     count: tags.length,
     next: null,
     previous: null,
-    results: tags
+    results: tags,
   }
 }
 

@@ -1,7 +1,7 @@
-import { clientAPI, clientAPIOptions } from './client'
 import { QueryFilterRecomendation } from '../models/recommendations.model'
-import { PaginationQuery, PaginationResult } from '../interfaces'
 import { OrganizationModel, ProjectModel, UserModel } from '../models'
+import { PaginationQuery, PaginationResult } from '../interfaces'
+import { clientAPI, clientAPIOptions } from './client'
 
 type Config = clientAPIOptions<QueryFilterRecomendation>
 type ConfigPagination = clientAPIOptions<PaginationQuery>

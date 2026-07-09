@@ -1,17 +1,25 @@
 import { ProjectMembersAddInput, ProjectMembersDeleteInput, ProjectSlugOrId } from '../models'
-import { clientAPI } from './client'
+import { clientAPI, clientAPIOptions } from './client'
 
-export async function addProjectMembers(projectId: ProjectSlugOrId, data: ProjectMembersAddInput) {
-  return await clientAPI(`project/${projectId}/member/add/`, { body: data, method: 'POST' }) // .data.value
+export async function addProjectMembers(
+  projectId: ProjectSlugOrId,
+  body: ProjectMembersAddInput,
+  config: clientAPIOptions = {}
+) {
+  await clientAPI(`project/${projectId}/member/add/`, { ...config, body, method: 'POST' })
 }
 
 export async function deleteProjectMembers(
   projectId: ProjectSlugOrId,
-  data: ProjectMembersDeleteInput
+  body: ProjectMembersDeleteInput,
+  config: clientAPIOptions = {}
 ) {
-  await clientAPI(`project/${projectId}/member/remove/`, { body: data, method: 'POST' })
+  await clientAPI(`project/${projectId}/member/remove/`, { ...config, body, method: 'POST' })
 }
 
-export async function deleteProjectMembersSelf(projectId: ProjectSlugOrId) {
-  await clientAPI(`project/${projectId}/quit/`, { method: 'DELETE' })
+export async function deleteProjectMembersSelf(
+  projectId: ProjectSlugOrId,
+  config: clientAPIOptions = {}
+) {
+  await clientAPI(`project/${projectId}/quit/`, { ...config, method: 'DELETE' })
 }

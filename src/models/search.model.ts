@@ -13,12 +13,12 @@ import type {
 import type { ProjectCategoryModel } from './project-category.model'
 import type { TranslatedUserModel, UserModel } from './user.model'
 import type { OrganizationModel } from './organization.model'
+import { PaginationQuery } from '../interfaces/pagination'
 import type { Language, SearchObjectType } from './types'
+import type { Ordering } from '../interfaces/query'
 import type { SkillModel } from './skill.model'
 import type { TagModel } from './tag.model'
-import type { Ordering } from '../interfaces/query'
 import type BaseModel from './base.model'
-import { PaginationQuery } from '../interfaces/pagination'
 
 export interface BaseSearchResult extends BaseModel {
   id: number
@@ -62,9 +62,7 @@ export type TranslatedSearchResultGroup = Omit<SearchResultGroup, 'people_group'
 export type SearchResultAll = SearchResultProject | SearchResultUser | SearchResultGroup
 
 export type TranslatedSearchResultAll =
-  | TranslatedSearchResultProject
-  | TranslatedSearchResultUser
-  | TranslatedSearchResultGroup
+  TranslatedSearchResultProject | TranslatedSearchResultUser | TranslatedSearchResultGroup
 
 export type QueryFilterSearch = Partial<
   {

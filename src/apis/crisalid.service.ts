@@ -1,13 +1,19 @@
-import { ResearcherDocument, ResearcherDocumentType, QueryFilterResearcher, Researcher, ResearcherDocumentAnalytics } from '../models/researcher.model'
+import {
+  ResearcherDocument,
+  ResearcherDocumentType,
+  QueryFilterResearcher,
+  Researcher,
+  ResearcherDocumentAnalytics,
+} from '../models/researcher.model'
 import { OrganizationModel, PeopleGroupIdOrSlug } from '../models'
-import { clientAPI, clientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces/pagination'
+import { clientAPI, clientAPIOptions } from './client'
 
 export async function getOwnResearchDocument(
   organisationCode: string,
   researchId: Researcher['id'],
   ResearcherdocumentType: ResearcherDocumentType,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<PaginationResult<ResearcherDocument>>(
     `crisalid/organization/${organisationCode}/researcher/${researchId}/${ResearcherdocumentType}/`,
@@ -19,7 +25,7 @@ export async function getGroupResearchDocument(
   organisationCode: string,
   groupId: PeopleGroupIdOrSlug,
   ResearcherdocumentType: ResearcherDocumentType,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<PaginationResult<ResearcherDocument>>(
     `crisalid/organization/${organisationCode}/people-group/${groupId}/${ResearcherdocumentType}/`,
@@ -31,7 +37,7 @@ export async function getOwnResearchDocumentAnalytics(
   organisationCode: string,
   researchId: Researcher['id'],
   ResearcherdocumentType: ResearcherDocumentType,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<ResearcherDocumentAnalytics>(
     `crisalid/organization/${organisationCode}/researcher/${researchId}/${ResearcherdocumentType}/analytics/`,
@@ -43,7 +49,7 @@ export async function getGroupResearchDocumentAnalytics(
   organisationCode: string,
   groupId: PeopleGroupIdOrSlug,
   ResearcherdocumentType: ResearcherDocumentType,
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<ResearcherDocumentAnalytics>(
     `crisalid/organization/${organisationCode}/people-group/${groupId}/${ResearcherdocumentType}/analytics/`,
@@ -54,7 +60,7 @@ export async function getGroupResearchDocumentAnalytics(
 export async function getResearchDocumentSimilars(
   organisationCode: string,
   documentId: ResearcherDocument['id'],
-  config = {}
+  config: clientAPIOptions = {}
 ) {
   return await clientAPI<PaginationResult<ResearcherDocument>>(
     `crisalid/organization/${organisationCode}/document/${documentId}/similars/`,

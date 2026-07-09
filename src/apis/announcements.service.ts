@@ -1,7 +1,13 @@
-import { PaginationResult } from '../interfaces'
-import { AnnouncementApplyForm, AnnouncementForm, AnnouncementId, AnnouncementModel, ProjectSlugOrId, QueryFilterAnnouncement } from '../models'
+import {
+  AnnouncementApplyForm,
+  AnnouncementForm,
+  AnnouncementId,
+  AnnouncementModel,
+  ProjectSlugOrId,
+  QueryFilterAnnouncement,
+} from '../models'
 import { clientAPI, clientAPIOptions } from './client'
-
+import { PaginationResult } from '../interfaces'
 
 type Config = clientAPIOptions<QueryFilterAnnouncement>
 
@@ -34,11 +40,14 @@ export async function patchAnnouncement(
   body: AnnouncementForm,
   config: Config = {}
 ) {
-  return await clientAPI<AnnouncementModel>(`project/${projectId}/announcement/${announcementId}/`, {
-    body,
-    method: 'PATCH',
-    ...config,
-  })
+  return await clientAPI<AnnouncementModel>(
+    `project/${projectId}/announcement/${announcementId}/`,
+    {
+      body,
+      method: 'PATCH',
+      ...config,
+    }
+  )
 }
 
 export async function deleteAnnouncement(

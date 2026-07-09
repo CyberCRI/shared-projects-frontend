@@ -2,9 +2,9 @@ import type { BaseLocationModel, BaseTranslatedLocationModel } from './location.
 import type BaseModel from './base.model'
 
 import type { Translated } from '../interfaces/translated'
+import { PaginationQuery } from '../interfaces/pagination'
 import type { Optional } from '../interfaces/utils'
 import type { Ordering } from '../interfaces/query'
-import { PaginationQuery } from '../interfaces/pagination'
 
 /**
  * @name NewsModel

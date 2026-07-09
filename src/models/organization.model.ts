@@ -13,9 +13,8 @@ export interface TermsAndConditions {
   id: number
   version: number
   content: string
-  displayed_version: number
-  displayed_content: string
-  displayed_updated_at: string
+  organization: OrganizationModel['code']
+  updated_at: Date | string
 }
 
 export interface OrganizationModel extends BaseModel {

@@ -1,7 +1,6 @@
-
-import { PaginationQuery, PaginationResult } from '../interfaces'
 import { AttachmentFileModel, OrganizationModel } from '../models'
-import {clientAPI, type clientAPIOptions } from './client'
+import { PaginationQuery, PaginationResult } from '../interfaces'
+import { clientAPI, type clientAPIOptions } from './client'
 
 type Config = clientAPIOptions
 type ConfigPagiations = clientAPIOptions<Partial<PaginationQuery>>
