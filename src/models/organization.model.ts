@@ -11,10 +11,11 @@ import type { TagModel } from './tag.model'
 
 export interface TermsAndConditions {
   id: number
-  version: number
-  content: string
   organization: OrganizationModel['code']
-  updated_at: Date | string
+  // backend added a "displayed_" prefix
+  displayed_updated_at: Date | string
+  displayed_version: number
+  displayed_content: string
 }
 
 export interface OrganizationModel extends BaseModel {
