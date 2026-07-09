@@ -180,7 +180,7 @@ export async function postOrganizationImage({
 
 export async function patchTermsAndConditions(
   organization: OrganizationModel,
-  content: TermsAndConditions['content'],
+  content: TermsAndConditions['displayed_content'],
   config: clientAPIOptions = {}
 ) {
   return await clientAPI<TermsAndConditions>(
