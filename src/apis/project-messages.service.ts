@@ -41,7 +41,7 @@ export async function deleteProjectMessage(
   projectMessageId: ProjectMessageModel['id'],
   config: Config = {}
 ) {
-  return await clientAPI<undefined>(`project/${projectId}/project-message/${projectMessageId}/`, {
+  await clientAPI(`project/${projectId}/project-message/${projectMessageId}/`, {
     method: 'DELETE',
     ...config,
   })

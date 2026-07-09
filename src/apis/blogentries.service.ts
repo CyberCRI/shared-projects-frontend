@@ -36,7 +36,7 @@ export async function patchBlogEntry(
 }
 
 export async function deleteBlogEntry(projectId: ProjectSlugOrId, blogEntryId: BlogEntryId) {
-  return await clientAPI<undefined>(`project/${projectId}/blog-entry/${blogEntryId}/`, {
+  await clientAPI(`project/${projectId}/blog-entry/${blogEntryId}/`, {
     method: 'DELETE',
   })
 }

@@ -24,7 +24,7 @@ export async function patchProject(projectId: ProjectSlugOrId, project: ProjectF
 }
 
 export async function deleteProject(projectId: ProjectSlugOrId) {
-  return await clientAPI<undefined>(`project/${projectId}/`, { method: 'DELETE' })
+  await clientAPI(`project/${projectId}/`, { method: 'DELETE' })
 }
 
 export async function duplicateProject(projectId: ProjectSlugOrId) {
@@ -45,11 +45,11 @@ export async function addLinkedProject(
   projectId: ProjectSlugOrId,
   body: AddManyLinkedProjectInput
 ) {
-  return await clientAPI(`project/${projectId}/linked-project/add-many/`, { body, method: 'POST' })
+  return await clientAPI<LinkedProject[]>(`project/${projectId}/linked-project/add-many/`, { body, method: 'POST' })
 }
 
 export async function deleteLinkedProject(projectId: ProjectSlugOrId, linkedProjectId: LinkedProject['id']) {
-  return await clientAPI<undefined>(`project/${projectId}/linked-project/${linkedProjectId}/`, {
+  await clientAPI(`project/${projectId}/linked-project/${linkedProjectId}/`, {
     method: 'DELETE',
   })
 }

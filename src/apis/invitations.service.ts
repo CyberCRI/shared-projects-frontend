@@ -31,7 +31,7 @@ export async function deleteInvitation(
   id: OrganizationModel['id'],
   config = {}
 ) {
-  return await clientAPI<undefined>(`organization/${organizationCode}/invitation/${id}/`, {
+  await clientAPI(`organization/${organizationCode}/invitation/${id}/`, {
     ...config,
     method: 'DELETE',
   })

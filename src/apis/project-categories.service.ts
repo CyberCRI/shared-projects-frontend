@@ -1,5 +1,5 @@
 import { PaginationResult } from '../interfaces'
-import { ImageModel, OrganizationModel, ProjectCategoryCreateInput, ProjectCategoryModel, ProjectCategoryPatchInput, ProjectCategoryPutInput } from '../models'
+import { FollowOutput, ImageModel, OrganizationModel, ProjectCategoryCreateInput, ProjectCategoryModel, ProjectCategoryPatchInput, ProjectCategoryPutInput, UserIdOrSlug } from '../models'
 import {clientAPI, type clientAPIOptions } from './client'
 
 type Config = clientAPIOptions
@@ -40,7 +40,7 @@ export async function deleteProjectCategory(
   organizationCode: OrganizationModel['code'],
   id: number
 ) {
-  return await clientAPI(`organization/${organizationCode}/category/${id}/`, { method: 'DELETE' })
+  await clientAPI(`organization/${organizationCode}/category/${id}/`, { method: 'DELETE' })
 }
 
 export async function getProjectCategory(organizationCode: OrganizationModel['code'], id: number) {
@@ -92,20 +92,20 @@ export async function deleteProjectCategoryBackground(
   organizationCode: OrganizationModel['code'],
   { category_id, id }: { category_id: ProjectCategoryModel['id'], id: any }
 ) {
-  return await clientAPI<undefined>(
+  await clientAPI(
     `organization/${organizationCode}/category/${category_id}/background/${id}/`,
     { method: 'DELETE' }
   )
 }
 
 export async function getProjectCategoriesFollow(userId: number) {
-  return await clientAPI<PaginationResult<ProjectCategoryModel>>(`user/${userId}/category-follow/`)
+  return await clientAPI<PaginationResult<FollowOutput>>(`user/${userId}/category-follow/`)
 }
 
-export async function postProjectCategoryFollow(userId: number, category_id: number) {
-  return await clientAPI<ProjectCategoryModel>(`user/${userId}/category-follow/`, { body: { category_id }, method: 'POST' })
+export async function postProjectCategoryFollow(userId: UserIdOrSlug, category_id: number) {
+  return await clientAPI<FollowOutput>(`user/${userId}/category-follow/`, { body: { category_id }, method: 'POST' })
 }
 
-export async function deleteProjectCategoryFollow(userId: number, category_follow_id: number) {
-  return await clientAPI<undefined>(`user/${userId}/category-follow/${category_follow_id}/`, { method: 'DELETE' })
+export async function deleteProjectCategoryFollow(userId: UserIdOrSlug, category_follow_id: number) {
+  await clientAPI(`user/${userId}/category-follow/${category_follow_id}/`, { method: 'DELETE' })
 }

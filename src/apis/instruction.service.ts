@@ -64,7 +64,7 @@ export async function deleteInstruction(
   organizationCode: OrganizationModel['code'],
   idOrSlug: InstructionId
 ) {
-  return await clientAPI<undefined>(`organization/${organizationCode}/instruction/${idOrSlug}/`, {
+  await clientAPI(`organization/${organizationCode}/instruction/${idOrSlug}/`, {
     method: 'DELETE',
   })
 }

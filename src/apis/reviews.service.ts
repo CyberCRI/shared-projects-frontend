@@ -27,5 +27,5 @@ export async function patchReview(
 }
 
 export async function deleteReview(projectId: ProjectSlugOrId, reviewId: ReviewId) {
-  return await clientAPI<undefined>(`project/${projectId}/review/${reviewId}/`, { method: 'DELETE' })
+  await clientAPI(`project/${projectId}/review/${reviewId}/`, { method: 'DELETE' })
 }

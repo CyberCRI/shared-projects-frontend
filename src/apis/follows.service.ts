@@ -21,7 +21,7 @@ export async function postFollowMany({ id, body }: { id: string; body: AddManyFo
 }
 
 export async function deleteFollow(follow: FollowInput) {
-  return await clientAPI<undefined>(`project/${follow.project_id}/follow/${follow.follower_id}/`, {
+  await clientAPI(`project/${follow.project_id}/follow/${follow.follower_id}/`, {
     method: 'DELETE',
   })
 }

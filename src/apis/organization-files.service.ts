@@ -55,7 +55,7 @@ export async function deleteOrganizationFile(
   organizationCode: OrganizationModel['code'],
   attachmentId: AttachmentFileModel['id']
 ) {
-  return await clientAPI<undefined>(`organization/${organizationCode}/file/${attachmentId}/`, {
+  await clientAPI(`organization/${organizationCode}/file/${attachmentId}/`, {
     method: 'DELETE',
   })
 }

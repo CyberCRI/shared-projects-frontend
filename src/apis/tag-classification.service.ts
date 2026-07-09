@@ -70,7 +70,7 @@ export async function deleteOrgClassification(
   organizationCode: OrganizationModel['code'],
   classificationId: TagClassificationModel['id']
 ) {
-  return await clientAPI<undefined>(
+  await clientAPI(
     `organization/${organizationCode}/tag-classification/${classificationId}/`,
     {
       method: 'DELETE',
@@ -141,7 +141,7 @@ export async function deleteClassificationTag(
   classificationId: TagClassificationModel['id'],
   tagtId: TagModel['id']
 ) {
-  return await clientAPI<TagModel>(
+  await clientAPI<TagModel>(
     `/organization/${organizationCode}/tag-classification/${classificationId}/tag/${tagtId}/`,
     { method: 'DELETE' }
   )

@@ -58,7 +58,7 @@ export async function deleteGroup(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug
 ) {
-  return await clientAPI<undefined>(`organization/${organizationCode}/people-group/${groupId}/`, {
+  await clientAPI(`organization/${organizationCode}/people-group/${groupId}/`, {
     method: 'DELETE',
   })
 }
@@ -262,13 +262,13 @@ export function getGroupGallery(
   )
 }
 
-export function deleteGroupGallery(
+export async function deleteGroupGallery(
   organizationCode: OrganizationModel['code'],
   groupId: PeopleGroupIdOrSlug,
   imageId: number,
   config = {}
 ) {
-  return clientAPI<undefined>(
+  await clientAPI(
     `organization/${organizationCode}/people-group/${groupId}/gallery/${imageId}/`,
     {
       ...config,

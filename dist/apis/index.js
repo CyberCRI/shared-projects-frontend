@@ -35,13 +35,13 @@ async function patchAnnouncement(projectId, announcementId, body, config = {}) {
   });
 }
 async function deleteAnnouncement(projectId, announcementId, config = {}) {
-  return await clientAPI(`project/${projectId}/announcement/${announcementId}/`, {
+  await clientAPI(`project/${projectId}/announcement/${announcementId}/`, {
     method: "DELETE",
     ...config
   });
 }
 async function applyAnnouncement(projectId, announcementId, body) {
-  return await clientAPI(`project/${projectId}/announcement/${announcementId}/apply/`, {
+  await clientAPI(`project/${projectId}/announcement/${announcementId}/apply/`, {
     body,
     method: "POST"
   });
@@ -67,7 +67,7 @@ async function patchProjectAttachmentFile(projectId, fileId, body) {
   });
 }
 async function deleteProjectAttachmentFile(projectId, fileId) {
-  return await clientAPI(`project/${projectId}/file/${fileId}/`, { method: "DELETE" });
+  await clientAPI(`project/${projectId}/file/${fileId}/`, { method: "DELETE" });
 }
 function getUserAttachmentFile(userId, options) {
   return clientAPI(`user/${userId}/file/`, options);
@@ -96,7 +96,7 @@ async function patchUserAttachmentFile(userId, fileId, data) {
   });
 }
 async function deleteUserAttachmentFile(userId, fileId) {
-  return await clientAPI(`user/${userId}/file/${fileId}/`, { method: "DELETE" });
+  await clientAPI(`user/${userId}/file/${fileId}/`, { method: "DELETE" });
 }
 
 // src/apis/attachment-links.service.ts
@@ -119,12 +119,12 @@ async function patchProjectAttachmentLink(projectId, linkId, body) {
   });
 }
 async function deleteProjectAttachmentLink(projectId, linkId) {
-  return await clientAPI(`project/${projectId}/link/${linkId}/`, { method: "DELETE" });
+  await clientAPI(`project/${projectId}/link/${linkId}/`, { method: "DELETE" });
 }
-function getUserAttachmentLink(userId, options) {
+function getUserAttachmentLink(userId, options = {}) {
   return clientAPI(`user/${userId}/link/`, options);
 }
-async function postUserAttachmentLink(userId, body) {
+async function postUserAttachmentLink(userId, body, options = {}) {
   return await clientAPI(`user/${userId}/link/`, { body, method: "POST" });
 }
 async function patchUserAttachmentLink(userId, linkId, body) {
@@ -134,7 +134,7 @@ async function patchUserAttachmentLink(userId, linkId, body) {
   });
 }
 async function deleteUserAttachmentLink(userId, linkId) {
-  return await clientAPI(`user/${userId}/link/${linkId}/`, { method: "DELETE" });
+  await clientAPI(`user/${userId}/link/${linkId}/`, { method: "DELETE" });
 }
 
 // src/apis/blogentries.service.ts
@@ -157,7 +157,7 @@ async function patchBlogEntry(projectId, blogEntryId, body) {
   });
 }
 async function deleteBlogEntry(projectId, blogEntryId) {
-  return await clientAPI(`project/${projectId}/blog-entry/${blogEntryId}/`, {
+  await clientAPI(`project/${projectId}/blog-entry/${blogEntryId}/`, {
     method: "DELETE"
   });
 }
@@ -190,7 +190,7 @@ async function patchComment(projectId, commentId, body) {
   });
 }
 async function deleteComment(projectId, commentId, config = {}) {
-  return await clientAPI(`project/${projectId}/comment/${commentId}/`, {
+  await clientAPI(`project/${projectId}/comment/${commentId}/`, {
     ...config,
     method: "DELETE"
   });
@@ -266,7 +266,7 @@ async function patchEvent(organizationCode, idOrSlug, body) {
   });
 }
 async function deleteEvent(organizationCode, idOrSlug) {
-  return await clientAPI(`organization/${organizationCode}/event/${idOrSlug}/`, {
+  await clientAPI(`organization/${organizationCode}/event/${idOrSlug}/`, {
     method: "DELETE"
   });
 }
@@ -285,7 +285,7 @@ async function patchFaq(organisationCode, body) {
   return await clientAPI(`organization/${organisationCode}/faq/`, { body, method: "PATCH" });
 }
 async function deleteFaq({ orgCode }) {
-  return await clientAPI(`organization/${orgCode}/faq/`, { method: "DELETE" });
+  await clientAPI(`organization/${orgCode}/faq/`, { method: "DELETE" });
 }
 async function postFaqImage({ orgCode, body }) {
   return await clientAPI(`organization/${orgCode}/faq-image/`, { body, method: "POST" });
@@ -308,7 +308,7 @@ async function postFollowMany({ id, body }) {
   return await clientAPI(`user/${id}/follow/follow-many/`, { body, method: "POST" });
 }
 async function deleteFollow(follow) {
-  return await clientAPI(`project/${follow.project_id}/follow/${follow.follower_id}/`, {
+  await clientAPI(`project/${follow.project_id}/follow/${follow.follower_id}/`, {
     method: "DELETE"
   });
 }
@@ -331,7 +331,7 @@ async function patchProjectGoal(projectId, goalId, body, config = {}) {
   });
 }
 async function deleteProjectGoal(projectId, goalId, config = {}) {
-  return await clientAPI(`project/${projectId}/goal/${goalId}/`, {
+  await clientAPI(`project/${projectId}/goal/${goalId}/`, {
     ...config,
     method: "DELETE"
   });
@@ -371,7 +371,7 @@ async function patchGroup(organizationCode, groupId, groupData) {
   });
 }
 async function deleteGroup(organizationCode, groupId) {
-  return await clientAPI(`organization/${organizationCode}/people-group/${groupId}/`, {
+  await clientAPI(`organization/${organizationCode}/people-group/${groupId}/`, {
     method: "DELETE"
   });
 }
@@ -484,8 +484,8 @@ function getGroupGallery(organizationCode, groupId, config = {}) {
     }
   );
 }
-function deleteGroupGallery(organizationCode, groupId, imageId, config = {}) {
-  return clientAPI(
+async function deleteGroupGallery(organizationCode, groupId, imageId, config = {}) {
+  await clientAPI(
     `organization/${organizationCode}/people-group/${groupId}/gallery/${imageId}/`,
     {
       ...config,
@@ -557,7 +557,7 @@ async function patchInstruction(organizationCode, idOrSlug, body) {
   );
 }
 async function deleteInstruction(organizationCode, idOrSlug) {
-  return await clientAPI(`organization/${organizationCode}/instruction/${idOrSlug}/`, {
+  await clientAPI(`organization/${organizationCode}/instruction/${idOrSlug}/`, {
     method: "DELETE"
   });
 }
@@ -580,7 +580,7 @@ async function postInvitation(organizationCode, formData, config = {}) {
   });
 }
 async function deleteInvitation(organizationCode, id, config = {}) {
-  return await clientAPI(`organization/${organizationCode}/invitation/${id}/`, {
+  await clientAPI(`organization/${organizationCode}/invitation/${id}/`, {
     ...config,
     method: "DELETE"
   });
@@ -606,7 +606,7 @@ async function patchLocation(projectId, locationId, body) {
   });
 }
 async function deleteLocation(projectId, locationId) {
-  return await clientAPI(`project/${projectId}/location/${locationId}/`, {
+  await clientAPI(`project/${projectId}/location/${locationId}/`, {
     method: "DELETE"
   });
 }
@@ -676,7 +676,7 @@ async function patchNews(organizationCode, newsId, body) {
   });
 }
 async function deleteNews(organizationCode, newsId) {
-  return await clientAPI(`organization/${organizationCode}/news/${newsId}/`, { method: "DELETE" });
+  await clientAPI(`organization/${organizationCode}/news/${newsId}/`, { method: "DELETE" });
 }
 async function postNewsHeader(organizationCode, newsId, body) {
   return await clientAPI(`organization/${organizationCode}/news/${newsId}/header/`, {
@@ -734,7 +734,7 @@ async function patchOrganizationFile(organizationCode, attachmentId, body) {
   );
 }
 async function deleteOrganizationFile(organizationCode, attachmentId) {
-  return await clientAPI(`organization/${organizationCode}/file/${attachmentId}/`, {
+  await clientAPI(`organization/${organizationCode}/file/${attachmentId}/`, {
     method: "DELETE"
   });
 }
@@ -818,7 +818,7 @@ async function addFeaturedProject(organizationCode, body, config = {}) {
   });
 }
 async function removeFeaturedProject(organizationCode, body, config = {}) {
-  return await clientAPI(`organization/${organizationCode}/featured-project/remove/`, {
+  await clientAPI(`organization/${organizationCode}/featured-project/remove/`, {
     method: "POST",
     body,
     ...config
@@ -890,7 +890,7 @@ async function patchUserPicture(id, pictureId, body) {
   return await clientAPI(`user/${id}/profile-picture/${pictureId}/`, { body, method: "PATCH" });
 }
 async function deleteUser(id) {
-  return await clientAPI(`user/${id}/`, { method: "DELETE" });
+  await clientAPI(`user/${id}/`, { method: "DELETE" });
 }
 async function postUserPicture(id, body) {
   return await clientAPI(`user/${id}/profile-picture/`, { body, method: "POST" });
@@ -905,7 +905,7 @@ async function patchUserSkill(user_id, skill_id, body) {
   return await clientAPI(`user/${user_id}/skill/${skill_id}/`, { body, method: "PATCH" });
 }
 async function deleteUserSkill(user_id, skill_id) {
-  return await clientAPI(`user/${user_id}/skill/${skill_id}/`, { method: "DELETE" });
+  await clientAPI(`user/${user_id}/skill/${skill_id}/`, { method: "DELETE" });
 }
 async function resetUserPassword(organizationCode, userId) {
   return await clientAPI(`user/${userId}/reset-password/`, {
@@ -935,7 +935,7 @@ async function patchProjectCategory(organizationCode, id, category) {
   });
 }
 async function deleteProjectCategory(organizationCode, id) {
-  return await clientAPI(`organization/${organizationCode}/category/${id}/`, { method: "DELETE" });
+  await clientAPI(`organization/${organizationCode}/category/${id}/`, { method: "DELETE" });
 }
 async function getProjectCategory(organizationCode, id) {
   return await clientAPI(`organization/${organizationCode}/category/${id}/`);
@@ -965,7 +965,7 @@ async function patchProjectCategoryBackground(organizationCode, { id, imageId, b
   });
 }
 async function deleteProjectCategoryBackground(organizationCode, { category_id, id }) {
-  return await clientAPI(
+  await clientAPI(
     `organization/${organizationCode}/category/${category_id}/background/${id}/`,
     { method: "DELETE" }
   );
@@ -977,7 +977,7 @@ async function postProjectCategoryFollow(userId, category_id) {
   return await clientAPI(`user/${userId}/category-follow/`, { body: { category_id }, method: "POST" });
 }
 async function deleteProjectCategoryFollow(userId, category_follow_id) {
-  return await clientAPI(`user/${userId}/category-follow/${category_follow_id}/`, { method: "DELETE" });
+  await clientAPI(`user/${userId}/category-follow/${category_follow_id}/`, { method: "DELETE" });
 }
 
 // src/apis/project-members.service.ts
@@ -985,10 +985,10 @@ async function addProjectMembers(projectId, data) {
   return await clientAPI(`project/${projectId}/member/add/`, { body: data, method: "POST" });
 }
 async function deleteProjectMembers(projectId, data) {
-  return await clientAPI(`project/${projectId}/member/remove/`, { body: data, method: "POST" });
+  await clientAPI(`project/${projectId}/member/remove/`, { body: data, method: "POST" });
 }
 async function deleteProjectMembersSelf(projectId) {
-  return await clientAPI(`project/${projectId}/quit/`, { method: "DELETE" });
+  await clientAPI(`project/${projectId}/quit/`, { method: "DELETE" });
 }
 
 // src/apis/project-messages.service.ts
@@ -1017,7 +1017,7 @@ async function patchProjectMessage(projectId, messageId, body) {
   });
 }
 async function deleteProjectMessage(projectId, projectMessageId, config = {}) {
-  return await clientAPI(`project/${projectId}/project-message/${projectMessageId}/`, {
+  await clientAPI(`project/${projectId}/project-message/${projectMessageId}/`, {
     method: "DELETE",
     ...config
   });
@@ -1044,7 +1044,7 @@ async function patchProject(projectId, project) {
   return await clientAPI(`project/${projectId}/`, { body: project, method: "PATCH" });
 }
 async function deleteProject(projectId) {
-  return await clientAPI(`project/${projectId}/`, { method: "DELETE" });
+  await clientAPI(`project/${projectId}/`, { method: "DELETE" });
 }
 async function duplicateProject(projectId) {
   return await clientAPI(`project/${projectId}/duplicate/`, { method: "POST" });
@@ -1059,7 +1059,7 @@ async function addLinkedProject(projectId, body) {
   return await clientAPI(`project/${projectId}/linked-project/add-many/`, { body, method: "POST" });
 }
 async function deleteLinkedProject(projectId, linkedProjectId) {
-  return await clientAPI(`project/${projectId}/linked-project/${linkedProjectId}/`, {
+  await clientAPI(`project/${projectId}/linked-project/${linkedProjectId}/`, {
     method: "DELETE"
   });
 }
@@ -1116,7 +1116,7 @@ async function updateProjectTab(projectId, projectTabId, body, config = {}) {
   });
 }
 async function deleteProjectTab(projectId, projectTabId, config = {}) {
-  return await clientAPI(`project/${projectId}/tab/${projectTabId}/`, {
+  await clientAPI(`project/${projectId}/tab/${projectTabId}/`, {
     method: "DELETE",
     ...config
   });
@@ -1151,7 +1151,7 @@ async function updateProjectTabItem(projectId, projectTabId, projectTabItemId, b
   );
 }
 async function deleteProjectTabItem(projectId, projectTabId, projectTabItemId, config = {}) {
-  return await clientAPI(
+  await clientAPI(
     `project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`,
     {
       method: "DELETE",
@@ -1237,7 +1237,7 @@ async function patchReview(projectId, reviewId, body) {
   });
 }
 async function deleteReview(projectId, reviewId) {
-  return await clientAPI(`project/${projectId}/review/${reviewId}/`, { method: "DELETE" });
+  await clientAPI(`project/${projectId}/review/${reviewId}/`, { method: "DELETE" });
 }
 
 // src/apis/search.service.ts
@@ -1335,7 +1335,7 @@ async function patchOrgClassification(organizationCode, classificationId, classi
   );
 }
 async function deleteOrgClassification(organizationCode, classificationId) {
-  return await clientAPI(
+  await clientAPI(
     `organization/${organizationCode}/tag-classification/${classificationId}/`,
     {
       method: "DELETE"
@@ -1379,7 +1379,7 @@ async function patchClassificationTag(organizationCode, classificationId, tagtId
   );
 }
 async function deleteClassificationTag(organizationCode, classificationId, tagtId) {
-  return await clientAPI(
+  await clientAPI(
     `/organization/${organizationCode}/tag-classification/${classificationId}/tag/${tagtId}/`,
     { method: "DELETE" }
   );
@@ -1404,8 +1404,8 @@ function getTemplates(organizationCode, config = {}) {
 function getTemplate(organizationCode, templateId, config = {}) {
   return clientAPI(`organization/${organizationCode}/template/${templateId}/`, config);
 }
-function deleteTemplate(organizationCode, templateId) {
-  return clientAPI(`organization/${organizationCode}/template/${templateId}/`, {
+async function deleteTemplate(organizationCode, templateId) {
+  await clientAPI(`organization/${organizationCode}/template/${templateId}/`, {
     method: "DELETE"
   });
 }

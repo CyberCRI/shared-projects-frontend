@@ -70,7 +70,7 @@ export async function patchUserPicture(id: string | number, pictureId: string, b
 }
 
 export async function deleteUser(id: string) {
-  return await clientAPI<undefined>(`user/${id}/`, { method: 'DELETE' })
+  await clientAPI(`user/${id}/`, { method: 'DELETE' })
 }
 
 export async function postUserPicture(id: string, body: FormData) {
@@ -94,7 +94,7 @@ export async function patchUserSkill(
 }
 
 export async function deleteUserSkill(user_id: string | number, skill_id: number) {
-  return await clientAPI(`user/${user_id}/skill/${skill_id}/`, { method: 'DELETE' })
+  await clientAPI(`user/${user_id}/skill/${skill_id}/`, { method: 'DELETE' })
 }
 
 export async function resetUserPassword(organizationCode: OrganizationModel['code'], userId: UserIdOrSlug) {

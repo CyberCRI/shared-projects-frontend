@@ -44,7 +44,7 @@ export async function deleteComment(
   commentId: CommentModel['id'],
   config: Config = {}
 ) {
-  return await clientAPI<undefined>(`project/${projectId}/comment/${commentId}/`, {
+  await clientAPI(`project/${projectId}/comment/${commentId}/`, {
     ...config,
     method: 'DELETE',
   })

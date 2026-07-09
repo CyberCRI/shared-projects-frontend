@@ -109,7 +109,7 @@ export async function removeFeaturedProject(
   body: FeaturedProjectBody,
   config: ConfigFeaturedProject = {}
 ) {
-  return await clientAPI<undefined>(`organization/${organizationCode}/featured-project/remove/`, {
+  await clientAPI(`organization/${organizationCode}/featured-project/remove/`, {
     method: 'POST',
     body,
     ...config,

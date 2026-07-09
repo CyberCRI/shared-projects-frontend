@@ -35,7 +35,7 @@ export async function patchLocation(
 }
 
 export async function deleteLocation(projectId: ProjectSlugOrId, locationId: LocationId) {
-  return await clientAPI<undefined>(`project/${projectId}/location/${locationId}/`, {
+  await clientAPI(`project/${projectId}/location/${locationId}/`, {
     method: 'DELETE',
   })
 }

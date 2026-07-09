@@ -20,11 +20,11 @@ export function getTemplate(
   return clientAPI<TemplateModel>(`organization/${organizationCode}/template/${templateId}/`, config)
 }
 
-export function deleteTemplate(
+export async function deleteTemplate(
   organizationCode: OrganizationModel['code'],
   templateId: TemplateId
 ) {
-  return clientAPI<undefined>(`organization/${organizationCode}/template/${templateId}/`, {
+  await clientAPI(`organization/${organizationCode}/template/${templateId}/`, {
     method: 'DELETE',
   })
 }

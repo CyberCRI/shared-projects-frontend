@@ -46,4 +46,4 @@ export interface NotificationSettingsModel extends BaseModel {
   new_instruction: boolean
 }
 
-export type NotificationSettingsForm = Optional<NotificationModel, 'id'>
+export type NotificationSettingsForm = Optional<NotificationSettingsModel, 'id'>

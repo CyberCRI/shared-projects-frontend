@@ -34,7 +34,7 @@ export async function deleteProjectGoal(
   goalId: GoalModel['id'],
   config = {}
 ) {
-  return await clientAPI<undefined>(`project/${projectId}/goal/${goalId}/`, {
+  await clientAPI(`project/${projectId}/goal/${goalId}/`, {
     ...config,
     method: 'DELETE',
   })

@@ -46,7 +46,7 @@ export async function deleteAnnouncement(
   announcementId: AnnouncementId,
   config: Config = {}
 ) {
-  return await clientAPI<undefined>(`project/${projectId}/announcement/${announcementId}/`, {
+  await clientAPI(`project/${projectId}/announcement/${announcementId}/`, {
     method: 'DELETE',
     ...config,
   })
@@ -57,7 +57,7 @@ export async function applyAnnouncement(
   announcementId: AnnouncementId,
   body: AnnouncementApplyForm
 ) {
-  return await clientAPI<undefined>(`project/${projectId}/announcement/${announcementId}/apply/`, {
+  await clientAPI(`project/${projectId}/announcement/${announcementId}/apply/`, {
     body,
     method: 'POST',
   })

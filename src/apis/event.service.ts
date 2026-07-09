@@ -55,7 +55,7 @@ export async function deleteEvent(
   organizationCode: OrganizationModel['code'],
   idOrSlug: EventIdOrSlug
 ) {
-  return await clientAPI<undefined>(`organization/${organizationCode}/event/${idOrSlug}/`, {
+  await clientAPI(`organization/${organizationCode}/event/${idOrSlug}/`, {
     method: 'DELETE',
   })
 }

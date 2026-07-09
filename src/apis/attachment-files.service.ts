@@ -1,5 +1,5 @@
 import { PaginationQuery, PaginationResult } from '../interfaces'
-import { AttachmentFileId, AttachmentFileInput, AttachmentFileModel, AttachmentForm, ProjectSlugOrId } from '../models'
+import { AttachmentFileId, AttachmentFileInput, AttachmentFileModel, AttachmentForm, ProjectSlugOrId, UserIdOrSlug } from '../models'
 import {clientAPI, type clientAPIOptions } from './client'
 
 type Config = clientAPIOptions<Partial<PaginationQuery>>
@@ -39,15 +39,15 @@ export async function deleteProjectAttachmentFile(
   projectId: ProjectSlugOrId,
   fileId: AttachmentFileId
 ) {
-  return await clientAPI<undefined>(`project/${projectId}/file/${fileId}/`, { method: 'DELETE' })
+  await clientAPI(`project/${projectId}/file/${fileId}/`, { method: 'DELETE' })
 }
 
 // -- user
-export function getUserAttachmentFile(userId: number, options: any) {
+export function getUserAttachmentFile(userId: UserIdOrSlug, options: any) {
   return clientAPI<PaginationResult<AttachmentFileModel>>(`user/${userId}/file/`, options)
 }
 
-export async function postUserAttachmentFile(userId: number, data: AttachmentForm) {
+export async function postUserAttachmentFile(userId: UserIdOrSlug, data: AttachmentForm) {
   const body = new FormData()
   body.set('description', data.description)
   body.set('title', data.title)
@@ -60,7 +60,7 @@ export async function postUserAttachmentFile(userId: number, data: AttachmentFor
 }
 
 export async function patchUserAttachmentFile(
-  userId: number,
+  userId: UserIdOrSlug,
   fileId: number,
   data: Partial<AttachmentFileModel>
 ) {
@@ -78,6 +78,6 @@ export async function patchUserAttachmentFile(
   })
 }
 
-export async function deleteUserAttachmentFile(userId: number, fileId: number) {
-  return await clientAPI(`user/${userId}/file/${fileId}/`, { method: 'DELETE' })
+export async function deleteUserAttachmentFile(userId: UserIdOrSlug, fileId: number) {
+  await clientAPI(`user/${userId}/file/${fileId}/`, { method: 'DELETE' })
 }

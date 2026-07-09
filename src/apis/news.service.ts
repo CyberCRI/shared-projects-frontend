@@ -49,7 +49,7 @@ export async function deleteNews(
   organizationCode: OrganizationModel['code'],
   newsId: NewsModel['id']
 ) {
-  return await clientAPI(`organization/${organizationCode}/news/${newsId}/`, { method: 'DELETE' })
+  await clientAPI(`organization/${organizationCode}/news/${newsId}/`, { method: 'DELETE' })
 }
 
 export async function postNewsHeader(

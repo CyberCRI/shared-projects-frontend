@@ -18,7 +18,7 @@ export async function patchFaq(organisationCode: OrganizationModel['code'], body
 }
 
 export async function deleteFaq({ orgCode }: { orgCode: OrganizationModel['code'] }) {
-  return await clientAPI(`organization/${orgCode}/faq/`, { method: 'DELETE' })
+  await clientAPI(`organization/${orgCode}/faq/`, { method: 'DELETE' })
 }
 
 export async function postFaqImage({ orgCode, body }: { orgCode: OrganizationModel['code'], body: any }) {

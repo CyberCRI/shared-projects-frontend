@@ -48,7 +48,7 @@ export async function deleteProjectTab(
   projectTabId: ProjectTab['id'],
   config: Config = {}
 ) {
-  return await clientAPI<undefined>(`project/${projectId}/tab/${projectTabId}/`, {
+  await clientAPI(`project/${projectId}/tab/${projectTabId}/`, {
     method: 'DELETE',
     ...config,
   })
@@ -116,7 +116,7 @@ export async function deleteProjectTabItem(
   projectTabItemId: ProjectTabItem['id'],
   config: Config = {}
 ) {
-  return await clientAPI<undefined>(
+  await clientAPI(
     `project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`,
     {
       method: 'DELETE',

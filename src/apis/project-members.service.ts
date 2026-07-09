@@ -9,9 +9,9 @@ export async function deleteProjectMembers(
   projectId: ProjectSlugOrId,
   data: ProjectMembersDeleteInput
 ) {
-  return await clientAPI(`project/${projectId}/member/remove/`, { body: data, method: 'POST' })
+  await clientAPI(`project/${projectId}/member/remove/`, { body: data, method: 'POST' })
 }
 
 export async function deleteProjectMembersSelf(projectId: ProjectSlugOrId) {
-  return await clientAPI(`project/${projectId}/quit/`, { method: 'DELETE' })
+  await clientAPI(`project/${projectId}/quit/`, { method: 'DELETE' })
 }
