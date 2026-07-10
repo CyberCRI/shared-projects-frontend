@@ -12,13 +12,13 @@ export type ClientAPIOptions<
   noError?: boolean
 }
 
-let $$defaultOptions: ClientAPIOptions = {}
+let $$defaultOptions: () => ClientAPIOptions = () => ({})
 
-export const configureAPI = (options: ClientAPIOptions): void => {
-  $$defaultOptions = options
+export const configureAPI = (callback: typeof $$defaultOptions): void => {
+  $$defaultOptions = callback
 }
 
 export const clientAPI = <Result>(url: string, options: ClientAPIOptions = {}): Promise<Result> => {
-  const finalOptions = merge($$defaultOptions, options || {})
+  const finalOptions = merge($$defaultOptions(), options || {})
   return ofetch<Result>(url, finalOptions)
 }

@@ -10,7 +10,8 @@ type ClientAPIOptions<Query extends OFetchOrgiginalOptions['query'] = OFetchOrgi
     body?: Body;
     noError?: boolean;
 };
-declare const configureAPI: (options: ClientAPIOptions) => void;
+declare let $$defaultOptions: () => ClientAPIOptions;
+declare const configureAPI: (callback: typeof $$defaultOptions) => void;
 declare const clientAPI: <Result>(url: string, options?: ClientAPIOptions) => Promise<Result>;
 
 type Config$d = ClientAPIOptions<QueryFilterAnnouncement>;

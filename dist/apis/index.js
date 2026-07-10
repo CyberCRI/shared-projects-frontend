@@ -1,12 +1,12 @@
 // src/apis/client.ts
 import { ofetch } from "ofetch";
 import { merge } from "es-toolkit";
-var $$defaultOptions = {};
-var configureAPI = (options) => {
-  $$defaultOptions = options;
+var $$defaultOptions = () => ({});
+var configureAPI = (callback) => {
+  $$defaultOptions = callback;
 };
 var clientAPI = (url, options = {}) => {
-  const finalOptions = merge($$defaultOptions, options || {});
+  const finalOptions = merge($$defaultOptions(), options || {});
   return ofetch(url, finalOptions);
 };
 
