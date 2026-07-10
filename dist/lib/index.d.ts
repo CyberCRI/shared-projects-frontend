@@ -1,6 +1,6 @@
 import { P as ProviderParams, R as Right } from '../permissions-BKtXZsbf.js';
 import { P as PermissionType } from '../permissions.model-DCQ_saKg.js';
-import { ax as Roles, S as OrganizationModel, a8 as ProjectModel, W as PeopleGroupModel, aZ as UserModel, M as NewsModel, i as EventModel, p as InstructionModel } from '../instruction.model-CnWXWF47.js';
+import { ax as Roles, S as OrganizationModel, a8 as ProjectModel, W as PeopleGroupModel, aZ as UserModel, M as NewsModel, i as EventModel, p as InstructionModel } from '../instruction.model-C4gOlUmx.js';
 import { StarterKitOptions } from '@tiptap/starter-kit';
 import { Extensions, Extension } from '@tiptap/core';
 import * as highlight_js from 'highlight.js';

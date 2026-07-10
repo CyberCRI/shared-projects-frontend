@@ -48,6 +48,7 @@ export type NewsInput = Required<
 >
 
 export type NewsForm = Omit<NewsInput, 'people_groups'> & {
+  id?: NewsModel['id']
   organization_code?: string
   imageSizes?: ImageSize
   people_groups: {

@@ -1,3 +1,5 @@
+# script to generate index.ts and exports in packages.json
+
 import json
 from pathlib import Path
 
@@ -18,8 +20,6 @@ exports = {
 }
 for dir in GENERATES:
     inline = []
-    print("-------\n")
-
     last_folder = None
     for file in Path(BASE / dir).rglob("**/*"):
         bb = without_base(file, dir)
@@ -32,7 +32,6 @@ for dir in GENERATES:
         parents = str(bb.parent)
 
         if last_folder != parents:
-            print(last_folder, parents)
             if last_folder is not None:
                 inline.append("")
             if parents.strip("/"):
