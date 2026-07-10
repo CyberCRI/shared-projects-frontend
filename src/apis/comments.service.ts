@@ -5,10 +5,10 @@ import {
   ProjectSlugOrId,
   QueryFilterComments,
 } from '../models'
-import { clientAPI, type clientAPIOptions } from './client'
+import { clientAPI, type ClientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
 
-type Config = clientAPIOptions<QueryFilterComments>
+type Config = ClientAPIOptions<QueryFilterComments>
 
 export async function getComments(projectId: ProjectSlugOrId, config: Config = {}) {
   return await clientAPI<PaginationResult<CommentModel>>(`project/${projectId}/comment/`, config)

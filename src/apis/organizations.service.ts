@@ -1,5 +1,6 @@
 import {
   GroupModelInput,
+  ImageModel,
   ImageModelCreated,
   ImageOrganizationInput,
   OrganizationModel,
@@ -11,7 +12,7 @@ import {
 } from '../models'
 import { AccessRequest, AccessRequestModel, QueryFilterAccessRequests } from './access.service'
 import { _adaptParamsToGetQuery } from './utils.service'
-import { clientAPI, clientAPIOptions } from './client'
+import { clientAPI, ClientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
 
 export async function patchOrganization(
@@ -26,12 +27,12 @@ export async function patchOrganization(
 
 export async function getOrganizationByCode(
   organisationCode: OrganizationModel['code'],
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<OrganizationModel>(`organization/${organisationCode}/`, config)
 }
 
-export async function getOrganizations(config: clientAPIOptions = {}) {
+export async function getOrganizations(config: ClientAPIOptions = {}) {
   return await clientAPI<PaginationResult<OrganizationModel>>(`organization/`, config)
 }
 
@@ -50,16 +51,26 @@ export async function postOrganisationBanner({
 
 export async function patchOrganisationBanner(
   organisationCode: OrganizationModel['code'],
-  banner_id: number,
-  body: FormData
+  imageId: ImageModel['id'],
+  body: FormData,
+  config: ClientAPIOptions = {}
 ) {
-  return await clientAPI<ImageModelCreated>(
-    `organization/${organisationCode}/banner/${banner_id}/`,
-    {
-      body,
-      method: 'PATCH',
-    }
-  )
+  return await clientAPI<ImageModelCreated>(`organization/${organisationCode}/banner/${imageId}/`, {
+    ...config,
+    body,
+    method: 'PATCH',
+  })
+}
+
+export async function deleteOrganisationBanner(
+  organizationCode: OrganizationModel['code'],
+  imageId: ImageModel['id'],
+  config: ClientAPIOptions = {}
+) {
+  await clientAPI(`organization/${organizationCode}/banner/${imageId}/`, {
+    ...config,
+    method: 'DELETE',
+  })
 }
 
 export async function postOrganisationLogo({
@@ -70,6 +81,17 @@ export async function postOrganisationLogo({
   body: ImageOrganizationInput | FormData
 }) {
   return await clientAPI<ImageModelCreated>(`organization/${code}/logo/`, { body, method: 'POST' })
+}
+
+export async function deleteOrganisationLogo(
+  organizationCode: OrganizationModel['code'],
+  imageId: ImageModel['id'],
+  config: ClientAPIOptions = {}
+) {
+  await clientAPI(`organization/${organizationCode}/logo/${imageId}/`, {
+    ...config,
+    method: 'DELETE',
+  })
 }
 
 export async function addOrgMember({ org_id, body }: { org_id: number; body: GroupModelInput[] }) {
@@ -95,7 +117,7 @@ export async function postAccessRequest(organizationCode: OrganizationModel['cod
 
 export async function getAccessRequests(
   organizationCode: OrganizationModel['code'],
-  config: clientAPIOptions<QueryFilterAccessRequests>
+  config: ClientAPIOptions<QueryFilterAccessRequests>
 ) {
   return await clientAPI<PaginationResult<AccessRequestModel>>(
     `organization/${organizationCode}/access-request/`,
@@ -127,7 +149,7 @@ export async function acceptAccessRequest(
 }
 
 // --- featured
-type ConfigFeaturedProject = clientAPIOptions
+type ConfigFeaturedProject = ClientAPIOptions
 type FeaturedProjectBody = {
   featured_projects_ids: ProjectSlugOrId[]
 }
@@ -181,7 +203,7 @@ export async function postOrganizationImage({
 export async function patchTermsAndConditions(
   organization: OrganizationModel,
   content: TermsAndConditions['displayed_content'],
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<TermsAndConditions>(
     `organization/${organization.code}/terms-and-conditions/${organization.terms_and_conditions?.id}/`,

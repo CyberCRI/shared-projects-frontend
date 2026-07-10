@@ -5,9 +5,9 @@ import {
   TagModel,
 } from '../models'
 import { PaginationQuery, PaginationResult } from '../interfaces'
-import { clientAPI, type clientAPIOptions } from './client'
+import { clientAPI, type ClientAPIOptions } from './client'
 
-export type Config = clientAPIOptions<PaginationQuery>
+export type Config = ClientAPIOptions<PaginationQuery>
 
 export async function getAllOrgClassifications(
   organizationCode: OrganizationModel['code'],
@@ -80,7 +80,7 @@ export async function deleteOrgClassification(
   })
 }
 
-type ConfigClassification = clientAPIOptions<QueryFilterTagClassification>
+type ConfigClassification = ClientAPIOptions<QueryFilterTagClassification>
 
 export async function getOrgClassificationTags(
   organizationCode: OrganizationModel['code'],

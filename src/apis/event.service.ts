@@ -5,10 +5,10 @@ import {
   OrganizationModel,
   QueryFilterEvent,
 } from '../models'
-import { clientAPI, type clientAPIOptions } from './client'
+import { clientAPI, type ClientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
 
-type ConfigEvent = clientAPIOptions<QueryFilterEvent>
+type ConfigEvent = ClientAPIOptions<QueryFilterEvent>
 
 export async function getAllEvents(
   organizationCode: OrganizationModel['code'],

@@ -1,8 +1,8 @@
-import { clientAPI, clientAPIOptions } from './client'
+import { clientAPI, ClientAPIOptions } from './client'
 import { Stats } from '../models/stats.model'
 import { OrganizationModel } from '../models'
 
-type Config = clientAPIOptions<{
+type Config = ClientAPIOptions<{
   publication_status: string
 }>
 

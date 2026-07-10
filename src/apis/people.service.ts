@@ -11,20 +11,20 @@ import {
   PrivacySettings,
   ImageModel,
 } from '../models'
-import { clientAPI, type clientAPIOptions } from './client'
+import { clientAPI, type ClientAPIOptions } from './client'
 import { _adaptParamsToGetQuery } from './utils.service'
 import { PaginationResult } from '../interfaces'
 import { merge } from 'es-toolkit'
 
 // New user service using projects API
-export async function getUser(userId: UserSlugOrId, config: clientAPIOptions = {}) {
+export async function getUser(userId: UserSlugOrId, config: ClientAPIOptions = {}) {
   return await clientAPI<UserModel>(`user/${userId}/`, config)
 }
 
 export async function postUser(
   organizationCode: OrganizationModel['code'],
   body: FormData,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<UserModel>(
     `user/`,
@@ -46,7 +46,7 @@ export async function postUserWithInvitation(
   organizationCode: OrganizationModel['code'],
   inviteToken: string,
   body: FormData,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   // use token as auth header with and "Invite" key instead of "Bearer"
   const options = merge(
@@ -68,7 +68,7 @@ export async function postUserWithInvitation(
 
 export async function searchPeopleAdmin(
   organizationId: OrganizationModel['id'],
-  config: clientAPIOptions
+  config: ClientAPIOptions
 ) {
   // TODO change backend with prefix organization code in url not in query
   const newConfig = {
@@ -85,7 +85,7 @@ export async function searchPeopleAdmin(
 export async function searchPeopleByExactMail(
   email: string,
   params: object,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   const adaptedParams = params ? _adaptParamsToGetQuery(params) : {}
   return await clientAPI<UserModel>(`user/get-by-email/${email}/`, { ...config, ...adaptedParams })
@@ -94,7 +94,7 @@ export async function searchPeopleByExactMail(
 export async function patchUser(
   userId: UserSlugOrId,
   body: UserPatchModel,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<UserModel>(`user/${userId}/`, { ...config, body, method: 'PATCH' })
 }
@@ -103,7 +103,7 @@ export async function patchUserPicture(
   userId: UserSlugOrId,
   pictureId: ImageModel['id'],
   body: FormData,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<ImageModelCreated>(`user/${userId}/profile-picture/${pictureId}/`, {
     ...config,
@@ -112,14 +112,14 @@ export async function patchUserPicture(
   })
 }
 
-export async function deleteUser(userId: UserSlugOrId, config: clientAPIOptions = {}) {
+export async function deleteUser(userId: UserSlugOrId, config: ClientAPIOptions = {}) {
   await clientAPI(`user/${userId}/`, { ...config, method: 'DELETE' })
 }
 
 export async function postUserPicture(
   userId: UserSlugOrId,
   body: FormData,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<ImageModelCreated>(`user/${userId}/profile-picture/`, {
     ...config,
@@ -128,10 +128,18 @@ export async function postUserPicture(
   })
 }
 
+export async function deleteUserPicture(
+  id: UserSlugOrId,
+  imageId: ImageModel['id'],
+  config: ClientAPIOptions = {}
+) {
+  await clientAPI(`user/${id}/profile-picture/${imageId}/`, { ...config, method: 'DELETE' })
+}
+
 export async function patchUserPrivacy(
   userId: UserSlugOrId,
   body: UserPrivacyPatchModel,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<PrivacySettings>(`privacy-settings/${userId}/`, {
     ...config,
@@ -143,7 +151,7 @@ export async function patchUserPrivacy(
 export async function postUserSkill(
   userId: UserSlugOrId,
   body: UserSkillModel,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<UserSkillModel>(`user/${userId}/skill/`, {
     ...config,
@@ -156,7 +164,7 @@ export async function patchUserSkill(
   userId: UserSlugOrId,
   skillId: UserSkillModel['id'],
   body: UserPrivacyPatchModel,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<UserSkillModel>(`user/${userId}/skill/${skillId}/`, {
     ...config,
@@ -168,7 +176,7 @@ export async function patchUserSkill(
 export async function deleteUserSkill(
   userId: UserSlugOrId,
   skillId: UserSkillModel['id'],
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   await clientAPI(`user/${userId}/skill/${skillId}/`, { ...config, method: 'DELETE' })
 }
@@ -176,7 +184,7 @@ export async function deleteUserSkill(
 export async function resetUserPassword(
   organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   // TODO change that in backend
   return await clientAPI<{ detail: 'Email sent' }>(

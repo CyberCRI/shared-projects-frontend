@@ -9,13 +9,13 @@ import {
   ProjectCategoryPutInput,
   UserSlugOrId,
 } from '../models'
-import { clientAPI, type clientAPIOptions } from './client'
+import { clientAPI, type ClientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
 
 export async function getProjectCategory(
   organizationCode: OrganizationModel['code'],
   categoryId: ProjectCategoryModel['id'],
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<ProjectCategoryModel>(
     `organization/${organizationCode}/category/${categoryId}/`,
@@ -26,7 +26,7 @@ export async function getProjectCategory(
 export async function createProjectCategory(
   organizationCode: OrganizationModel['code'],
   body: ProjectCategoryCreateInput | FormData,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<ProjectCategoryModel>(`organization/${organizationCode}/category/`, {
     ...config,
@@ -39,7 +39,7 @@ export async function putProjectCategory(
   organizationCode: OrganizationModel['code'],
   categoryId: ProjectCategoryModel['id'],
   body: ProjectCategoryPutInput | FormData,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<ProjectCategoryModel>(
     `organization/${organizationCode}/category/${categoryId}/`,
@@ -55,7 +55,7 @@ export async function patchProjectCategory(
   organizationCode: OrganizationModel['code'],
   categoryId: ProjectCategoryModel['id'],
   body: ProjectCategoryPatchInput | FormData,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<ProjectCategoryModel>(
     `organization/${organizationCode}/category/${categoryId}/`,
@@ -70,7 +70,7 @@ export async function patchProjectCategory(
 export async function deleteProjectCategory(
   organizationCode: OrganizationModel['code'],
   categoryId: ProjectCategoryModel['id'],
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   await clientAPI(`organization/${organizationCode}/category/${categoryId}/`, {
     ...config,
@@ -80,7 +80,7 @@ export async function deleteProjectCategory(
 
 export async function getAllProjectCategories(
   organizationCode: OrganizationModel['code'],
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<PaginationResult<ProjectCategoryModel>>(
     `organization/${organizationCode}/category/`,
@@ -90,7 +90,7 @@ export async function getAllProjectCategories(
 
 export async function getRootProjectCategory(
   organizationCode: OrganizationModel['code'],
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<ProjectCategoryModel>(
     `organization/${organizationCode}/categories-hierarchy/`,
@@ -101,7 +101,7 @@ export async function getRootProjectCategory(
 export async function getProjectCategoriesHierarchy(
   organizationCode: OrganizationModel['code'],
   categoryId: ProjectCategoryModel['id'],
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<ProjectCategoryModel>(
     `organization/${organizationCode}/category/${categoryId}/hierarchy/`,
@@ -112,7 +112,7 @@ export async function getProjectCategoriesHierarchy(
 export async function postProjectCategoryBackground(
   organizationCode: OrganizationModel['code'],
   { id, body }: { id: ProjectCategoryModel['id']; body: any },
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<ImageModelCreated>(
     `organization/${organizationCode}/category/${id}/background/`,
@@ -127,7 +127,7 @@ export async function postProjectCategoryBackground(
 export async function patchProjectCategoryBackground(
   organizationCode: OrganizationModel['code'],
   { id, imageId, body }: { id: ProjectCategoryModel['id']; body: any; imageId: ImageModel['id'] },
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<ImageModelCreated>(
     `organization/${organizationCode}/category/${id}/background/${imageId}/`,
@@ -142,7 +142,7 @@ export async function patchProjectCategoryBackground(
 export async function deleteProjectCategoryBackground(
   organizationCode: OrganizationModel['code'],
   { category_id, id }: { category_id: ProjectCategoryModel['id']; id: any },
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   await clientAPI(`organization/${organizationCode}/category/${category_id}/background/${id}/`, {
     ...config,
@@ -152,7 +152,7 @@ export async function deleteProjectCategoryBackground(
 
 export async function getProjectCategoriesFollow(
   userId: UserSlugOrId,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<PaginationResult<FollowOutput>>(`user/${userId}/category-follow/`, config)
 }
@@ -160,7 +160,7 @@ export async function getProjectCategoriesFollow(
 export async function postProjectCategoryFollow(
   userId: UserSlugOrId,
   category_id: number,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<FollowOutput>(`user/${userId}/category-follow/`, {
     ...config,
@@ -172,7 +172,7 @@ export async function postProjectCategoryFollow(
 export async function deleteProjectCategoryFollow(
   userId: UserSlugOrId,
   category_follow_id: number,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   await clientAPI(`user/${userId}/category-follow/${category_follow_id}/`, {
     ...config,

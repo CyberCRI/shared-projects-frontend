@@ -6,11 +6,11 @@ import {
   ProjectSlugOrId,
   QueryFilterBlogEntry,
 } from '../models'
-import { clientAPI, type clientAPIOptions } from './client'
+import { clientAPI, type ClientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
 
-type ConfigBlogEntry = clientAPIOptions
-type ConfigBlogEntries = clientAPIOptions<QueryFilterBlogEntry>
+type ConfigBlogEntry = ClientAPIOptions
+type ConfigBlogEntries = ClientAPIOptions<QueryFilterBlogEntry>
 
 export async function getBlogEntries(projectId: ProjectSlugOrId, config: ConfigBlogEntries = {}) {
   return await clientAPI<PaginationResult<BlogEntryModel>>(

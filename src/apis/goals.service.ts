@@ -1,8 +1,8 @@
 import { GoalForm, GoalModel, ProjectSlugOrId } from '../models'
-import { clientAPI, clientAPIOptions } from './client'
+import { clientAPI, ClientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
 
-type ConfigGoal = clientAPIOptions
+type ConfigGoal = ClientAPIOptions
 
 export async function getProjectGoals(projectId: ProjectSlugOrId, config: ConfigGoal = {}) {
   return await clientAPI<PaginationResult<GoalModel>>(`project/${projectId}/goal/`, config)
@@ -22,7 +22,7 @@ export async function getProjectGoal(
 export async function createProjectGoal(
   projectId: ProjectSlugOrId,
   body: GoalForm,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<GoalModel>(`project/${projectId}/goal/`, {
     ...config,
@@ -35,7 +35,7 @@ export async function patchProjectGoal(
   projectId: ProjectSlugOrId,
   goalId: GoalModel['id'],
   body: GoalForm,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<GoalModel>(`project/${projectId}/goal/${goalId}/`, {
     ...config,
@@ -47,7 +47,7 @@ export async function patchProjectGoal(
 export async function deleteProjectGoal(
   projectId: ProjectSlugOrId,
   goalId: GoalModel['id'],
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   await clientAPI(`project/${projectId}/goal/${goalId}/`, {
     ...config,

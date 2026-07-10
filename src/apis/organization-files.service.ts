@@ -1,9 +1,9 @@
 import { AttachmentFileModel, OrganizationModel } from '../models'
 import { PaginationQuery, PaginationResult } from '../interfaces'
-import { clientAPI, type clientAPIOptions } from './client'
+import { clientAPI, type ClientAPIOptions } from './client'
 
-type Config = clientAPIOptions
-type ConfigPagiations = clientAPIOptions<Partial<PaginationQuery>>
+type Config = ClientAPIOptions
+type ConfigPagiations = ClientAPIOptions<Partial<PaginationQuery>>
 
 export async function getOrganizationFiles(
   organizationCode: string,

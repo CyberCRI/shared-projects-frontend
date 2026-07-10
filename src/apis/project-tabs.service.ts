@@ -8,12 +8,12 @@ import {
   QueryFilterProjectTab,
   QueryFilterProjectTabItem,
 } from '../models'
-import { clientAPI, clientAPIOptions } from './client'
+import { clientAPI, ClientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
 
-type Config = clientAPIOptions
-type ConfigTab = clientAPIOptions<QueryFilterProjectTab>
-type ConfigTabItem = clientAPIOptions<QueryFilterProjectTabItem>
+type Config = ClientAPIOptions
+type ConfigTab = ClientAPIOptions<QueryFilterProjectTab>
+type ConfigTabItem = ClientAPIOptions<QueryFilterProjectTabItem>
 
 export async function getAllProjectTab(projectId: ProjectSlugOrId, config: ConfigTab = {}) {
   return await clientAPI<PaginationResult<ProjectTab>>(`project/${projectId}/tab/`, config)

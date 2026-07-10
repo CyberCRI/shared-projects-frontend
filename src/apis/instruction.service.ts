@@ -5,14 +5,14 @@ import {
   OrganizationModel,
   QueryFilterInstruction,
 } from '../models'
-import { clientAPI, type clientAPIOptions } from './client'
+import { clientAPI, type ClientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
 
-type ConfigEvent = clientAPIOptions<QueryFilterInstruction>
+type ConfigInstruction = ClientAPIOptions<QueryFilterInstruction>
 
 export async function getAllInstructions(
   organizationCode: OrganizationModel['code'],
-  config?: ConfigEvent
+  config?: ConfigInstruction
 ) {
   return await clientAPI<PaginationResult<InstructionModel>>(
     `organization/${organizationCode}/instruction/`,
@@ -23,7 +23,7 @@ export async function getAllInstructions(
 export async function getInstruction(
   organizationCode: OrganizationModel['code'],
   idOrSlug: InstructionId,
-  config?: ConfigEvent
+  config?: ConfigInstruction
 ) {
   return await clientAPI<InstructionModel>(
     `organization/${organizationCode}/instruction/${idOrSlug}/`,

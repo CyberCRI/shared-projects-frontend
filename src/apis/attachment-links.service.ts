@@ -7,9 +7,9 @@ import {
   UserSlugOrId,
 } from '../models'
 import { PaginationQuery, PaginationResult } from '../interfaces'
-import { clientAPI, type clientAPIOptions } from './client'
+import { clientAPI, type ClientAPIOptions } from './client'
 
-type Config = clientAPIOptions<Partial<PaginationQuery>>
+type Config = ClientAPIOptions<Partial<PaginationQuery>>
 
 export async function getProjectAttachmentLinks(projectId: ProjectSlugOrId, config: Config = {}) {
   return await clientAPI<PaginationResult<AttachmentLinkModel>>(
@@ -52,14 +52,14 @@ export async function deleteProjectAttachmentLink(
 
 // --- user
 
-export function getUserAttachmentLink(userId: UserSlugOrId, options: clientAPIOptions = {}) {
+export function getUserAttachmentLink(userId: UserSlugOrId, options: ClientAPIOptions = {}) {
   return clientAPI<PaginationResult<AttachmentLinkModel>>(`user/${userId}/link/`, options)
 }
 
 export async function postUserAttachmentLink(
   userId: UserSlugOrId,
   body: AttachmentLinkModel,
-  options: clientAPIOptions = {}
+  options: ClientAPIOptions = {}
 ) {
   return await clientAPI<AttachmentLinkModel>(`user/${userId}/link/`, { body, method: 'POST' })
 }

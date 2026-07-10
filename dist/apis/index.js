@@ -43,8 +43,9 @@ async function deleteAnnouncement(projectId, announcementId, config = {}) {
     ...config
   });
 }
-async function applyAnnouncement(projectId, announcementId, body) {
+async function applyAnnouncement(projectId, announcementId, body, config = {}) {
   await clientAPI(`project/${projectId}/announcement/${announcementId}/apply/`, {
+    ...config,
     body,
     method: "POST"
   });
@@ -430,16 +431,30 @@ async function removeGroupProject(organizationCode, groupId, projectsData) {
     }
   );
 }
-async function postGroupHeader(organizationCode, groupId, headerData) {
-  return await clientAPI(`organization/${organizationCode}/people-group/${groupId}/header/`, {
-    body: headerData,
-    method: "POST"
-  });
+async function postGroupHeader(organizationCode, groupId, body, config = {}) {
+  return await clientAPI(
+    `organization/${organizationCode}/people-group/${groupId}/header/`,
+    {
+      ...config,
+      body,
+      method: "POST"
+    }
+  );
 }
-async function patchGroupHeader(organizationCode, groupId, headerData) {
-  return await clientAPI(`organization/${organizationCode}/people-group/${groupId}/header/`, {
-    body: headerData,
-    method: "PATCH"
+async function patchGroupHeader(organizationCode, groupId, body, config = {}) {
+  return await clientAPI(
+    `organization/${organizationCode}/people-group/${groupId}/header/`,
+    {
+      ...config,
+      body,
+      method: "PATCH"
+    }
+  );
+}
+async function deleteGroupHeader(organizationCode, groupId, imageId, config = {}) {
+  await clientAPI(`organization/${organizationCode}/people-group/${groupId}/header/${imageId}/`, {
+    ...config,
+    method: "DELETE"
   });
 }
 async function getGroupSimilar(organizationCode, groupId, config = {}) {
@@ -586,7 +601,10 @@ async function getInvitation(organizationCode, token, config = {}) {
   );
 }
 async function getInvitations(organizationCode, config = {}) {
-  return await clientAPI(`organization/${organizationCode}/invitation/`, config);
+  return await clientAPI(
+    `organization/${organizationCode}/invitation/`,
+    config
+  );
 }
 async function postInvitation(organizationCode, formData, config = {}) {
   return await clientAPI(`organization/${organizationCode}/invitation/`, {
@@ -637,10 +655,8 @@ async function getUserMentorship(organizationCode, config = {}) {
     config
   );
 }
-async function getMentorshipDetails(organizationCode, mentorshipId, payload) {
-  return await clientAPI(`organization/${organizationCode}/mentoring/${mentorshipId}/`, {
-    params: payload
-  });
+async function getMentorshipDetails(organizationCode, mentorshipId) {
+  return await clientAPI(`organization/${organizationCode}/mentoring/${mentorshipId}/`);
 }
 async function offerMentorship(organizationCode, skill, payload) {
   return await clientAPI(
@@ -729,6 +745,12 @@ async function patchNewsHeader(organizationCode, newsId, imageId, body, config =
     }
   );
 }
+async function deleteNewsHeader(organizationCode, newsId, imageId, config = {}) {
+  await clientAPI(`organization/${organizationCode}/news/${newsId}/header/${imageId}/`, {
+    ...config,
+    method: "DELETE"
+  });
+}
 
 // src/apis/notifications.service.ts
 async function getNotifications(params, organisationCode) {
@@ -804,20 +826,30 @@ async function postOrganisationBanner({
     method: "POST"
   });
 }
-async function patchOrganisationBanner(organisationCode, banner_id, body) {
-  return await clientAPI(
-    `organization/${organisationCode}/banner/${banner_id}/`,
-    {
-      body,
-      method: "PATCH"
-    }
-  );
+async function patchOrganisationBanner(organisationCode, imageId, body, config = {}) {
+  return await clientAPI(`organization/${organisationCode}/banner/${imageId}/`, {
+    ...config,
+    body,
+    method: "PATCH"
+  });
+}
+async function deleteOrganisationBanner(organizationCode, imageId, config = {}) {
+  await clientAPI(`organization/${organizationCode}/banner/${imageId}/`, {
+    ...config,
+    method: "DELETE"
+  });
 }
 async function postOrganisationLogo({
   code,
   body
 }) {
   return await clientAPI(`organization/${code}/logo/`, { body, method: "POST" });
+}
+async function deleteOrganisationLogo(organizationCode, imageId, config = {}) {
+  await clientAPI(`organization/${organizationCode}/logo/${imageId}/`, {
+    ...config,
+    method: "DELETE"
+  });
 }
 async function addOrgMember({ org_id, body }) {
   return await clientAPI(`organization/${org_id}/member/add/`, { body, method: "POST" });
@@ -975,6 +1007,9 @@ async function postUserPicture(userId, body, config = {}) {
     body,
     method: "POST"
   });
+}
+async function deleteUserPicture(id, imageId, config = {}) {
+  await clientAPI(`user/${id}/profile-picture/${imageId}/`, { ...config, method: "DELETE" });
 }
 async function patchUserPrivacy(userId, body, config = {}) {
   return await clientAPI(`privacy-settings/${userId}/`, {
@@ -1225,6 +1260,12 @@ async function patchProjectHeader(projectId, imageId, body) {
     method: "PATCH"
   });
 }
+async function deleteProjectHeader(projectId, imageId, config = {}) {
+  await clientAPI(`project/${projectId}/header/${imageId}/`, {
+    ...config,
+    method: "DELETE"
+  });
+}
 async function lockUnlockProject({
   project_id,
   context
@@ -1371,20 +1412,22 @@ async function contactUs(organizationCode, body, config = {}) {
 async function getReviews(projectId, config = {}) {
   return await clientAPI(`project/${projectId}/review/`, config);
 }
-async function postReview(projectId, body) {
+async function postReview(projectId, body, config = {}) {
   return await clientAPI(`project/${projectId}/review/`, {
+    ...config,
     body,
     method: "POST"
   });
 }
-async function patchReview(projectId, reviewId, body) {
+async function patchReview(projectId, reviewId, body, config = {}) {
   return await clientAPI(`project/${projectId}/review/${reviewId}/`, {
+    ...config,
     body,
     method: "PATCH"
   });
 }
-async function deleteReview(projectId, reviewId) {
-  await clientAPI(`project/${projectId}/review/${reviewId}/`, { method: "DELETE" });
+async function deleteReview(projectId, reviewId, config = {}) {
+  await clientAPI(`project/${projectId}/review/${reviewId}/`, { ...config, method: "DELETE" });
 }
 
 // src/apis/search.service.ts
@@ -1553,32 +1596,36 @@ function getTemplate(organizationCode, templateId, config = {}) {
     config
   );
 }
-async function deleteTemplate(organizationCode, templateId) {
+async function deleteTemplate(organizationCode, templateId, config = {}) {
   await clientAPI(`organization/${organizationCode}/template/${templateId}/`, {
+    ...config,
     method: "DELETE"
   });
 }
-function postTemplate(organizationCode, body) {
+function postTemplate(organizationCode, body, config = {}) {
   return clientAPI(`organization/${organizationCode}/template/`, {
+    ...config,
     method: "POST",
     body
   });
 }
-function postTemplateImage(organizationCode, templateId, file) {
+function postTemplateImage(organizationCode, templateId, file, config = {}) {
   const body = new FormData();
   body.append("file", file, file.name);
   return clientAPI(
     `organization/${organizationCode}/template/${templateId}/image/`,
     {
+      ...config,
       body,
       method: "POST"
     }
   );
 }
-function patchTemplate(organizationCode, templateId, body) {
+function patchTemplate(organizationCode, templateId, body, config = {}) {
   return clientAPI(`organization/${organizationCode}/template/${templateId}/`, {
-    method: "PATCH",
-    body
+    ...config,
+    body,
+    method: "PATCH"
   });
 }
 export {
@@ -1612,12 +1659,16 @@ export {
   deleteFollow,
   deleteGroup,
   deleteGroupGallery,
+  deleteGroupHeader,
   deleteInstruction,
   deleteInvitation,
   deleteLinkedProject,
   deleteLocation,
   deleteNews,
+  deleteNewsHeader,
   deleteOrgClassification,
+  deleteOrganisationBanner,
+  deleteOrganisationLogo,
   deleteOrganizationFile,
   deleteProject,
   deleteProjectAttachmentFile,
@@ -1626,6 +1677,7 @@ export {
   deleteProjectCategoryBackground,
   deleteProjectCategoryFollow,
   deleteProjectGoal,
+  deleteProjectHeader,
   deleteProjectMembers,
   deleteProjectMembersSelf,
   deleteProjectMessage,
@@ -1636,6 +1688,7 @@ export {
   deleteUser,
   deleteUserAttachmentFile,
   deleteUserAttachmentLink,
+  deleteUserPicture,
   deleteUserSkill,
   duplicateProject,
   getAccessRequests,

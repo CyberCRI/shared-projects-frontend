@@ -1,5 +1,5 @@
-import { clientAPI, clientAPIOptions } from './client'
+import { clientAPI, ClientAPIOptions } from './client'
 
-export async function getOrgUnits(config: clientAPIOptions = {}) {
+export async function getOrgUnits(config: ClientAPIOptions = {}) {
   return await clientAPI<string[]>(`google/org-units/`, config)
 }

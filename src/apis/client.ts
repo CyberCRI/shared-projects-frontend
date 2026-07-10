@@ -3,7 +3,7 @@ import { merge } from 'es-toolkit'
 
 type OFetchOrgiginalOptions<T extends ResponseType = 'json'> = FetchOptions<T>
 
-export type clientAPIOptions<
+export type ClientAPIOptions<
   Query extends OFetchOrgiginalOptions['query'] = OFetchOrgiginalOptions['query'],
   Body extends OFetchOrgiginalOptions['body'] = OFetchOrgiginalOptions['body'],
 > = OFetchOrgiginalOptions & {
@@ -12,13 +12,13 @@ export type clientAPIOptions<
   noError?: boolean
 }
 
-let $$defaultOptions: clientAPIOptions = {}
+let $$defaultOptions: ClientAPIOptions = {}
 
-export const configureAPI = (options: clientAPIOptions): void => {
+export const configureAPI = (options: ClientAPIOptions): void => {
   $$defaultOptions = options
 }
 
-export const clientAPI = <Result>(url: string, options: clientAPIOptions = {}): Promise<Result> => {
+export const clientAPI = <Result>(url: string, options: ClientAPIOptions = {}): Promise<Result> => {
   const finalOptions = merge($$defaultOptions, options || {})
   return ofetch<Result>(url, finalOptions)
 }

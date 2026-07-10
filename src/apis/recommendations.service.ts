@@ -1,10 +1,10 @@
 import { QueryFilterRecomendation } from '../models/recommendations.model'
 import { OrganizationModel, ProjectModel, UserModel } from '../models'
 import { PaginationQuery, PaginationResult } from '../interfaces'
-import { clientAPI, clientAPIOptions } from './client'
+import { clientAPI, ClientAPIOptions } from './client'
 
-type Config = clientAPIOptions<QueryFilterRecomendation>
-type ConfigPagination = clientAPIOptions<PaginationQuery>
+type Config = ClientAPIOptions<QueryFilterRecomendation>
+type ConfigPagination = ClientAPIOptions<PaginationQuery>
 
 // projects
 export async function getProjectsRecommendationsForUser(

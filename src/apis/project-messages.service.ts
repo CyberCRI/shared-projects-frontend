@@ -6,10 +6,10 @@ import {
   ProjectSlugOrId,
   QueryFilterProjectMessage,
 } from '../models'
-import { clientAPI, clientAPIOptions } from './client'
+import { clientAPI, ClientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
 
-type Config = clientAPIOptions<QueryFilterProjectMessage>
+type Config = ClientAPIOptions<QueryFilterProjectMessage>
 
 export async function getProjectMessages(projectId: ProjectSlugOrId, config: Config = {}) {
   return await clientAPI<PaginationResult<ProjectMessageModel>>(

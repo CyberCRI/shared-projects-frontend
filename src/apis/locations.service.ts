@@ -1,8 +1,8 @@
 import { LocationId, LocationModel, ProjectLocationForm, ProjectSlugOrId } from '../models'
 import { LocationGeneral } from '../models/location.model'
-import { clientAPI, clientAPIOptions } from './client'
+import { clientAPI, ClientAPIOptions } from './client'
 
-type Config = clientAPIOptions
+type Config = ClientAPIOptions
 
 export async function getProjectLocations(projectId: ProjectSlugOrId, config: Config = {}) {
   return await clientAPI<LocationModel[]>(`project/${projectId}/location/`, config)

@@ -7,9 +7,9 @@ import {
   UserSlugOrId,
 } from '../models'
 import { PaginationQuery, PaginationResult } from '../interfaces'
-import { clientAPI, type clientAPIOptions } from './client'
+import { clientAPI, type ClientAPIOptions } from './client'
 
-type Config = clientAPIOptions<Partial<PaginationQuery>>
+type Config = ClientAPIOptions<Partial<PaginationQuery>>
 
 export async function getProjectAttachmentFiles(projectId: ProjectSlugOrId, config: Config = {}) {
   return await clientAPI<PaginationResult<AttachmentFileModel>>(

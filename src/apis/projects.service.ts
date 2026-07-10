@@ -13,12 +13,12 @@ import {
   QueryFilterProjectSimilars,
 } from '../models'
 import { PaginationQuery, PaginationResult } from '../interfaces'
-import type { clientAPIOptions } from './client'
+import type { ClientAPIOptions } from './client'
 import { clientAPI } from './client'
 
-type ConfigProject = clientAPIOptions<QueryFilterProject>
-type ConfigProjectLinked = clientAPIOptions<Partial<PaginationQuery>>
-type ConfigProjectMembers = clientAPIOptions<QueryFilterProjectMembers>
+type ConfigProject = ClientAPIOptions<QueryFilterProject>
+type ConfigProjectLinked = ClientAPIOptions<Partial<PaginationQuery>>
+type ConfigProjectMembers = ClientAPIOptions<QueryFilterProjectMembers>
 
 export async function getAllProjects(config: ConfigProject = {}) {
   return await clientAPI<PaginationResult<ProjectModel>>(`project/`, config)
@@ -28,7 +28,7 @@ export async function getProject(projectSlugOrId: ProjectSlugOrId, config: Confi
   return await clientAPI<ProjectModel>(`project/${projectSlugOrId}/`, config)
 }
 
-export function postProject(body: ProjectForm, config: clientAPIOptions = {}) {
+export function postProject(body: ProjectForm, config: ClientAPIOptions = {}) {
   return clientAPI<ProjectModel>(`project/`, { ...config, body, method: 'POST' })
 }
 
@@ -105,6 +105,17 @@ export async function patchProjectHeader(
   })
 }
 
+export async function deleteProjectHeader(
+  projectId: ProjectSlugOrId,
+  imageId: ImageModel['id'],
+  config: ClientAPIOptions = {}
+) {
+  await clientAPI(`project/${projectId}/header/${imageId}/`, {
+    ...config,
+    method: 'DELETE',
+  })
+}
+
 export async function lockUnlockProject({
   project_id,
   context,
@@ -115,13 +126,13 @@ export async function lockUnlockProject({
   return await clientAPI<null>(`project/${project_id}/${context}/`, { method: 'POST' })
 }
 
-export type ConfigSimilar = clientAPIOptions<QueryFilterProjectSimilars>
+export type ConfigSimilar = ClientAPIOptions<QueryFilterProjectSimilars>
 
 export async function getProjectSimilars(projectId: ProjectSlugOrId, config: ConfigSimilar = {}) {
   return await clientAPI<PaginationResult<ProjectModel>>(`/project/${projectId}/similar/`, config)
 }
 
-type ConfigProjectGroup = clientAPIOptions<Partial<PaginationQuery>>
+type ConfigProjectGroup = ClientAPIOptions<Partial<PaginationQuery>>
 
 export async function getProjectGroups(
   projectId: ProjectSlugOrId,

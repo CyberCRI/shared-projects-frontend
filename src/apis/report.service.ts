@@ -1,10 +1,10 @@
 import { ContactForm, OrganizationModel, ReportForm, ReportModel } from '../models'
-import { clientAPI, clientAPIOptions } from './client'
+import { clientAPI, ClientAPIOptions } from './client'
 
 export async function reportBug(
   organizationCode: OrganizationModel['code'],
   body: ReportForm,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   await clientAPI<ReportModel>(`organization/${organizationCode}/report/bug/`, {
     ...config,
@@ -16,7 +16,7 @@ export async function reportBug(
 export async function reportAbuse(
   organizationCode: OrganizationModel['code'],
   body: ReportForm,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   await clientAPI<ReportModel>(`organization/${organizationCode}/report/abuse/`, {
     ...config,
@@ -28,7 +28,7 @@ export async function reportAbuse(
 export async function contactUs(
   organizationCode: OrganizationModel['code'],
   body: ContactForm,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   await clientAPI(`organization/${organizationCode}/contact/us/`, {
     ...config,

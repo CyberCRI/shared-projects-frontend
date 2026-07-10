@@ -1,10 +1,11 @@
 import { InvitationModel, InvitationModelInput, OrganizationModel } from '../models'
-import { clientAPI, clientAPIOptions } from './client'
+import { clientAPI, ClientAPIOptions } from './client'
+import { PaginationResult } from '../interfaces'
 
 export async function getInvitation(
   organizationCode: OrganizationModel['code'],
   token: string,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<InvitationModel>(
     `organization/${organizationCode}/invitation/${token}/`,
@@ -13,14 +14,17 @@ export async function getInvitation(
 }
 export async function getInvitations(
   organizationCode: OrganizationModel['code'],
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
-  return await clientAPI<InvitationModel>(`organization/${organizationCode}/invitation/`, config)
+  return await clientAPI<PaginationResult<InvitationModel>>(
+    `organization/${organizationCode}/invitation/`,
+    config
+  )
 }
 export async function postInvitation(
   organizationCode: OrganizationModel['code'],
   formData: InvitationModelInput,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<InvitationModel>(`organization/${organizationCode}/invitation/`, {
     ...config,
@@ -32,7 +36,7 @@ export async function postInvitation(
 export async function deleteInvitation(
   organizationCode: OrganizationModel['code'],
   id: OrganizationModel['id'],
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   await clientAPI(`organization/${organizationCode}/invitation/${id}/`, {
     ...config,

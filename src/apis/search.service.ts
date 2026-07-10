@@ -5,10 +5,10 @@ import {
   SearchResultProject,
   SearchResultUser,
 } from '../models'
-import { clientAPI, type clientAPIOptions } from './client'
+import { clientAPI, type ClientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
 
-type Config = clientAPIOptions<QueryFilterSearch>
+type Config = ClientAPIOptions<QueryFilterSearch>
 
 export async function searchAll<T = SearchResultAll>(search: string, config: Config = {}) {
   const url = `search/${search ? `${encodeURIComponent(search)}/` : ''}`

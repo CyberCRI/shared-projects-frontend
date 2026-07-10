@@ -6,10 +6,10 @@ import {
   ProjectSlugOrId,
   QueryFilterAnnouncement,
 } from '../models'
-import { clientAPI, clientAPIOptions } from './client'
+import { clientAPI, ClientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
 
-type Config = clientAPIOptions<QueryFilterAnnouncement>
+type Config = ClientAPIOptions<QueryFilterAnnouncement>
 
 export async function getAnnouncements(config: Config = {}) {
   return await clientAPI<PaginationResult<AnnouncementModel>>(`announcement/`, config)
@@ -64,9 +64,11 @@ export async function deleteAnnouncement(
 export async function applyAnnouncement(
   projectId: ProjectSlugOrId,
   announcementId: AnnouncementId,
-  body: AnnouncementApplyForm
+  body: AnnouncementApplyForm,
+  config: ClientAPIOptions = {}
 ) {
   await clientAPI(`project/${projectId}/announcement/${announcementId}/apply/`, {
+    ...config,
     body,
     method: 'POST',
   })

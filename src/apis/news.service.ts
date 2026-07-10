@@ -6,10 +6,10 @@ import {
   OrganizationModel,
   QueryFilterNews,
 } from '../models'
-import { clientAPI, type clientAPIOptions } from './client'
+import { clientAPI, type ClientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
 
-type ConfigNews = clientAPIOptions<QueryFilterNews>
+type ConfigNews = ClientAPIOptions<QueryFilterNews>
 
 export async function getAllNews(
   organizationCode: OrganizationModel['code'],
@@ -24,7 +24,7 @@ export async function getAllNews(
 export async function getNews(
   organizationCode: OrganizationModel['code'],
   newsId: NewsModel['id'],
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<NewsModel>(`organization/${organizationCode}/news/${newsId}/`, config)
 }
@@ -32,7 +32,7 @@ export async function getNews(
 export async function createNews(
   organizationCode: OrganizationModel['code'],
   body: NewsInput,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<NewsModel>(`organization/${organizationCode}/news/`, {
     ...config,
@@ -45,7 +45,7 @@ export async function putNews(
   organizationCode: OrganizationModel['code'],
   newsId: NewsModel['id'],
   body: NewsInput,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<NewsModel>(`organization/${organizationCode}/news/${newsId}/`, {
     ...config,
@@ -58,7 +58,7 @@ export async function patchNews(
   organizationCode: OrganizationModel['code'],
   newsId: NewsModel['id'],
   body: NewsInput,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<NewsModel>(`organization/${organizationCode}/news/${newsId}/`, {
     ...config,
@@ -70,7 +70,7 @@ export async function patchNews(
 export async function deleteNews(
   organizationCode: OrganizationModel['code'],
   newsId: NewsModel['id'],
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   await clientAPI(`organization/${organizationCode}/news/${newsId}/`, {
     ...config,
@@ -82,7 +82,7 @@ export async function postNewsHeader(
   organizationCode: OrganizationModel['code'],
   newsId: NewsModel['id'],
   body: FormData,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<ImageModelCreated>(
     `organization/${organizationCode}/news/${newsId}/header/`,
@@ -99,7 +99,7 @@ export async function patchNewsHeader(
   newsId: NewsModel['id'],
   imageId: ImageModel['id'],
   body: FormData,
-  config: clientAPIOptions = {}
+  config: ClientAPIOptions = {}
 ) {
   return await clientAPI<ImageModelCreated>(
     `organization/${organizationCode}/news/${newsId}/header/${imageId}/`,
@@ -109,4 +109,16 @@ export async function patchNewsHeader(
       method: 'PATCH',
     }
   )
+}
+
+export async function deleteNewsHeader(
+  organizationCode: OrganizationModel['code'],
+  newsId: NewsModel['id'],
+  imageId: ImageModel['id'],
+  config: ClientAPIOptions = {}
+) {
+  await clientAPI(`organization/${organizationCode}/news/${newsId}/header/${imageId}/`, {
+    ...config,
+    method: 'DELETE',
+  })
 }
