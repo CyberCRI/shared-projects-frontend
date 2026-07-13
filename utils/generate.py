@@ -48,7 +48,7 @@ for dir in GENERATES:
 
     index = Path(BASE / dir / "index.ts")
     with open(index, "w") as f:
-        f.write("\n".join(inline).strip())
+        f.write("\n".join(inline).strip(" ").strip("\n"))
 
 
 with open("package.json") as f:

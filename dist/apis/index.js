@@ -1049,6 +1049,12 @@ async function resetUserPassword(organizationCode, userId, config = {}) {
     )
   );
 }
+async function removeUserCookie(config = {}) {
+  return await clientAPI(
+    "user/remove-authentication-cookie",
+    config
+  );
+}
 
 // src/apis/project-categories.service.ts
 async function getProjectCategory(organizationCode, categoryId, config = {}) {
@@ -1868,6 +1874,7 @@ export {
   removeGroupMember,
   removeGroupProject,
   removeOrgMember,
+  removeUserCookie,
   reportAbuse,
   reportBug,
   resetUserPassword,

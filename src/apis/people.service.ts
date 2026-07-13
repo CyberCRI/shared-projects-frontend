@@ -199,3 +199,10 @@ export async function resetUserPassword(
     )
   )
 }
+
+export async function removeUserCookie(config: ClientAPIOptions = {}) {
+  return await clientAPI<'Cookie already deleted' | 'Cookie deleted'>(
+    'user/remove-authentication-cookie',
+    config
+  )
+}
