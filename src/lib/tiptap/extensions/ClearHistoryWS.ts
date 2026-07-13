@@ -17,7 +17,7 @@ declare module '@tiptap/core' {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export const ClearHistoryWS = Extension.create<{}>({
-  name: 'clearhistoryws',
+  name: 'clear-history-ws',
 
   priority: 1000,
 

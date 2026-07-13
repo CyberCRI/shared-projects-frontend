@@ -319,6 +319,7 @@ var DEFAULT_LANGUAGE = "plaintext";
 var DEFAULT_THEME = "dark";
 var DEFAULT_TAB = 2;
 var LpiCodeBlock_default = CodeBlockLowlight.extend({
+  name: "code-block-lowlight",
   addOptions() {
     return {
       ...this.parent?.(),
@@ -512,7 +513,7 @@ var getExtensions = (options = {}) => [
 import { Extension } from "@tiptap/core";
 import { yUndoPluginKey } from "y-prosemirror";
 var ClearHistoryWS = Extension.create({
-  name: "clearhistoryws",
+  name: "clear-history-ws",
   priority: 1e3,
   addOptions() {
     return {};

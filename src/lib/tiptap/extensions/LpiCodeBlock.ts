@@ -14,6 +14,8 @@ export interface LpiBlockOptions extends CodeBlockLowlightOptions {
 }
 
 export default CodeBlockLowlight.extend<LpiBlockOptions>({
+  name: 'code-block-lowlight',
+
   addOptions() {
     return {
       ...this.parent?.(),
