@@ -10,6 +10,7 @@ export * from './permissions/isViewer'
 export * from './permissions/isUser'
 export * from './permissions/can'
 export * from './permissions/utils'
+export * from './permissions/rights'
 
 // tiptap
 export * from './tiptap/options'

@@ -1,17 +1,80 @@
 [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
-# Projects
+# shared-project-frontend
 ![https://projects.directory.com](https://api.projects.lp-i.org/static/projects_logo.png)
 
-### Structure
+Front-end shared library for interacting with the projects-backend. This library centralizes API calls, data models, utility interfaces, and permission logic common to multiple applications.
 
-#### /apis
-> All projects apis endpoints
-#### /interfaces
-> Common typescript interfaces used in many models
-#### /models
-> All typescript type/interfaces for all projects models/serializers/querys
-#### /lib
-> Utility fonctions for permissions and tiptaps
+# 📁 Project Structure
+
+shared-project-frontend/
+├── apis/              # All backend API calls (TypeScript)
+│   └── configureAPI   # Header and global config setup (via ofetch)
+├── models/            # Data models corresponding to the backend
+├── interfaces/        # Utility interfaces shared throughout the application
+└── lib/               # Shared libraries (e.g., permission management)
+                        └── permissions.ts  # Access checks (modify/delete objects, organizations, etc.)
+
+# 🚀 Installation
+
+```sh
+npm install shared-project-frontend
+# or
+yarn add shared-project-frontend
+```
+
+# ⚙️ API Configuration
+Configure the ofetch instance before any usage:
+
+```ts
+import { configureAPI } from '@shared-projects-frontend/apis';
+
+// a callback called before each request
+configureAPI(() => ({
+  baseURL: 'my-base-url',
+  headers: {
+    'my default-header': 'my-default-value'
+  }
+}));
+```
+
+# 📦 Usage
+## API Call
+```ts
+import { getProjects, getUser, getOrganization, ... } from '@shared-projects-frontend/apis';
+
+const projects = await getProjects();
+```
+
+## Accessing Models
+```ts
+import type { Project, Organization, ... } from '@shared-projects-frontend/models';
+
+const project: Project = /* ... */;
+```
+
+## Utility Interfaces
+```ts
+import type { PaginatedResult, Query, .... } from '@shared-projects-frontend/interfaces';
+```
+
+## Permissions
+```ts
+import { getAllProjects } from '@shared-projects-frontend/apis';
+import { canEditProject, canDeleteOrganization, userRights } from '@shared-projects-frontend/lib';
+
+const user = getUser()
+const projects = getAllProjects()
+const organization = getOrganization("LPI") 
+
+const rights = userRights(user)
+
+projects.forEach((project) => {
+    if (canEditProject(rights, organization.id, project)) {
+        // Allowed
+    }
+})
+```
+
 
 
 # License

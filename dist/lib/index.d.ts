@@ -1,5 +1,5 @@
 import { P as ProviderParams, R as Right } from '../permissions-CUX6tqOY.js';
-import { S as OrganizationModel, ax as Roles, a8 as ProjectModel, W as PeopleGroupModel, aZ as UserModel, M as NewsModel, i as EventModel, p as InstructionModel } from '../instruction.model-C4gOlUmx.js';
+import { S as OrganizationModel, ax as Roles, aZ as UserModel, a8 as ProjectModel, W as PeopleGroupModel, M as NewsModel, i as EventModel, p as InstructionModel } from '../instruction.model-C4gOlUmx.js';
 import { P as PermissionType } from '../permissions.model-DCQ_saKg.js';
 import { StarterKitOptions } from '@tiptap/starter-kit';
 import { Extensions, Extension } from '@tiptap/core';
@@ -38,6 +38,17 @@ declare const isUser: (rights: Right, organizationId: OrganizationModel["id"]) =
 declare const canPermission: (rights: Right, organizationId: OrganizationModel["id"], elementType: "projects" | "accounts" | "peoplegroup", identification: (number | string | Roles | null) | undefined, perrmissionName: PermissionType) => boolean;
 
 declare function hasPermission(permissions: Right['permissions'], app: 'organizations' | 'projects' | 'accounts' | 'peoplegroup', permissionName: PermissionType, identification?: number | string | Roles | null): boolean;
+
+/**
+ * Generate User rights from usermodels
+ *
+ * @constant
+ * @name userRights
+ * @kind variable
+ * @type {<U extends Pick<UserModel, "permissions" | "roles">>(user: U) => Right}
+ * @exports
+ */
+declare const userRights: <U extends Pick<UserModel, "permissions" | "roles">>(user: U) => Right;
 
 declare const getExtensions: (options?: Partial<StarterKitOptions>) => Extensions;
 
@@ -141,4 +152,4 @@ declare const canCreateInstruction: (rights: Right, organizationId: Organization
 declare const canEditInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
 declare const canDeleteInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
 
-export { ClearHistoryWS, DEFAULT_LANGUAGE, DEFAULT_TAB, DEFAULT_THEME, type LpiBlockOptions, canCreateComment, canCreateEvent, canCreateGroup, canCreateInstruction, canCreateNews, canCreateProject, canCreateReview, canDeleteComment, canDeleteEvent, canDeleteInstruction, canDeleteNews, canDeleteProject, canDeleteReview, canEditComment, canEditEvent, canEditGroup, canEditInstruction, canEditNews, canEditProject, canEditReview, canEditUser, canPermission, canPermissionProject, getExtensions, getFormatedVideoSrc, hasPermission, isAdmin, isAdminOrFacilitator, isFacilitator, isMember, isOwner, isSuperAdmin, isUser, isViewer, lowlight, roomKeyFromParams };
+export { ClearHistoryWS, DEFAULT_LANGUAGE, DEFAULT_TAB, DEFAULT_THEME, type LpiBlockOptions, canCreateComment, canCreateEvent, canCreateGroup, canCreateInstruction, canCreateNews, canCreateProject, canCreateReview, canDeleteComment, canDeleteEvent, canDeleteInstruction, canDeleteNews, canDeleteProject, canDeleteReview, canEditComment, canEditEvent, canEditGroup, canEditInstruction, canEditNews, canEditProject, canEditReview, canEditUser, canPermission, canPermissionProject, getExtensions, getFormatedVideoSrc, hasPermission, isAdmin, isAdminOrFacilitator, isFacilitator, isMember, isOwner, isSuperAdmin, isUser, isViewer, lowlight, roomKeyFromParams, userRights };

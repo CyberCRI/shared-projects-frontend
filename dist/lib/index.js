@@ -76,6 +76,19 @@ var canPermission = (rights, organizationId, elementType, identification = null,
   hasPermission(rights.permissions, "organizations", perrmissionName, organizationId) || hasPermission(rights.permissions, "organizations", perrmissionName);
 };
 
+// src/lib/permissions/rights.ts
+var userRights = (user) => {
+  const rawPermissions = user.permissions;
+  const permissions = {};
+  for (const permission of rawPermissions) {
+    permissions[permission] = true;
+  }
+  return {
+    roles: user.roles,
+    permissions
+  };
+};
+
 // src/lib/tiptap/options.ts
 import TableHeader from "@tiptap/extension-table-header";
 import TextStyle from "@tiptap/extension-text-style";
@@ -650,6 +663,7 @@ export {
   isUser,
   isViewer,
   lowlight,
-  roomKeyFromParams
+  roomKeyFromParams,
+  userRights
 };
 //# sourceMappingURL=index.js.map
