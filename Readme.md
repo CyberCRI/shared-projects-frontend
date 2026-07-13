@@ -5,14 +5,15 @@
 Front-end shared library for interacting with the projects-backend. This library centralizes API calls, data models, utility interfaces, and permission logic common to multiple applications.
 
 # 📁 Project Structure
-
 shared-project-frontend/
-├── apis/              # All backend API calls (TypeScript)
+```
+├── apis/                       # All backend API calls (TypeScript)
 │   └── configureAPI   # Header and global config setup (via ofetch)
-├── models/            # Data models corresponding to the backend
-├── interfaces/        # Utility interfaces shared throughout the application
-└── lib/               # Shared libraries (e.g., permission management)
-                        └── permissions.ts  # Access checks (modify/delete objects, organizations, etc.)
+├── models/                  # Data models corresponding to the backend
+├── interfaces/              # Utility interfaces shared throughout the application
+└── lib/                         # Shared libraries (e.g., permission management)
+    └── permissions.ts    # Access checks (modify/delete objects, organizations, etc.)
+```
 
 # 🚀 Installation
 
