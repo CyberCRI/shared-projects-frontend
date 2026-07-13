@@ -25,7 +25,7 @@ let $$fetcher: $Fetch = $fetch
  * @returns {void}
  * @exports
  */
-export const configureClientAPI = (fetcher: $Fetch): void => {
+export const configureClientAPI = <T extends $Fetch>(fetcher: T): void => {
   $$fetcher = fetcher
 }
 

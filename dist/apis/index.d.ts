@@ -21,7 +21,7 @@ declare let $$defaultOptions: () => ClientAPIOptions;
  * @returns {void}
  * @exports
  */
-declare const configureClientAPI: (fetcher: $Fetch) => void;
+declare const configureClientAPI: <T extends $Fetch>(fetcher: T) => void;
 /**
  * set callback running before each request
  *
