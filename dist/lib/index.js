@@ -509,34 +509,6 @@ var getExtensions = (options = {}) => [
   })
 ];
 
-// src/lib/tiptap/extensions/ClearHistoryWS.ts
-import { Extension } from "@tiptap/core";
-import { yUndoPluginKey } from "y-prosemirror";
-var ClearHistoryWS = Extension.create({
-  name: "clear-history-ws",
-  priority: 1e3,
-  addOptions() {
-    return {};
-  },
-  onCreate() {
-    if (this.editor.extensionManager.extensions.find(
-      (extension) => extension.name === "collaboration"
-    )) {
-      console.warn("[tiptap warn]: clear history must only be used with collaboration extension.");
-    }
-  },
-  addCommands() {
-    return {
-      clearHistoryWS: () => ({ tr, state }) => {
-        tr.setMeta("preventDispatch", true);
-        const undoManager = yUndoPluginKey.getState(state)?.undoManager;
-        undoManager?.clear();
-        return true;
-      }
-    };
-  }
-});
-
 // src/lib/permissions/projects/isOwner.ts
 var isOwner = (rights, organizationId, projectId) => {
   return hasPermission(rights.permissions, "projects", "delete_project", projectId) || hasPermission(rights.permissions, "organizations", "delete_project", organizationId) || hasPermission(rights.permissions, "projects", "delete_project");
@@ -625,7 +597,6 @@ var canDeleteInstruction = (rights, organizationId, instructionId) => {
   return isAdminOrFacilitator(rights, organizationId);
 };
 export {
-  ClearHistoryWS,
   DEFAULT_LANGUAGE,
   DEFAULT_TAB,
   DEFAULT_THEME,

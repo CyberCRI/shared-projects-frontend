@@ -2,7 +2,7 @@ import { P as ProviderParams, R as Right } from '../permissions-CUX6tqOY.js';
 import { S as OrganizationModel, ax as Roles, aZ as UserModel, a8 as ProjectModel, W as PeopleGroupModel, M as NewsModel, i as EventModel, p as InstructionModel } from '../instruction.model-C4gOlUmx.js';
 import { P as PermissionType } from '../permissions.model-DCQ_saKg.js';
 import { StarterKitOptions } from '@tiptap/starter-kit';
-import { Extensions, Extension } from '@tiptap/core';
+import { Extensions } from '@tiptap/core';
 import * as highlight_js from 'highlight.js';
 import * as hast from 'hast';
 import * as _lowlight from 'lowlight';
@@ -66,18 +66,6 @@ declare const lowlight: {
     };
     registered: (aliasOrName: string) => boolean;
 };
-
-declare module '@tiptap/core' {
-    interface Commands<ReturnType> {
-        clearhistoryws: {
-            /**
-             * clear history
-             */
-            clearHistoryWS: () => ReturnType;
-        };
-    }
-}
-declare const ClearHistoryWS: Extension<{}, any>;
 
 type Options = {
     src: string;
@@ -152,4 +140,4 @@ declare const canCreateInstruction: (rights: Right, organizationId: Organization
 declare const canEditInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
 declare const canDeleteInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
 
-export { ClearHistoryWS, DEFAULT_LANGUAGE, DEFAULT_TAB, DEFAULT_THEME, type LpiBlockOptions, canCreateComment, canCreateEvent, canCreateGroup, canCreateInstruction, canCreateNews, canCreateProject, canCreateReview, canDeleteComment, canDeleteEvent, canDeleteInstruction, canDeleteNews, canDeleteProject, canDeleteReview, canEditComment, canEditEvent, canEditGroup, canEditInstruction, canEditNews, canEditProject, canEditReview, canEditUser, canPermission, canPermissionProject, getExtensions, getFormatedVideoSrc, hasPermission, isAdmin, isAdminOrFacilitator, isFacilitator, isMember, isOwner, isSuperAdmin, isUser, isViewer, lowlight, roomKeyFromParams, userRights };
+export { DEFAULT_LANGUAGE, DEFAULT_TAB, DEFAULT_THEME, type LpiBlockOptions, canCreateComment, canCreateEvent, canCreateGroup, canCreateInstruction, canCreateNews, canCreateProject, canCreateReview, canDeleteComment, canDeleteEvent, canDeleteInstruction, canDeleteNews, canDeleteProject, canDeleteReview, canEditComment, canEditEvent, canEditGroup, canEditInstruction, canEditNews, canEditProject, canEditReview, canEditUser, canPermission, canPermissionProject, getExtensions, getFormatedVideoSrc, hasPermission, isAdmin, isAdminOrFacilitator, isFacilitator, isMember, isOwner, isSuperAdmin, isUser, isViewer, lowlight, roomKeyFromParams, userRights };

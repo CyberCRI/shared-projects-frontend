@@ -17,7 +17,6 @@ export * from './tiptap/options'
 export * from './tiptap/lowlight'
 
 // tiptap/extensions
-export * from './tiptap/extensions/ClearHistoryWS'
 export * from './tiptap/extensions/CustomImage'
 export * from './tiptap/extensions/CustomTableCell'
 export * from './tiptap/extensions/ExternalVideo'

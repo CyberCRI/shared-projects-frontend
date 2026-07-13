@@ -15,7 +15,6 @@ export default defineConfig({
     '@tiptap/starter-kit',
     /^@tiptap\/extension-/,
     'yjs',
-    'y-prosemirror',
   ],
   format: ["esm"],
   sourcemap: true,
