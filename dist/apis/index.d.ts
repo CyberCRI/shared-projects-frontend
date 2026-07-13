@@ -91,7 +91,7 @@ declare function deleteFollow(follow: FollowInput): Promise<void>;
 
 type ConfigGoal = ClientAPIOptions;
 declare function getProjectGoals(projectId: ProjectSlugOrId, config?: ConfigGoal): Promise<PaginationResult<GoalModel>>;
-declare function getProjectGoal(projectId: ProjectSlugOrId, goalId: GoalModel['id'], config?: ConfigGoal): Promise<PaginationResult<GoalModel>>;
+declare function getProjectGoal(projectId: ProjectSlugOrId, goalId: GoalModel['id'], config?: ConfigGoal): Promise<GoalModel>;
 declare function createProjectGoal(projectId: ProjectSlugOrId, body: GoalForm, config?: ClientAPIOptions): Promise<GoalModel>;
 declare function patchProjectGoal(projectId: ProjectSlugOrId, goalId: GoalModel['id'], body: GoalForm, config?: ClientAPIOptions): Promise<GoalModel>;
 declare function deleteProjectGoal(projectId: ProjectSlugOrId, goalId: GoalModel['id'], config?: ClientAPIOptions): Promise<void>;

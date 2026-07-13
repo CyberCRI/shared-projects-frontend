@@ -30,15 +30,6 @@ var roomKeyFromParams = (params) => {
   }).join("::");
 };
 
-// src/lib/permissions/utils.ts
-function hasPermission(permissions, app, permissionName, identification = null) {
-  let perm = `${app}.${permissionName}`;
-  if (identification !== null && identification !== void 0 && identification !== "") {
-    perm += `.${identification}`;
-  }
-  return !!permissions[perm];
-}
-
 // src/lib/permissions/isSuperAdmin.ts
 var isSuperAdmin = (rights) => {
   return rights.roles.includes("superadmins");
@@ -68,6 +59,15 @@ var isViewer = (rights, organizationId) => {
 var isUser = (rights, organizationId) => {
   return rights.roles.includes(`organization:#${organizationId}:users`);
 };
+
+// src/lib/permissions/utils.ts
+function hasPermission(permissions, app, permissionName, identification = null) {
+  let perm = `${app}.${permissionName}`;
+  if (identification !== null && identification !== void 0 && identification !== "") {
+    perm += `.${identification}`;
+  }
+  return !!permissions[perm];
+}
 
 // src/lib/permissions/can.ts
 var canPermission = (rights, organizationId, elementType, identification = null, perrmissionName) => {

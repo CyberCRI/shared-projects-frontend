@@ -319,10 +319,7 @@ async function getProjectGoals(projectId, config = {}) {
   return await clientAPI(`project/${projectId}/goal/`, config);
 }
 async function getProjectGoal(projectId, goalId, config = {}) {
-  return await clientAPI(
-    `project/${projectId}/goal/${goalId}/`,
-    config
-  );
+  return await clientAPI(`project/${projectId}/goal/${goalId}/`, config);
 }
 async function createProjectGoal(projectId, body, config = {}) {
   return await clientAPI(`project/${projectId}/goal/`, {

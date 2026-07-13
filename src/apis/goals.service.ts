@@ -13,10 +13,7 @@ export async function getProjectGoal(
   goalId: GoalModel['id'],
   config: ConfigGoal = {}
 ) {
-  return await clientAPI<PaginationResult<GoalModel>>(
-    `project/${projectId}/goal/${goalId}/`,
-    config
-  )
+  return await clientAPI<GoalModel>(`project/${projectId}/goal/${goalId}/`, config)
 }
 
 export async function createProjectGoal(

@@ -2,7 +2,6 @@ export * from './collaboratives'
 export * from './index'
 
 // permissions
-export * from './permissions/utils'
 export * from './permissions/isAdmin'
 export * from './permissions/isAdminOrFacilitator'
 export * from './permissions/isSuperAdmin'
@@ -10,6 +9,7 @@ export * from './permissions/isFacilitator'
 export * from './permissions/isViewer'
 export * from './permissions/isUser'
 export * from './permissions/can'
+export * from './permissions/utils'
 
 // tiptap
 export * from './tiptap/options'

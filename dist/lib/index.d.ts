@@ -1,6 +1,6 @@
 import { P as ProviderParams, R as Right } from '../permissions-BKtXZsbf.js';
+import { S as OrganizationModel, ax as Roles, a8 as ProjectModel, W as PeopleGroupModel, aZ as UserModel, M as NewsModel, i as EventModel, p as InstructionModel } from '../instruction.model-C4gOlUmx.js';
 import { P as PermissionType } from '../permissions.model-DCQ_saKg.js';
-import { ax as Roles, S as OrganizationModel, a8 as ProjectModel, W as PeopleGroupModel, aZ as UserModel, M as NewsModel, i as EventModel, p as InstructionModel } from '../instruction.model-C4gOlUmx.js';
 import { StarterKitOptions } from '@tiptap/starter-kit';
 import { Extensions, Extension } from '@tiptap/core';
 import * as highlight_js from 'highlight.js';
@@ -23,8 +23,6 @@ import 'zod';
  */
 declare const roomKeyFromParams: (params: ProviderParams) => string | null;
 
-declare function hasPermission(permissions: Right['permissions'], app: 'organizations' | 'projects' | 'accounts' | 'peoplegroup', permissionName: PermissionType, identification?: number | string | Roles | null): boolean;
-
 declare const isAdmin: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
 
 declare const isAdminOrFacilitator: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
@@ -38,6 +36,8 @@ declare const isViewer: (rights: Right, organizationId: OrganizationModel["id"])
 declare const isUser: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
 
 declare const canPermission: (rights: Right, organizationId: OrganizationModel["id"], elementType: "projects" | "accounts" | "peoplegroup", identification: (number | string | Roles | null) | undefined, perrmissionName: PermissionType) => boolean;
+
+declare function hasPermission(permissions: Right['permissions'], app: 'organizations' | 'projects' | 'accounts' | 'peoplegroup', permissionName: PermissionType, identification?: number | string | Roles | null): boolean;
 
 declare const getExtensions: (options?: Partial<StarterKitOptions>) => Extensions;
 
