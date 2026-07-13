@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+
 const BaseSchema = z.object({
   organizationId: z.union([z.string(), z.number()]),
 })
@@ -11,22 +12,22 @@ const ProjectParamsSchema = BaseSchema.extend({
 
 const ProjectTabParamsSchema = ProjectParamsSchema.extend({
   type: z.literal('project-tab'),
-  tabId: z.number(),
+  tabId: z.preprocess(Number, z.number().positive()),
 })
 
 const ProjectTabItemParamsSchema = ProjectTabParamsSchema.extend({
   type: z.literal('project-tab-item'),
-  tabItemId: z.number(),
+  tabItemId: z.preprocess(Number, z.number().positive()),
 })
 
 const ProjectBlogParamsSchema = ProjectParamsSchema.extend({
   type: z.literal('project-blog'),
-  blogId: z.number(),
+  blogId: z.preprocess(Number, z.number().positive()),
 })
 
 const ProjectGoalParamsSchema = ProjectParamsSchema.extend({
   type: z.literal('project-goal'),
-  goalId: z.number(),
+  goalId: z.preprocess(Number, z.number().positive()),
 })
 
 // provide a schema
