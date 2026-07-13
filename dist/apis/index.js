@@ -1,13 +1,17 @@
 // src/apis/client.ts
-import { ofetch } from "ofetch";
+import { $fetch } from "ofetch";
 import { merge } from "es-toolkit";
 var $$defaultOptions = () => ({});
-var configureAPI = (callback) => {
+var $$fetcher = $fetch;
+var configureClientAPI = (fetcher) => {
+  $$fetcher = fetcher;
+};
+var configureOptionsAPI = (callback) => {
   $$defaultOptions = callback;
 };
 var clientAPI = (url, options = {}) => {
   const finalOptions = merge($$defaultOptions(), options || {});
-  return ofetch(url, finalOptions);
+  return $$fetcher(url, finalOptions);
 };
 
 // src/apis/announcements.service.ts
@@ -1636,7 +1640,8 @@ export {
   applyAnnouncement,
   askMentorship,
   clientAPI,
-  configureAPI,
+  configureClientAPI,
+  configureOptionsAPI,
   contactUs,
   createEvent,
   createInstruction,

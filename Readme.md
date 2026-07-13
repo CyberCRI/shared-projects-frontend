@@ -27,10 +27,14 @@ yarn add shared-project-frontend
 Configure the ofetch instance before any usage:
 
 ```ts
-import { configureAPI } from '@shared-projects-frontend/apis';
+import { configureOptionsAPI, configureClientAPI } from '@shared-projects-frontend/apis';
+
+// optional, custom ofetch instance
+const myofetch = ofetch.create(...)
+configureClientAPI(myofetch)
 
 // a callback called before each request
-configureAPI(() => ({
+configureOptionsAPI(() => ({
   baseURL: 'my-base-url',
   headers: {
     'my default-header': 'my-default-value'
