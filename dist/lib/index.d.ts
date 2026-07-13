@@ -1,4 +1,4 @@
-import { P as ProviderParams, R as Right } from '../permissions-BKtXZsbf.js';
+import { P as ProviderParams, R as Right } from '../permissions-CUX6tqOY.js';
 import { S as OrganizationModel, ax as Roles, a8 as ProjectModel, W as PeopleGroupModel, aZ as UserModel, M as NewsModel, i as EventModel, p as InstructionModel } from '../instruction.model-C4gOlUmx.js';
 import { P as PermissionType } from '../permissions.model-DCQ_saKg.js';
 import { StarterKitOptions } from '@tiptap/starter-kit';

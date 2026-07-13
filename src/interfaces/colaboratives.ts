@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-
 const BaseSchema = z.object({
   organizationId: z.union([z.string(), z.number()]),
 })

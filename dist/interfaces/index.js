@@ -9,19 +9,19 @@ var ProjectParamsSchema = BaseSchema.extend({
 });
 var ProjectTabParamsSchema = ProjectParamsSchema.extend({
   type: z.literal("project-tab"),
-  tabId: z.number()
+  tabId: z.preprocess(Number, z.number().positive())
 });
 var ProjectTabItemParamsSchema = ProjectTabParamsSchema.extend({
   type: z.literal("project-tab-item"),
-  tabItemId: z.number()
+  tabItemId: z.preprocess(Number, z.number().positive())
 });
 var ProjectBlogParamsSchema = ProjectParamsSchema.extend({
   type: z.literal("project-blog"),
-  blogId: z.number()
+  blogId: z.preprocess(Number, z.number().positive())
 });
 var ProjectGoalParamsSchema = ProjectParamsSchema.extend({
   type: z.literal("project-goal"),
-  goalId: z.number()
+  goalId: z.preprocess(Number, z.number().positive())
 });
 var ProviderParamsSchema = z.discriminatedUnion("type", [
   ProjectParamsSchema,
