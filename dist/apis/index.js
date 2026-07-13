@@ -1,6 +1,39 @@
 // src/apis/client.ts
 import { $fetch } from "ofetch";
-import { merge } from "es-toolkit";
+
+// node_modules/es-toolkit/dist/predicate/isPlainObject.mjs
+function isPlainObject(value) {
+  if (!value || typeof value !== "object") return false;
+  const proto = Object.getPrototypeOf(value);
+  if (!(proto === null || proto === Object.prototype || Object.getPrototypeOf(proto) === null)) return false;
+  return Object.prototype.toString.call(value) === "[object Object]";
+}
+
+// node_modules/es-toolkit/dist/_internal/isUnsafeProperty.mjs
+function isUnsafeProperty(key) {
+  return key === "__proto__";
+}
+
+// node_modules/es-toolkit/dist/object/merge.mjs
+function merge(target, source) {
+  const sourceKeys = Object.keys(source);
+  for (let i = 0; i < sourceKeys.length; i++) {
+    const key = sourceKeys[i];
+    if (isUnsafeProperty(key)) continue;
+    const sourceValue = source[key];
+    const targetValue = target[key];
+    if (isMergeableValue(sourceValue) && isMergeableValue(targetValue)) target[key] = merge(targetValue, sourceValue);
+    else if (Array.isArray(sourceValue)) target[key] = merge([], sourceValue);
+    else if (isPlainObject(sourceValue)) target[key] = merge({}, sourceValue);
+    else if (targetValue === void 0 || sourceValue !== void 0) target[key] = sourceValue;
+  }
+  return target;
+}
+function isMergeableValue(value) {
+  return isPlainObject(value) || Array.isArray(value);
+}
+
+// src/apis/client.ts
 var $$defaultOptions = () => ({});
 var $$fetcher = $fetch;
 var configureClientAPI = (fetcher) => {
@@ -940,14 +973,13 @@ function _adaptParamsToGetQuery(params) {
 }
 
 // src/apis/people.service.ts
-import { merge as merge2 } from "es-toolkit";
 async function getUser(userId, config = {}) {
   return await clientAPI(`user/${userId}/`, config);
 }
 async function postUser(organizationCode, body, config = {}) {
   return await clientAPI(
     `user/`,
-    merge2(
+    merge(
       {
         body,
         method: "POST",
@@ -960,7 +992,7 @@ async function postUser(organizationCode, body, config = {}) {
   );
 }
 async function postUserWithInvitation(organizationCode, inviteToken, body, config = {}) {
-  const options = merge2(
+  const options = merge(
     {
       body,
       method: "POST",
@@ -1039,7 +1071,7 @@ async function deleteUserSkill(userId, skillId, config = {}) {
 async function resetUserPassword(organizationCode, userId, config = {}) {
   return await clientAPI(
     `user/${userId}/reset-password/`,
-    merge2(
+    merge(
       {
         query: {
           organization: organizationCode
