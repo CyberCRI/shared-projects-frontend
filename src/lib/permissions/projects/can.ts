@@ -8,7 +8,7 @@ import { canPermission } from '../can'
 export const canPermissionProject = (
   rights: Right,
   organizationId: OrganizationModel['id'],
-  projectId: ProjectModel['id'],
+  projectId: ProjectModel['id'] | null = null,
   perrmissionName: PermissionType
 ): boolean => {
   return canPermission(rights, organizationId, 'projects', projectId, perrmissionName)
@@ -18,7 +18,7 @@ export const canCreateProject = (
   rights: Right,
   organizationId: OrganizationModel['id']
 ): boolean => {
-  return isViewer(rights, organizationId)
+  return canPermissionProject(rights, organizationId, null, 'add_project')
 }
 
 export const canEditProject = (

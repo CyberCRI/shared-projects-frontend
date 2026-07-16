@@ -61,7 +61,7 @@ export const getFormatedVideoSrc = (newVideoId: string) => {
   return link
 }
 
-export default Node.create({
+export const ExternalVideo = Node.create({
   name: 'external-video',
 
   addOptions() {

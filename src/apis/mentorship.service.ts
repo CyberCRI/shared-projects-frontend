@@ -16,9 +16,9 @@ export async function getUserMentorship(
 // fetch mentorshup demand and offer for currentr user
 export async function getMentorshipDetails(
   organizationCode: OrganizationModel['code'],
-  mentorshipId: any
+  mentorshipId: Mentoring['id']
 ) {
-  return await clientAPI(`organization/${organizationCode}/mentoring/${mentorshipId}/`)
+  return await clientAPI<Mentoring>(`organization/${organizationCode}/mentoring/${mentorshipId}/`)
 }
 
 // offer mentroship fro a skill

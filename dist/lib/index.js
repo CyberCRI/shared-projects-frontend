@@ -103,7 +103,7 @@ import Link from "@tiptap/extension-link";
 // src/lib/tiptap/extensions/CustomTableCell.ts
 import TableCell from "@tiptap/extension-table-cell";
 var CustomTableCell = TableCell.extend({
-  name: "tableCell",
+  name: "custom-table-cell",
   addAttributes() {
     return {
       // extend the existing attributes …
@@ -123,7 +123,6 @@ var CustomTableCell = TableCell.extend({
     };
   }
 });
-var CustomTableCell_default = CustomTableCell;
 
 // src/lib/tiptap/extensions/ExternalVideo.ts
 import { Node, mergeAttributes } from "@tiptap/core";
@@ -160,7 +159,7 @@ var getFormatedVideoSrc = (newVideoId) => {
   }
   return link;
 };
-var ExternalVideo_default = Node.create({
+var ExternalVideo = Node.create({
   name: "external-video",
   addOptions() {
     return {
@@ -318,8 +317,8 @@ import { PluginKey } from "@tiptap/pm/state";
 var DEFAULT_LANGUAGE = "plaintext";
 var DEFAULT_THEME = "dark";
 var DEFAULT_TAB = 2;
-var LpiCodeBlock_default = CodeBlockLowlight.extend({
-  name: "code-block-lowlight",
+var LpiCodeBlock = CodeBlockLowlight.extend({
+  name: "lpi-code-block",
   addOptions() {
     return {
       ...this.parent?.(),
@@ -395,8 +394,8 @@ var LpiCodeBlock_default = CodeBlockLowlight.extend({
 // src/lib/tiptap/extensions/CustomImage.ts
 import { mergeAttributes as mergeAttributes3 } from "@tiptap/core";
 import Image from "@tiptap/extension-image";
-var CustomImage_default = Image.extend({
-  name: "image",
+var CustomImage = Image.extend({
+  name: "custom-image",
   addAttributes() {
     return {
       ...Image?.config?.addAttributes?.call(this) || {},
@@ -495,16 +494,16 @@ var getExtensions = (options = {}) => [
     types: ["heading", "paragraph"],
     alignments: ["left", "center", "right"]
   }),
-  ExternalVideo_default,
+  ExternalVideo,
   Table.configure({
     resizable: true,
     cellMinWidth: 300
   }),
   TableRow,
   TableHeader,
-  CustomTableCell_default,
-  CustomImage_default,
-  LpiCodeBlock_default.configure({
+  CustomTableCell,
+  CustomImage,
+  LpiCodeBlock.configure({
     lowlight
   })
 ];
@@ -520,11 +519,11 @@ var isMember = (rights, organizationId, projectId) => {
 };
 
 // src/lib/permissions/projects/can.ts
-var canPermissionProject = (rights, organizationId, projectId, perrmissionName) => {
+var canPermissionProject = (rights, organizationId, projectId = null, perrmissionName) => {
   return canPermission(rights, organizationId, "projects", projectId, perrmissionName);
 };
 var canCreateProject = (rights, organizationId) => {
-  return isViewer(rights, organizationId);
+  return canPermissionProject(rights, organizationId, null, "add_project");
 };
 var canEditProject = (rights, organizationId, projectId) => {
   return canPermissionProject(rights, organizationId, projectId, "change_project");
@@ -597,9 +596,13 @@ var canDeleteInstruction = (rights, organizationId, instructionId) => {
   return isAdminOrFacilitator(rights, organizationId);
 };
 export {
+  CustomImage,
+  CustomTableCell,
   DEFAULT_LANGUAGE,
   DEFAULT_TAB,
   DEFAULT_THEME,
+  ExternalVideo,
+  LpiCodeBlock,
   canCreateComment,
   canCreateEvent,
   canCreateGroup,

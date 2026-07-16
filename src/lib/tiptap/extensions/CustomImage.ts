@@ -19,8 +19,8 @@ declare module '@tiptap/core' {
   }
 }
 
-export default Image.extend({
-  name: 'image',
+export const CustomImage = Image.extend({
+  name: 'custom-image',
 
   addAttributes() {
     return {

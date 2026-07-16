@@ -70,7 +70,7 @@ export type TranslatedProject = Translated<
   tags: TranslatedTag[]
 }
 
-export type ProjectSlugOrId = ProjectModel['id']
+export type ProjectSlugOrId = ProjectModel['slug']
 
 export type LinkedProject = {
   id: number

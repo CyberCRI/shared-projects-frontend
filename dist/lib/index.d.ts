@@ -1,12 +1,14 @@
 import { P as ProviderParams, R as Right } from '../permissions-CUX6tqOY.js';
-import { S as OrganizationModel, ax as Roles, aZ as UserModel, a8 as ProjectModel, W as PeopleGroupModel, M as NewsModel, i as EventModel, p as InstructionModel } from '../instruction.model-C4gOlUmx.js';
+import { S as OrganizationModel, ax as Roles, aZ as UserModel, a8 as ProjectModel, W as PeopleGroupModel, M as NewsModel, i as EventModel, p as InstructionModel } from '../instruction.model-BEV8LBmt.js';
 import { P as PermissionType } from '../permissions.model-DCQ_saKg.js';
 import { StarterKitOptions } from '@tiptap/starter-kit';
-import { Extensions } from '@tiptap/core';
+import * as _tiptap_core from '@tiptap/core';
+import { Extensions, Node } from '@tiptap/core';
 import * as highlight_js from 'highlight.js';
 import * as hast from 'hast';
 import * as _lowlight from 'lowlight';
 import { h as ImageVariations } from '../query-vMMsxjBM.js';
+import * as _tiptap_extension_table_cell from '@tiptap/extension-table-cell';
 import { Attrs } from '@tiptap/pm/model';
 import { CodeBlockLowlightOptions } from '@tiptap/extension-code-block-lowlight';
 import 'zod';
@@ -82,6 +84,14 @@ declare module '@tiptap/core' {
         };
     }
 }
+declare const CustomImage: _tiptap_core.Node<{
+    inline: boolean;
+    HTMLAttributes: {};
+    sizes: ImageVariations[];
+    allowBase64: boolean;
+}, any>;
+
+declare const CustomTableCell: _tiptap_core.Node<_tiptap_extension_table_cell.TableCellOptions, any>;
 
 type Option = {
     size?: ImageVariations;
@@ -98,6 +108,12 @@ declare module '@tiptap/core' {
     }
 }
 declare const getFormatedVideoSrc: (newVideoId: string) => string;
+declare const ExternalVideo: Node<{
+    inline: boolean;
+    HTMLAttributes: {};
+    sizes: ImageVariations[];
+    aligns: string[];
+}, any>;
 
 declare const DEFAULT_LANGUAGE = "plaintext";
 declare const DEFAULT_THEME = "dark";
@@ -107,12 +123,13 @@ interface LpiBlockOptions extends CodeBlockLowlightOptions {
     themeClassPrefix: string;
     defaultTheme: string | null | undefined;
 }
+declare const LpiCodeBlock: _tiptap_core.Node<LpiBlockOptions, any>;
 
 declare const isOwner: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
 
 declare const isMember: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
 
-declare const canPermissionProject: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"], perrmissionName: PermissionType) => boolean;
+declare const canPermissionProject: (rights: Right, organizationId: OrganizationModel["id"], projectId: (ProjectModel["id"] | null) | undefined, perrmissionName: PermissionType) => boolean;
 declare const canCreateProject: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
 declare const canEditProject: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
 declare const canDeleteProject: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
@@ -140,4 +157,4 @@ declare const canCreateInstruction: (rights: Right, organizationId: Organization
 declare const canEditInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
 declare const canDeleteInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
 
-export { DEFAULT_LANGUAGE, DEFAULT_TAB, DEFAULT_THEME, type LpiBlockOptions, canCreateComment, canCreateEvent, canCreateGroup, canCreateInstruction, canCreateNews, canCreateProject, canCreateReview, canDeleteComment, canDeleteEvent, canDeleteInstruction, canDeleteNews, canDeleteProject, canDeleteReview, canEditComment, canEditEvent, canEditGroup, canEditInstruction, canEditNews, canEditProject, canEditReview, canEditUser, canPermission, canPermissionProject, getExtensions, getFormatedVideoSrc, hasPermission, isAdmin, isAdminOrFacilitator, isFacilitator, isMember, isOwner, isSuperAdmin, isUser, isViewer, lowlight, roomKeyFromParams, userRights };
+export { CustomImage, CustomTableCell, DEFAULT_LANGUAGE, DEFAULT_TAB, DEFAULT_THEME, ExternalVideo, type LpiBlockOptions, LpiCodeBlock, canCreateComment, canCreateEvent, canCreateGroup, canCreateInstruction, canCreateNews, canCreateProject, canCreateReview, canDeleteComment, canDeleteEvent, canDeleteInstruction, canDeleteNews, canDeleteProject, canDeleteReview, canEditComment, canEditEvent, canEditGroup, canEditInstruction, canEditNews, canEditProject, canEditReview, canEditUser, canPermission, canPermissionProject, getExtensions, getFormatedVideoSrc, hasPermission, isAdmin, isAdminOrFacilitator, isFacilitator, isMember, isOwner, isSuperAdmin, isUser, isViewer, lowlight, roomKeyFromParams, userRights };

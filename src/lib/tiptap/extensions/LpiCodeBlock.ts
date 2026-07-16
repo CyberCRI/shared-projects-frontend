@@ -13,8 +13,8 @@ export interface LpiBlockOptions extends CodeBlockLowlightOptions {
   defaultTheme: string | null | undefined
 }
 
-export default CodeBlockLowlight.extend<LpiBlockOptions>({
-  name: 'code-block-lowlight',
+export const LpiCodeBlock = CodeBlockLowlight.extend<LpiBlockOptions>({
+  name: 'lpi-code-block',
 
   addOptions() {
     return {

@@ -9,11 +9,11 @@ import Table from '@tiptap/extension-table'
 import Color from '@tiptap/extension-color'
 import Link from '@tiptap/extension-link'
 
-import CustomTableCell from './extensions/CustomTableCell'
+import { CustomTableCell } from './extensions/CustomTableCell'
+import { ExternalVideo } from './extensions/ExternalVideo'
+import { LpiCodeBlock } from './extensions/LpiCodeBlock'
 import { AnyExtension, Extensions } from '@tiptap/core'
-import ExternalVideo from './extensions/ExternalVideo'
-import LpiCodeBlock from './extensions/LpiCodeBlock'
-import CustomImage from './extensions/CustomImage'
+import { CustomImage } from './extensions/CustomImage'
 import { lowlight } from './lowlight'
 
 export const getExtensions = (options: Partial<StarterKitOptions> = {}): Extensions => [
