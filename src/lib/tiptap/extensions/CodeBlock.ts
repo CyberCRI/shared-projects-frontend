@@ -12,6 +12,12 @@ export interface LpiBlockOptions extends CodeBlockLowlightOptions {
   defaultTheme: string | null | undefined
 }
 
+const getClassValue = (element: Element, classPrefix: string): string => {
+  const classNames = element.getAttribute('class')?.split(/\s+/).filter(Boolean) ?? []
+
+  return classNames.find((c) => c.startsWith(classPrefix))?.slice(classPrefix.length) || ''
+}
+
 export const CodeBlock = CodeBlockLowlight.extend<LpiBlockOptions>({
   name: 'code-block',
 
@@ -20,6 +26,7 @@ export const CodeBlock = CodeBlockLowlight.extend<LpiBlockOptions>({
       ...this.parent?.(),
       themeClassPrefix: 'theme-',
       tabClassPrefix: 'tab-',
+      languageClassPrefix: 'language-',
       defaultTheme: DEFAULT_THEME,
       defaultTab: DEFAULT_TAB,
     }
@@ -29,18 +36,20 @@ export const CodeBlock = CodeBlockLowlight.extend<LpiBlockOptions>({
     return {
       ...this.parent?.(),
 
+      language: {
+        default: null,
+        parseHTML: (element) => {
+          const { languageClassPrefix } = this.options
+          return getClassValue(element, languageClassPrefix) || DEFAULT_LANGUAGE
+        },
+        rendered: false,
+      },
+
       theme: {
         default: null,
         parseHTML: (element) => {
           const { themeClassPrefix } = this.options
-
-          const classNames = element.getAttribute('class')?.split(/\s+/).filter(Boolean) ?? []
-
-          const theme = classNames
-            .find((c) => c.startsWith(themeClassPrefix))
-            ?.slice(themeClassPrefix.length)
-
-          return theme ?? DEFAULT_THEME
+          return getClassValue(element, themeClassPrefix) || DEFAULT_THEME
         },
         rendered: false,
       },
@@ -49,14 +58,7 @@ export const CodeBlock = CodeBlockLowlight.extend<LpiBlockOptions>({
         default: null,
         parseHTML: (element) => {
           const { tabClassPrefix } = this.options
-
-          const classNames = element.getAttribute('class')?.split(/\s+/).filter(Boolean) ?? []
-
-          const tab = classNames
-            .find((c) => c.startsWith(tabClassPrefix))
-            ?.slice(tabClassPrefix.length)
-
-          return tab ?? DEFAULT_TAB.toString()
+          return getClassValue(element, tabClassPrefix) || DEFAULT_TAB.toString()
         },
         rendered: false,
       },
@@ -73,17 +75,9 @@ export const CodeBlock = CodeBlockLowlight.extend<LpiBlockOptions>({
   },
 
   renderHTML({ node, HTMLAttributes }) {
-    const langClass = node.attrs.language
-      ? this.options.languageClassPrefix + node.attrs.language
-      : null
-
-    const themeClass = node.attrs.theme
-      ? this.options.themeClassPrefix + node.attrs.theme
-      : this.options.themeClassPrefix + DEFAULT_THEME
-
-    const tabClass = node.attrs.tab
-      ? this.options.tabClassPrefix + node.attrs.tab
-      : this.options.tabClassPrefix + DEFAULT_TAB.toString()
+    const langClass = `${this.options.languageClassPrefix}${node.attrs.language || DEFAULT_LANGUAGE}`
+    const themeClass = `${this.options.themeClassPrefix}${node.attrs.theme || DEFAULT_THEME}`
+    const tabClass = `${this.options.tabClassPrefix}${node.attrs.tab || DEFAULT_TAB}`
 
     return [
       'pre',

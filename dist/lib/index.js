@@ -399,6 +399,10 @@ import { mergeAttributes as mergeAttributes3 } from "@tiptap/core";
 var DEFAULT_LANGUAGE = "plaintext";
 var DEFAULT_THEME = "dark";
 var DEFAULT_TAB = 2;
+var getClassValue = (element, classPrefix) => {
+  const classNames = element.getAttribute("class")?.split(/\s+/).filter(Boolean) ?? [];
+  return classNames.find((c) => c.startsWith(classPrefix))?.slice(classPrefix.length) || "";
+};
 var CodeBlock = CodeBlockLowlight.extend({
   name: "code-block",
   addOptions() {
@@ -406,6 +410,7 @@ var CodeBlock = CodeBlockLowlight.extend({
       ...this.parent?.(),
       themeClassPrefix: "theme-",
       tabClassPrefix: "tab-",
+      languageClassPrefix: "language-",
       defaultTheme: DEFAULT_THEME,
       defaultTab: DEFAULT_TAB
     };
@@ -413,13 +418,19 @@ var CodeBlock = CodeBlockLowlight.extend({
   addAttributes() {
     return {
       ...this.parent?.(),
+      language: {
+        default: null,
+        parseHTML: (element) => {
+          const { languageClassPrefix } = this.options;
+          return getClassValue(element, languageClassPrefix) || DEFAULT_LANGUAGE;
+        },
+        rendered: false
+      },
       theme: {
         default: null,
         parseHTML: (element) => {
           const { themeClassPrefix } = this.options;
-          const classNames = element.getAttribute("class")?.split(/\s+/).filter(Boolean) ?? [];
-          const theme = classNames.find((c) => c.startsWith(themeClassPrefix))?.slice(themeClassPrefix.length);
-          return theme ?? DEFAULT_THEME;
+          return getClassValue(element, themeClassPrefix) || DEFAULT_THEME;
         },
         rendered: false
       },
@@ -427,9 +438,7 @@ var CodeBlock = CodeBlockLowlight.extend({
         default: null,
         parseHTML: (element) => {
           const { tabClassPrefix } = this.options;
-          const classNames = element.getAttribute("class")?.split(/\s+/).filter(Boolean) ?? [];
-          const tab = classNames.find((c) => c.startsWith(tabClassPrefix))?.slice(tabClassPrefix.length);
-          return tab ?? DEFAULT_TAB.toString();
+          return getClassValue(element, tabClassPrefix) || DEFAULT_TAB.toString();
         },
         rendered: false
       }
@@ -444,9 +453,9 @@ var CodeBlock = CodeBlockLowlight.extend({
     ];
   },
   renderHTML({ node, HTMLAttributes }) {
-    const langClass = node.attrs.language ? this.options.languageClassPrefix + node.attrs.language : null;
-    const themeClass = node.attrs.theme ? this.options.themeClassPrefix + node.attrs.theme : this.options.themeClassPrefix + DEFAULT_THEME;
-    const tabClass = node.attrs.tab ? this.options.tabClassPrefix + node.attrs.tab : this.options.tabClassPrefix + DEFAULT_TAB.toString();
+    const langClass = `${this.options.languageClassPrefix}${node.attrs.language || DEFAULT_LANGUAGE}`;
+    const themeClass = `${this.options.themeClassPrefix}${node.attrs.theme || DEFAULT_THEME}`;
+    const tabClass = `${this.options.tabClassPrefix}${node.attrs.tab || DEFAULT_TAB}`;
     return [
       "pre",
       mergeAttributes3(this.options.HTMLAttributes, HTMLAttributes, {
