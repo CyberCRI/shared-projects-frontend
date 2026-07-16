@@ -1,7 +1,6 @@
 import type { CodeBlockLowlightOptions } from '@tiptap/extension-code-block-lowlight'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { mergeAttributes } from '@tiptap/core'
-import { PluginKey } from '@tiptap/pm/state'
 
 export const DEFAULT_LANGUAGE = 'plaintext'
 export const DEFAULT_THEME = 'dark'
@@ -13,8 +12,8 @@ export interface LpiBlockOptions extends CodeBlockLowlightOptions {
   defaultTheme: string | null | undefined
 }
 
-export const LpiCodeBlock = CodeBlockLowlight.extend<LpiBlockOptions>({
-  name: 'lpi-code-block',
+export const CodeBlock = CodeBlockLowlight.extend<LpiBlockOptions>({
+  name: 'code-block',
 
   addOptions() {
     return {
@@ -34,17 +33,14 @@ export const LpiCodeBlock = CodeBlockLowlight.extend<LpiBlockOptions>({
         default: null,
         parseHTML: (element) => {
           const { themeClassPrefix } = this.options
-          const classNames = [...(element?.classList || [])]
-          const themes = classNames
-            .filter((className) => className.startsWith(themeClassPrefix))
-            .map((className) => className.replace(themeClassPrefix, ''))
-          const theme = themes[0]
 
-          if (!theme) {
-            return DEFAULT_THEME
-          }
+          const classNames = element.getAttribute('class')?.split(/\s+/).filter(Boolean) ?? []
 
-          return theme
+          const theme = classNames
+            .find((c) => c.startsWith(themeClassPrefix))
+            ?.slice(themeClassPrefix.length)
+
+          return theme ?? DEFAULT_THEME
         },
         rendered: false,
       },
@@ -53,17 +49,14 @@ export const LpiCodeBlock = CodeBlockLowlight.extend<LpiBlockOptions>({
         default: null,
         parseHTML: (element) => {
           const { tabClassPrefix } = this.options
-          const classNames = [...(element?.classList || [])]
-          const tabs = classNames
-            .filter((className) => className.startsWith(tabClassPrefix))
-            .map((className) => className.replace(tabClassPrefix, ''))
-          const tab = tabs[0]
 
-          if (!tab) {
-            return DEFAULT_TAB.toString()
-          }
+          const classNames = element.getAttribute('class')?.split(/\s+/).filter(Boolean) ?? []
 
-          return tab
+          const tab = classNames
+            .find((c) => c.startsWith(tabClassPrefix))
+            ?.slice(tabClassPrefix.length)
+
+          return tab ?? DEFAULT_TAB.toString()
         },
         rendered: false,
       },

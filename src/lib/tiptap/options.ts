@@ -11,9 +11,9 @@ import Link from '@tiptap/extension-link'
 
 import { CustomTableCell } from './extensions/CustomTableCell'
 import { ExternalVideo } from './extensions/ExternalVideo'
-import { LpiCodeBlock } from './extensions/LpiCodeBlock'
 import { AnyExtension, Extensions } from '@tiptap/core'
 import { CustomImage } from './extensions/CustomImage'
+import { CodeBlock } from './extensions/CodeBlock'
 import { lowlight } from './lowlight'
 
 export const getExtensions = (options: Partial<StarterKitOptions> = {}): Extensions => [
@@ -38,7 +38,7 @@ export const getExtensions = (options: Partial<StarterKitOptions> = {}): Extensi
   TableHeader,
   CustomTableCell,
   CustomImage,
-  LpiCodeBlock.configure({
+  CodeBlock.configure({
     lowlight,
   }),
 ]

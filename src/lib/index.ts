@@ -20,7 +20,7 @@ export * from './tiptap/lowlight'
 export * from './tiptap/extensions/CustomImage'
 export * from './tiptap/extensions/CustomTableCell'
 export * from './tiptap/extensions/ExternalVideo'
-export * from './tiptap/extensions/LpiCodeBlock'
+export * from './tiptap/extensions/CodeBlock'
 
 // permissions/projects
 export * from './permissions/projects/isOwner'

@@ -123,7 +123,7 @@ interface LpiBlockOptions extends CodeBlockLowlightOptions {
     themeClassPrefix: string;
     defaultTheme: string | null | undefined;
 }
-declare const LpiCodeBlock: _tiptap_core.Node<LpiBlockOptions, any>;
+declare const CodeBlock: _tiptap_core.Node<LpiBlockOptions, any>;
 
 declare const isOwner: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
 
@@ -157,4 +157,4 @@ declare const canCreateInstruction: (rights: Right, organizationId: Organization
 declare const canEditInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
 declare const canDeleteInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
 
-export { CustomImage, CustomTableCell, DEFAULT_LANGUAGE, DEFAULT_TAB, DEFAULT_THEME, ExternalVideo, type LpiBlockOptions, LpiCodeBlock, canCreateComment, canCreateEvent, canCreateGroup, canCreateInstruction, canCreateNews, canCreateProject, canCreateReview, canDeleteComment, canDeleteEvent, canDeleteInstruction, canDeleteNews, canDeleteProject, canDeleteReview, canEditComment, canEditEvent, canEditGroup, canEditInstruction, canEditNews, canEditProject, canEditReview, canEditUser, canPermission, canPermissionProject, getExtensions, getFormatedVideoSrc, hasPermission, isAdmin, isAdminOrFacilitator, isFacilitator, isMember, isOwner, isSuperAdmin, isUser, isViewer, lowlight, roomKeyFromParams, userRights };
+export { CodeBlock, CustomImage, CustomTableCell, DEFAULT_LANGUAGE, DEFAULT_TAB, DEFAULT_THEME, ExternalVideo, type LpiBlockOptions, canCreateComment, canCreateEvent, canCreateGroup, canCreateInstruction, canCreateNews, canCreateProject, canCreateReview, canDeleteComment, canDeleteEvent, canDeleteInstruction, canDeleteNews, canDeleteProject, canDeleteReview, canEditComment, canEditEvent, canEditGroup, canEditInstruction, canEditNews, canEditProject, canEditReview, canEditUser, canPermission, canPermissionProject, getExtensions, getFormatedVideoSrc, hasPermission, isAdmin, isAdminOrFacilitator, isFacilitator, isMember, isOwner, isSuperAdmin, isUser, isViewer, lowlight, roomKeyFromParams, userRights };

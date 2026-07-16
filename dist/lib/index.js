@@ -309,87 +309,8 @@ var ExternalVideo = Node.create({
   }
 });
 
-// src/lib/tiptap/extensions/LpiCodeBlock.ts
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
-import { mergeAttributes as mergeAttributes2 } from "@tiptap/core";
-var DEFAULT_LANGUAGE = "plaintext";
-var DEFAULT_THEME = "dark";
-var DEFAULT_TAB = 2;
-var LpiCodeBlock = CodeBlockLowlight.extend({
-  name: "lpi-code-block",
-  addOptions() {
-    return {
-      ...this.parent?.(),
-      themeClassPrefix: "theme-",
-      tabClassPrefix: "tab-",
-      defaultTheme: DEFAULT_THEME,
-      defaultTab: DEFAULT_TAB
-    };
-  },
-  addAttributes() {
-    return {
-      ...this.parent?.(),
-      theme: {
-        default: null,
-        parseHTML: (element) => {
-          const { themeClassPrefix } = this.options;
-          const classNames = [...element?.classList || []];
-          const themes = classNames.filter((className) => className.startsWith(themeClassPrefix)).map((className) => className.replace(themeClassPrefix, ""));
-          const theme = themes[0];
-          if (!theme) {
-            return DEFAULT_THEME;
-          }
-          return theme;
-        },
-        rendered: false
-      },
-      tab: {
-        default: null,
-        parseHTML: (element) => {
-          const { tabClassPrefix } = this.options;
-          const classNames = [...element?.classList || []];
-          const tabs = classNames.filter((className) => className.startsWith(tabClassPrefix)).map((className) => className.replace(tabClassPrefix, ""));
-          const tab = tabs[0];
-          if (!tab) {
-            return DEFAULT_TAB.toString();
-          }
-          return tab;
-        },
-        rendered: false
-      }
-    };
-  },
-  parseHTML() {
-    return [
-      {
-        tag: "pre.lpi-code-block",
-        preserveWhitespace: "full"
-      }
-    ];
-  },
-  renderHTML({ node, HTMLAttributes }) {
-    const langClass = node.attrs.language ? this.options.languageClassPrefix + node.attrs.language : null;
-    const themeClass = node.attrs.theme ? this.options.themeClassPrefix + node.attrs.theme : this.options.themeClassPrefix + DEFAULT_THEME;
-    const tabClass = node.attrs.tab ? this.options.tabClassPrefix + node.attrs.tab : this.options.tabClassPrefix + DEFAULT_TAB.toString();
-    return [
-      "pre",
-      mergeAttributes2(this.options.HTMLAttributes, HTMLAttributes, {
-        class: `lpi-code-block ${themeClass} ${tabClass}`
-      }),
-      [
-        "code",
-        {
-          class: langClass,
-          spellcheck: "false"
-        },
-        0
-      ]
-    ];
-  }
-});
-
 // src/lib/tiptap/extensions/CustomImage.ts
-import { mergeAttributes as mergeAttributes3 } from "@tiptap/core";
+import { mergeAttributes as mergeAttributes2 } from "@tiptap/core";
 import Image from "@tiptap/extension-image";
 var CustomImage = Image.extend({
   addAttributes() {
@@ -444,7 +365,7 @@ var CustomImage = Image.extend({
   renderHTML({ node, HTMLAttributes }) {
     const size = node.attrs.size;
     HTMLAttributes.class = " custom-image-" + size;
-    return ["img", mergeAttributes3(this.options.HTMLAttributes, HTMLAttributes)];
+    return ["img", mergeAttributes2(this.options.HTMLAttributes, HTMLAttributes)];
   },
   parseHTML() {
     const getAttrs = (dom) => {
@@ -468,6 +389,77 @@ var CustomImage = Image.extend({
         tag: "img[src]",
         getAttrs
       }
+    ];
+  }
+});
+
+// src/lib/tiptap/extensions/CodeBlock.ts
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import { mergeAttributes as mergeAttributes3 } from "@tiptap/core";
+var DEFAULT_LANGUAGE = "plaintext";
+var DEFAULT_THEME = "dark";
+var DEFAULT_TAB = 2;
+var CodeBlock = CodeBlockLowlight.extend({
+  name: "code-block",
+  addOptions() {
+    return {
+      ...this.parent?.(),
+      themeClassPrefix: "theme-",
+      tabClassPrefix: "tab-",
+      defaultTheme: DEFAULT_THEME,
+      defaultTab: DEFAULT_TAB
+    };
+  },
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      theme: {
+        default: null,
+        parseHTML: (element) => {
+          const { themeClassPrefix } = this.options;
+          const classNames = element.getAttribute("class")?.split(/\s+/).filter(Boolean) ?? [];
+          const theme = classNames.find((c) => c.startsWith(themeClassPrefix))?.slice(themeClassPrefix.length);
+          return theme ?? DEFAULT_THEME;
+        },
+        rendered: false
+      },
+      tab: {
+        default: null,
+        parseHTML: (element) => {
+          const { tabClassPrefix } = this.options;
+          const classNames = element.getAttribute("class")?.split(/\s+/).filter(Boolean) ?? [];
+          const tab = classNames.find((c) => c.startsWith(tabClassPrefix))?.slice(tabClassPrefix.length);
+          return tab ?? DEFAULT_TAB.toString();
+        },
+        rendered: false
+      }
+    };
+  },
+  parseHTML() {
+    return [
+      {
+        tag: "pre.lpi-code-block",
+        preserveWhitespace: "full"
+      }
+    ];
+  },
+  renderHTML({ node, HTMLAttributes }) {
+    const langClass = node.attrs.language ? this.options.languageClassPrefix + node.attrs.language : null;
+    const themeClass = node.attrs.theme ? this.options.themeClassPrefix + node.attrs.theme : this.options.themeClassPrefix + DEFAULT_THEME;
+    const tabClass = node.attrs.tab ? this.options.tabClassPrefix + node.attrs.tab : this.options.tabClassPrefix + DEFAULT_TAB.toString();
+    return [
+      "pre",
+      mergeAttributes3(this.options.HTMLAttributes, HTMLAttributes, {
+        class: `lpi-code-block ${themeClass} ${tabClass}`
+      }),
+      [
+        "code",
+        {
+          class: langClass,
+          spellcheck: "false"
+        },
+        0
+      ]
     ];
   }
 });
@@ -499,7 +491,7 @@ var getExtensions = (options = {}) => [
   TableHeader,
   CustomTableCell,
   CustomImage,
-  LpiCodeBlock.configure({
+  CodeBlock.configure({
     lowlight
   })
 ];
@@ -592,13 +584,13 @@ var canDeleteInstruction = (rights, organizationId, instructionId) => {
   return isAdminOrFacilitator(rights, organizationId);
 };
 export {
+  CodeBlock,
   CustomImage,
   CustomTableCell,
   DEFAULT_LANGUAGE,
   DEFAULT_TAB,
   DEFAULT_THEME,
   ExternalVideo,
-  LpiCodeBlock,
   canCreateComment,
   canCreateEvent,
   canCreateGroup,
