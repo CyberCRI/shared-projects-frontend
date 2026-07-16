@@ -1,8 +1,6 @@
 import TableCell from '@tiptap/extension-table-cell'
 
 export const CustomTableCell = TableCell.extend({
-  name: 'custom-table-cell',
-
   addAttributes() {
     return {
       // extend the existing attributes …

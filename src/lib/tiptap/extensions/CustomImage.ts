@@ -20,8 +20,6 @@ declare module '@tiptap/core' {
 }
 
 export const CustomImage = Image.extend({
-  name: 'custom-image',
-
   addAttributes() {
     return {
       ...(Image?.config?.addAttributes?.call(this) || {}),

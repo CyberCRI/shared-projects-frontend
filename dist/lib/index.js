@@ -103,7 +103,6 @@ import Link from "@tiptap/extension-link";
 // src/lib/tiptap/extensions/CustomTableCell.ts
 import TableCell from "@tiptap/extension-table-cell";
 var CustomTableCell = TableCell.extend({
-  name: "custom-table-cell",
   addAttributes() {
     return {
       // extend the existing attributes …
@@ -313,7 +312,6 @@ var ExternalVideo = Node.create({
 // src/lib/tiptap/extensions/LpiCodeBlock.ts
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import { mergeAttributes as mergeAttributes2 } from "@tiptap/core";
-import { PluginKey } from "@tiptap/pm/state";
 var DEFAULT_LANGUAGE = "plaintext";
 var DEFAULT_THEME = "dark";
 var DEFAULT_TAB = 2;
@@ -325,8 +323,7 @@ var LpiCodeBlock = CodeBlockLowlight.extend({
       themeClassPrefix: "theme-",
       tabClassPrefix: "tab-",
       defaultTheme: DEFAULT_THEME,
-      defaultTab: DEFAULT_TAB,
-      key: new PluginKey("lpiCodeBlock")
+      defaultTab: DEFAULT_TAB
     };
   },
   addAttributes() {
@@ -395,7 +392,6 @@ var LpiCodeBlock = CodeBlockLowlight.extend({
 import { mergeAttributes as mergeAttributes3 } from "@tiptap/core";
 import Image from "@tiptap/extension-image";
 var CustomImage = Image.extend({
-  name: "custom-image",
   addAttributes() {
     return {
       ...Image?.config?.addAttributes?.call(this) || {},

@@ -23,7 +23,6 @@ export const LpiCodeBlock = CodeBlockLowlight.extend<LpiBlockOptions>({
       tabClassPrefix: 'tab-',
       defaultTheme: DEFAULT_THEME,
       defaultTab: DEFAULT_TAB,
-      key: new PluginKey('lpiCodeBlock'),
     }
   },
 
