@@ -459,7 +459,7 @@ var CodeBlock = CodeBlockLowlight.extend({
     return [
       "pre",
       mergeAttributes3(this.options.HTMLAttributes, HTMLAttributes, {
-        class: `lpi-code-block ${themeClass} ${tabClass}`
+        class: `lpi-code-block ${themeClass} ${tabClass} ${langClass}`
       }),
       [
         "code",

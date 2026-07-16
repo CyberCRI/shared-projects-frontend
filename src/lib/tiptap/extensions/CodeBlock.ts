@@ -82,7 +82,7 @@ export const CodeBlock = CodeBlockLowlight.extend<LpiBlockOptions>({
     return [
       'pre',
       mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
-        class: `lpi-code-block ${themeClass} ${tabClass}`,
+        class: `lpi-code-block ${themeClass} ${tabClass} ${langClass}`,
       }),
       [
         'code',
