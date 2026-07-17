@@ -112,5 +112,6 @@
     "lowlight": "^3.3.0",
     "yjs": "13.6.27"
   },
-  "packageManager": "yarn@4.17.1"
+  "packageManager": "yarn@4.17.1",
+  "license": "CC-BY-NC-SA-4.0",
 }
