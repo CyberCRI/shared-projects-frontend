@@ -5,6 +5,22 @@ import type { TagModel, TranslatedTag } from './tag.model'
 import type { ImageModel } from './image.model'
 import type { LanguageType } from './types'
 import type BaseModel from './base.model'
+import { ProjectTab, ProjectTabItem } from './projects-tabs.model'
+
+export interface TemplateTab extends BaseModel {
+  id?: number
+  template?: number
+  
+  uuid: ProjectTab['uuid']
+  title: ProjectTab['title']
+  description: ProjectTab['description']
+  type: ProjectTab['type']
+  icon: ProjectTab['icon']
+  show_preview: ProjectTab['show_preview']
+
+  title_item: ProjectTabItem['title']
+  content_item: ProjectTabItem['content']
+}
 
 /**
  * @name TemplateModel
@@ -29,6 +45,7 @@ export interface TemplateModel extends BaseModel {
   review_title: string
   review_description: string
   comment_content: string
+  tabs: TemplateTab[]
 }
 
 export type TemplateId = TemplateModel['id']
@@ -55,6 +72,11 @@ export type TranslatedTemplate = Omit<
   project_tags: TranslatedTag[]
 }
 
-export type TemplateForm = Partial<TemplateModel> & {
+
+export type TemplateTabForm = Partial<TemplateTab>
+
+export type TemplateForm = Partial<Omit<TemplateModel, 'tabs'>> & {
+  tabs: TemplateTabForm[]
   project_categories_ids: number[]
 }
+

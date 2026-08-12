@@ -10,6 +10,7 @@ import type BaseModel from './base.model'
 export interface ProjectTab extends BaseModel {
   id: number
   project?: ProjectModel
+  uuid: string
   title: string
   type: ProjectTabType
   description: string | null
