@@ -73,7 +73,12 @@ export type TranslatedTemplate = Omit<
 }
 
 
-export type TemplateTabForm = Partial<TemplateTab>
+export type TemplateTabForm = Partial<TemplateTab & {
+  item: {
+    title?: TemplateTab['title_item']
+    content?: TemplateTab['content_item']
+  }
+}>;
 
 export type TemplateForm = Partial<Omit<TemplateModel, 'tabs'>> & {
   tabs: TemplateTabForm[]
