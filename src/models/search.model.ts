@@ -10,8 +10,8 @@ import type {
   ProjectSlugOrId,
   TranslatedProject,
 } from './project.model'
+import type { TranslatedUserModel, UserModel, UserModulesKeys } from './user.model'
 import type { ProjectCategoryModel } from './project-category.model'
-import type { TranslatedUserModel, UserModel } from './user.model'
 import type { OrganizationModel } from './organization.model'
 import { PaginationQuery } from '../interfaces/pagination'
 import type { Language, SearchObjectType } from './types'
@@ -92,7 +92,7 @@ export type QueryFilterSearch = Partial<
     people_group: PeopleGroupIdOrSlug[]
 
     // modules filtereds
-    modules: 'none' | ProjectModulesKeys[] | PeopleGroupModulesKeys[]
+    modules: 'none' | ProjectModulesKeys[] | PeopleGroupModulesKeys[] | UserModulesKeys[]
 
     // extras
 

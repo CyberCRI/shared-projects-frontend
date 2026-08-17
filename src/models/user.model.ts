@@ -8,8 +8,11 @@ import type { ImageModel } from './image.model'
 import type { Translated } from '../interfaces/translated'
 import type { ResearcherLight } from './researcher.model'
 
+import { Ordering, PaginationQuery } from '../interfaces'
+import { OrganizationModel } from './organization.model'
 import type { TagModel } from './tag.model'
 import type BaseModel from './base.model'
+import { Roles } from './types'
 
 export type PrivacyValue = 'hide' | 'org' | 'pub'
 
@@ -61,7 +64,24 @@ export interface UserModel extends BaseModel {
   facebook: string | null
   twitter: string | null
   website: string | null
+
+  modules: {
+    conferences: number
+    files: number
+    follows_categories: number
+    follows_projects: number
+    groups: number
+    links: number
+    mentor: number
+    mentoree: number
+    projects: number
+    publications: number
+    skills: number
+  }
 }
+
+export type UserModulesKeys = keyof UserModel['modules']
+export type UserModuleExtra = UserModulesKeys | 'resources'
 
 export type UserSlugOrId = UserModel['id'] | UserModel['slug']
 
@@ -151,3 +171,30 @@ export type TranslatedUserModel = Translated<
 > & {
   people_groups: TranslatedPeopleGroupModel[]
 }
+
+export type QueryFilterUser = Partial<
+  {
+    ordering: Ordering<
+      | 'given_name'
+      | 'family_name'
+      | 'job'
+      | 'current_org_role'
+      | 'email_verified'
+      | 'password_created'
+      | 'last_login'
+      | 'created_at'
+    >
+    search: string
+    modules: 'none' | UserModulesKeys[]
+    serializer: 'light' | 'superlight'
+
+    // TODO check if array is need to is csv (separate by coma)
+    organizations: OrganizationModel['code'][]
+    current_org_pk: OrganizationModel['id'][]
+    current_org_role: Roles[]
+    can_mentor: boolean
+    needs_mentor: boolean
+    can_mentor_on: TagModel['id'][]
+    needs_mentor_on: TagModel['id'][]
+  } & PaginationQuery
+>
