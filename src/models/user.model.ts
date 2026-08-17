@@ -189,12 +189,26 @@ export type QueryFilterUser = Partial<
     serializer: 'light' | 'superlight'
 
     // TODO check if array is need to is csv (separate by coma)
-    organizations: OrganizationModel['code'][]
-    current_org_pk: OrganizationModel['id'][]
-    current_org_role: Roles[]
+    // OrganizationModel['code'][]
+    organizations: string
+    // OrganizationModel['id'][]
+    current_org_pk: string | number
+    // Roles[]
+    current_org_role: string
     can_mentor: boolean
     needs_mentor: boolean
-    can_mentor_on: TagModel['id'][]
-    needs_mentor_on: TagModel['id'][]
+
+    // TagModel['id'][]
+    can_mentor_on: string
+    // TagModel['id'][]
+    needs_mentor_on: string
   } & PaginationQuery
 >
+
+export type QueryFilterUserEmail = Partial<{
+  current_org_pk: OrganizationModel['id']
+}>
+
+export type QueryFilterResetPassword = Partial<{
+  redirect_uri: string
+}>
