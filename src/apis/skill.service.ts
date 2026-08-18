@@ -1,6 +1,6 @@
-import { SkillModel, UserSlugOrId } from '../models'
 import { QueryFilterSkill, UserSkillForm } from '../models/skill.model'
 import { clientAPI, ClientAPIOptions } from './client'
+import { SkillModel, UserSlugOrId } from '../models'
 
 type Config = ClientAPIOptions<QueryFilterSkill>
 

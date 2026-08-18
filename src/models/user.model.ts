@@ -2,7 +2,6 @@
  * @name UserModel
  * @description user data set on the project app
  */
-import type { PeopleGroupModel, TranslatedPeopleGroupModel } from './people-group.model'
 import type { ImageModel } from './image.model'
 
 import type { Translated } from '../interfaces/translated'
@@ -10,8 +9,6 @@ import type { ResearcherLight } from './researcher.model'
 
 import { Ordering, PaginationQuery } from '../interfaces'
 import { OrganizationModel } from './organization.model'
-import type { TagModel } from './tag.model'
-import { SkillModel } from './skill.model'
 import type BaseModel from './base.model'
 import { Roles } from './types'
 
@@ -29,41 +26,24 @@ export interface PrivacySettings extends BaseModel {
 
 export interface UserModel extends BaseModel {
   id: number
-  name: {
-    firstname: string
-    lastname: string
-  }
+  slug: string
+  // uuid
+  people_id?: string
 
   created_at: string
+
   email_verified?: boolean
   current_org_role?: Roles
-  keycloack_id?: number
   pronouns?: string
-  slug: string
+
   email: string
-  roles: string[]
-  orgs: string[]
   given_name: string
   family_name: string
   profile_picture?: ImageModel
-  permissions: string[]
   description?: string
   short_description?: string
   job?: string
-  people_groups?: PeopleGroupModel[] // TODO: define this type
-  skills?: SkillModel[]
-  notifications?: number
-  researcher?: ResearcherLight
-  resources: {
-    files: number
-    links: number
-  }
-  signed_terms_and_conditions?: {
-    [key: string]: { version: number | null; date: string | null }
-  } | null
-  privacy_settings?: PrivacySettings
   sdgs?: number[]
-  is_superuser: boolean
 
   location: string
   linkedin: string | null
@@ -73,6 +53,16 @@ export interface UserModel extends BaseModel {
   landline_phone: string | null
   mobile_phone: string | null
   skype: string | null
+
+  researcher?: ResearcherLight
+
+  signed_terms_and_conditions?: {
+    [key: string]: { version: number | null; date: string | null }
+  } | null
+
+  is_superuser: boolean
+  roles: string[]
+  permissions: string[]
 
   modules: {
     conferences: number
@@ -86,6 +76,7 @@ export interface UserModel extends BaseModel {
     projects: number
     publications: number
     skills: number
+    notifications: number
   }
 }
 
@@ -162,11 +153,9 @@ export interface UserPrivacyPatchModel {
 }
 
 export type TranslatedUserModel = Translated<
-  Omit<UserModel, 'people_groups'>,
+  UserModel,
   'description' | 'short_description' | 'job'
-> & {
-  people_groups: TranslatedPeopleGroupModel[]
-}
+> & {}
 
 export type QueryFilterUser = Partial<
   {
