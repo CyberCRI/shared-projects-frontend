@@ -11,6 +11,7 @@ import type { ResearcherLight } from './researcher.model'
 import { Ordering, PaginationQuery } from '../interfaces'
 import { OrganizationModel } from './organization.model'
 import type { TagModel } from './tag.model'
+import { SkillModel } from './skill.model'
 import type BaseModel from './base.model'
 import { Roles } from './types'
 
@@ -50,7 +51,7 @@ export interface UserModel extends BaseModel {
   short_description?: string
   job?: string
   people_groups?: PeopleGroupModel[] // TODO: define this type
-  skills?: UserSkillModel[]
+  skills?: SkillModel[]
   notifications?: number
   researcher?: ResearcherLight
   resources: {
@@ -158,19 +159,6 @@ export interface UserPrivacyPatchModel {
   skype?: PrivacyValue
   landline_phone?: PrivacyValue
   twitter?: PrivacyValue
-}
-
-export interface UserSkillModel extends BaseModel {
-  id: number
-  user: string
-  tag: TagModel
-  level: number
-  level_to_reach: number
-  category: string
-  type: 'skill' | 'hobby'
-  can_mentor: boolean
-  needs_mentor: boolean
-  comment: string
 }
 
 export type TranslatedUserModel = Translated<

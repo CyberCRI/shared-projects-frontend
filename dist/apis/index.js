@@ -961,133 +961,6 @@ async function patchTermsAndConditions(organization, content, config = {}) {
   );
 }
 
-// src/apis/utils.service.ts
-function _adaptParamsToGetQuery(params) {
-  const query = {};
-  Object.entries(params || {}).forEach(([key, value]) => {
-    query[key] = Array.isArray(value) ? value.join(",") : value.toString();
-  });
-  return {
-    params: query
-  };
-}
-
-// src/apis/people.service.ts
-async function getUser(userId, config = {}) {
-  return await clientAPI(`user/${userId}/`, config);
-}
-async function postUser(organizationCode, body, config = {}) {
-  return await clientAPI(
-    `user/`,
-    merge(
-      {
-        body,
-        method: "POST",
-        query: {
-          organization: organizationCode
-        }
-      },
-      config
-    )
-  );
-}
-async function postUserWithInvitation(organizationCode, inviteToken, body, config = {}) {
-  const options = merge(
-    {
-      body,
-      method: "POST",
-      headers: {
-        Authorization: `Invite ${inviteToken}`
-      },
-      query: {
-        organization: organizationCode
-      }
-    },
-    config
-  );
-  return await clientAPI(`user/`, options);
-}
-async function searchPeopleAdmin(organizationId, config) {
-  const newConfig = {
-    ...config,
-    query: {
-      ...config.query,
-      current_org_pk: organizationId
-    }
-  };
-  return await clientAPI("user/admin-list/", newConfig);
-}
-async function searchPeopleByExactMail(email, params, config = {}) {
-  const adaptedParams = params ? _adaptParamsToGetQuery(params) : {};
-  return await clientAPI(`user/get-by-email/${email}/`, { ...config, ...adaptedParams });
-}
-async function patchUser(userId, body, config = {}) {
-  return await clientAPI(`user/${userId}/`, { ...config, body, method: "PATCH" });
-}
-async function patchUserPicture(userId, pictureId, body, config = {}) {
-  return await clientAPI(`user/${userId}/profile-picture/${pictureId}/`, {
-    ...config,
-    body,
-    method: "PATCH"
-  });
-}
-async function deleteUser(userId, config = {}) {
-  await clientAPI(`user/${userId}/`, { ...config, method: "DELETE" });
-}
-async function postUserPicture(userId, body, config = {}) {
-  return await clientAPI(`user/${userId}/profile-picture/`, {
-    ...config,
-    body,
-    method: "POST"
-  });
-}
-async function deleteUserPicture(id, imageId, config = {}) {
-  await clientAPI(`user/${id}/profile-picture/${imageId}/`, { ...config, method: "DELETE" });
-}
-async function patchUserPrivacy(userId, body, config = {}) {
-  return await clientAPI(`privacy-settings/${userId}/`, {
-    ...config,
-    body,
-    method: "PATCH"
-  });
-}
-async function postUserSkill(userId, body, config = {}) {
-  return await clientAPI(`user/${userId}/skill/`, {
-    ...config,
-    body,
-    method: "POST"
-  });
-}
-async function patchUserSkill(userId, skillId, body, config = {}) {
-  return await clientAPI(`user/${userId}/skill/${skillId}/`, {
-    ...config,
-    body,
-    method: "PATCH"
-  });
-}
-async function deleteUserSkill(userId, skillId, config = {}) {
-  await clientAPI(`user/${userId}/skill/${skillId}/`, { ...config, method: "DELETE" });
-}
-async function resetUserPassword(organizationCode, userId, config = {}) {
-  return await clientAPI(
-    `user/${userId}/reset-password/`,
-    merge(
-      {
-        query: {
-          organization: organizationCode
-        }
-      },
-      config
-    )
-  );
-}
-async function removeUserCookie(config = {}) {
-  return await clientAPI(
-    "user/remove-authentication-cookie",
-    config
-  );
-}
-
 // src/apis/project-categories.service.ts
 async function getProjectCategory(organizationCode, categoryId, config = {}) {
   return await clientAPI(
@@ -1503,17 +1376,28 @@ function searchGroups(search, config = {}) {
 }
 
 // src/apis/skill.service.ts
-async function getSkill(skillId, options = {}) {
-  return await clientAPI(`skill/${skillId}/`, options);
+async function getUserSkills(userId, options = {}) {
+  return await clientAPI(`${userId}/skill/`, options);
 }
-async function searchSkill(search, options = {}) {
-  return await clientAPI(`skill/`, {
-    ...options,
-    query: {
-      ...options?.query || {},
-      search
-    }
+async function getUserSkill(userId, skillId, options = {}) {
+  return await clientAPI(`${userId}/skill/${skillId}/`, options);
+}
+async function postUserSkill(userId, body, config = {}) {
+  return await clientAPI(`user/${userId}/skill/`, {
+    ...config,
+    body,
+    method: "POST"
   });
+}
+async function patchUserSkill(userId, skillId, body, config = {}) {
+  return await clientAPI(`user/${userId}/skill/${skillId}/`, {
+    ...config,
+    body,
+    method: "PATCH"
+  });
+}
+async function deleteUserSkill(userId, skillId, config = {}) {
+  await clientAPI(`user/${userId}/skill/${skillId}/`, { ...config, method: "DELETE" });
 }
 
 // src/apis/stats.service.ts
@@ -1667,6 +1551,115 @@ function patchTemplate(organizationCode, templateId, body, config = {}) {
     method: "PATCH"
   });
 }
+
+// src/apis/utils.service.ts
+function _adaptParamsToGetQuery(params) {
+  const query = {};
+  Object.entries(params || {}).forEach(([key, value]) => {
+    query[key] = Array.isArray(value) ? value.join(",") : value.toString();
+  });
+  return {
+    params: query
+  };
+}
+
+// src/apis/user.service.ts
+async function getUser(userId, config = {}) {
+  return await clientAPI(`user/${userId}/`, config);
+}
+async function postUser(organizationCode, body, config = {}) {
+  await clientAPI(
+    `user/`,
+    merge(
+      {
+        body,
+        method: "POST",
+        query: {
+          organization: organizationCode
+        }
+      },
+      config
+    )
+  );
+}
+async function postUserWithInvitation(organizationCode, inviteToken, body, config = {}) {
+  const options = merge(
+    {
+      body,
+      method: "POST",
+      headers: {
+        Authorization: `Invite ${inviteToken}`
+      },
+      query: {
+        organization: organizationCode
+      }
+    },
+    config
+  );
+  return await clientAPI(`user/`, options);
+}
+async function searchUserAdmin(organizationId, config = {}) {
+  const newConfig = {
+    ...config || {},
+    query: {
+      ...config?.query || {},
+      current_org_pk: organizationId
+    }
+  };
+  return await clientAPI("user/admin-list/", newConfig);
+}
+async function searchUserByExactMail(email, config = {}) {
+  return await clientAPI(`user/get-by-email/${encodeURIComponent(email)}/`, config);
+}
+async function patchUser(userId, body, config = {}) {
+  return await clientAPI(`user/${userId}/`, { ...config, body, method: "PATCH" });
+}
+async function patchUserPicture(userId, pictureId, body, config = {}) {
+  return await clientAPI(`user/${userId}/profile-picture/${pictureId}/`, {
+    ...config,
+    body,
+    method: "PATCH"
+  });
+}
+async function deleteUser(userId, config = {}) {
+  await clientAPI(`user/${userId}/`, { ...config, method: "DELETE" });
+}
+async function postUserPicture(userId, body, config = {}) {
+  return await clientAPI(`user/${userId}/profile-picture/`, {
+    ...config,
+    body,
+    method: "POST"
+  });
+}
+async function deleteUserPicture(id, imageId, config = {}) {
+  await clientAPI(`user/${id}/profile-picture/${imageId}/`, { ...config, method: "DELETE" });
+}
+async function patchUserPrivacy(userId, body, config = {}) {
+  return await clientAPI(`privacy-settings/${userId}/`, {
+    ...config,
+    body,
+    method: "PATCH"
+  });
+}
+async function resetUserPassword(organizationCode, userId, config = {}) {
+  return await clientAPI(
+    `user/${userId}/reset-password/`,
+    merge(
+      {
+        query: {
+          organization: organizationCode
+        }
+      },
+      config
+    )
+  );
+}
+async function removeUserCookie(config = {}) {
+  return await clientAPI(
+    "user/remove-authentication-cookie",
+    config
+  );
+}
 export {
   _adaptParamsToGetQuery,
   acceptAccessRequest,
@@ -1805,7 +1798,6 @@ export {
   getResearchDocumentSimilars,
   getReviews,
   getRootProjectCategory,
-  getSkill,
   getStats,
   getSubGroup,
   getTags,
@@ -1817,6 +1809,8 @@ export {
   getUserFollows,
   getUserMentorship,
   getUserNotificationSettings,
+  getUserSkill,
+  getUserSkills,
   getUsersRecommendationsForUser,
   lockUnlockProject,
   offerMentorship,
@@ -1913,12 +1907,11 @@ export {
   respondMentorship,
   searchAll,
   searchGroups,
-  searchPeopleAdmin,
-  searchPeopleByExactMail,
   searchProjects,
   searchResearcher,
-  searchSkill,
   searchUser,
+  searchUserAdmin,
+  searchUserByExactMail,
   updateProjectTab,
   updateProjectTabItem
 };

@@ -5,7 +5,7 @@ import {
   UserModel,
   UserPatchModel,
   UserPrivacyPatchModel,
-  UserSkillModel,
+  SkillModel,
   PrivacySettings,
   ImageModel,
   QueryFilterUser,
@@ -149,40 +149,6 @@ export async function patchUserPrivacy(
     method: 'PATCH',
   })
 }
-
-export async function postUserSkill(
-  userId: UserSlugOrId,
-  body: UserSkillModel,
-  config: ClientAPIOptions = {}
-) {
-  return await clientAPI<UserSkillModel>(`user/${userId}/skill/`, {
-    ...config,
-    body,
-    method: 'POST',
-  })
-}
-
-export async function patchUserSkill(
-  userId: UserSlugOrId,
-  skillId: UserSkillModel['id'],
-  body: UserPrivacyPatchModel,
-  config: ClientAPIOptions = {}
-) {
-  return await clientAPI<UserSkillModel>(`user/${userId}/skill/${skillId}/`, {
-    ...config,
-    body,
-    method: 'PATCH',
-  })
-}
-
-export async function deleteUserSkill(
-  userId: UserSlugOrId,
-  skillId: UserSkillModel['id'],
-  config: ClientAPIOptions = {}
-) {
-  await clientAPI(`user/${userId}/skill/${skillId}/`, { ...config, method: 'DELETE' })
-}
-
 export async function resetUserPassword(
   organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,

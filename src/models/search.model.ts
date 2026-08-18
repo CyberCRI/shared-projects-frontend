@@ -16,8 +16,8 @@ import type { OrganizationModel } from './organization.model'
 import { PaginationQuery } from '../interfaces/pagination'
 import type { Language, SearchObjectType } from './types'
 import type { Ordering } from '../interfaces/query'
-import type { SkillModel } from './skill.model'
 import type { TagModel } from './tag.model'
+import { SkillModel } from './skill.model'
 import type BaseModel from './base.model'
 
 export interface BaseSearchResult extends BaseModel {
