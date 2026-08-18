@@ -32,6 +32,10 @@ export interface UserModel extends BaseModel {
     firstname: string
     lastname: string
   }
+
+  created_at: string
+  email_verified?: boolean
+  current_org_role?: Roles
   keycloack_id?: number
   pronouns?: string
   slug: string
@@ -60,10 +64,14 @@ export interface UserModel extends BaseModel {
   sdgs?: number[]
   is_superuser: boolean
 
+  location: string
   linkedin: string | null
   facebook: string | null
   twitter: string | null
   website: string | null
+  landline_phone: string | null
+  mobile_phone: string | null
+  skype: string | null
 
   modules: {
     conferences: number

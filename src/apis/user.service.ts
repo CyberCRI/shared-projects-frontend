@@ -70,7 +70,7 @@ export async function postUserWithInvitation(
   return await clientAPI<UserModel>(`user/`, options)
 }
 
-export async function searchPeopleAdmin(
+export async function searchUserAdmin(
   organizationId: OrganizationModel['id'],
   config: ClientAPIOptions<QueryFilterUser> = {}
 ) {
@@ -86,7 +86,7 @@ export async function searchPeopleAdmin(
   return await clientAPI<PaginationResult<UserModel>>('user/admin-list/', newConfig)
 }
 
-export async function searchPeopleByExactMail(
+export async function searchUserByExactMail(
   email: string,
   config: ClientAPIOptions<QueryFilterUserEmail> = {}
 ) {
