@@ -1,5 +1,5 @@
 import { UserSlugOrId } from './user.model'
-import type { TagModel } from './tag.model'
+import type { TagModel, TranslatedTag } from './tag.model'
 import BaseModel from './base.model'
 
 export interface SkillModel extends BaseModel {
@@ -20,3 +20,7 @@ export type QueryFilterSkill = Partial<{
 }>
 
 export type UserSkillForm = Partial<SkillModel>
+
+export type TranslatedSkill = Omit<SkillModel, 'tag'> & {
+  tag: TranslatedTag
+}
