@@ -1,11 +1,12 @@
 import { QueryFilterSkill, UserSkillForm } from '../models/skill.model'
 import { clientAPI, ClientAPIOptions } from './client'
 import { SkillModel, UserSlugOrId } from '../models'
+import { PaginationResult } from '../interfaces'
 
 type Config = ClientAPIOptions<QueryFilterSkill>
 
 export async function getUserSkills(userId: UserSlugOrId, options: Config = {}) {
-  return await clientAPI<SkillModel>(`${userId}/skill/`, options)
+  return await clientAPI<PaginationResult<SkillModel>>(`${userId}/skill/`, options)
 }
 
 export async function getUserSkill(
