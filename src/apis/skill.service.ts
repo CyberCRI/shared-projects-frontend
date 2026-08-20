@@ -6,7 +6,7 @@ import { PaginationResult } from '../interfaces'
 type Config = ClientAPIOptions<QueryFilterSkill>
 
 export async function getUserSkills(userId: UserSlugOrId, options: Config = {}) {
-  return await clientAPI<PaginationResult<SkillModel>>(`${userId}/skill/`, options)
+  return await clientAPI<PaginationResult<SkillModel>>(`user/${userId}/skill/`, options)
 }
 
 export async function getUserSkill(
@@ -14,7 +14,7 @@ export async function getUserSkill(
   skillId: SkillModel['id'],
   options: Config = {}
 ) {
-  return await clientAPI<SkillModel>(`${userId}/skill/${skillId}/`, options)
+  return await clientAPI<SkillModel>(`user/${userId}/skill/${skillId}/`, options)
 }
 
 export async function postUserSkill(
