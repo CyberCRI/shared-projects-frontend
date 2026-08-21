@@ -9,6 +9,7 @@ import type BaseModel from './base.model'
 
 export interface ProjectTab extends BaseModel {
   id: number
+  slug: string
   project?: ProjectModel
   uuid: string
   title: string
@@ -23,6 +24,8 @@ export interface ProjectTab extends BaseModel {
     items: number
   }
 }
+
+export type TabSlugOrId = ProjectTab['slug'] | ProjectTab['id']
 
 export type ProjectTabForm = Partial<
   Omit<ProjectTab, 'id' | 'modules' | 'images'> & {

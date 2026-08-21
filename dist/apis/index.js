@@ -961,133 +961,6 @@ async function patchTermsAndConditions(organization, content, config = {}) {
   );
 }
 
-// src/apis/utils.service.ts
-function _adaptParamsToGetQuery(params) {
-  const query = {};
-  Object.entries(params || {}).forEach(([key, value]) => {
-    query[key] = Array.isArray(value) ? value.join(",") : value.toString();
-  });
-  return {
-    params: query
-  };
-}
-
-// src/apis/people.service.ts
-async function getUser(userId, config = {}) {
-  return await clientAPI(`user/${userId}/`, config);
-}
-async function postUser(organizationCode, body, config = {}) {
-  return await clientAPI(
-    `user/`,
-    merge(
-      {
-        body,
-        method: "POST",
-        query: {
-          organization: organizationCode
-        }
-      },
-      config
-    )
-  );
-}
-async function postUserWithInvitation(organizationCode, inviteToken, body, config = {}) {
-  const options = merge(
-    {
-      body,
-      method: "POST",
-      headers: {
-        Authorization: `Invite ${inviteToken}`
-      },
-      query: {
-        organization: organizationCode
-      }
-    },
-    config
-  );
-  return await clientAPI(`user/`, options);
-}
-async function searchPeopleAdmin(organizationId, config) {
-  const newConfig = {
-    ...config,
-    query: {
-      ...config.query,
-      current_org_pk: organizationId
-    }
-  };
-  return await clientAPI("user/admin-list/", newConfig);
-}
-async function searchPeopleByExactMail(email, params, config = {}) {
-  const adaptedParams = params ? _adaptParamsToGetQuery(params) : {};
-  return await clientAPI(`user/get-by-email/${email}/`, { ...config, ...adaptedParams });
-}
-async function patchUser(userId, body, config = {}) {
-  return await clientAPI(`user/${userId}/`, { ...config, body, method: "PATCH" });
-}
-async function patchUserPicture(userId, pictureId, body, config = {}) {
-  return await clientAPI(`user/${userId}/profile-picture/${pictureId}/`, {
-    ...config,
-    body,
-    method: "PATCH"
-  });
-}
-async function deleteUser(userId, config = {}) {
-  await clientAPI(`user/${userId}/`, { ...config, method: "DELETE" });
-}
-async function postUserPicture(userId, body, config = {}) {
-  return await clientAPI(`user/${userId}/profile-picture/`, {
-    ...config,
-    body,
-    method: "POST"
-  });
-}
-async function deleteUserPicture(id, imageId, config = {}) {
-  await clientAPI(`user/${id}/profile-picture/${imageId}/`, { ...config, method: "DELETE" });
-}
-async function patchUserPrivacy(userId, body, config = {}) {
-  return await clientAPI(`privacy-settings/${userId}/`, {
-    ...config,
-    body,
-    method: "PATCH"
-  });
-}
-async function postUserSkill(userId, body, config = {}) {
-  return await clientAPI(`user/${userId}/skill/`, {
-    ...config,
-    body,
-    method: "POST"
-  });
-}
-async function patchUserSkill(userId, skillId, body, config = {}) {
-  return await clientAPI(`user/${userId}/skill/${skillId}/`, {
-    ...config,
-    body,
-    method: "PATCH"
-  });
-}
-async function deleteUserSkill(userId, skillId, config = {}) {
-  await clientAPI(`user/${userId}/skill/${skillId}/`, { ...config, method: "DELETE" });
-}
-async function resetUserPassword(organizationCode, userId, config = {}) {
-  return await clientAPI(
-    `user/${userId}/reset-password/`,
-    merge(
-      {
-        query: {
-          organization: organizationCode
-        }
-      },
-      config
-    )
-  );
-}
-async function removeUserCookie(config = {}) {
-  return await clientAPI(
-    "user/remove-authentication-cookie",
-    config
-  );
-}
-
 // src/apis/project-categories.service.ts
 async function getProjectCategory(organizationCode, categoryId, config = {}) {
   return await clientAPI(
@@ -1502,20 +1375,6 @@ function searchGroups(search, config = {}) {
   });
 }
 
-// src/apis/skill.service.ts
-async function getSkill(skillId, options = {}) {
-  return await clientAPI(`skill/${skillId}/`, options);
-}
-async function searchSkill(search, options = {}) {
-  return await clientAPI(`skill/`, {
-    ...options,
-    query: {
-      ...options?.query || {},
-      search
-    }
-  });
-}
-
 // src/apis/stats.service.ts
 async function getStats(orgaizationCode, config = {
   query: { publication_status: "all" }
@@ -1665,6 +1524,147 @@ function patchTemplate(organizationCode, templateId, body, config = {}) {
     ...config,
     body,
     method: "PATCH"
+  });
+}
+
+// src/apis/utils.service.ts
+function _adaptParamsToGetQuery(params) {
+  const query = {};
+  Object.entries(params || {}).forEach(([key, value]) => {
+    query[key] = Array.isArray(value) ? value.join(",") : value.toString();
+  });
+  return {
+    params: query
+  };
+}
+
+// src/apis/people.service.ts
+async function getUser(userId, config = {}) {
+  return await clientAPI(`user/${userId}/`, config);
+}
+async function postUser(organizationCode, body, config = {}) {
+  return await clientAPI(
+    `user/`,
+    merge(
+      {
+        body,
+        method: "POST",
+        query: {
+          organization: organizationCode
+        }
+      },
+      config
+    )
+  );
+}
+async function postUserWithInvitation(organizationCode, inviteToken, body, config = {}) {
+  const options = merge(
+    {
+      body,
+      method: "POST",
+      headers: {
+        Authorization: `Invite ${inviteToken}`
+      },
+      query: {
+        organization: organizationCode
+      }
+    },
+    config
+  );
+  return await clientAPI(`user/`, options);
+}
+async function searchPeopleAdmin(organizationId, config) {
+  const newConfig = {
+    ...config,
+    query: {
+      ...config.query,
+      current_org_pk: organizationId
+    }
+  };
+  return await clientAPI("user/admin-list/", newConfig);
+}
+async function searchPeopleByExactMail(email, params, config = {}) {
+  const adaptedParams = params ? _adaptParamsToGetQuery(params) : {};
+  return await clientAPI(`user/get-by-email/${email}/`, { ...config, ...adaptedParams });
+}
+async function patchUser(userId, body, config = {}) {
+  return await clientAPI(`user/${userId}/`, { ...config, body, method: "PATCH" });
+}
+async function patchUserPicture(userId, pictureId, body, config = {}) {
+  return await clientAPI(`user/${userId}/profile-picture/${pictureId}/`, {
+    ...config,
+    body,
+    method: "PATCH"
+  });
+}
+async function deleteUser(userId, config = {}) {
+  await clientAPI(`user/${userId}/`, { ...config, method: "DELETE" });
+}
+async function postUserPicture(userId, body, config = {}) {
+  return await clientAPI(`user/${userId}/profile-picture/`, {
+    ...config,
+    body,
+    method: "POST"
+  });
+}
+async function deleteUserPicture(id, imageId, config = {}) {
+  await clientAPI(`user/${id}/profile-picture/${imageId}/`, { ...config, method: "DELETE" });
+}
+async function patchUserPrivacy(userId, body, config = {}) {
+  return await clientAPI(`privacy-settings/${userId}/`, {
+    ...config,
+    body,
+    method: "PATCH"
+  });
+}
+async function postUserSkill(userId, body, config = {}) {
+  return await clientAPI(`user/${userId}/skill/`, {
+    ...config,
+    body,
+    method: "POST"
+  });
+}
+async function patchUserSkill(userId, skillId, body, config = {}) {
+  return await clientAPI(`user/${userId}/skill/${skillId}/`, {
+    ...config,
+    body,
+    method: "PATCH"
+  });
+}
+async function deleteUserSkill(userId, skillId, config = {}) {
+  await clientAPI(`user/${userId}/skill/${skillId}/`, { ...config, method: "DELETE" });
+}
+async function resetUserPassword(organizationCode, userId, config = {}) {
+  return await clientAPI(
+    `user/${userId}/reset-password/`,
+    merge(
+      {
+        query: {
+          organization: organizationCode
+        }
+      },
+      config
+    )
+  );
+}
+async function removeUserCookie(config = {}) {
+  return await clientAPI(
+    "user/remove-authentication-cookie",
+    config
+  );
+}
+
+// src/apis/skill.service.ts
+async function getSkill(skillId, options = {}) {
+  return await clientAPI(`skill/${skillId}/`, options);
+}
+async function searchSkill(search, options = {}) {
+  return await clientAPI(`skill/`, {
+    ...options,
+    query: {
+      ...options?.query || {},
+      search
+    }
   });
 }
 export {
