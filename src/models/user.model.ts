@@ -2,14 +2,15 @@
  * @name UserModel
  * @description user data set on the project app
  */
-import type { PeopleGroupModel, TranslatedPeopleGroupModel } from './people-group.model'
 import type { ImageModel } from './image.model'
 
 import type { Translated } from '../interfaces/translated'
 import type { ResearcherLight } from './researcher.model'
 
-import type { TagModel } from './tag.model'
+import { Ordering, PaginationQuery } from '../interfaces'
+import { OrganizationModel } from './organization.model'
 import type BaseModel from './base.model'
+import { Roles } from './types'
 
 export type PrivacyValue = 'hide' | 'org' | 'pub'
 
@@ -25,43 +26,62 @@ export interface PrivacySettings extends BaseModel {
 
 export interface UserModel extends BaseModel {
   id: number
-  name: {
-    firstname: string
-    lastname: string
-  }
-  keycloack_id?: number
-  pronouns?: string
   slug: string
+  // uuid
+  people_id?: string
+
+  created_at: string
+
+  email_verified?: boolean
+  current_org_role?: Roles
+  pronouns?: string
+
   email: string
-  roles: string[]
-  orgs: string[]
   given_name: string
   family_name: string
   profile_picture?: ImageModel
-  permissions: string[]
   description?: string
   short_description?: string
   job?: string
-  people_groups?: PeopleGroupModel[] // TODO: define this type
-  skills?: UserSkillModel[]
-  notifications?: number
-  researcher?: ResearcherLight
-  resources: {
-    files: number
-    links: number
-  }
-  signed_terms_and_conditions?: {
-    [key: string]: { version: number | null; date: string | null }
-  } | null
-  privacy_settings?: PrivacySettings
   sdgs?: number[]
-  is_superuser: boolean
 
+  location: string
   linkedin: string | null
   facebook: string | null
   twitter: string | null
   website: string | null
+  landline_phone: string | null
+  mobile_phone: string | null
+  skype: string | null
+
+  researcher?: ResearcherLight
+
+  signed_terms_and_conditions?: {
+    [key: string]: { version: number | null; date: string | null }
+  } | null
+
+  is_superuser: boolean
+  roles: string[]
+  permissions: string[]
+
+  modules: {
+    conferences: number
+    files: number
+    follows_categories: number
+    follows_projects: number
+    groups: number
+    links: number
+    mentor: number
+    mentoree: number
+    projects: number
+    publications: number
+    skills: number
+    notifications: number
+  }
 }
+
+export type UserModulesKeys = keyof UserModel['modules']
+export type UserModuleExtra = UserModulesKeys | 'resources'
 
 export type UserSlugOrId = UserModel['id'] | UserModel['slug']
 
@@ -132,22 +152,48 @@ export interface UserPrivacyPatchModel {
   twitter?: PrivacyValue
 }
 
-export interface UserSkillModel extends BaseModel {
-  id: number
-  user: string
-  tag: TagModel
-  level: number
-  level_to_reach: number
-  category: string
-  type: 'skill' | 'hobby'
-  can_mentor: boolean
-  needs_mentor: boolean
-  comment: string
-}
-
 export type TranslatedUserModel = Translated<
-  Omit<UserModel, 'people_groups'>,
+  UserModel,
   'description' | 'short_description' | 'job'
-> & {
-  people_groups: TranslatedPeopleGroupModel[]
-}
+> & {}
+
+export type QueryFilterUser = Partial<
+  {
+    ordering: Ordering<
+      | 'given_name'
+      | 'family_name'
+      | 'job'
+      | 'current_org_role'
+      | 'email_verified'
+      | 'password_created'
+      | 'last_login'
+      | 'created_at'
+    >
+    search: string
+    modules: 'none' | UserModulesKeys[]
+    serializer: 'light' | 'superlight'
+
+    // TODO check if array is need to is csv (separate by coma)
+    // OrganizationModel['code'][]
+    organizations: string
+    // OrganizationModel['id'][]
+    current_org_pk: string | number
+    // Roles[]
+    current_org_role: string
+    can_mentor: boolean
+    needs_mentor: boolean
+
+    // TagModel['id'][]
+    can_mentor_on: string
+    // TagModel['id'][]
+    needs_mentor_on: string
+  } & PaginationQuery
+>
+
+export type QueryFilterUserEmail = Partial<{
+  current_org_pk: OrganizationModel['id']
+}>
+
+export type QueryFilterResetPassword = Partial<{
+  redirect_uri: string
+}>
