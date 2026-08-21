@@ -1191,86 +1191,6 @@ async function getProjectGroups(projectId, config = {}) {
   return await clientAPI(`/project/${projectId}/group/`, config);
 }
 
-// src/apis/project-tabs.service.ts
-async function getAllProjectTab(projectId, config = {}) {
-  return await clientAPI(`project/${projectId}/tab/`, config);
-}
-async function getProjectTab(projectId, projectTabId, config = {}) {
-  return await clientAPI(`project/${projectId}/tab/${projectTabId}/`, config);
-}
-async function createProjectTab(projectId, body, config = {}) {
-  return await clientAPI(`project/${projectId}/tab/`, {
-    method: "POST",
-    body,
-    ...config
-  });
-}
-async function updateProjectTab(projectId, projectTabId, body, config = {}) {
-  return await clientAPI(`project/${projectId}/tab/${projectTabId}/`, {
-    method: "PATCH",
-    body,
-    ...config
-  });
-}
-async function deleteProjectTab(projectId, projectTabId, config = {}) {
-  await clientAPI(`project/${projectId}/tab/${projectTabId}/`, {
-    method: "DELETE",
-    ...config
-  });
-}
-async function getAllProjectTabItem(projectId, projectTabId, config = {}) {
-  return await clientAPI(
-    `project/${projectId}/tab/${projectTabId}/item/`,
-    config
-  );
-}
-async function getProjectTabItem(projectId, projectTabId, projectTabItemId, config = {}) {
-  return await clientAPI(
-    `project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`,
-    config
-  );
-}
-async function createProjectTabItem(projectId, projectTabId, body, config = {}) {
-  return await clientAPI(`project/${projectId}/tab/${projectTabId}/item/`, {
-    method: "POST",
-    body,
-    ...config
-  });
-}
-async function updateProjectTabItem(projectId, projectTabId, projectTabItemId, body, config = {}) {
-  return await clientAPI(
-    `project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`,
-    {
-      method: "PATCH",
-      body,
-      ...config
-    }
-  );
-}
-async function deleteProjectTabItem(projectId, projectTabId, projectTabItemId, config = {}) {
-  await clientAPI(`project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`, {
-    method: "DELETE",
-    ...config
-  });
-}
-async function createProjectTabImage(projectId, body, config = {}) {
-  return await clientAPI(`project/${projectId}/tab-image/`, {
-    method: "POST",
-    body,
-    ...config
-  });
-}
-async function createProjectTabItemImage(projectId, projectTabId, body, config = {}) {
-  return await clientAPI(
-    `project/${projectId}/tab/${projectTabId}/item-image/`,
-    {
-      method: "POST",
-      body,
-      ...config
-    }
-  );
-}
-
 // src/apis/recommendations.service.ts
 async function getProjectsRecommendationsForUser(organizationCode, config = {}) {
   return await clientAPI(
@@ -1666,6 +1586,86 @@ async function searchSkill(search, options = {}) {
       search
     }
   });
+}
+
+// src/apis/project-tabs.service.ts
+async function getAllProjectTab(projectId, config = {}) {
+  return await clientAPI(`project/${projectId}/tab/`, config);
+}
+async function getProjectTab(projectId, projectTabId, config = {}) {
+  return await clientAPI(`project/${projectId}/tab/${projectTabId}/`, config);
+}
+async function createProjectTab(projectId, body, config = {}) {
+  return await clientAPI(`project/${projectId}/tab/`, {
+    method: "POST",
+    body,
+    ...config
+  });
+}
+async function updateProjectTab(projectId, projectTabId, body, config = {}) {
+  return await clientAPI(`project/${projectId}/tab/${projectTabId}/`, {
+    method: "PATCH",
+    body,
+    ...config
+  });
+}
+async function deleteProjectTab(projectId, projectTabId, config = {}) {
+  await clientAPI(`project/${projectId}/tab/${projectTabId}/`, {
+    method: "DELETE",
+    ...config
+  });
+}
+async function getAllProjectTabItem(projectId, projectTabId, config = {}) {
+  return await clientAPI(
+    `project/${projectId}/tab/${projectTabId}/item/`,
+    config
+  );
+}
+async function getProjectTabItem(projectId, projectTabId, projectTabItemId, config = {}) {
+  return await clientAPI(
+    `project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`,
+    config
+  );
+}
+async function createProjectTabItem(projectId, projectTabId, body, config = {}) {
+  return await clientAPI(`project/${projectId}/tab/${projectTabId}/item/`, {
+    method: "POST",
+    body,
+    ...config
+  });
+}
+async function updateProjectTabItem(projectId, projectTabId, projectTabItemId, body, config = {}) {
+  return await clientAPI(
+    `project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`,
+    {
+      method: "PATCH",
+      body,
+      ...config
+    }
+  );
+}
+async function deleteProjectTabItem(projectId, projectTabId, projectTabItemId, config = {}) {
+  await clientAPI(`project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`, {
+    method: "DELETE",
+    ...config
+  });
+}
+async function createProjectTabImage(projectId, body, config = {}) {
+  return await clientAPI(`project/${projectId}/tab-image/`, {
+    method: "POST",
+    body,
+    ...config
+  });
+}
+async function createProjectTabItemImage(projectId, projectTabId, body, config = {}) {
+  return await clientAPI(
+    `project/${projectId}/tab/${projectTabId}/item-image/`,
+    {
+      method: "POST",
+      body,
+      ...config
+    }
+  );
 }
 export {
   _adaptParamsToGetQuery,
