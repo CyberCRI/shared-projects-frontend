@@ -31,7 +31,7 @@
   },
   "scripts": {
     "build-index": "python3 utils/generate.py",
-    "build": "yarn build-index && tsup",
+    "build": "yarn build-index && rm -rf dist && tsup",
     "lint": "eslint --ext .ts --fix ./src"
   },
   "dependencies": {

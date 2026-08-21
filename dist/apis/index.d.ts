@@ -331,44 +331,28 @@ declare function getProjectSimilars(projectId: ProjectSlugOrId, config?: ConfigS
 type ConfigProjectGroup = ClientAPIOptions<Partial<PaginationQuery>>;
 declare function getProjectGroups(projectId: ProjectSlugOrId, config?: ConfigProjectGroup): Promise<PaginationResult<PeopleGroupModel>>;
 
-type Config$6 = ClientAPIOptions;
-type ConfigTab = ClientAPIOptions<QueryFilterProjectTab>;
-type ConfigTabItem = ClientAPIOptions<QueryFilterProjectTabItem>;
-declare function getAllProjectTab(projectId: ProjectSlugOrId, config?: ConfigTab): Promise<PaginationResult<ProjectTab>>;
-declare function getProjectTab(projectId: ProjectSlugOrId, projectTabId: TabSlugOrId, config?: Config$6): Promise<ProjectTab>;
-declare function createProjectTab(projectId: ProjectSlugOrId, body: ProjectTabForm, config?: Config$6): Promise<ProjectTab>;
-declare function updateProjectTab(projectId: ProjectSlugOrId, projectTabId: TabSlugOrId, body: ProjectTabForm, config?: Config$6): Promise<ProjectTab>;
-declare function deleteProjectTab(projectId: ProjectSlugOrId, projectTabId: TabSlugOrId, config?: Config$6): Promise<void>;
-declare function getAllProjectTabItem(projectId: ProjectSlugOrId, projectTabId: TabSlugOrId, config?: ConfigTabItem): Promise<PaginationResult<ProjectTabItem>>;
-declare function getProjectTabItem(projectId: ProjectSlugOrId, projectTabId: TabSlugOrId, projectTabItemId: ProjectTabItem['id'], config?: Config$6): Promise<ProjectTabItem>;
-declare function createProjectTabItem(projectId: ProjectSlugOrId, projectTabId: TabSlugOrId, body: ProjectTabItemForm, config?: Config$6): Promise<ProjectTabItem>;
-declare function updateProjectTabItem(projectId: ProjectSlugOrId, projectTabId: TabSlugOrId, projectTabItemId: ProjectTabItem['id'], body: ProjectTabItemForm, config?: Config$6): Promise<ProjectTabItem>;
-declare function deleteProjectTabItem(projectId: ProjectSlugOrId, projectTabId: TabSlugOrId, projectTabItemId: ProjectTabItem['id'], config?: Config$6): Promise<void>;
-declare function createProjectTabImage(projectId: ProjectSlugOrId, body: FormData, config?: Config$6): Promise<ImageModelCreated>;
-declare function createProjectTabItemImage(projectId: ProjectSlugOrId, projectTabId: TabSlugOrId, body: FormData, config?: Config$6): Promise<ImageModelCreated>;
-
-type Config$5 = ClientAPIOptions<QueryFilterRecomendation>;
+type Config$6 = ClientAPIOptions<QueryFilterRecomendation>;
 type ConfigPagination = ClientAPIOptions<PaginationQuery>;
 declare function getProjectsRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: ConfigPagination): Promise<PaginationResult<ProjectModel>>;
-declare function getRandomProjectsRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: Config$5): Promise<ProjectModel[]>;
+declare function getRandomProjectsRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: Config$6): Promise<ProjectModel[]>;
 declare function getUsersRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: ConfigPagination): Promise<PaginationResult<UserModel>>;
-declare function getRandomUsersRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: Config$5): Promise<UserModel[]>;
+declare function getRandomUsersRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: Config$6): Promise<UserModel[]>;
 
 declare function reportBug(organizationCode: OrganizationModel['code'], body: ReportForm, config?: ClientAPIOptions): Promise<void>;
 declare function reportAbuse(organizationCode: OrganizationModel['code'], body: ReportForm, config?: ClientAPIOptions): Promise<void>;
 declare function contactUs(organizationCode: OrganizationModel['code'], body: ContactForm, config?: ClientAPIOptions): Promise<void>;
 
-type Config$4 = ClientAPIOptions<QueryFilterReviews>;
-declare function getReviews(projectId: ProjectSlugOrId, config?: Config$4): Promise<PaginationResult<ReviewModel>>;
+type Config$5 = ClientAPIOptions<QueryFilterReviews>;
+declare function getReviews(projectId: ProjectSlugOrId, config?: Config$5): Promise<PaginationResult<ReviewModel>>;
 declare function postReview(projectId: ProjectSlugOrId, body: ReviewForm, config?: ClientAPIOptions): Promise<ReviewModel>;
 declare function patchReview(projectId: ProjectSlugOrId, reviewId: ReviewId, body: ReviewForm, config?: ClientAPIOptions): Promise<ReviewModel>;
 declare function deleteReview(projectId: ProjectSlugOrId, reviewId: ReviewId, config?: ClientAPIOptions): Promise<void>;
 
-type Config$3 = ClientAPIOptions<QueryFilterSearch>;
-declare function searchAll<T = SearchResultAll>(search: string, config?: Config$3): Promise<PaginationResult<T>>;
-declare function searchProjects(search: string, config?: Config$3): Promise<PaginationResult<SearchResultProject>>;
-declare function searchUser(search: string, config?: Config$3): Promise<PaginationResult<SearchResultUser>>;
-declare function searchGroups(search: string, config?: Config$3): Promise<PaginationResult<SearchResultGroup>>;
+type Config$4 = ClientAPIOptions<QueryFilterSearch>;
+declare function searchAll<T = SearchResultAll>(search: string, config?: Config$4): Promise<PaginationResult<T>>;
+declare function searchProjects(search: string, config?: Config$4): Promise<PaginationResult<SearchResultProject>>;
+declare function searchUser(search: string, config?: Config$4): Promise<PaginationResult<SearchResultUser>>;
+declare function searchGroups(search: string, config?: Config$4): Promise<PaginationResult<SearchResultGroup>>;
 
 type Config$2 = ClientAPIOptions<QueryFilterSkill>;
 declare function getUserSkills(userId: UserSlugOrId, options?: Config$2): Promise<SkillModel>;
@@ -380,19 +364,19 @@ declare function deleteUserSkill(userId: UserSlugOrId, skillId: SkillModel['id']
 type Config$1 = ClientAPIOptions<{
     publication_status: string;
 }>;
-declare function getStats(orgaizationCode: OrganizationModel['code'], config?: Config$2): Promise<Stats>;
+declare function getStats(orgaizationCode: OrganizationModel['code'], config?: Config$3): Promise<Stats>;
 
-type Config$1 = ClientAPIOptions<PaginationQuery>;
-declare function getAllOrgClassifications(organizationCode: OrganizationModel['code'], config?: Config$1): Promise<PaginationResult<TagModel>>;
-declare function getOrgClassification(organizationCode: OrganizationModel['code'], classificationId: TagClassificationModel['id'], config?: Config$1): Promise<TagClassificationModel>;
+type Config$2 = ClientAPIOptions<PaginationQuery>;
+declare function getAllOrgClassifications(organizationCode: OrganizationModel['code'], config?: Config$2): Promise<PaginationResult<TagModel>>;
+declare function getOrgClassification(organizationCode: OrganizationModel['code'], classificationId: TagClassificationModel['id'], config?: Config$2): Promise<TagClassificationModel>;
 declare function postOrgClassification(organizationCode: OrganizationModel['code'], classification: Partial<TagClassificationModel>): Promise<TagClassificationModel>;
 declare function putOrgClassification(organizationCode: OrganizationModel['code'], classificationId: TagClassificationModel['id'], classification: Partial<TagClassificationModel>): Promise<TagClassificationModel>;
 declare function patchOrgClassification(organizationCode: OrganizationModel['code'], classificationId: TagClassificationModel['id'], classification: Partial<TagClassificationModel>): Promise<TagClassificationModel>;
 declare function deleteOrgClassification(organizationCode: OrganizationModel['code'], classificationId: TagClassificationModel['id']): Promise<void>;
 type ConfigClassification = ClientAPIOptions<QueryFilterTagClassification>;
 declare function getOrgClassificationTags(organizationCode: OrganizationModel['code'], classificationId: TagClassificationModel['id'] | 'enabled-for-projects' | 'enabled-for-skills', config?: ConfigClassification): Promise<PaginationResult<TagClassificationModel>>;
-declare function getTags(ids: number[], config?: Config$1): Promise<TagModel[]>;
-declare function getAllTagsById(ids: number[], config?: Config$1): Promise<PaginationResult<TagModel>>;
+declare function getTags(ids: number[], config?: Config$2): Promise<TagModel[]>;
+declare function getAllTagsById(ids: number[], config?: Config$2): Promise<PaginationResult<TagModel>>;
 declare function putClassificationTag(organizationCode: OrganizationModel['code'], classificationId: TagClassificationModel['id'], tagtId: TagModel['id'], tag: TagModel): Promise<TagModel>;
 declare function patchClassificationTag(organizationCode: OrganizationModel['code'], classificationId: TagClassificationModel['id'], tagtId: TagModel['id'], tag: TagModel): Promise<TagModel>;
 declare function deleteClassificationTag(organizationCode: OrganizationModel['code'], classificationId: TagClassificationModel['id'], tagtId: TagModel['id']): Promise<void>;
