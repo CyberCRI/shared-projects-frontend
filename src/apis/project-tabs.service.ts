@@ -7,6 +7,7 @@ import {
   ProjectTabItemForm,
   QueryFilterProjectTab,
   QueryFilterProjectTabItem,
+  TabSlugOrId,
 } from '../models'
 import { clientAPI, ClientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
@@ -21,7 +22,7 @@ export async function getAllProjectTab(projectId: ProjectSlugOrId, config: Confi
 
 export async function getProjectTab(
   projectId: ProjectSlugOrId,
-  projectTabId: ProjectTab['id'],
+  projectTabId: TabSlugOrId,
   config: Config = {}
 ) {
   return await clientAPI<ProjectTab>(`project/${projectId}/tab/${projectTabId}/`, config)
@@ -41,7 +42,7 @@ export async function createProjectTab(
 
 export async function updateProjectTab(
   projectId: ProjectSlugOrId,
-  projectTabId: ProjectTab['id'],
+  projectTabId: TabSlugOrId,
   body: ProjectTabForm,
   config: Config = {}
 ) {
@@ -54,7 +55,7 @@ export async function updateProjectTab(
 
 export async function deleteProjectTab(
   projectId: ProjectSlugOrId,
-  projectTabId: ProjectTab['id'],
+  projectTabId: TabSlugOrId,
   config: Config = {}
 ) {
   await clientAPI(`project/${projectId}/tab/${projectTabId}/`, {
@@ -67,7 +68,7 @@ export async function deleteProjectTab(
 
 export async function getAllProjectTabItem(
   projectId: ProjectSlugOrId,
-  projectTabId: ProjectTab['id'],
+  projectTabId: TabSlugOrId,
   config: ConfigTabItem = {}
 ) {
   // await delay(40000)
@@ -79,7 +80,7 @@ export async function getAllProjectTabItem(
 
 export async function getProjectTabItem(
   projectId: ProjectSlugOrId,
-  projectTabId: ProjectTab['id'],
+  projectTabId: TabSlugOrId,
   projectTabItemId: ProjectTabItem['id'],
   config: Config = {}
 ) {
@@ -91,7 +92,7 @@ export async function getProjectTabItem(
 
 export async function createProjectTabItem(
   projectId: ProjectSlugOrId,
-  projectTabId: ProjectTab['id'],
+  projectTabId: TabSlugOrId,
   body: ProjectTabItemForm,
   config: Config = {}
 ) {
@@ -104,7 +105,7 @@ export async function createProjectTabItem(
 
 export async function updateProjectTabItem(
   projectId: ProjectSlugOrId,
-  projectTabId: ProjectTab['id'],
+  projectTabId: TabSlugOrId,
   projectTabItemId: ProjectTabItem['id'],
   body: ProjectTabItemForm,
   config: Config = {}
@@ -121,7 +122,7 @@ export async function updateProjectTabItem(
 
 export async function deleteProjectTabItem(
   projectId: ProjectSlugOrId,
-  projectTabId: ProjectTab['id'],
+  projectTabId: TabSlugOrId,
   projectTabItemId: ProjectTabItem['id'],
   config: Config = {}
 ) {
@@ -145,7 +146,7 @@ export async function createProjectTabImage(
 
 export async function createProjectTabItemImage(
   projectId: ProjectSlugOrId,
-  projectTabId: ProjectTab['id'],
+  projectTabId: TabSlugOrId,
   body: FormData,
   config: Config = {}
 ) {
