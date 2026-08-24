@@ -1,5 +1,5 @@
-import { UserSlugOrId } from './user.model'
 import type { TagModel, TranslatedTag } from './tag.model'
+import { UserSlugOrId } from './user.model'
 import BaseModel from './base.model'
 
 export interface SkillModel extends BaseModel {

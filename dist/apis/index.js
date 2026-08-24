@@ -1295,31 +1295,6 @@ function searchGroups(search, config = {}) {
   });
 }
 
-// src/apis/skill.service.ts
-async function getUserSkills(userId, options = {}) {
-  return await clientAPI(`${userId}/skill/`, options);
-}
-async function getUserSkill(userId, skillId, options = {}) {
-  return await clientAPI(`${userId}/skill/${skillId}/`, options);
-}
-async function postUserSkill(userId, body, config = {}) {
-  return await clientAPI(`user/${userId}/skill/`, {
-    ...config,
-    body,
-    method: "POST"
-  });
-}
-async function patchUserSkill(userId, skillId, body, config = {}) {
-  return await clientAPI(`user/${userId}/skill/${skillId}/`, {
-    ...config,
-    body,
-    method: "PATCH"
-  });
-}
-async function deleteUserSkill(userId, skillId, config = {}) {
-  await clientAPI(`user/${userId}/skill/${skillId}/`, { ...config, method: "DELETE" });
-}
-
 // src/apis/stats.service.ts
 async function getStats(orgaizationCode, config = {
   query: { publication_status: "all" }
@@ -1579,6 +1554,111 @@ async function removeUserCookie(config = {}) {
     "user/remove-authentication-cookie",
     config
   );
+}
+
+// src/apis/project-tabs.service.ts
+async function getAllProjectTab(projectId, config = {}) {
+  return await clientAPI(`project/${projectId}/tab/`, config);
+}
+async function getProjectTab(projectId, projectTabId, config = {}) {
+  return await clientAPI(`project/${projectId}/tab/${projectTabId}/`, config);
+}
+async function createProjectTab(projectId, body, config = {}) {
+  return await clientAPI(`project/${projectId}/tab/`, {
+    method: "POST",
+    body,
+    ...config
+  });
+}
+async function updateProjectTab(projectId, projectTabId, body, config = {}) {
+  return await clientAPI(`project/${projectId}/tab/${projectTabId}/`, {
+    method: "PATCH",
+    body,
+    ...config
+  });
+}
+async function deleteProjectTab(projectId, projectTabId, config = {}) {
+  await clientAPI(`project/${projectId}/tab/${projectTabId}/`, {
+    method: "DELETE",
+    ...config
+  });
+}
+async function getAllProjectTabItem(projectId, projectTabId, config = {}) {
+  return await clientAPI(
+    `project/${projectId}/tab/${projectTabId}/item/`,
+    config
+  );
+}
+async function getProjectTabItem(projectId, projectTabId, projectTabItemId, config = {}) {
+  return await clientAPI(
+    `project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`,
+    config
+  );
+}
+async function createProjectTabItem(projectId, projectTabId, body, config = {}) {
+  return await clientAPI(`project/${projectId}/tab/${projectTabId}/item/`, {
+    method: "POST",
+    body,
+    ...config
+  });
+}
+async function updateProjectTabItem(projectId, projectTabId, projectTabItemId, body, config = {}) {
+  return await clientAPI(
+    `project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`,
+    {
+      method: "PATCH",
+      body,
+      ...config
+    }
+  );
+}
+async function deleteProjectTabItem(projectId, projectTabId, projectTabItemId, config = {}) {
+  await clientAPI(`project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`, {
+    method: "DELETE",
+    ...config
+  });
+}
+async function createProjectTabImage(projectId, body, config = {}) {
+  return await clientAPI(`project/${projectId}/tab-image/`, {
+    method: "POST",
+    body,
+    ...config
+  });
+}
+async function createProjectTabItemImage(projectId, projectTabId, body, config = {}) {
+  return await clientAPI(
+    `project/${projectId}/tab/${projectTabId}/item-image/`,
+    {
+      method: "POST",
+      body,
+      ...config
+    }
+  );
+}
+
+// src/apis/skill.service.ts
+async function getUserSkills(userId, options = {}) {
+  return await clientAPI(`user/${userId}/skill/`, options);
+}
+async function getUserSkill(userId, skillId, options = {}) {
+  return await clientAPI(`user/${userId}/skill/${skillId}/`, options);
+}
+async function postUserSkill(userId, body, config = {}) {
+  return await clientAPI(`user/${userId}/skill/`, {
+    ...config,
+    body,
+    method: "POST"
+  });
+}
+async function patchUserSkill(userId, skillId, body, config = {}) {
+  return await clientAPI(`user/${userId}/skill/${skillId}/`, {
+    ...config,
+    body,
+    method: "PATCH"
+  });
+}
+async function deleteUserSkill(userId, skillId, config = {}) {
+  await clientAPI(`user/${userId}/skill/${skillId}/`, { ...config, method: "DELETE" });
 }
 export {
   _adaptParamsToGetQuery,
