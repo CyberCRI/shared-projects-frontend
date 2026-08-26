@@ -1,15 +1,15 @@
-import { P as ProviderParams, R as Right } from '../permissions-CUX6tqOY.js';
-import { S as OrganizationModel, aH as Roles, be as UserModel, a8 as ProjectModel, W as PeopleGroupModel, M as NewsModel, i as EventModel, p as InstructionModel } from '../instruction.model-BJbzev7I.js';
+import { P as ProviderParams, R as Right } from '../colaboratives-DvPs7lX7.js';
+import { S as OrganizationModel, aH as Roles, bg as UserModel, i as EventModel, W as PeopleGroupModel, M as NewsModel, a8 as ProjectModel, p as InstructionModel } from '../instruction.model-BNvnRk7H.js';
 import { P as PermissionType } from '../permissions.model-DCQ_saKg.js';
-import { StarterKitOptions } from '@tiptap/starter-kit';
-import * as _tiptap_core from '@tiptap/core';
-import { Extensions, Node } from '@tiptap/core';
 import * as highlight_js from 'highlight.js';
 import * as hast from 'hast';
 import * as _lowlight from 'lowlight';
-import { j as ImageVariations } from '../utils-Def92TDC.js';
-import * as _tiptap_extension_table_cell from '@tiptap/extension-table-cell';
+import { StarterKitOptions } from '@tiptap/starter-kit';
+import * as _tiptap_core from '@tiptap/core';
+import { Extensions, Node } from '@tiptap/core';
+import { j as ImageVariations } from '../utils-DyxP_0Vl.js';
 import { Attrs } from '@tiptap/pm/model';
+import * as _tiptap_extension_table_cell from '@tiptap/extension-table-cell';
 import { CodeBlockLowlightOptions } from '@tiptap/extension-code-block-lowlight';
 import 'zod';
 
@@ -25,19 +25,17 @@ import 'zod';
  */
 declare const roomKeyFromParams: (params: ProviderParams) => string | null;
 
-declare const isAdmin: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-
-declare const isAdminOrFacilitator: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-
 declare const isSuperAdmin: (rights: Right) => boolean;
 
 declare const isFacilitator: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
 
-declare const isViewer: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-
 declare const isUser: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
 
 declare const canPermission: (rights: Right, organizationId: OrganizationModel["id"], elementType: "projects" | "accounts" | "peoplegroup", identification: (number | string | Roles | null) | undefined, perrmissionName: PermissionType) => boolean;
+
+declare const isAdminOrFacilitator: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+
+declare const isAdmin: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
 
 declare function hasPermission(permissions: Right['permissions'], app: 'organizations' | 'projects' | 'accounts' | 'peoplegroup', permissionName: PermissionType, identification?: number | string | Roles | null): boolean;
 
@@ -52,7 +50,7 @@ declare function hasPermission(permissions: Right['permissions'], app: 'organiza
  */
 declare const userRights: <U extends Pick<UserModel, "permissions" | "roles">>(user: U) => Right;
 
-declare const getExtensions: (options?: Partial<StarterKitOptions>) => Extensions;
+declare const isViewer: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
 
 declare const lowlight: {
     highlight: (language: string, value: string, options?: Readonly<_lowlight.Options> | null | undefined) => hast.Root;
@@ -68,6 +66,40 @@ declare const lowlight: {
     };
     registered: (aliasOrName: string) => boolean;
 };
+
+declare const getExtensions: (options?: Partial<StarterKitOptions>) => Extensions;
+
+declare const canCreateEvent: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+declare const canEditEvent: (rights: Right, organizationId: OrganizationModel["id"], eventId: EventModel["id"]) => boolean;
+declare const canDeleteEvent: (rights: Right, organizationId: OrganizationModel["id"], eventId: EventModel["id"]) => boolean;
+
+declare const canEditUser: (rights: Right, organizationId: OrganizationModel["id"], userId: UserModel["id"]) => boolean;
+
+declare const canCreateGroup: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+declare const canEditGroup: (rights: Right, organizationId: OrganizationModel["id"], groupId: PeopleGroupModel["id"]) => boolean;
+
+declare const canCreateNews: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+declare const canEditNews: (rights: Right, organizationId: OrganizationModel["id"], newsId: NewsModel["id"]) => boolean;
+declare const canDeleteNews: (rights: Right, organizationId: OrganizationModel["id"], newsId: NewsModel["id"]) => boolean;
+
+declare const isMember: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+
+declare const isOwner: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+
+declare const canPermissionProject: (rights: Right, organizationId: OrganizationModel["id"], projectId: (ProjectModel["id"] | null) | undefined, perrmissionName: PermissionType) => boolean;
+declare const canCreateProject: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+declare const canEditProject: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+declare const canDeleteProject: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+declare const canCreateReview: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+declare const canEditReview: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+declare const canDeleteReview: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+declare const canCreateComment: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+declare const canEditComment: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+declare const canDeleteComment: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+
+declare const canCreateInstruction: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+declare const canEditInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
+declare const canDeleteInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
 
 type Options = {
     src: string;
@@ -91,8 +123,6 @@ declare const CustomImage: _tiptap_core.Node<{
     allowBase64: boolean;
 }, any>;
 
-declare const CustomTableCell: _tiptap_core.Node<_tiptap_extension_table_cell.TableCellOptions, any>;
-
 type Option = {
     size?: ImageVariations;
     src: string;
@@ -115,6 +145,8 @@ declare const ExternalVideo: Node<{
     aligns: string[];
 }, any>;
 
+declare const CustomTableCell: _tiptap_core.Node<_tiptap_extension_table_cell.TableCellOptions, any>;
+
 declare const DEFAULT_LANGUAGE = "plaintext";
 declare const DEFAULT_THEME = "dark";
 declare const DEFAULT_TAB = 2;
@@ -124,37 +156,5 @@ interface LpiBlockOptions extends CodeBlockLowlightOptions {
     defaultTheme: string | null | undefined;
 }
 declare const CodeBlock: _tiptap_core.Node<LpiBlockOptions, any>;
-
-declare const isOwner: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-
-declare const isMember: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-
-declare const canPermissionProject: (rights: Right, organizationId: OrganizationModel["id"], projectId: (ProjectModel["id"] | null) | undefined, perrmissionName: PermissionType) => boolean;
-declare const canCreateProject: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-declare const canEditProject: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-declare const canDeleteProject: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-declare const canCreateReview: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-declare const canEditReview: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-declare const canDeleteReview: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-declare const canCreateComment: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-declare const canEditComment: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-declare const canDeleteComment: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-
-declare const canCreateGroup: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-declare const canEditGroup: (rights: Right, organizationId: OrganizationModel["id"], groupId: PeopleGroupModel["id"]) => boolean;
-
-declare const canEditUser: (rights: Right, organizationId: OrganizationModel["id"], userId: UserModel["id"]) => boolean;
-
-declare const canCreateNews: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-declare const canEditNews: (rights: Right, organizationId: OrganizationModel["id"], newsId: NewsModel["id"]) => boolean;
-declare const canDeleteNews: (rights: Right, organizationId: OrganizationModel["id"], newsId: NewsModel["id"]) => boolean;
-
-declare const canCreateEvent: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-declare const canEditEvent: (rights: Right, organizationId: OrganizationModel["id"], eventId: EventModel["id"]) => boolean;
-declare const canDeleteEvent: (rights: Right, organizationId: OrganizationModel["id"], eventId: EventModel["id"]) => boolean;
-
-declare const canCreateInstruction: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-declare const canEditInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
-declare const canDeleteInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
 
 export { CodeBlock, CustomImage, CustomTableCell, DEFAULT_LANGUAGE, DEFAULT_TAB, DEFAULT_THEME, ExternalVideo, type LpiBlockOptions, canCreateComment, canCreateEvent, canCreateGroup, canCreateInstruction, canCreateNews, canCreateProject, canCreateReview, canDeleteComment, canDeleteEvent, canDeleteInstruction, canDeleteNews, canDeleteProject, canDeleteReview, canEditComment, canEditEvent, canEditGroup, canEditInstruction, canEditNews, canEditProject, canEditReview, canEditUser, canPermission, canPermissionProject, getExtensions, getFormatedVideoSrc, hasPermission, isAdmin, isAdminOrFacilitator, isFacilitator, isMember, isOwner, isSuperAdmin, isUser, isViewer, lowlight, roomKeyFromParams, userRights };

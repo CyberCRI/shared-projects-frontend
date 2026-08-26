@@ -57,15 +57,7 @@ export function getUserAttachmentFile(userId: UserSlugOrId, options: any) {
   return clientAPI<PaginationResult<AttachmentFileModel>>(`user/${userId}/file/`, options)
 }
 
-export async function postUserAttachmentFile(userId: UserSlugOrId, data: AttachmentForm) {
-  const body = new FormData()
-  body.set('description', data.description)
-  body.set('title', data.title)
-  if (data.file) {
-    body.set('file', data.file, data.file.name)
-    body.set('mime', data.file.type || 'file')
-  }
-
+export async function postUserAttachmentFile(userId: UserSlugOrId, body: FormData) {
   return await clientAPI<AttachmentFileModel>(`user/${userId}/file/`, { body, method: 'POST' })
 }
 

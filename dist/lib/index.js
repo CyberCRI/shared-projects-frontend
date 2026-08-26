@@ -35,24 +35,9 @@ var isSuperAdmin = (rights) => {
   return rights.roles.includes("superadmins");
 };
 
-// src/lib/permissions/isAdmin.ts
-var isAdmin = (rights, organizationId) => {
-  return !!(isSuperAdmin(rights) || rights.roles.includes(`organization:#${organizationId}:admins`));
-};
-
 // src/lib/permissions/isFacilitator.ts
 var isFacilitator = (rights, organizationId) => {
   return rights.roles.includes(`organization:#${organizationId}:facilitators`);
-};
-
-// src/lib/permissions/isAdminOrFacilitator.ts
-var isAdminOrFacilitator = (rights, organizationId) => {
-  return isAdmin(rights, organizationId) || isFacilitator(rights, organizationId);
-};
-
-// src/lib/permissions/isViewer.ts
-var isViewer = (rights, organizationId) => {
-  return rights.roles.includes(`organization:#${organizationId}:viewers`);
 };
 
 // src/lib/permissions/isUser.ts
@@ -69,11 +54,21 @@ function hasPermission(permissions, app, permissionName, identification = null) 
   return !!permissions[perm];
 }
 
+// src/lib/permissions/isAdmin.ts
+var isAdmin = (rights, organizationId) => {
+  return !!(isSuperAdmin(rights) || rights.roles.includes(`organization:#${organizationId}:admins`));
+};
+
 // src/lib/permissions/can.ts
 var canPermission = (rights, organizationId, elementType, identification = null, perrmissionName) => {
   return isAdmin(rights, organizationId) || // check objects permissions
   hasPermission(rights.permissions, elementType, perrmissionName, identification) || hasPermission(rights.permissions, elementType, perrmissionName) || // check organizations permissions
   hasPermission(rights.permissions, "organizations", perrmissionName, organizationId) || hasPermission(rights.permissions, "organizations", perrmissionName);
+};
+
+// src/lib/permissions/isAdminOrFacilitator.ts
+var isAdminOrFacilitator = (rights, organizationId) => {
+  return isAdmin(rights, organizationId) || isFacilitator(rights, organizationId);
 };
 
 // src/lib/permissions/rights.ts
@@ -88,6 +83,15 @@ var userRights = (user) => {
     permissions
   };
 };
+
+// src/lib/permissions/isViewer.ts
+var isViewer = (rights, organizationId) => {
+  return rights.roles.includes(`organization:#${organizationId}:viewers`);
+};
+
+// src/lib/tiptap/lowlight.ts
+import { common, createLowlight } from "lowlight";
+var lowlight = createLowlight(common);
 
 // src/lib/tiptap/options.ts
 import TableHeader from "@tiptap/extension-table-header";
@@ -473,10 +477,6 @@ var CodeBlock = CodeBlockLowlight.extend({
   }
 });
 
-// src/lib/tiptap/lowlight.ts
-import { common, createLowlight } from "lowlight";
-var lowlight = createLowlight(common);
-
 // src/lib/tiptap/options.ts
 var getExtensions = (options = {}) => [
   // StarterKit.configure no return a type satisfied AnyExtension, why ?
@@ -504,6 +504,41 @@ var getExtensions = (options = {}) => [
     lowlight
   })
 ];
+
+// src/lib/permissions/event/can.ts
+var canCreateEvent = (rights, organizationId) => {
+  return isAdminOrFacilitator(rights, organizationId);
+};
+var canEditEvent = (rights, organizationId, eventId) => {
+  return isAdminOrFacilitator(rights, organizationId);
+};
+var canDeleteEvent = (rights, organizationId, eventId) => {
+  return isAdminOrFacilitator(rights, organizationId);
+};
+
+// src/lib/permissions/user/can.ts
+var canEditUser = (rights, organizationId, userId) => {
+  return isAdmin(rights, organizationId);
+};
+
+// src/lib/permissions/groups/can.ts
+var canCreateGroup = (rights, organizationId) => {
+  return isAdmin(rights, organizationId) || hasPermission(rights.permissions, "peoplegroup", "add_peoplegroup") || hasPermission(rights.permissions, "organizations", "add_peoplegroup", organizationId) || hasPermission(rights.permissions, "organizations", "add_peoplegroup");
+};
+var canEditGroup = (rights, organizationId, groupId) => {
+  return isAdmin(rights, organizationId) || hasPermission(rights.permissions, "peoplegroup", "change_peoplegroup", groupId) || hasPermission(rights.permissions, "peoplegroup", "change_peoplegroup") || hasPermission(rights.permissions, "organizations", "change_peoplegroup", organizationId) || hasPermission(rights.permissions, "organizations", "change_peoplegroup");
+};
+
+// src/lib/permissions/news/can.ts
+var canCreateNews = (rights, organizationId) => {
+  return isAdminOrFacilitator(rights, organizationId);
+};
+var canEditNews = (rights, organizationId, newsId) => {
+  return isAdminOrFacilitator(rights, organizationId);
+};
+var canDeleteNews = (rights, organizationId, newsId) => {
+  return isAdminOrFacilitator(rights, organizationId);
+};
 
 // src/lib/permissions/projects/isOwner.ts
 var isOwner = (rights, organizationId, projectId) => {
@@ -545,41 +580,6 @@ var canEditComment = (rights, organizationId, projectId) => {
 };
 var canDeleteComment = (rights, organizationId, projectId) => {
   return canPermissionProject(rights, organizationId, projectId, "delete_comment");
-};
-
-// src/lib/permissions/groups/can.ts
-var canCreateGroup = (rights, organizationId) => {
-  return isAdmin(rights, organizationId) || hasPermission(rights.permissions, "peoplegroup", "add_peoplegroup") || hasPermission(rights.permissions, "organizations", "add_peoplegroup", organizationId) || hasPermission(rights.permissions, "organizations", "add_peoplegroup");
-};
-var canEditGroup = (rights, organizationId, groupId) => {
-  return isAdmin(rights, organizationId) || hasPermission(rights.permissions, "peoplegroup", "change_peoplegroup", groupId) || hasPermission(rights.permissions, "peoplegroup", "change_peoplegroup") || hasPermission(rights.permissions, "organizations", "change_peoplegroup", organizationId) || hasPermission(rights.permissions, "organizations", "change_peoplegroup");
-};
-
-// src/lib/permissions/user/can.ts
-var canEditUser = (rights, organizationId, userId) => {
-  return isAdmin(rights, organizationId);
-};
-
-// src/lib/permissions/news/can.ts
-var canCreateNews = (rights, organizationId) => {
-  return isAdminOrFacilitator(rights, organizationId);
-};
-var canEditNews = (rights, organizationId, newsId) => {
-  return isAdminOrFacilitator(rights, organizationId);
-};
-var canDeleteNews = (rights, organizationId, newsId) => {
-  return isAdminOrFacilitator(rights, organizationId);
-};
-
-// src/lib/permissions/event/can.ts
-var canCreateEvent = (rights, organizationId) => {
-  return isAdminOrFacilitator(rights, organizationId);
-};
-var canEditEvent = (rights, organizationId, eventId) => {
-  return isAdminOrFacilitator(rights, organizationId);
-};
-var canDeleteEvent = (rights, organizationId, eventId) => {
-  return isAdminOrFacilitator(rights, organizationId);
 };
 
 // src/lib/permissions/instruction/can.ts

@@ -65,7 +65,7 @@ import type { PaginatedResult, Query, .... } from '@shared-projects-frontend/int
 ## Permissions
 ```ts
 import { getAllProjects } from '@shared-projects-frontend/apis';
-import { canEditProject, canDeleteOrganization, userRights } from '@shared-projects-frontend/lib';
+  import { canEditProject, canDeleteOrganization, userRights } from '@shared-projects-frontend/lib';
 
 const user = getUser()
 const projects = getAllProjects()
