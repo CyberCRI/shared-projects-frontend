@@ -1461,6 +1461,9 @@ async function removeUserCookie(config = {}) {
     config
   );
 }
+async function getUserGroup(userId, config = {}) {
+  return await clientAPI(`user/${userId}/groups/`, config);
+}
 
 // src/apis/project-messages.service.ts
 async function getProjectMessages(projectId, config = {}) {
@@ -1798,6 +1801,7 @@ export {
   getUserAttachmentFile,
   getUserAttachmentLink,
   getUserFollows,
+  getUserGroup,
   getUserMentorship,
   getUserNotificationSettings,
   getUserResearchDocument,

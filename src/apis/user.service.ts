@@ -11,6 +11,7 @@ import {
   QueryFilterUser,
   QueryFilterUserEmail,
   QueryFilterResetPassword,
+  GroupModel,
 } from '../models'
 import { clientAPI, type ClientAPIOptions } from './client'
 import { _adaptParamsToGetQuery } from './utils.service'
@@ -173,4 +174,11 @@ export async function removeUserCookie(config: ClientAPIOptions = {}) {
     'user/remove-authentication-cookie',
     config
   )
+}
+
+export async function getUserGroup(
+  userId: UserSlugOrId,
+  config: ClientAPIOptions<QueryFilterUser> = {}
+) {
+  return await clientAPI<GroupModel>(`user/${userId}/groups/`, config)
 }
