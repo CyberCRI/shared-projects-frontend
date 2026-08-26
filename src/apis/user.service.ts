@@ -176,7 +176,7 @@ export async function removeUserCookie(config: ClientAPIOptions = {}) {
   )
 }
 
-export async function getUserGroup(
+export async function getUserGroups(
   userId: UserSlugOrId,
   config: ClientAPIOptions<QueryFilterUser> = {}
 ) {

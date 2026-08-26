@@ -1461,7 +1461,7 @@ async function removeUserCookie(config = {}) {
     config
   );
 }
-async function getUserGroup(userId, config = {}) {
+async function getUserGroups(userId, config = {}) {
   return await clientAPI(`user/${userId}/groups/`, config);
 }
 
@@ -1801,7 +1801,7 @@ export {
   getUserAttachmentFile,
   getUserAttachmentLink,
   getUserFollows,
-  getUserGroup,
+  getUserGroups,
   getUserMentorship,
   getUserNotificationSettings,
   getUserResearchDocument,
