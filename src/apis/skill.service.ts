@@ -1,4 +1,4 @@
-import { QueryFilterSkill, UserSkillForm } from '../models/skill.model'
+import { QueryFilterSkill, SkillForm } from '../models/skill.model'
 import { clientAPI, ClientAPIOptions } from './client'
 import { SkillModel, UserSlugOrId } from '../models'
 import { PaginationResult } from '../interfaces'
@@ -19,7 +19,7 @@ export async function getUserSkill(
 
 export async function postUserSkill(
   userId: UserSlugOrId,
-  body: SkillModel,
+  body: SkillForm,
   config: ClientAPIOptions = {}
 ) {
   return await clientAPI<SkillModel>(`user/${userId}/skill/`, {
@@ -32,7 +32,7 @@ export async function postUserSkill(
 export async function patchUserSkill(
   userId: UserSlugOrId,
   skillId: SkillModel['id'],
-  body: UserSkillForm,
+  body: SkillForm,
   config: ClientAPIOptions = {}
 ) {
   return await clientAPI<SkillModel>(`user/${userId}/skill/${skillId}/`, {
