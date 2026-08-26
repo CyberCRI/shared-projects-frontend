@@ -9,7 +9,7 @@ import { OrganizationModel, PeopleGroupIdOrSlug } from '../models'
 import { PaginationResult } from '../interfaces/pagination'
 import { clientAPI, ClientAPIOptions } from './client'
 
-export async function getOwnResearchDocument(
+export async function getUserResearchDocument(
   organisationCode: string,
   researchId: Researcher['id'],
   ResearcherdocumentType: ResearcherDocumentType,
@@ -33,7 +33,7 @@ export async function getGroupResearchDocument(
   )
 }
 
-export async function getOwnResearchDocumentAnalytics(
+export async function getUserResearchDocumentAnalytics(
   organisationCode: string,
   researchId: Researcher['id'],
   ResearcherdocumentType: ResearcherDocumentType,
