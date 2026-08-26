@@ -19,8 +19,14 @@ export type QueryFilterSkill = Partial<{
   search: string
 }>
 
-export type SkillForm = Partial<SkillModel>
-
 export type TranslatedSkill = Omit<SkillModel, 'tag'> & {
   tag: TranslatedTag
 }
+
+export type SkillForm = Partial<TranslatedSkill>
+
+export type SkillCleanedForm = Partial<
+  Omit<SkillForm, 'tag'> & {
+    tag: TagModel['id']
+  }
+>
