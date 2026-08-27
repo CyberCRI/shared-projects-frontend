@@ -101,7 +101,7 @@ function getUserAttachmentFile(userId, options) {
 async function postUserAttachmentFile(userId, body) {
   return await clientAPI(`user/${userId}/file/`, { body, method: "POST" });
 }
-async function patchUserAttachmentFile(userId, fileId, data) {
+async function patchUserAttachmentFile(userId, fileId, data, config = {}) {
   const body = new FormData();
   if (data.description) {
     body.set("description", data.description);
@@ -110,12 +110,13 @@ async function patchUserAttachmentFile(userId, fileId, data) {
     body.set("title", data.title);
   }
   return await clientAPI(`user/${userId}/file/${fileId}/`, {
+    ...config,
     body,
     method: "PATCH"
   });
 }
-async function deleteUserAttachmentFile(userId, fileId) {
-  await clientAPI(`user/${userId}/file/${fileId}/`, { method: "DELETE" });
+async function deleteUserAttachmentFile(userId, fileId, config = {}) {
+  await clientAPI(`user/${userId}/file/${fileId}/`, { ...config, method: "DELETE" });
 }
 
 // src/apis/instruction.service.ts

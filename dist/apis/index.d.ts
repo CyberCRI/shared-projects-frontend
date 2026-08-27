@@ -68,8 +68,8 @@ declare function patchProjectAttachmentFile(projectId: ProjectSlugOrId, fileId: 
 declare function deleteProjectAttachmentFile(projectId: ProjectSlugOrId, fileId: AttachmentFileId): Promise<void>;
 declare function getUserAttachmentFile(userId: UserSlugOrId, options: any): Promise<PaginationResult<AttachmentFileModel>>;
 declare function postUserAttachmentFile(userId: UserSlugOrId, body: FormData): Promise<AttachmentFileModel>;
-declare function patchUserAttachmentFile(userId: UserSlugOrId, fileId: number, data: Partial<AttachmentFileModel>): Promise<AttachmentFileModel>;
-declare function deleteUserAttachmentFile(userId: UserSlugOrId, fileId: number): Promise<void>;
+declare function patchUserAttachmentFile(userId: UserSlugOrId, fileId: number, data: Partial<AttachmentFileModel>, config?: Config$d): Promise<AttachmentFileModel>;
+declare function deleteUserAttachmentFile(userId: UserSlugOrId, fileId: number, config?: Config$d): Promise<void>;
 
 type ConfigInstruction = ClientAPIOptions<QueryFilterInstruction>;
 declare function getAllInstructions(organizationCode: OrganizationModel['code'], config?: ConfigInstruction): Promise<PaginationResult<InstructionModel>>;

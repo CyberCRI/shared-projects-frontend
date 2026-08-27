@@ -64,7 +64,8 @@ export async function postUserAttachmentFile(userId: UserSlugOrId, body: FormDat
 export async function patchUserAttachmentFile(
   userId: UserSlugOrId,
   fileId: number,
-  data: Partial<AttachmentFileModel>
+  data: Partial<AttachmentFileModel>,
+  config: Config = {}
 ) {
   const body = new FormData()
   if (data.description) {
@@ -75,11 +76,16 @@ export async function patchUserAttachmentFile(
   }
 
   return await clientAPI<AttachmentFileModel>(`user/${userId}/file/${fileId}/`, {
+    ...config,
     body,
     method: 'PATCH',
   })
 }
 
-export async function deleteUserAttachmentFile(userId: UserSlugOrId, fileId: number) {
-  await clientAPI(`user/${userId}/file/${fileId}/`, { method: 'DELETE' })
+export async function deleteUserAttachmentFile(
+  userId: UserSlugOrId,
+  fileId: number,
+  config: Config = {}
+) {
+  await clientAPI(`user/${userId}/file/${fileId}/`, { ...config, method: 'DELETE' })
 }
