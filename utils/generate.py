@@ -21,7 +21,7 @@ exports = {
 for dir in GENERATES:
     inline = []
     last_folder = None
-    for file in Path(BASE / dir).rglob("**/*"):
+    for file in sorted(Path(BASE / dir).rglob("**/*"), key=lambda x: str(x)):
         bb = without_base(file, dir)
 
         name = "." + str(without_base(file, dir).with_suffix(""))
@@ -48,7 +48,7 @@ for dir in GENERATES:
 
     index = Path(BASE / dir / "index.ts")
     with open(index, "w") as f:
-        f.write("\n".join(inline).strip(" ").strip("\n"))
+        f.write("\n".join(inline).strip(" ").strip("\n") + "\n")
 
 
 with open("package.json") as f:

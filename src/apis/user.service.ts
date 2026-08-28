@@ -180,5 +180,5 @@ export async function getUserGroups(
   userId: UserSlugOrId,
   config: ClientAPIOptions<QueryFilterUser> = {}
 ) {
-  return await clientAPI<GroupModel>(`user/${userId}/groups/`, config)
+  return await clientAPI<PaginationResult<GroupModel>>(`user/${userId}/groups/`, config)
 }
