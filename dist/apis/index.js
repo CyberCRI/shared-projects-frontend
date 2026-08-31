@@ -1465,6 +1465,27 @@ async function removeUserCookie(config = {}) {
 async function getUserGroups(userId, config = {}) {
   return await clientAPI(`user/${userId}/groups/`, config);
 }
+async function getUserProjectsMember(userId, config = {}) {
+  return await clientAPI(`user/${userId}/projects/member/`, config);
+}
+async function getUserProjectsFollower(userId, config = {}) {
+  return await clientAPI(
+    `user/${userId}/projects/follower/`,
+    config
+  );
+}
+async function getUserProjectsReviewer(userId, config = {}) {
+  return await clientAPI(
+    `user/${userId}/projects/reviewer/`,
+    config
+  );
+}
+async function getUserCategoriesFollower(userId, config = {}) {
+  return await clientAPI(
+    `user/${userId}/categories/follower/`,
+    config
+  );
+}
 
 // src/apis/project-messages.service.ts
 async function getProjectMessages(projectId, config = {}) {
@@ -1801,10 +1822,14 @@ export {
   getUser,
   getUserAttachmentFile,
   getUserAttachmentLink,
+  getUserCategoriesFollower,
   getUserFollows,
   getUserGroups,
   getUserMentorship,
   getUserNotificationSettings,
+  getUserProjectsFollower,
+  getUserProjectsMember,
+  getUserProjectsReviewer,
   getUserResearchDocument,
   getUserResearchDocumentAnalytics,
   getUserSkill,
