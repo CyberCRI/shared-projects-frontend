@@ -5,7 +5,8 @@ import {
   UserModel,
   UserPatchModel,
   UserPrivacyPatchModel,
-  SkillModel,
+  ProjectCategoryModel,
+  ProjectModel,
   PrivacySettings,
   ImageModel,
   QueryFilterUser,
@@ -181,4 +182,41 @@ export async function getUserGroups(
   config: ClientAPIOptions<QueryFilterUser> = {}
 ) {
   return await clientAPI<PaginationResult<GroupModel>>(`user/${userId}/groups/`, config)
+}
+
+export async function getUserProjectsMember(
+  userId: UserSlugOrId,
+  config: ClientAPIOptions<QueryFilterUser> = {}
+) {
+  return await clientAPI<PaginationResult<ProjectModel>>(`user/${userId}/projects/member/`, config)
+}
+
+export async function getUserProjectsFollower(
+  userId: UserSlugOrId,
+  config: ClientAPIOptions<QueryFilterUser> = {}
+) {
+  return await clientAPI<PaginationResult<ProjectModel>>(
+    `user/${userId}/projects/follower/`,
+    config
+  )
+}
+
+export async function getUserProjectsReviewer(
+  userId: UserSlugOrId,
+  config: ClientAPIOptions<QueryFilterUser> = {}
+) {
+  return await clientAPI<PaginationResult<ProjectModel>>(
+    `user/${userId}/projects/reviewer/`,
+    config
+  )
+}
+
+export async function getUserCategoriesFollower(
+  userId: UserSlugOrId,
+  config: ClientAPIOptions<QueryFilterUser> = {}
+) {
+  return await clientAPI<PaginationResult<ProjectCategoryModel>>(
+    `user/${userId}/categories/follower/`,
+    config
+  )
 }
