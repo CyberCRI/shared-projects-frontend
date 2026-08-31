@@ -1,16 +1,16 @@
-import { P as ProviderParams, R as Right } from '../colaboratives-DvPs7lX7.js';
-import { S as OrganizationModel, aH as Roles, bg as UserModel, i as EventModel, W as PeopleGroupModel, M as NewsModel, a8 as ProjectModel, p as InstructionModel } from '../instruction.model-BNvnRk7H.js';
+import { P as ProviderParams, R as Right } from '../permissions-CUX6tqOY.js';
+import { S as OrganizationModel, aH as Roles, i as EventModel, W as PeopleGroupModel, p as InstructionModel, M as NewsModel, a8 as ProjectModel, bg as UserModel } from '../instruction.model-HisYQecw.js';
 import { P as PermissionType } from '../permissions.model-DCQ_saKg.js';
+import * as _tiptap_core from '@tiptap/core';
+import { Node, Extensions } from '@tiptap/core';
+import { CodeBlockLowlightOptions } from '@tiptap/extension-code-block-lowlight';
+import { j as ImageVariations } from '../utils-Def92TDC.js';
+import * as _tiptap_extension_table_cell from '@tiptap/extension-table-cell';
+import { Attrs } from '@tiptap/pm/model';
 import * as highlight_js from 'highlight.js';
 import * as hast from 'hast';
 import * as _lowlight from 'lowlight';
 import { StarterKitOptions } from '@tiptap/starter-kit';
-import * as _tiptap_core from '@tiptap/core';
-import { Extensions, Node } from '@tiptap/core';
-import { j as ImageVariations } from '../utils-DyxP_0Vl.js';
-import { Attrs } from '@tiptap/pm/model';
-import * as _tiptap_extension_table_cell from '@tiptap/extension-table-cell';
-import { CodeBlockLowlightOptions } from '@tiptap/extension-code-block-lowlight';
 import 'zod';
 
 /**
@@ -25,66 +25,34 @@ import 'zod';
  */
 declare const roomKeyFromParams: (params: ProviderParams) => string | null;
 
-declare const isSuperAdmin: (rights: Right) => boolean;
-
-declare const isFacilitator: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-
-declare const isUser: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-
 declare const canPermission: (rights: Right, organizationId: OrganizationModel["id"], elementType: "projects" | "accounts" | "peoplegroup", identification: (number | string | Roles | null) | undefined, perrmissionName: PermissionType) => boolean;
-
-declare const isAdminOrFacilitator: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-
-declare const isAdmin: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-
-declare function hasPermission(permissions: Right['permissions'], app: 'organizations' | 'projects' | 'accounts' | 'peoplegroup', permissionName: PermissionType, identification?: number | string | Roles | null): boolean;
-
-/**
- * Generate User rights from usermodels
- *
- * @constant
- * @name userRights
- * @kind variable
- * @type {<U extends Pick<UserModel, "permissions" | "roles">>(user: U) => Right}
- * @exports
- */
-declare const userRights: <U extends Pick<UserModel, "permissions" | "roles">>(user: U) => Right;
-
-declare const isViewer: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-
-declare const lowlight: {
-    highlight: (language: string, value: string, options?: Readonly<_lowlight.Options> | null | undefined) => hast.Root;
-    highlightAuto: (value: string, options?: Readonly<_lowlight.AutoOptions> | null | undefined) => hast.Root;
-    listLanguages: () => Array<string>;
-    register: {
-        (grammars: Readonly<Record<string, highlight_js.LanguageFn>>): undefined;
-        (name: string, grammar: highlight_js.LanguageFn): undefined;
-    };
-    registerAlias: {
-        (aliases: Readonly<Record<string, ReadonlyArray<string> | string>>): undefined;
-        (language: string, alias: ReadonlyArray<string> | string): undefined;
-    };
-    registered: (aliasOrName: string) => boolean;
-};
-
-declare const getExtensions: (options?: Partial<StarterKitOptions>) => Extensions;
 
 declare const canCreateEvent: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
 declare const canEditEvent: (rights: Right, organizationId: OrganizationModel["id"], eventId: EventModel["id"]) => boolean;
 declare const canDeleteEvent: (rights: Right, organizationId: OrganizationModel["id"], eventId: EventModel["id"]) => boolean;
 
-declare const canEditUser: (rights: Right, organizationId: OrganizationModel["id"], userId: UserModel["id"]) => boolean;
-
 declare const canCreateGroup: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
 declare const canEditGroup: (rights: Right, organizationId: OrganizationModel["id"], groupId: PeopleGroupModel["id"]) => boolean;
+
+declare const canCreateInstruction: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+declare const canEditInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
+declare const canDeleteInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
+
+declare const isAdmin: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+
+declare const isAdminOrFacilitator: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+
+declare const isFacilitator: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+
+declare const isSuperAdmin: (rights: Right) => boolean;
+
+declare const isUser: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
+
+declare const isViewer: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
 
 declare const canCreateNews: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
 declare const canEditNews: (rights: Right, organizationId: OrganizationModel["id"], newsId: NewsModel["id"]) => boolean;
 declare const canDeleteNews: (rights: Right, organizationId: OrganizationModel["id"], newsId: NewsModel["id"]) => boolean;
-
-declare const isMember: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
-
-declare const isOwner: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
 
 declare const canPermissionProject: (rights: Right, organizationId: OrganizationModel["id"], projectId: (ProjectModel["id"] | null) | undefined, perrmissionName: PermissionType) => boolean;
 declare const canCreateProject: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
@@ -97,9 +65,34 @@ declare const canCreateComment: (rights: Right, organizationId: OrganizationMode
 declare const canEditComment: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
 declare const canDeleteComment: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
 
-declare const canCreateInstruction: (rights: Right, organizationId: OrganizationModel["id"]) => boolean;
-declare const canEditInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
-declare const canDeleteInstruction: (rights: Right, organizationId: OrganizationModel["id"], instructionId: InstructionModel["id"]) => boolean;
+declare const isMember: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+
+declare const isOwner: (rights: Right, organizationId: OrganizationModel["id"], projectId: ProjectModel["id"]) => boolean;
+
+/**
+ * Generate User rights from usermodels
+ *
+ * @constant
+ * @name userRights
+ * @kind variable
+ * @type {<U extends Pick<UserModel, "permissions" | "roles">>(user: U) => Right}
+ * @exports
+ */
+declare const userRights: <U extends Pick<UserModel, "permissions" | "roles">>(user: U) => Right;
+
+declare const canEditUser: (rights: Right, organizationId: OrganizationModel["id"], userId: UserModel["id"]) => boolean;
+
+declare function hasPermission(permissions: Right['permissions'], app: 'organizations' | 'projects' | 'accounts' | 'peoplegroup', permissionName: PermissionType, identification?: number | string | Roles | null): boolean;
+
+declare const DEFAULT_LANGUAGE = "plaintext";
+declare const DEFAULT_THEME = "dark";
+declare const DEFAULT_TAB = 2;
+interface LpiBlockOptions extends CodeBlockLowlightOptions {
+    tabClassPrefix: string;
+    themeClassPrefix: string;
+    defaultTheme: string | null | undefined;
+}
+declare const CodeBlock: _tiptap_core.Node<LpiBlockOptions, any>;
 
 type Options = {
     src: string;
@@ -123,6 +116,8 @@ declare const CustomImage: _tiptap_core.Node<{
     allowBase64: boolean;
 }, any>;
 
+declare const CustomTableCell: _tiptap_core.Node<_tiptap_extension_table_cell.TableCellOptions, any>;
+
 type Option = {
     size?: ImageVariations;
     src: string;
@@ -145,16 +140,21 @@ declare const ExternalVideo: Node<{
     aligns: string[];
 }, any>;
 
-declare const CustomTableCell: _tiptap_core.Node<_tiptap_extension_table_cell.TableCellOptions, any>;
+declare const lowlight: {
+    highlight: (language: string, value: string, options?: Readonly<_lowlight.Options> | null | undefined) => hast.Root;
+    highlightAuto: (value: string, options?: Readonly<_lowlight.AutoOptions> | null | undefined) => hast.Root;
+    listLanguages: () => Array<string>;
+    register: {
+        (grammars: Readonly<Record<string, highlight_js.LanguageFn>>): undefined;
+        (name: string, grammar: highlight_js.LanguageFn): undefined;
+    };
+    registerAlias: {
+        (aliases: Readonly<Record<string, ReadonlyArray<string> | string>>): undefined;
+        (language: string, alias: ReadonlyArray<string> | string): undefined;
+    };
+    registered: (aliasOrName: string) => boolean;
+};
 
-declare const DEFAULT_LANGUAGE = "plaintext";
-declare const DEFAULT_THEME = "dark";
-declare const DEFAULT_TAB = 2;
-interface LpiBlockOptions extends CodeBlockLowlightOptions {
-    tabClassPrefix: string;
-    themeClassPrefix: string;
-    defaultTheme: string | null | undefined;
-}
-declare const CodeBlock: _tiptap_core.Node<LpiBlockOptions, any>;
+declare const getExtensions: (options?: Partial<StarterKitOptions>) => Extensions;
 
 export { CodeBlock, CustomImage, CustomTableCell, DEFAULT_LANGUAGE, DEFAULT_TAB, DEFAULT_THEME, ExternalVideo, type LpiBlockOptions, canCreateComment, canCreateEvent, canCreateGroup, canCreateInstruction, canCreateNews, canCreateProject, canCreateReview, canDeleteComment, canDeleteEvent, canDeleteInstruction, canDeleteNews, canDeleteProject, canDeleteReview, canEditComment, canEditEvent, canEditGroup, canEditInstruction, canEditNews, canEditProject, canEditReview, canEditUser, canPermission, canPermissionProject, getExtensions, getFormatedVideoSrc, hasPermission, isAdmin, isAdminOrFacilitator, isFacilitator, isMember, isOwner, isSuperAdmin, isUser, isViewer, lowlight, roomKeyFromParams, userRights };
