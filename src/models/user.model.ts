@@ -2,7 +2,7 @@
  * @name UserModel
  * @description user data set on the project app
  */
-import type { ImageModel } from './image.model'
+import type { ImageModel, ImageSize } from './image.model'
 
 import type { Translated } from '../interfaces/translated'
 import type { ResearcherLight } from './researcher.model'
@@ -205,4 +205,11 @@ export type UserForm = Partial<Omit<UserModel, 'slug'
   | 'roles'
   | 'permissions'
   | 'modules'
-  >>
+  | 'created_at'
+  | 'email_verified'
+  | 'people_id'
+  | 'profile_picture'
+  > & {
+  imageSizes: ImageSize | null
+  profile_picture: ImageModel | File | null
+  }>
