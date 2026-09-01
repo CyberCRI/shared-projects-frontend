@@ -197,3 +197,12 @@ export type QueryFilterUserEmail = Partial<{
 export type QueryFilterResetPassword = Partial<{
   redirect_uri: string
 }>
+
+
+export type UserForm = Partial<Omit<UserModel, 'slug'
+  | 'researcher'
+  | 'is_superuser'
+  | 'roles'
+  | 'permissions'
+  | 'modules'
+  >>
