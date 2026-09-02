@@ -54,3 +54,8 @@ export type FollowProjectOutput = Required<FollowOutput> & {
 }
 
 export type FollowOutputList = FollowManyOutput[]
+
+export type FollowedModel = {
+  is_followed: boolean
+  follow_id: number
+}

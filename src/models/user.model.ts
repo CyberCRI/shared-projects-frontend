@@ -2,7 +2,7 @@
  * @name UserModel
  * @description user data set on the project app
  */
-import type { ImageModel } from './image.model'
+import type { ImageModel, ImageSize } from './image.model'
 
 import type { Translated } from '../interfaces/translated'
 import type { ResearcherLight } from './researcher.model'
@@ -67,6 +67,7 @@ export interface UserModel extends BaseModel {
   modules: {
     conferences: number
     files: number
+    reviews_projects: number
     follows_categories: number
     follows_projects: number
     groups: number
@@ -197,3 +198,22 @@ export type QueryFilterUserEmail = Partial<{
 export type QueryFilterResetPassword = Partial<{
   redirect_uri: string
 }>
+
+export type UserForm = Partial<
+  Omit<
+    UserModel,
+    | 'slug'
+    | 'researcher'
+    | 'is_superuser'
+    | 'roles'
+    | 'permissions'
+    | 'modules'
+    | 'created_at'
+    | 'email_verified'
+    | 'people_id'
+    | 'profile_picture'
+  > & {
+    imageSizes: ImageSize | null
+    profile_picture: ImageModel | File | null
+  }
+>

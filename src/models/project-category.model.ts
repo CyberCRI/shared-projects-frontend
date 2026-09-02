@@ -3,6 +3,7 @@ import type { OrganizationModel } from './organization.model'
 import type { Translated } from '../interfaces/translated'
 import type { ImageModel, ImageSize } from './image.model'
 import type { TagModel, TranslatedTag } from './tag.model'
+import { FollowedModel } from './follow.model'
 import type BaseModel from './base.model'
 
 /**
@@ -28,6 +29,7 @@ export interface ProjectCategoryModel extends BaseModel {
   only_reviewer_can_publish: boolean
   is_root: boolean
   parent: ProjectCategoryModel | null
+  is_followed: FollowedModel
 
   background_color: string
   foreground_color: string
@@ -72,7 +74,7 @@ export type ProjectCategoryOutput = BaseModel &
     tags: TagModel[]
   }
 
-export type ProjectCategoryForm = Omit<ProjectCategoryModel, 'parent'> & {
+export type ProjectCategoryForm = Omit<ProjectCategoryModel, 'parent' | 'is_followed'> & {
   parent: number
   imageSizes?: ImageSize
 }
