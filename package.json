@@ -40,7 +40,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@tiptap/core": "2.26.3",
+    "@tiptap/core": "3.30.4",
     "@tiptap/extension-blockquote": "2.26.3",
     "@tiptap/extension-bold": "2.26.3",
     "@tiptap/extension-bullet-list": "2.26.3",
@@ -82,7 +82,7 @@
     "yjs": "13.6.27"
   },
   "peerDependencies": {
-    "@tiptap/core": "2.26.3",
+    "@tiptap/core": "3.30.4",
     "@tiptap/extension-blockquote": "2.26.3",
     "@tiptap/extension-bold": "2.26.3",
     "@tiptap/extension-bullet-list": "2.26.3",
