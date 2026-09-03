@@ -140,6 +140,22 @@ export async function deleteUserPicture(
   await clientAPI(`user/${id}/profile-picture/${imageId}/`, { ...config, method: 'DELETE' })
 }
 
+export async function getUserPrivacy(userId: UserSlugOrId, config: ClientAPIOptions = {}) {
+  return await clientAPI<PrivacySettings>(`privacy-settings/${userId}/`, config)
+}
+
+export async function putUserPrivacy(
+  userId: UserSlugOrId,
+  body: UserPrivacyPatchModel,
+  config: ClientAPIOptions = {}
+) {
+  return await clientAPI<PrivacySettings>(`privacy-settings/${userId}/`, {
+    ...config,
+    body,
+    method: 'PUT',
+  })
+}
+
 export async function patchUserPrivacy(
   userId: UserSlugOrId,
   body: UserPrivacyPatchModel,

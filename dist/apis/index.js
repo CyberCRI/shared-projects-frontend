@@ -1623,6 +1623,16 @@ async function postUserPicture(userId, body, config = {}) {
 async function deleteUserPicture(id, imageId, config = {}) {
   await clientAPI(`user/${id}/profile-picture/${imageId}/`, { ...config, method: "DELETE" });
 }
+async function getUserPrivacy(userId, config = {}) {
+  return await clientAPI(`privacy-settings/${userId}/`, config);
+}
+async function putUserPrivacy(userId, body, config = {}) {
+  return await clientAPI(`privacy-settings/${userId}/`, {
+    ...config,
+    body,
+    method: "PUT"
+  });
+}
 async function patchUserPrivacy(userId, body, config = {}) {
   return await clientAPI(`privacy-settings/${userId}/`, {
     ...config,
@@ -1833,6 +1843,7 @@ export {
   getUserGroups,
   getUserMentorship,
   getUserNotificationSettings,
+  getUserPrivacy,
   getUserProjectsFollower,
   getUserProjectsMember,
   getUserProjectsReviewer,
@@ -1924,6 +1935,7 @@ export {
   putNews,
   putOrgClassification,
   putProjectCategory,
+  putUserPrivacy,
   removeFeaturedProject,
   removeGroupLocation,
   removeGroupMember,
