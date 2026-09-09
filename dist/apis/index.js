@@ -119,14 +119,7 @@ function getUserAttachmentFile(userId, options) {
 async function postUserAttachmentFile(userId, body) {
   return await clientAPI(`user/${userId}/file/`, { body, method: "POST" });
 }
-async function patchUserAttachmentFile(userId, fileId, data, config = {}) {
-  const body = new FormData();
-  if (data.description) {
-    body.set("description", data.description);
-  }
-  if (data.title) {
-    body.set("title", data.title);
-  }
+async function patchUserAttachmentFile(userId, fileId, body, config = {}) {
   return await clientAPI(`user/${userId}/file/${fileId}/`, {
     ...config,
     body,
