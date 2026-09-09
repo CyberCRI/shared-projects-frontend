@@ -26,4 +26,5 @@ export type TranslatedAttachmentFile = Translated<AttachmentFileModel, 'title' |
 export type AttachmentFileInput = Required<AttachmentFileModel> & {
   file: File
   project_id: string
+  user_id: string
 }

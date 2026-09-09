@@ -64,17 +64,9 @@ export async function postUserAttachmentFile(userId: UserSlugOrId, body: FormDat
 export async function patchUserAttachmentFile(
   userId: UserSlugOrId,
   fileId: number,
-  data: Partial<AttachmentFileModel>,
+  body: FormData,
   config: Config = {}
 ) {
-  const body = new FormData()
-  if (data.description) {
-    body.set('description', data.description)
-  }
-  if (data.title) {
-    body.set('title', data.title)
-  }
-
   return await clientAPI<AttachmentFileModel>(`user/${userId}/file/${fileId}/`, {
     ...config,
     body,

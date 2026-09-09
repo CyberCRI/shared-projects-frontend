@@ -82,7 +82,7 @@ export interface UserModel extends BaseModel {
 }
 
 export type UserModulesKeys = keyof UserModel['modules']
-export type UserModuleExtra = UserModulesKeys | 'resources'
+export type UserModuleExtra = UserModulesKeys | 'resources' | 'privacy'
 
 export type UserSlugOrId = UserModel['id'] | UserModel['slug']
 
