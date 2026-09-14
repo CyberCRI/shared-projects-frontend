@@ -2,6 +2,7 @@ import type { OrganizationModel } from './organization.model'
 import { PaginationQuery } from '../interfaces/pagination'
 import type { LanguageType, TagType } from './types'
 import type { TagModel } from './tag.model'
+import { Translated } from '../interfaces'
 import type BaseModel from './base.model'
 
 export type TagClassificationModel = BaseModel & {
@@ -23,4 +24,9 @@ export type QueryFilterTagClassification = Partial<
     search: string
     language: LanguageType
   } & PaginationQuery
+>
+
+export type TranslatedTagClassification = Translated<
+  TagClassificationModel,
+  'title' | 'description'
 >

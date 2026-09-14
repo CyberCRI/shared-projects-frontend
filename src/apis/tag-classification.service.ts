@@ -13,7 +13,7 @@ export async function getAllOrgClassifications(
   organizationCode: OrganizationModel['code'],
   config: Config = {}
 ) {
-  return await clientAPI<PaginationResult<TagModel>>(
+  return await clientAPI<PaginationResult<TagClassificationModel>>(
     `organization/${organizationCode}/tag-classification/`,
     config
   )
@@ -87,7 +87,7 @@ export async function getOrgClassificationTags(
   classificationId: TagClassificationModel['id'] | 'enabled-for-projects' | 'enabled-for-skills',
   config: ConfigClassification = {}
 ) {
-  return await clientAPI<PaginationResult<TagClassificationModel>>(
+  return await clientAPI<PaginationResult<TagModel>>(
     `organization/${organizationCode}/tag-classification/${classificationId}/tag/`,
     config
   )
