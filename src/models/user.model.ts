@@ -79,6 +79,8 @@ export interface UserModel extends BaseModel {
     skills: number
     notifications: number
   }
+
+  role?: string
 }
 
 export type UserModulesKeys = keyof UserModel['modules']

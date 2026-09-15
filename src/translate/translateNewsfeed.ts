@@ -4,23 +4,24 @@ import { translateProject } from './translateProject'
 import { translateOneNews } from './translateOneNews'
 
 export const translateNewsFeed = (
-  data: NewsfeedModel,
+  datas: NewsfeedModel[],
   locale: Language | null
-): TranslatedNewsfeed => {
-  if (!data) {
-    return data
+): TranslatedNewsfeed[] => {
+  if (!datas) {
+    return datas
   }
 
-  const translate = { ...data } as TranslatedNewsfeed
-  if (data.project) {
-    translate.project = translateProject(data.project, locale)
-  }
-  if (data.news) {
-    translate.news = translateOneNews(data.news, locale)
-  }
-  if (data.announcement) {
-    translate.announcement = translateAnnouncement(data.announcement, locale)
-  }
-
-  return translate
+  return datas.map((data) => {
+    const translate = { ...data } as TranslatedNewsfeed
+    if (data.project !== undefined) {
+      translate.project = translateProject(data.project, locale)
+    }
+    if (data.news) {
+      translate.news = translateOneNews(data.news, locale)
+    }
+    if (data.announcement) {
+      translate.announcement = translateAnnouncement(data.announcement, locale)
+    }
+    return translate
+  })
 }
