@@ -1,7 +1,7 @@
-import { Language, TranslatedUserModel, UserModel } from 'shared-projects-frontend/models'
+import { Language, TranslatedUserModel, UserModel } from '../models'
 import { translateEntity } from './utils'
 
-export const translateUser = (data: UserModel, locale: Language): TranslatedUserModel => {
+export const translateUser = (data: UserModel, locale: Language | null): TranslatedUserModel => {
   if (!data) {
     return data
   }

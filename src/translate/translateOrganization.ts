@@ -1,13 +1,9 @@
-import {
-  Language,
-  OrganizationModel,
-  TranslatedOrganizationModel,
-} from 'shared-projects-frontend/models'
+import { Language, OrganizationModel, TranslatedOrganizationModel } from '../models'
 import { translateEntity } from './utils'
 
 export const translateOrganization = (
   data: OrganizationModel,
-  locale: Language
+  locale: Language | null
 ): TranslatedOrganizationModel => {
   if (!data) {
     return data

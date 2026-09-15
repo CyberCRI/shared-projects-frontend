@@ -1,14 +1,10 @@
-import {
-  Language,
-  PeopleGroupModel,
-  TranslatedPeopleGroupModel,
-} from 'shared-projects-frontend/models'
+import { Language, PeopleGroupModel, TranslatedPeopleGroupModel } from '../models'
 import { translateEntity, translateMany } from './utils'
 import { translateLocation } from './translateLocation'
 
 export const translateGroup = (
   data: PeopleGroupModel,
-  locale: Language
+  locale: Language | null
 ): TranslatedPeopleGroupModel => {
   if (!data) {
     return data

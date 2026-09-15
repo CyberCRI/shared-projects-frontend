@@ -1,7 +1,10 @@
-import { CommentModel, Language, TranslatedComment } from 'shared-projects-frontend/models'
+import { CommentModel, Language, TranslatedComment } from '../models'
 import { translateEntity, translateMany } from './utils'
 
-export const translateComment = (data: CommentModel, locale: Language): TranslatedComment => {
+export const translateComment = (
+  data: CommentModel,
+  locale: Language | null
+): TranslatedComment => {
   if (!data) {
     return data
   }

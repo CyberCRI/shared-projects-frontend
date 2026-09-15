@@ -1,14 +1,10 @@
-import {
-  BaseLocationModel,
-  Language,
-  TranslatedNewsLocation,
-} from 'shared-projects-frontend/models'
+import { BaseLocationModel, Language, TranslatedNewsLocation } from '../models'
 import { translateLocation } from './translateLocation'
 import { translateOneNews } from './translateOneNews'
 
 export const translateOneNewsLocation = <Location extends BaseLocationModel>(
   data: Location,
-  locale: Language
+  locale: Language | null
 ): TranslatedNewsLocation => {
   if (!data) {
     return data

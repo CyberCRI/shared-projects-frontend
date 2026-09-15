@@ -1,9 +1,12 @@
-import { Language, NewsfeedModel, TranslatedNewsfeed } from 'shared-projects-frontend/models'
+import { Language, NewsfeedModel, TranslatedNewsfeed } from '../models'
 import { translateAnnouncement } from './translateAnnouncement'
 import { translateProject } from './translateProject'
 import { translateOneNews } from './translateOneNews'
 
-export const translateNewsFeed = (data: NewsfeedModel, locale: Language): TranslatedNewsfeed => {
+export const translateNewsFeed = (
+  data: NewsfeedModel,
+  locale: Language | null
+): TranslatedNewsfeed => {
   if (!data) {
     return data
   }

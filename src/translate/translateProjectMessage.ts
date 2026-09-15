@@ -1,13 +1,9 @@
-import {
-  Language,
-  ProjectMessageModel,
-  TranslatedProjectMessage,
-} from 'shared-projects-frontend/models'
+import { Language, ProjectMessageModel, TranslatedProjectMessage } from '../models'
 import { translateEntity, translateMany } from './utils'
 
 export const translateProjectMessage = (
   data: ProjectMessageModel,
-  locale: Language
+  locale: Language | null
 ): TranslatedProjectMessage => {
   if (!data) {
     return data

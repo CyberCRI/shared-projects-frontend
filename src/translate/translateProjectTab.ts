@@ -1,7 +1,10 @@
-import { Language, ProjectTab, TranslatedProjectTab } from 'shared-projects-frontend/models'
+import { Language, ProjectTab, TranslatedProjectTab } from '../models'
 import { translateEntity } from './utils'
 
-export const translateProjectTab = (data: ProjectTab, locale: Language): TranslatedProjectTab => {
+export const translateProjectTab = (
+  data: ProjectTab,
+  locale: Language | null
+): TranslatedProjectTab => {
   if (!data) {
     return data
   }

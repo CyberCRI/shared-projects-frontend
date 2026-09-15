@@ -1,7 +1,7 @@
-import { GoalModel, Language, TranslatedGoal } from 'shared-projects-frontend/models'
+import { GoalModel, Language, TranslatedGoal } from '../models'
 import { translateEntity } from './utils'
 
-export const translateGoal = (data: GoalModel, locale: Language): TranslatedGoal => {
+export const translateGoal = (data: GoalModel, locale: Language | null): TranslatedGoal => {
   if (!data) {
     return data
   }

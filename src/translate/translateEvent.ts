@@ -1,8 +1,8 @@
-import { EventModel, Language, TranslatedEventModel } from 'shared-projects-frontend/models'
+import { EventModel, Language, TranslatedEventModel } from '../models'
 import { translateLocation } from './translateLocation'
 import { translateEntity } from './utils'
 
-export const translateEvent = (data: EventModel, locale: Language): TranslatedEventModel => {
+export const translateEvent = (data: EventModel, locale: Language | null): TranslatedEventModel => {
   if (!data) {
     return data
   }

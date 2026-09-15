@@ -1,10 +1,10 @@
-import { BaseLocationModel, Language, TranslatedLocation } from 'shared-projects-frontend/models'
+import { BaseLocationModel, Language, TranslatedLocation } from '../models'
 import { translateProject } from './translateProject'
 import { translateEntity } from './utils'
 
 export const translatePeopleGroupLocation = <Location extends BaseLocationModel>(
   data: Location,
-  locale: Language
+  locale: Language | null
 ): TranslatedLocation => {
   if (!data) {
     return data

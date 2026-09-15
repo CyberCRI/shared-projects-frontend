@@ -1,7 +1,7 @@
-import { Language, ReviewModel, TranslatedReview } from 'shared-projects-frontend/models'
+import { Language, ReviewModel, TranslatedReview } from '../models'
 import { translateEntity } from './utils'
 
-export const translateReview = (data: ReviewModel, locale: Language): TranslatedReview => {
+export const translateReview = (data: ReviewModel, locale: Language | null): TranslatedReview => {
   if (!data) {
     return data
   }

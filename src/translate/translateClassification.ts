@@ -1,14 +1,10 @@
-import {
-  Language,
-  TagClassificationModel,
-  TranslatedTagClassification,
-} from 'shared-projects-frontend/models'
+import { Language, TagClassificationModel, TranslatedTagClassification } from '../models'
 import { translateEntity, translateMany } from './utils'
 import { translateTag } from './translateTag'
 
 export const translateClassification = (
   data: TagClassificationModel,
-  locale: Language
+  locale: Language | null
 ): TranslatedTagClassification => {
   if (!data) {
     return data

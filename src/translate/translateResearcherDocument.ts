@@ -1,13 +1,9 @@
-import {
-  Language,
-  ResearcherDocument,
-  TranslatedResearcherDocument,
-} from 'shared-projects-frontend/models'
+import { Language, ResearcherDocument, TranslatedResearcherDocument } from '../models'
 import { translateEntity } from './utils'
 
 export const translateResearcherDocument = (
   data: ResearcherDocument,
-  locale: Language
+  locale: Language | null
 ): TranslatedResearcherDocument => {
   if (!data) {
     return data

@@ -1,14 +1,10 @@
-import {
-  Language,
-  ProjectCategoryModel,
-  TranslatedProjectCategory,
-} from 'shared-projects-frontend/models'
+import { Language, ProjectCategoryModel, TranslatedProjectCategory } from '../models'
 import { translateEntity, translateMany } from './utils'
 import { translateTag } from './translateTag'
 
 export const translateCategory = (
   data: ProjectCategoryModel,
-  locale: Language
+  locale: Language | null
 ): TranslatedProjectCategory => {
   if (!data) {
     return data

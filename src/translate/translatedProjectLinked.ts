@@ -1,9 +1,9 @@
-import { Language, LinkedProject, TranslatedLinkedProject } from 'shared-projects-frontend/models'
+import { Language, LinkedProject, TranslatedLinkedProject } from '../models'
 import { translateProject } from './translateProject'
 
 export const translatedProjectLinked = (
   data: LinkedProject,
-  locale: Language
+  locale: Language | null
 ): TranslatedLinkedProject => {
   if (!data) {
     return data

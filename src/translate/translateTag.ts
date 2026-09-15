@@ -1,7 +1,7 @@
-import { Language, TagModel, TranslatedTag } from 'shared-projects-frontend/models'
+import { Language, TagModel, TranslatedTag } from '../models'
 import { translateEntity } from './utils'
 
-export const translateTag = (data: TagModel, locale: Language): TranslatedTag => {
+export const translateTag = (data: TagModel, locale: Language | null): TranslatedTag => {
   if (!data) {
     return data
   }

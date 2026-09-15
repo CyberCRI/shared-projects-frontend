@@ -1,7 +1,10 @@
-import { BlogEntryModel, Language, TranslatedBlogEntry } from 'shared-projects-frontend/models'
+import { BlogEntryModel, Language, TranslatedBlogEntry } from '../models'
 import { translateEntity } from './utils'
 
-export const translateBlogEntry = (data: BlogEntryModel, locale: Language): TranslatedBlogEntry => {
+export const translateBlogEntry = (
+  data: BlogEntryModel,
+  locale: Language | null
+): TranslatedBlogEntry => {
   if (!data) {
     return data
   }

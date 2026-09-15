@@ -1,15 +1,17 @@
+import { Language } from '../models'
+
 export const getTranslatableField = <
   DataT extends Record<string, any>,
   Field extends keyof DataT = keyof DataT,
 >(
   entity: DataT,
   field: Field,
-  locale: Language
+  locale: Language | null
 ): string => {
   const isNotTranslated = !entity[`${field.toString()}_detected_language`]
   const isDetectectedLanguage = locale == entity[`${field.toString()}_detected_language`]
 
-  if (isDetectectedLanguage || isNotTranslated) {
+  if (locale === null || isDetectectedLanguage || isNotTranslated) {
     return entity[field.toString()] || ''
   } else {
     return entity[`${field.toString()}_${locale}`] || entity[field.toString()] || ''
@@ -22,7 +24,7 @@ export const getTranslatableFields = <
 >(
   entity: DataT,
   fields: Field[],
-  locale: Language
+  locale: Language | null
 ): Record<Field, string> => {
   // @ts-ignore
   const res: Record<Field, string> = {}
@@ -40,7 +42,7 @@ export const translateEntity = <
 >(
   entity: DataT,
   fields: Fields[],
-  locale: Language
+  locale: Language | null
 ): DataT | (DataT & ResultT) => {
   if (!entity) {
     return entity
@@ -52,9 +54,9 @@ export const translateEntity = <
 }
 
 export const translateMany = <Result, Data>(
-  func: (data: Data, locale: Language) => Result,
+  func: (data: Data, locale: Language | null) => Result,
   datas: Data[],
-  locale: Language
+  locale: Language | null
 ) => {
   return datas.map((data) => func(data, locale))
 }

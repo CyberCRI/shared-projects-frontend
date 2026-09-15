@@ -1,14 +1,10 @@
-import {
-  AnnouncementModel,
-  Language,
-  TranslatedAnnouncement,
-} from 'shared-projects-frontend/models'
+import { AnnouncementModel, Language, TranslatedAnnouncement } from '../models'
 import { translateProject } from './translateProject'
 import { translateEntity } from './utils'
 
 export const translateAnnouncement = (
   data: AnnouncementModel,
-  locale: Language
+  locale: Language | null
 ): TranslatedAnnouncement => {
   if (!data) {
     return data

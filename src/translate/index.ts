@@ -1,3 +1,4 @@
+export * from './index'
 export * from './translateAnnouncement'
 export * from './translateBlogEntry'
 export * from './translateCategory'

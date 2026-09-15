@@ -1,9 +1,12 @@
-import { Language, TemplateModel, TranslatedTemplate } from 'shared-projects-frontend/models'
+import { Language, TemplateModel, TranslatedTemplate } from '../models'
 import { translateEntity, translateMany } from './utils'
 import { translateCategory } from './translateCategory'
 import { translateTag } from './translateTag'
 
-export const translateTemplate = (data: TemplateModel, locale: Language): TranslatedTemplate => {
+export const translateTemplate = (
+  data: TemplateModel,
+  locale: Language | null
+): TranslatedTemplate => {
   if (!data) {
     return data
   }

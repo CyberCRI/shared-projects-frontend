@@ -1,13 +1,9 @@
-import {
-  BaseLocationModel,
-  GeneralLocationPeopleGroup,
-  Language,
-} from 'shared-projects-frontend/models'
+import { BaseLocationModel, GeneralLocationPeopleGroup, Language } from '../models'
 import { translateGroup } from './translateGroup'
 
 export const translateLocation = <Location extends BaseLocationModel>(
   data: Location,
-  locale: Language
+  locale: Language | null
 ): GeneralLocationPeopleGroup => {
   if (!data) {
     return data

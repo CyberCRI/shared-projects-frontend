@@ -1,9 +1,9 @@
-import { InstructionModel, Language, TranslatedInstruction } from 'shared-projects-frontend/models'
+import { InstructionModel, Language, TranslatedInstruction } from '../models'
 import { translateEntity } from './utils'
 
 export const translateInstruction = (
   data: InstructionModel,
-  locale: Language
+  locale: Language | null
 ): TranslatedInstruction => {
   if (!data) {
     return data
