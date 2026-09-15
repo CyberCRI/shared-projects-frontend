@@ -76,7 +76,7 @@ export type LinkedProject = {
   target?: ProjectModel
 }
 
-export type TranslatedLinkedProject = LinkedProject & {
+export type TranslatedLinkedProject = Omit<LinkedProject, 'project' | 'target'> & {
   project: TranslatedProject
   target?: TranslatedProject
 }

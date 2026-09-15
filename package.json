@@ -27,6 +27,10 @@
     "./apis": {
       "types": "./dist/apis/index.d.ts",
       "default": "./dist/apis/index.js"
+    },
+    "./translate": {
+      "types": "./dist/translate/index.d.ts",
+      "default": "./dist/translate/index.js"
     }
   },
   "scripts": {
