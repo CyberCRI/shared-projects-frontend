@@ -61,13 +61,13 @@ export type OrganizationOutput = BaseModel &
     languages?: string[]
     default_skills_tags?: TagModel[]
     default_projects_tags?: TagModel[]
-}
-  
+  }
+
 export type TransaltedTermsAndConditions = Translated<TermsAndConditions, 'displayed_content'>
 
 export type TranslatedOrganizationModel = Translated<
   Omit<OrganizationOutput, 'terms_and_conditions'>,
   'name' | 'dashboard_title' | 'dashboard_subtitle' | 'description' | 'chat_button_text'
-  > & {
+> & {
   terms_and_conditions: TransaltedTermsAndConditions
 }
