@@ -21,8 +21,8 @@ export type TagClassificationModel = BaseModel & {
 
 export type QueryFilterTagClassification = Partial<
   {
-    search: string
-    language: LanguageType
+    type: TagType[],
+    enabled_for: ('projects' | 'skills')[]
   } & PaginationQuery
 >
 
