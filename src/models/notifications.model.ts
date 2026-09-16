@@ -1,10 +1,10 @@
 import type { OrganizationModel } from './organization.model'
 import type { InvitationModel } from './invitation.model'
 import type { ProjectModel } from './project.model'
+import { Optional, Ordering } from '../interfaces'
 import type { NotificationType } from './types'
 import type { UserModel } from './user.model'
 import type BaseModel from './base.model'
-import { Optional } from '../interfaces'
 
 export interface NotificationModel extends BaseModel {
   id: number
@@ -25,6 +25,12 @@ export interface NotificationModel extends BaseModel {
   // extra
   invitation: InvitationModel
 }
+
+export type QueryFilterNotification = Partial<{
+  ordering: Ordering<'is_viewed' | 'created' | 'type'>
+  type: NotificationType[]
+  is_viewed: boolean
+}>
 
 export interface NotificationSettingsModel extends BaseModel {
   id: number

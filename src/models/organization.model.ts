@@ -6,8 +6,8 @@ import type BaseModel from './base.model'
 
 import type { Translated } from '../interfaces/translated'
 
-import type { UserSkillModel } from './user.model'
 import type { TagModel } from './tag.model'
+import { SkillModel } from './skill.model'
 
 export interface TermsAndConditions {
   id: number
@@ -47,7 +47,7 @@ export interface OrganizationModel extends BaseModel {
 
 export type OrganizationPatchInput = Partial<OrganizationModel> & {
   tags?: number[]
-  default_skills_tags?: UserSkillModel[] | number[]
+  default_skills_tags?: SkillModel[] | number[]
   default_projects_tags?: TagModel[] | number[]
 }
 
@@ -63,7 +63,11 @@ export type OrganizationOutput = BaseModel &
     default_projects_tags?: TagModel[]
   }
 
+export type TransaltedTermsAndConditions = Translated<TermsAndConditions, 'displayed_content'>
+
 export type TranslatedOrganizationModel = Translated<
-  OrganizationOutput,
+  Omit<OrganizationOutput, 'terms_and_conditions'>,
   'name' | 'dashboard_title' | 'dashboard_subtitle' | 'description' | 'chat_button_text'
->
+> & {
+  terms_and_conditions: TransaltedTermsAndConditions
+}

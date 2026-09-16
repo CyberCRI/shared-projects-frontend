@@ -1,13 +1,32 @@
-import type { TagModel } from './tag.model'
+import type { TagModel, TranslatedTag } from './tag.model'
+import { UserSlugOrId } from './user.model'
+import BaseModel from './base.model'
 
-export interface SkillModel {
+export interface SkillModel extends BaseModel {
   id: number
-  user: string
+  user?: UserSlugOrId
   tag: TagModel
   level: number
   level_to_reach: number
+  category: string
+  type: 'skill' | 'hobby'
+  can_mentor: boolean
+  needs_mentor: boolean
+  comment: string
 }
 
 export type QueryFilterSkill = Partial<{
   search: string
 }>
+
+export type TranslatedSkill = Omit<SkillModel, 'tag'> & {
+  tag: TranslatedTag
+}
+
+export type SkillForm = Partial<TranslatedSkill>
+
+export type SkillCleanedForm = Partial<
+  Omit<SkillForm, 'tag'> & {
+    tag: TagModel['id']
+  }
+>

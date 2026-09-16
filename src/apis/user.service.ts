@@ -1,15 +1,18 @@
 import {
   ImageModelCreated,
   OrganizationModel,
-  PeopleModel,
   UserSlugOrId,
   UserModel,
   UserPatchModel,
   UserPrivacyPatchModel,
-  UserSkillModel,
-  SkillModel,
+  ProjectCategoryModel,
+  ProjectModel,
   PrivacySettings,
   ImageModel,
+  QueryFilterUser,
+  QueryFilterUserEmail,
+  QueryFilterResetPassword,
+  GroupModel,
 } from '../models'
 import { clientAPI, type ClientAPIOptions } from './client'
 import { _adaptParamsToGetQuery } from './utils.service'
@@ -17,7 +20,10 @@ import { PaginationResult } from '../interfaces'
 import { merge } from 'es-toolkit'
 
 // New user service using projects API
-export async function getUser(userId: UserSlugOrId, config: ClientAPIOptions = {}) {
+export async function getUser(
+  userId: UserSlugOrId,
+  config: ClientAPIOptions<QueryFilterUser> = {}
+) {
   return await clientAPI<UserModel>(`user/${userId}/`, config)
 }
 
@@ -26,7 +32,7 @@ export async function postUser(
   body: FormData,
   config: ClientAPIOptions = {}
 ) {
-  return await clientAPI<UserModel>(
+  await clientAPI<UserModel>(
     `user/`,
     merge(
       {
@@ -66,29 +72,27 @@ export async function postUserWithInvitation(
   return await clientAPI<UserModel>(`user/`, options)
 }
 
-export async function searchPeopleAdmin(
+export async function searchUserAdmin(
   organizationId: OrganizationModel['id'],
-  config: ClientAPIOptions
+  config: ClientAPIOptions<QueryFilterUser> = {}
 ) {
   // TODO change backend with prefix organization code in url not in query
-  const newConfig = {
-    ...config,
+  const newConfig: ClientAPIOptions<QueryFilterUser> = {
+    ...(config || {}),
     query: {
-      ...config.query,
+      ...(config?.query || {}),
       current_org_pk: organizationId,
     },
   }
 
-  return await clientAPI<PaginationResult<PeopleModel>>('user/admin-list/', newConfig)
+  return await clientAPI<PaginationResult<UserModel>>('user/admin-list/', newConfig)
 }
 
-export async function searchPeopleByExactMail(
+export async function searchUserByExactMail(
   email: string,
-  params: object,
-  config: ClientAPIOptions = {}
+  config: ClientAPIOptions<QueryFilterUserEmail> = {}
 ) {
-  const adaptedParams = params ? _adaptParamsToGetQuery(params) : {}
-  return await clientAPI<UserModel>(`user/get-by-email/${email}/`, { ...config, ...adaptedParams })
+  return await clientAPI<UserModel>(`user/get-by-email/${encodeURIComponent(email)}/`, config)
 }
 
 export async function patchUser(
@@ -136,6 +140,22 @@ export async function deleteUserPicture(
   await clientAPI(`user/${id}/profile-picture/${imageId}/`, { ...config, method: 'DELETE' })
 }
 
+export async function getUserPrivacy(userId: UserSlugOrId, config: ClientAPIOptions = {}) {
+  return await clientAPI<PrivacySettings>(`privacy-settings/${userId}/`, config)
+}
+
+export async function putUserPrivacy(
+  userId: UserSlugOrId,
+  body: UserPrivacyPatchModel,
+  config: ClientAPIOptions = {}
+) {
+  return await clientAPI<PrivacySettings>(`privacy-settings/${userId}/`, {
+    ...config,
+    body,
+    method: 'PUT',
+  })
+}
+
 export async function patchUserPrivacy(
   userId: UserSlugOrId,
   body: UserPrivacyPatchModel,
@@ -147,44 +167,10 @@ export async function patchUserPrivacy(
     method: 'PATCH',
   })
 }
-
-export async function postUserSkill(
-  userId: UserSlugOrId,
-  body: UserSkillModel,
-  config: ClientAPIOptions = {}
-) {
-  return await clientAPI<UserSkillModel>(`user/${userId}/skill/`, {
-    ...config,
-    body,
-    method: 'POST',
-  })
-}
-
-export async function patchUserSkill(
-  userId: UserSlugOrId,
-  skillId: UserSkillModel['id'],
-  body: UserPrivacyPatchModel,
-  config: ClientAPIOptions = {}
-) {
-  return await clientAPI<UserSkillModel>(`user/${userId}/skill/${skillId}/`, {
-    ...config,
-    body,
-    method: 'PATCH',
-  })
-}
-
-export async function deleteUserSkill(
-  userId: UserSlugOrId,
-  skillId: UserSkillModel['id'],
-  config: ClientAPIOptions = {}
-) {
-  await clientAPI(`user/${userId}/skill/${skillId}/`, { ...config, method: 'DELETE' })
-}
-
 export async function resetUserPassword(
   organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
-  config: ClientAPIOptions = {}
+  config: ClientAPIOptions<QueryFilterResetPassword> = {}
 ) {
   // TODO change that in backend
   return await clientAPI<{ detail: 'Email sent' }>(
@@ -203,6 +189,50 @@ export async function resetUserPassword(
 export async function removeUserCookie(config: ClientAPIOptions = {}) {
   return await clientAPI<'Cookie already deleted' | 'Cookie deleted'>(
     'user/remove-authentication-cookie',
+    config
+  )
+}
+
+export async function getUserGroups(
+  userId: UserSlugOrId,
+  config: ClientAPIOptions<QueryFilterUser> = {}
+) {
+  return await clientAPI<PaginationResult<GroupModel>>(`user/${userId}/groups/`, config)
+}
+
+export async function getUserProjectsMember(
+  userId: UserSlugOrId,
+  config: ClientAPIOptions<QueryFilterUser> = {}
+) {
+  return await clientAPI<PaginationResult<ProjectModel>>(`user/${userId}/projects/member/`, config)
+}
+
+export async function getUserProjectsFollower(
+  userId: UserSlugOrId,
+  config: ClientAPIOptions<QueryFilterUser> = {}
+) {
+  return await clientAPI<PaginationResult<ProjectModel>>(
+    `user/${userId}/projects/follower/`,
+    config
+  )
+}
+
+export async function getUserProjectsReviewer(
+  userId: UserSlugOrId,
+  config: ClientAPIOptions<QueryFilterUser> = {}
+) {
+  return await clientAPI<PaginationResult<ProjectModel>>(
+    `user/${userId}/projects/reviewer/`,
+    config
+  )
+}
+
+export async function getUserCategoriesFollower(
+  userId: UserSlugOrId,
+  config: ClientAPIOptions<QueryFilterUser> = {}
+) {
+  return await clientAPI<PaginationResult<ProjectCategoryModel>>(
+    `user/${userId}/categories/follower/`,
     config
   )
 }

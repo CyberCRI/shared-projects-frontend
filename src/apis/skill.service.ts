@@ -1,19 +1,51 @@
-import { QueryFilterSkill, SkillModel } from '../models/skill.model'
+import { QueryFilterSkill, SkillCleanedForm } from '../models/skill.model'
 import { clientAPI, ClientAPIOptions } from './client'
+import { SkillModel, UserSlugOrId } from '../models'
 import { PaginationResult } from '../interfaces'
 
-type Config = ClientAPIOptions
-export async function getSkill(skillId: SkillModel['id'], options: Config = {}) {
-  return await clientAPI<SkillModel>(`skill/${skillId}/`, options)
+type Config = ClientAPIOptions<QueryFilterSkill>
+
+export async function getUserSkills(userId: UserSlugOrId, options: Config = {}) {
+  return await clientAPI<PaginationResult<SkillModel>>(`user/${userId}/skill/`, options)
 }
 
-type ConfigSearch = ClientAPIOptions<QueryFilterSkill>
-export async function searchSkill(search: string, options: ConfigSearch = {}) {
-  return await clientAPI<PaginationResult<SkillModel>>(`skill/`, {
-    ...options,
-    query: {
-      ...(options?.query || {}),
-      search,
-    },
+export async function getUserSkill(
+  userId: UserSlugOrId,
+  skillId: SkillModel['id'],
+  options: Config = {}
+) {
+  return await clientAPI<SkillModel>(`user/${userId}/skill/${skillId}/`, options)
+}
+
+export async function postUserSkill(
+  userId: UserSlugOrId,
+  body: SkillCleanedForm,
+  config: ClientAPIOptions = {}
+) {
+  return await clientAPI<SkillModel>(`user/${userId}/skill/`, {
+    ...config,
+    body,
+    method: 'POST',
   })
+}
+
+export async function patchUserSkill(
+  userId: UserSlugOrId,
+  skillId: SkillModel['id'],
+  body: SkillCleanedForm,
+  config: ClientAPIOptions = {}
+) {
+  return await clientAPI<SkillModel>(`user/${userId}/skill/${skillId}/`, {
+    ...config,
+    body,
+    method: 'PATCH',
+  })
+}
+
+export async function deleteUserSkill(
+  userId: UserSlugOrId,
+  skillId: SkillModel['id'],
+  config: ClientAPIOptions = {}
+) {
+  await clientAPI(`user/${userId}/skill/${skillId}/`, { ...config, method: 'DELETE' })
 }

@@ -57,37 +57,27 @@ export function getUserAttachmentFile(userId: UserSlugOrId, options: any) {
   return clientAPI<PaginationResult<AttachmentFileModel>>(`user/${userId}/file/`, options)
 }
 
-export async function postUserAttachmentFile(userId: UserSlugOrId, data: AttachmentForm) {
-  const body = new FormData()
-  body.set('description', data.description)
-  body.set('title', data.title)
-  if (data.file) {
-    body.set('file', data.file, data.file.name)
-    body.set('mime', data.file.type || 'file')
-  }
-
+export async function postUserAttachmentFile(userId: UserSlugOrId, body: FormData) {
   return await clientAPI<AttachmentFileModel>(`user/${userId}/file/`, { body, method: 'POST' })
 }
 
 export async function patchUserAttachmentFile(
   userId: UserSlugOrId,
   fileId: number,
-  data: Partial<AttachmentFileModel>
+  body: FormData,
+  config: Config = {}
 ) {
-  const body = new FormData()
-  if (data.description) {
-    body.set('description', data.description)
-  }
-  if (data.title) {
-    body.set('title', data.title)
-  }
-
   return await clientAPI<AttachmentFileModel>(`user/${userId}/file/${fileId}/`, {
+    ...config,
     body,
     method: 'PATCH',
   })
 }
 
-export async function deleteUserAttachmentFile(userId: UserSlugOrId, fileId: number) {
-  await clientAPI(`user/${userId}/file/${fileId}/`, { method: 'DELETE' })
+export async function deleteUserAttachmentFile(
+  userId: UserSlugOrId,
+  fileId: number,
+  config: Config = {}
+) {
+  await clientAPI(`user/${userId}/file/${fileId}/`, { ...config, method: 'DELETE' })
 }

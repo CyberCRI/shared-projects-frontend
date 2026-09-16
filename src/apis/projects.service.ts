@@ -48,7 +48,7 @@ export async function getLinkedProject(
   projectId: ProjectSlugOrId,
   config: ConfigProjectLinked = {}
 ) {
-  return await clientAPI<PaginationResult<ProjectModel>>(
+  return await clientAPI<PaginationResult<LinkedProject>>(
     `project/${projectId}/linked-project/`,
     config
   )

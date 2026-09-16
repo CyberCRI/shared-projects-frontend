@@ -30,6 +30,15 @@ var roomKeyFromParams = (params) => {
   }).join("::");
 };
 
+// src/lib/permissions/utils.ts
+function hasPermission(permissions, app, permissionName, identification = null) {
+  let perm = `${app}.${permissionName}`;
+  if (identification !== null && identification !== void 0 && identification !== "") {
+    perm += `.${identification}`;
+  }
+  return !!permissions[perm];
+}
+
 // src/lib/permissions/isSuperAdmin.ts
 var isSuperAdmin = (rights) => {
   return rights.roles.includes("superadmins");
@@ -38,6 +47,13 @@ var isSuperAdmin = (rights) => {
 // src/lib/permissions/isAdmin.ts
 var isAdmin = (rights, organizationId) => {
   return !!(isSuperAdmin(rights) || rights.roles.includes(`organization:#${organizationId}:admins`));
+};
+
+// src/lib/permissions/can.ts
+var canPermission = (rights, organizationId, elementType, identification = null, perrmissionName) => {
+  return isAdmin(rights, organizationId) || // check objects permissions
+  hasPermission(rights.permissions, elementType, perrmissionName, identification) || hasPermission(rights.permissions, elementType, perrmissionName) || // check organizations permissions
+  hasPermission(rights.permissions, "organizations", perrmissionName, organizationId) || hasPermission(rights.permissions, "organizations", perrmissionName);
 };
 
 // src/lib/permissions/isFacilitator.ts
@@ -50,9 +66,34 @@ var isAdminOrFacilitator = (rights, organizationId) => {
   return isAdmin(rights, organizationId) || isFacilitator(rights, organizationId);
 };
 
-// src/lib/permissions/isViewer.ts
-var isViewer = (rights, organizationId) => {
-  return rights.roles.includes(`organization:#${organizationId}:viewers`);
+// src/lib/permissions/event/can.ts
+var canCreateEvent = (rights, organizationId) => {
+  return isAdminOrFacilitator(rights, organizationId);
+};
+var canEditEvent = (rights, organizationId, eventId) => {
+  return isAdminOrFacilitator(rights, organizationId);
+};
+var canDeleteEvent = (rights, organizationId, eventId) => {
+  return isAdminOrFacilitator(rights, organizationId);
+};
+
+// src/lib/permissions/groups/can.ts
+var canCreateGroup = (rights, organizationId) => {
+  return isAdmin(rights, organizationId) || hasPermission(rights.permissions, "peoplegroup", "add_peoplegroup") || hasPermission(rights.permissions, "organizations", "add_peoplegroup", organizationId) || hasPermission(rights.permissions, "organizations", "add_peoplegroup");
+};
+var canEditGroup = (rights, organizationId, groupId) => {
+  return isAdmin(rights, organizationId) || hasPermission(rights.permissions, "peoplegroup", "change_peoplegroup", groupId) || hasPermission(rights.permissions, "peoplegroup", "change_peoplegroup") || hasPermission(rights.permissions, "organizations", "change_peoplegroup", organizationId) || hasPermission(rights.permissions, "organizations", "change_peoplegroup");
+};
+
+// src/lib/permissions/instruction/can.ts
+var canCreateInstruction = (rights, organizationId) => {
+  return isAdminOrFacilitator(rights, organizationId);
+};
+var canEditInstruction = (rights, organizationId, instructionId) => {
+  return isAdminOrFacilitator(rights, organizationId);
+};
+var canDeleteInstruction = (rights, organizationId, instructionId) => {
+  return isAdminOrFacilitator(rights, organizationId);
 };
 
 // src/lib/permissions/isUser.ts
@@ -60,20 +101,62 @@ var isUser = (rights, organizationId) => {
   return rights.roles.includes(`organization:#${organizationId}:users`);
 };
 
-// src/lib/permissions/utils.ts
-function hasPermission(permissions, app, permissionName, identification = null) {
-  let perm = `${app}.${permissionName}`;
-  if (identification !== null && identification !== void 0 && identification !== "") {
-    perm += `.${identification}`;
-  }
-  return !!permissions[perm];
-}
+// src/lib/permissions/isViewer.ts
+var isViewer = (rights, organizationId) => {
+  return rights.roles.includes(`organization:#${organizationId}:viewers`);
+};
 
-// src/lib/permissions/can.ts
-var canPermission = (rights, organizationId, elementType, identification = null, perrmissionName) => {
-  return isAdmin(rights, organizationId) || // check objects permissions
-  hasPermission(rights.permissions, elementType, perrmissionName, identification) || hasPermission(rights.permissions, elementType, perrmissionName) || // check organizations permissions
-  hasPermission(rights.permissions, "organizations", perrmissionName, organizationId) || hasPermission(rights.permissions, "organizations", perrmissionName);
+// src/lib/permissions/news/can.ts
+var canCreateNews = (rights, organizationId) => {
+  return isAdminOrFacilitator(rights, organizationId);
+};
+var canEditNews = (rights, organizationId, newsId) => {
+  return isAdminOrFacilitator(rights, organizationId);
+};
+var canDeleteNews = (rights, organizationId, newsId) => {
+  return isAdminOrFacilitator(rights, organizationId);
+};
+
+// src/lib/permissions/projects/can.ts
+var canPermissionProject = (rights, organizationId, projectId = null, perrmissionName) => {
+  return canPermission(rights, organizationId, "projects", projectId, perrmissionName);
+};
+var canCreateProject = (rights, organizationId) => {
+  return canPermissionProject(rights, organizationId, null, "add_project");
+};
+var canEditProject = (rights, organizationId, projectId) => {
+  return canPermissionProject(rights, organizationId, projectId, "change_project");
+};
+var canDeleteProject = (rights, organizationId, projectId) => {
+  return canPermissionProject(rights, organizationId, projectId, "delete_project");
+};
+var canCreateReview = (rights, organizationId, projectId) => {
+  return canPermissionProject(rights, organizationId, projectId, "add_review");
+};
+var canEditReview = (rights, organizationId, projectId) => {
+  return canPermissionProject(rights, organizationId, projectId, "change_review");
+};
+var canDeleteReview = (rights, organizationId, projectId) => {
+  return canPermissionProject(rights, organizationId, projectId, "delete_review");
+};
+var canCreateComment = (rights, organizationId, projectId) => {
+  return canPermissionProject(rights, organizationId, projectId, "delete_comment");
+};
+var canEditComment = (rights, organizationId, projectId) => {
+  return canPermissionProject(rights, organizationId, projectId, "change_comment");
+};
+var canDeleteComment = (rights, organizationId, projectId) => {
+  return canPermissionProject(rights, organizationId, projectId, "delete_comment");
+};
+
+// src/lib/permissions/projects/isOwner.ts
+var isOwner = (rights, organizationId, projectId) => {
+  return hasPermission(rights.permissions, "projects", "delete_project", projectId) || hasPermission(rights.permissions, "organizations", "delete_project", organizationId) || hasPermission(rights.permissions, "projects", "delete_project");
+};
+
+// src/lib/permissions/projects/isMember.ts
+var isMember = (rights, organizationId, projectId) => {
+  return isOwner(rights, organizationId, projectId) || isViewer(rights, organizationId) || isFacilitator(rights, organizationId);
 };
 
 // src/lib/permissions/rights.ts
@@ -89,16 +172,174 @@ var userRights = (user) => {
   };
 };
 
-// src/lib/tiptap/options.ts
-import TableHeader from "@tiptap/extension-table-header";
-import TextStyle from "@tiptap/extension-text-style";
-import TextAlign from "@tiptap/extension-text-align";
-import Underline from "@tiptap/extension-underline";
-import TableRow from "@tiptap/extension-table-row";
-import StarterKit from "@tiptap/starter-kit";
-import Table from "@tiptap/extension-table";
-import Color from "@tiptap/extension-color";
-import Link from "@tiptap/extension-link";
+// src/lib/permissions/user/can.ts
+var canEditUser = (rights, organizationId, userId) => {
+  return isAdmin(rights, organizationId);
+};
+
+// src/lib/tiptap/extensions/CodeBlock.ts
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import { mergeAttributes } from "@tiptap/core";
+var DEFAULT_LANGUAGE = "plaintext";
+var DEFAULT_THEME = "dark";
+var DEFAULT_TAB = 2;
+var getClassValue = (element, classPrefix) => {
+  const classNames = element.getAttribute("class")?.split(/\s+/).filter(Boolean) ?? [];
+  return classNames.find((c) => c.startsWith(classPrefix))?.slice(classPrefix.length) || "";
+};
+var CodeBlock = CodeBlockLowlight.extend({
+  name: "code-block",
+  addOptions() {
+    return {
+      ...this.parent?.(),
+      themeClassPrefix: "theme-",
+      tabClassPrefix: "tab-",
+      languageClassPrefix: "language-",
+      defaultTheme: DEFAULT_THEME,
+      defaultTab: DEFAULT_TAB
+    };
+  },
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      language: {
+        default: null,
+        parseHTML: (element) => {
+          const { languageClassPrefix } = this.options;
+          return getClassValue(element, languageClassPrefix) || DEFAULT_LANGUAGE;
+        },
+        rendered: false
+      },
+      theme: {
+        default: null,
+        parseHTML: (element) => {
+          const { themeClassPrefix } = this.options;
+          return getClassValue(element, themeClassPrefix) || DEFAULT_THEME;
+        },
+        rendered: false
+      },
+      tab: {
+        default: null,
+        parseHTML: (element) => {
+          const { tabClassPrefix } = this.options;
+          return getClassValue(element, tabClassPrefix) || DEFAULT_TAB.toString();
+        },
+        rendered: false
+      }
+    };
+  },
+  parseHTML() {
+    return [
+      {
+        tag: "pre.lpi-code-block",
+        preserveWhitespace: "full"
+      }
+    ];
+  },
+  renderHTML({ node, HTMLAttributes }) {
+    const langClass = `${this.options.languageClassPrefix}${node.attrs.language || DEFAULT_LANGUAGE}`;
+    const themeClass = `${this.options.themeClassPrefix}${node.attrs.theme || DEFAULT_THEME}`;
+    const tabClass = `${this.options.tabClassPrefix}${node.attrs.tab || DEFAULT_TAB}`;
+    return [
+      "pre",
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
+        class: `lpi-code-block ${themeClass} ${tabClass} ${langClass}`
+      }),
+      [
+        "code",
+        {
+          class: langClass,
+          spellcheck: "false"
+        },
+        0
+      ]
+    ];
+  }
+});
+
+// src/lib/tiptap/extensions/CustomImage.ts
+import { mergeAttributes as mergeAttributes2 } from "@tiptap/core";
+import Image from "@tiptap/extension-image";
+var CustomImage = Image.extend({
+  addAttributes() {
+    return {
+      ...Image?.config?.addAttributes?.call(this) || {},
+      size: {
+        default: null,
+        rendered: false
+      }
+    };
+  },
+  addOptions() {
+    return {
+      ...Image.options,
+      inline: true,
+      HTMLAttributes: {},
+      sizes: ["small", "medium", "large", "full", "custom", "original"],
+      allowBase64: false
+    };
+  },
+  inline() {
+    return this.options.inline;
+  },
+  group() {
+    return this.options.inline ? "inline" : "block";
+  },
+  draggable: true,
+  addCommands() {
+    return {
+      // This is unchanged from the original
+      // Image setImage function
+      // However, if I extended addComands in
+      // the same way as addAttributes `this`
+      // seemed to lose context, so I've just
+      // copied it in here directly
+      setImage: (options) => ({ tr, dispatch }) => {
+        if (!options["size"]) {
+          options = {
+            ...options,
+            size: "original"
+          };
+        }
+        const { selection } = tr;
+        const node = this.type.create(options);
+        if (dispatch) {
+          tr.replaceRangeWith(selection.from, selection.to, node);
+        }
+        return true;
+      }
+    };
+  },
+  renderHTML({ node, HTMLAttributes }) {
+    const size = node.attrs.size;
+    HTMLAttributes.class = " custom-image-" + size;
+    return ["img", mergeAttributes2(this.options.HTMLAttributes, HTMLAttributes)];
+  },
+  parseHTML() {
+    const getAttrs = (dom) => {
+      let size = "original";
+      const sizes = this.options.sizes;
+      sizes.forEach((s) => {
+        const hasSize = dom.classList.contains("custom-image-" + s);
+        if (hasSize) {
+          size = s;
+        }
+      });
+      return {
+        src: dom.getAttribute("src"),
+        title: dom.getAttribute("title"),
+        alt: dom.getAttribute("alt"),
+        size
+      };
+    };
+    return [
+      {
+        tag: "img[src]",
+        getAttrs
+      }
+    ];
+  }
+});
 
 // src/lib/tiptap/extensions/CustomTableCell.ts
 import TableCell from "@tiptap/extension-table-cell";
@@ -124,7 +365,7 @@ var CustomTableCell = TableCell.extend({
 });
 
 // src/lib/tiptap/extensions/ExternalVideo.ts
-import { Node, mergeAttributes } from "@tiptap/core";
+import { Node, mergeAttributes as mergeAttributes3 } from "@tiptap/core";
 var getFormatedVideoSrc = (newVideoId) => {
   let resolvedid = "";
   let link = "";
@@ -274,7 +515,7 @@ var ExternalVideo = Node.create({
         {
           class: "custom-video-wrapper custom-video-wrapper-" + size + " custom-video-wrapper-" + align
         },
-        ["iframe", mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)]
+        ["iframe", mergeAttributes3(this.options.HTMLAttributes, HTMLAttributes)]
       ]
     ];
   },
@@ -309,175 +550,20 @@ var ExternalVideo = Node.create({
   }
 });
 
-// src/lib/tiptap/extensions/CustomImage.ts
-import { mergeAttributes as mergeAttributes2 } from "@tiptap/core";
-import Image from "@tiptap/extension-image";
-var CustomImage = Image.extend({
-  addAttributes() {
-    return {
-      ...Image?.config?.addAttributes?.call(this) || {},
-      size: {
-        default: null,
-        rendered: false
-      }
-    };
-  },
-  addOptions() {
-    return {
-      ...Image.options,
-      inline: true,
-      HTMLAttributes: {},
-      sizes: ["small", "medium", "large", "full", "custom", "original"],
-      allowBase64: false
-    };
-  },
-  inline() {
-    return this.options.inline;
-  },
-  group() {
-    return this.options.inline ? "inline" : "block";
-  },
-  draggable: true,
-  addCommands() {
-    return {
-      // This is unchanged from the original
-      // Image setImage function
-      // However, if I extended addComands in
-      // the same way as addAttributes `this`
-      // seemed to lose context, so I've just
-      // copied it in here directly
-      setImage: (options) => ({ tr, dispatch }) => {
-        if (!options["size"]) {
-          options = {
-            ...options,
-            size: "original"
-          };
-        }
-        const { selection } = tr;
-        const node = this.type.create(options);
-        if (dispatch) {
-          tr.replaceRangeWith(selection.from, selection.to, node);
-        }
-        return true;
-      }
-    };
-  },
-  renderHTML({ node, HTMLAttributes }) {
-    const size = node.attrs.size;
-    HTMLAttributes.class = " custom-image-" + size;
-    return ["img", mergeAttributes2(this.options.HTMLAttributes, HTMLAttributes)];
-  },
-  parseHTML() {
-    const getAttrs = (dom) => {
-      let size = "original";
-      const sizes = this.options.sizes;
-      sizes.forEach((s) => {
-        const hasSize = dom.classList.contains("custom-image-" + s);
-        if (hasSize) {
-          size = s;
-        }
-      });
-      return {
-        src: dom.getAttribute("src"),
-        title: dom.getAttribute("title"),
-        alt: dom.getAttribute("alt"),
-        size
-      };
-    };
-    return [
-      {
-        tag: "img[src]",
-        getAttrs
-      }
-    ];
-  }
-});
-
-// src/lib/tiptap/extensions/CodeBlock.ts
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
-import { mergeAttributes as mergeAttributes3 } from "@tiptap/core";
-var DEFAULT_LANGUAGE = "plaintext";
-var DEFAULT_THEME = "dark";
-var DEFAULT_TAB = 2;
-var getClassValue = (element, classPrefix) => {
-  const classNames = element.getAttribute("class")?.split(/\s+/).filter(Boolean) ?? [];
-  return classNames.find((c) => c.startsWith(classPrefix))?.slice(classPrefix.length) || "";
-};
-var CodeBlock = CodeBlockLowlight.extend({
-  name: "code-block",
-  addOptions() {
-    return {
-      ...this.parent?.(),
-      themeClassPrefix: "theme-",
-      tabClassPrefix: "tab-",
-      languageClassPrefix: "language-",
-      defaultTheme: DEFAULT_THEME,
-      defaultTab: DEFAULT_TAB
-    };
-  },
-  addAttributes() {
-    return {
-      ...this.parent?.(),
-      language: {
-        default: null,
-        parseHTML: (element) => {
-          const { languageClassPrefix } = this.options;
-          return getClassValue(element, languageClassPrefix) || DEFAULT_LANGUAGE;
-        },
-        rendered: false
-      },
-      theme: {
-        default: null,
-        parseHTML: (element) => {
-          const { themeClassPrefix } = this.options;
-          return getClassValue(element, themeClassPrefix) || DEFAULT_THEME;
-        },
-        rendered: false
-      },
-      tab: {
-        default: null,
-        parseHTML: (element) => {
-          const { tabClassPrefix } = this.options;
-          return getClassValue(element, tabClassPrefix) || DEFAULT_TAB.toString();
-        },
-        rendered: false
-      }
-    };
-  },
-  parseHTML() {
-    return [
-      {
-        tag: "pre.lpi-code-block",
-        preserveWhitespace: "full"
-      }
-    ];
-  },
-  renderHTML({ node, HTMLAttributes }) {
-    const langClass = `${this.options.languageClassPrefix}${node.attrs.language || DEFAULT_LANGUAGE}`;
-    const themeClass = `${this.options.themeClassPrefix}${node.attrs.theme || DEFAULT_THEME}`;
-    const tabClass = `${this.options.tabClassPrefix}${node.attrs.tab || DEFAULT_TAB}`;
-    return [
-      "pre",
-      mergeAttributes3(this.options.HTMLAttributes, HTMLAttributes, {
-        class: `lpi-code-block ${themeClass} ${tabClass} ${langClass}`
-      }),
-      [
-        "code",
-        {
-          class: langClass,
-          spellcheck: "false"
-        },
-        0
-      ]
-    ];
-  }
-});
-
 // src/lib/tiptap/lowlight.ts
 import { common, createLowlight } from "lowlight";
 var lowlight = createLowlight(common);
 
 // src/lib/tiptap/options.ts
+import TableHeader from "@tiptap/extension-table-header";
+import TextStyle from "@tiptap/extension-text-style";
+import TextAlign from "@tiptap/extension-text-align";
+import Underline from "@tiptap/extension-underline";
+import TableRow from "@tiptap/extension-table-row";
+import StarterKit from "@tiptap/starter-kit";
+import Table from "@tiptap/extension-table";
+import Color from "@tiptap/extension-color";
+import Link from "@tiptap/extension-link";
 var getExtensions = (options = {}) => [
   // StarterKit.configure no return a type satisfied AnyExtension, why ?
   StarterKit.configure({ ...options, codeBlock: false }),
@@ -504,94 +590,6 @@ var getExtensions = (options = {}) => [
     lowlight
   })
 ];
-
-// src/lib/permissions/projects/isOwner.ts
-var isOwner = (rights, organizationId, projectId) => {
-  return hasPermission(rights.permissions, "projects", "delete_project", projectId) || hasPermission(rights.permissions, "organizations", "delete_project", organizationId) || hasPermission(rights.permissions, "projects", "delete_project");
-};
-
-// src/lib/permissions/projects/isMember.ts
-var isMember = (rights, organizationId, projectId) => {
-  return isOwner(rights, organizationId, projectId) || isViewer(rights, organizationId) || isFacilitator(rights, organizationId);
-};
-
-// src/lib/permissions/projects/can.ts
-var canPermissionProject = (rights, organizationId, projectId = null, perrmissionName) => {
-  return canPermission(rights, organizationId, "projects", projectId, perrmissionName);
-};
-var canCreateProject = (rights, organizationId) => {
-  return canPermissionProject(rights, organizationId, null, "add_project");
-};
-var canEditProject = (rights, organizationId, projectId) => {
-  return canPermissionProject(rights, organizationId, projectId, "change_project");
-};
-var canDeleteProject = (rights, organizationId, projectId) => {
-  return canPermissionProject(rights, organizationId, projectId, "delete_project");
-};
-var canCreateReview = (rights, organizationId, projectId) => {
-  return canPermissionProject(rights, organizationId, projectId, "add_review");
-};
-var canEditReview = (rights, organizationId, projectId) => {
-  return canPermissionProject(rights, organizationId, projectId, "change_review");
-};
-var canDeleteReview = (rights, organizationId, projectId) => {
-  return canPermissionProject(rights, organizationId, projectId, "delete_review");
-};
-var canCreateComment = (rights, organizationId, projectId) => {
-  return canPermissionProject(rights, organizationId, projectId, "delete_comment");
-};
-var canEditComment = (rights, organizationId, projectId) => {
-  return canPermissionProject(rights, organizationId, projectId, "change_comment");
-};
-var canDeleteComment = (rights, organizationId, projectId) => {
-  return canPermissionProject(rights, organizationId, projectId, "delete_comment");
-};
-
-// src/lib/permissions/groups/can.ts
-var canCreateGroup = (rights, organizationId) => {
-  return isAdmin(rights, organizationId) || hasPermission(rights.permissions, "peoplegroup", "add_peoplegroup") || hasPermission(rights.permissions, "organizations", "add_peoplegroup", organizationId) || hasPermission(rights.permissions, "organizations", "add_peoplegroup");
-};
-var canEditGroup = (rights, organizationId, groupId) => {
-  return isAdmin(rights, organizationId) || hasPermission(rights.permissions, "peoplegroup", "change_peoplegroup", groupId) || hasPermission(rights.permissions, "peoplegroup", "change_peoplegroup") || hasPermission(rights.permissions, "organizations", "change_peoplegroup", organizationId) || hasPermission(rights.permissions, "organizations", "change_peoplegroup");
-};
-
-// src/lib/permissions/user/can.ts
-var canEditUser = (rights, organizationId, userId) => {
-  return isAdmin(rights, organizationId);
-};
-
-// src/lib/permissions/news/can.ts
-var canCreateNews = (rights, organizationId) => {
-  return isAdminOrFacilitator(rights, organizationId);
-};
-var canEditNews = (rights, organizationId, newsId) => {
-  return isAdminOrFacilitator(rights, organizationId);
-};
-var canDeleteNews = (rights, organizationId, newsId) => {
-  return isAdminOrFacilitator(rights, organizationId);
-};
-
-// src/lib/permissions/event/can.ts
-var canCreateEvent = (rights, organizationId) => {
-  return isAdminOrFacilitator(rights, organizationId);
-};
-var canEditEvent = (rights, organizationId, eventId) => {
-  return isAdminOrFacilitator(rights, organizationId);
-};
-var canDeleteEvent = (rights, organizationId, eventId) => {
-  return isAdminOrFacilitator(rights, organizationId);
-};
-
-// src/lib/permissions/instruction/can.ts
-var canCreateInstruction = (rights, organizationId) => {
-  return isAdminOrFacilitator(rights, organizationId);
-};
-var canEditInstruction = (rights, organizationId, instructionId) => {
-  return isAdminOrFacilitator(rights, organizationId);
-};
-var canDeleteInstruction = (rights, organizationId, instructionId) => {
-  return isAdminOrFacilitator(rights, organizationId);
-};
 export {
   CodeBlock,
   CustomImage,

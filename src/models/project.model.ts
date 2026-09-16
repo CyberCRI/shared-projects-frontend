@@ -10,6 +10,7 @@ import type { Translated } from '../interfaces/translated'
 import type { TagModel, TranslatedTag } from './tag.model'
 import type { LocationOutput } from './location.model'
 import type { ImageModel } from './image.model'
+import { FollowedModel } from './follow.model'
 import type BaseModel from './base.model'
 
 /**
@@ -31,10 +32,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
   life_status: ProjectStatusType
   tags: TagModel[]
   sdgs: number[]
-  is_followed: {
-    is_followed: boolean
-    follow_id: number
-  }
+  is_followed: FollowedModel
   slug: string
   updated_at: string
   created_at: string
@@ -78,7 +76,7 @@ export type LinkedProject = {
   target?: ProjectModel
 }
 
-export type TranslatedLinkedProject = LinkedProject & {
+export type TranslatedLinkedProject = Omit<LinkedProject, 'project' | 'target'> & {
   project: TranslatedProject
   target?: TranslatedProject
 }

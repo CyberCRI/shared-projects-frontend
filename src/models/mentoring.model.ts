@@ -1,6 +1,6 @@
 import type { OrganizationModel } from './organization.model'
-import type { SkillModel } from './skill.model'
 import type { UserModel } from './user.model'
+import { SkillModel } from './skill.model'
 import type BaseModel from './base.model'
 
 export interface Mentoring extends BaseModel {

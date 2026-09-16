@@ -116,31 +116,18 @@ async function deleteProjectAttachmentFile(projectId, fileId) {
 function getUserAttachmentFile(userId, options) {
   return clientAPI(`user/${userId}/file/`, options);
 }
-async function postUserAttachmentFile(userId, data) {
-  const body = new FormData();
-  body.set("description", data.description);
-  body.set("title", data.title);
-  if (data.file) {
-    body.set("file", data.file, data.file.name);
-    body.set("mime", data.file.type || "file");
-  }
+async function postUserAttachmentFile(userId, body) {
   return await clientAPI(`user/${userId}/file/`, { body, method: "POST" });
 }
-async function patchUserAttachmentFile(userId, fileId, data) {
-  const body = new FormData();
-  if (data.description) {
-    body.set("description", data.description);
-  }
-  if (data.title) {
-    body.set("title", data.title);
-  }
+async function patchUserAttachmentFile(userId, fileId, body, config = {}) {
   return await clientAPI(`user/${userId}/file/${fileId}/`, {
+    ...config,
     body,
     method: "PATCH"
   });
 }
-async function deleteUserAttachmentFile(userId, fileId) {
-  await clientAPI(`user/${userId}/file/${fileId}/`, { method: "DELETE" });
+async function deleteUserAttachmentFile(userId, fileId, config = {}) {
+  await clientAPI(`user/${userId}/file/${fileId}/`, { ...config, method: "DELETE" });
 }
 
 // src/apis/attachment-links.service.ts
@@ -258,7 +245,7 @@ async function postCommentImage(projectId, body, config = {}) {
 }
 
 // src/apis/crisalid.service.ts
-async function getOwnResearchDocument(organisationCode, researchId, ResearcherdocumentType, config = {}) {
+async function getUserResearchDocument(organisationCode, researchId, ResearcherdocumentType, config = {}) {
   return await clientAPI(
     `crisalid/organization/${organisationCode}/researcher/${researchId}/${ResearcherdocumentType}/`,
     config
@@ -270,7 +257,7 @@ async function getGroupResearchDocument(organisationCode, groupId, Researcherdoc
     config
   );
 }
-async function getOwnResearchDocumentAnalytics(organisationCode, researchId, ResearcherdocumentType, config = {}) {
+async function getUserResearchDocumentAnalytics(organisationCode, researchId, ResearcherdocumentType, config = {}) {
   return await clientAPI(
     `crisalid/organization/${organisationCode}/researcher/${researchId}/${ResearcherdocumentType}/analytics/`,
     config
@@ -714,14 +701,6 @@ async function respondMentorship(organizationCode, mentorshipId, payload) {
   });
 }
 
-// src/apis/newsfeed.service.ts
-async function getNewsfeed(organizationCode, config = {}) {
-  return await clientAPI(
-    `organization/${organizationCode}/newsfeed/`,
-    config
-  );
-}
-
 // src/apis/news.service.ts
 async function getAllNews(organizationCode, config = {}) {
   return await clientAPI(
@@ -786,22 +765,36 @@ async function deleteNewsHeader(organizationCode, newsId, imageId, config = {}) 
   });
 }
 
-// src/apis/notifications.service.ts
-async function getNotifications(params, organisationCode) {
+// src/apis/newsfeed.service.ts
+async function getNewsfeed(organizationCode, config = {}) {
   return await clientAPI(
-    `organization/${organisationCode}/notification/`,
-    { params }
+    `organization/${organizationCode}/newsfeed/`,
+    config
   );
 }
-async function getUserNotificationSettings(userId, config = {}) {
-  return await clientAPI(`notifications-setting/${userId}/`, config);
+
+// src/apis/notifications.service.ts
+async function getNotifications(organisationCode, userId, config = {}) {
+  return await clientAPI(
+    `organization/${organisationCode}/user/${userId}/notification/`,
+    config
+  );
 }
-async function patchUserNotificationSettings(userId, body, config = {}) {
-  return await clientAPI(`notifications-setting/${userId}/`, {
-    ...config,
-    body,
-    method: "PATCH"
-  });
+async function getUserNotificationSettings(organisationCode, userId, config = {}) {
+  return await clientAPI(
+    `organization/${organisationCode}/user/${userId}/notifications-setting/`,
+    config
+  );
+}
+async function patchUserNotificationSettings(organisationCode, userId, body, config = {}) {
+  return await clientAPI(
+    `organization/${organisationCode}/user/${userId}/notifications-setting/`,
+    {
+      ...config,
+      body,
+      method: "PATCH"
+    }
+  );
 }
 
 // src/apis/organization-files.service.ts
@@ -1115,6 +1108,86 @@ async function postProjectMessageImage(projectId, body, config = {}) {
   });
 }
 
+// src/apis/project-tabs.service.ts
+async function getAllProjectTab(projectId, config = {}) {
+  return await clientAPI(`project/${projectId}/tab/`, config);
+}
+async function getProjectTab(projectId, projectTabId, config = {}) {
+  return await clientAPI(`project/${projectId}/tab/${projectTabId}/`, config);
+}
+async function createProjectTab(projectId, body, config = {}) {
+  return await clientAPI(`project/${projectId}/tab/`, {
+    method: "POST",
+    body,
+    ...config
+  });
+}
+async function updateProjectTab(projectId, projectTabId, body, config = {}) {
+  return await clientAPI(`project/${projectId}/tab/${projectTabId}/`, {
+    method: "PATCH",
+    body,
+    ...config
+  });
+}
+async function deleteProjectTab(projectId, projectTabId, config = {}) {
+  await clientAPI(`project/${projectId}/tab/${projectTabId}/`, {
+    method: "DELETE",
+    ...config
+  });
+}
+async function getAllProjectTabItem(projectId, projectTabId, config = {}) {
+  return await clientAPI(
+    `project/${projectId}/tab/${projectTabId}/item/`,
+    config
+  );
+}
+async function getProjectTabItem(projectId, projectTabId, projectTabItemId, config = {}) {
+  return await clientAPI(
+    `project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`,
+    config
+  );
+}
+async function createProjectTabItem(projectId, projectTabId, body, config = {}) {
+  return await clientAPI(`project/${projectId}/tab/${projectTabId}/item/`, {
+    method: "POST",
+    body,
+    ...config
+  });
+}
+async function updateProjectTabItem(projectId, projectTabId, projectTabItemId, body, config = {}) {
+  return await clientAPI(
+    `project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`,
+    {
+      method: "PATCH",
+      body,
+      ...config
+    }
+  );
+}
+async function deleteProjectTabItem(projectId, projectTabId, projectTabItemId, config = {}) {
+  await clientAPI(`project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`, {
+    method: "DELETE",
+    ...config
+  });
+}
+async function createProjectTabImage(projectId, body, config = {}) {
+  return await clientAPI(`project/${projectId}/tab-image/`, {
+    method: "POST",
+    body,
+    ...config
+  });
+}
+async function createProjectTabItemImage(projectId, projectTabId, body, config = {}) {
+  return await clientAPI(
+    `project/${projectId}/tab/${projectTabId}/item-image/`,
+    {
+      method: "POST",
+      body,
+      ...config
+    }
+  );
+}
+
 // src/apis/projects.service.ts
 async function getAllProjects(config = {}) {
   return await clientAPI(`project/`, config);
@@ -1295,6 +1368,31 @@ function searchGroups(search, config = {}) {
   });
 }
 
+// src/apis/skill.service.ts
+async function getUserSkills(userId, options = {}) {
+  return await clientAPI(`user/${userId}/skill/`, options);
+}
+async function getUserSkill(userId, skillId, options = {}) {
+  return await clientAPI(`user/${userId}/skill/${skillId}/`, options);
+}
+async function postUserSkill(userId, body, config = {}) {
+  return await clientAPI(`user/${userId}/skill/`, {
+    ...config,
+    body,
+    method: "POST"
+  });
+}
+async function patchUserSkill(userId, skillId, body, config = {}) {
+  return await clientAPI(`user/${userId}/skill/${skillId}/`, {
+    ...config,
+    body,
+    method: "PATCH"
+  });
+}
+async function deleteUserSkill(userId, skillId, config = {}) {
+  await clientAPI(`user/${userId}/skill/${skillId}/`, { ...config, method: "DELETE" });
+}
+
 // src/apis/stats.service.ts
 async function getStats(orgaizationCode, config = {
   query: { publication_status: "all" }
@@ -1447,23 +1545,12 @@ function patchTemplate(organizationCode, templateId, body, config = {}) {
   });
 }
 
-// src/apis/utils.service.ts
-function _adaptParamsToGetQuery(params) {
-  const query = {};
-  Object.entries(params || {}).forEach(([key, value]) => {
-    query[key] = Array.isArray(value) ? value.join(",") : value.toString();
-  });
-  return {
-    params: query
-  };
-}
-
-// src/apis/people.service.ts
+// src/apis/user.service.ts
 async function getUser(userId, config = {}) {
   return await clientAPI(`user/${userId}/`, config);
 }
 async function postUser(organizationCode, body, config = {}) {
-  return await clientAPI(
+  await clientAPI(
     `user/`,
     merge(
       {
@@ -1493,19 +1580,18 @@ async function postUserWithInvitation(organizationCode, inviteToken, body, confi
   );
   return await clientAPI(`user/`, options);
 }
-async function searchPeopleAdmin(organizationId, config) {
+async function searchUserAdmin(organizationId, config = {}) {
   const newConfig = {
-    ...config,
+    ...config || {},
     query: {
-      ...config.query,
+      ...config?.query || {},
       current_org_pk: organizationId
     }
   };
   return await clientAPI("user/admin-list/", newConfig);
 }
-async function searchPeopleByExactMail(email, params, config = {}) {
-  const adaptedParams = params ? _adaptParamsToGetQuery(params) : {};
-  return await clientAPI(`user/get-by-email/${email}/`, { ...config, ...adaptedParams });
+async function searchUserByExactMail(email, config = {}) {
+  return await clientAPI(`user/get-by-email/${encodeURIComponent(email)}/`, config);
 }
 async function patchUser(userId, body, config = {}) {
   return await clientAPI(`user/${userId}/`, { ...config, body, method: "PATCH" });
@@ -1530,29 +1616,22 @@ async function postUserPicture(userId, body, config = {}) {
 async function deleteUserPicture(id, imageId, config = {}) {
   await clientAPI(`user/${id}/profile-picture/${imageId}/`, { ...config, method: "DELETE" });
 }
+async function getUserPrivacy(userId, config = {}) {
+  return await clientAPI(`privacy-settings/${userId}/`, config);
+}
+async function putUserPrivacy(userId, body, config = {}) {
+  return await clientAPI(`privacy-settings/${userId}/`, {
+    ...config,
+    body,
+    method: "PUT"
+  });
+}
 async function patchUserPrivacy(userId, body, config = {}) {
   return await clientAPI(`privacy-settings/${userId}/`, {
     ...config,
     body,
     method: "PATCH"
   });
-}
-async function postUserSkill(userId, body, config = {}) {
-  return await clientAPI(`user/${userId}/skill/`, {
-    ...config,
-    body,
-    method: "POST"
-  });
-}
-async function patchUserSkill(userId, skillId, body, config = {}) {
-  return await clientAPI(`user/${userId}/skill/${skillId}/`, {
-    ...config,
-    body,
-    method: "PATCH"
-  });
-}
-async function deleteUserSkill(userId, skillId, config = {}) {
-  await clientAPI(`user/${userId}/skill/${skillId}/`, { ...config, method: "DELETE" });
 }
 async function resetUserPassword(organizationCode, userId, config = {}) {
   return await clientAPI(
@@ -1573,99 +1652,40 @@ async function removeUserCookie(config = {}) {
     config
   );
 }
-
-// src/apis/skill.service.ts
-async function getSkill(skillId, options = {}) {
-  return await clientAPI(`skill/${skillId}/`, options);
+async function getUserGroups(userId, config = {}) {
+  return await clientAPI(`user/${userId}/groups/`, config);
 }
-async function searchSkill(search, options = {}) {
-  return await clientAPI(`skill/`, {
-    ...options,
-    query: {
-      ...options?.query || {},
-      search
-    }
-  });
+async function getUserProjectsMember(userId, config = {}) {
+  return await clientAPI(`user/${userId}/projects/member/`, config);
 }
-
-// src/apis/project-tabs.service.ts
-async function getAllProjectTab(projectId, config = {}) {
-  return await clientAPI(`project/${projectId}/tab/`, config);
-}
-async function getProjectTab(projectId, projectTabId, config = {}) {
-  return await clientAPI(`project/${projectId}/tab/${projectTabId}/`, config);
-}
-async function createProjectTab(projectId, body, config = {}) {
-  return await clientAPI(`project/${projectId}/tab/`, {
-    method: "POST",
-    body,
-    ...config
-  });
-}
-async function updateProjectTab(projectId, projectTabId, body, config = {}) {
-  return await clientAPI(`project/${projectId}/tab/${projectTabId}/`, {
-    method: "PATCH",
-    body,
-    ...config
-  });
-}
-async function deleteProjectTab(projectId, projectTabId, config = {}) {
-  await clientAPI(`project/${projectId}/tab/${projectTabId}/`, {
-    method: "DELETE",
-    ...config
-  });
-}
-async function getAllProjectTabItem(projectId, projectTabId, config = {}) {
+async function getUserProjectsFollower(userId, config = {}) {
   return await clientAPI(
-    `project/${projectId}/tab/${projectTabId}/item/`,
+    `user/${userId}/projects/follower/`,
     config
   );
 }
-async function getProjectTabItem(projectId, projectTabId, projectTabItemId, config = {}) {
+async function getUserProjectsReviewer(userId, config = {}) {
   return await clientAPI(
-    `project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`,
+    `user/${userId}/projects/reviewer/`,
     config
   );
 }
-async function createProjectTabItem(projectId, projectTabId, body, config = {}) {
-  return await clientAPI(`project/${projectId}/tab/${projectTabId}/item/`, {
-    method: "POST",
-    body,
-    ...config
-  });
-}
-async function updateProjectTabItem(projectId, projectTabId, projectTabItemId, body, config = {}) {
+async function getUserCategoriesFollower(userId, config = {}) {
   return await clientAPI(
-    `project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`,
-    {
-      method: "PATCH",
-      body,
-      ...config
-    }
+    `user/${userId}/categories/follower/`,
+    config
   );
 }
-async function deleteProjectTabItem(projectId, projectTabId, projectTabItemId, config = {}) {
-  await clientAPI(`project/${projectId}/tab/${projectTabId}/item/${projectTabItemId}/`, {
-    method: "DELETE",
-    ...config
+
+// src/apis/utils.service.ts
+function _adaptParamsToGetQuery(params) {
+  const query = {};
+  Object.entries(params || {}).forEach(([key, value]) => {
+    query[key] = Array.isArray(value) ? value.join(",") : value.toString();
   });
-}
-async function createProjectTabImage(projectId, body, config = {}) {
-  return await clientAPI(`project/${projectId}/tab-image/`, {
-    method: "POST",
-    body,
-    ...config
-  });
-}
-async function createProjectTabItemImage(projectId, projectTabId, body, config = {}) {
-  return await clientAPI(
-    `project/${projectId}/tab/${projectTabId}/item-image/`,
-    {
-      method: "POST",
-      body,
-      ...config
-    }
-  );
+  return {
+    params: query
+  };
 }
 export {
   _adaptParamsToGetQuery,
@@ -1776,8 +1796,6 @@ export {
   getOrganizationFile,
   getOrganizationFiles,
   getOrganizations,
-  getOwnResearchDocument,
-  getOwnResearchDocumentAnalytics,
   getProject,
   getProjectAnnouncements,
   getProjectAttachmentFile,
@@ -1805,7 +1823,6 @@ export {
   getResearchDocumentSimilars,
   getReviews,
   getRootProjectCategory,
-  getSkill,
   getStats,
   getSubGroup,
   getTags,
@@ -1814,9 +1831,19 @@ export {
   getUser,
   getUserAttachmentFile,
   getUserAttachmentLink,
+  getUserCategoriesFollower,
   getUserFollows,
+  getUserGroups,
   getUserMentorship,
   getUserNotificationSettings,
+  getUserPrivacy,
+  getUserProjectsFollower,
+  getUserProjectsMember,
+  getUserProjectsReviewer,
+  getUserResearchDocument,
+  getUserResearchDocumentAnalytics,
+  getUserSkill,
+  getUserSkills,
   getUsersRecommendationsForUser,
   lockUnlockProject,
   offerMentorship,
@@ -1901,6 +1928,7 @@ export {
   putNews,
   putOrgClassification,
   putProjectCategory,
+  putUserPrivacy,
   removeFeaturedProject,
   removeGroupLocation,
   removeGroupMember,
@@ -1913,12 +1941,11 @@ export {
   respondMentorship,
   searchAll,
   searchGroups,
-  searchPeopleAdmin,
-  searchPeopleByExactMail,
   searchProjects,
   searchResearcher,
-  searchSkill,
   searchUser,
+  searchUserAdmin,
+  searchUserByExactMail,
   updateProjectTab,
   updateProjectTabItem
 };
