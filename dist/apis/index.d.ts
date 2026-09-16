@@ -351,16 +351,16 @@ declare function getProjectGroups(projectId: ProjectSlugOrId, config?: ConfigPro
 type Config$5 = ClientAPIOptions<QueryFilterRecomendation>;
 type ConfigPagination = ClientAPIOptions<PaginationQuery>;
 declare function getProjectsRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: ConfigPagination): Promise<PaginationResult<ProjectModel>>;
-declare function getRandomProjectsRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: Config$5): Promise<ProjectModel[]>;
+declare function getRandomProjectsRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: Config$6): Promise<ProjectModel[]>;
 declare function getUsersRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: ConfigPagination): Promise<PaginationResult<UserModel>>;
-declare function getRandomUsersRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: Config$5): Promise<UserModel[]>;
+declare function getRandomUsersRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: Config$6): Promise<UserModel[]>;
 
 declare function reportBug(organizationCode: OrganizationModel['code'], body: ReportForm, config?: ClientAPIOptions): Promise<void>;
 declare function reportAbuse(organizationCode: OrganizationModel['code'], body: ReportForm, config?: ClientAPIOptions): Promise<void>;
 declare function contactUs(organizationCode: OrganizationModel['code'], body: ContactForm, config?: ClientAPIOptions): Promise<void>;
 
-type Config$4 = ClientAPIOptions<QueryFilterReviews>;
-declare function getReviews(projectId: ProjectSlugOrId, config?: Config$4): Promise<PaginationResult<ReviewModel>>;
+type Config$5 = ClientAPIOptions<QueryFilterReviews>;
+declare function getReviews(projectId: ProjectSlugOrId, config?: Config$5): Promise<PaginationResult<ReviewModel>>;
 declare function postReview(projectId: ProjectSlugOrId, body: ReviewForm, config?: ClientAPIOptions): Promise<ReviewModel>;
 declare function patchReview(projectId: ProjectSlugOrId, reviewId: ReviewId, body: ReviewForm, config?: ClientAPIOptions): Promise<ReviewModel>;
 declare function deleteReview(projectId: ProjectSlugOrId, reviewId: ReviewId, config?: ClientAPIOptions): Promise<void>;
@@ -378,10 +378,10 @@ declare function postUserSkill(userId: UserSlugOrId, body: SkillCleanedForm, con
 declare function patchUserSkill(userId: UserSlugOrId, skillId: SkillModel['id'], body: SkillCleanedForm, config?: ClientAPIOptions): Promise<SkillModel>;
 declare function deleteUserSkill(userId: UserSlugOrId, skillId: SkillModel['id'], config?: ClientAPIOptions): Promise<void>;
 
-type Config$1 = ClientAPIOptions<{
+type Config$3 = ClientAPIOptions<{
     publication_status: string;
 }>;
-declare function getStats(orgaizationCode: OrganizationModel['code'], config?: Config$1): Promise<Stats>;
+declare function getStats(orgaizationCode: OrganizationModel['code'], config?: Config$3): Promise<Stats>;
 
 type Config = ClientAPIOptions<PaginationQuery>;
 declare function getAllOrgClassifications(organizationCode: OrganizationModel['code'], config?: Config): Promise<PaginationResult<TagClassificationModel>>;
