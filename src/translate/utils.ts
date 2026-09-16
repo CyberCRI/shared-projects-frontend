@@ -26,15 +26,24 @@ export const getTranslatableFields = <
   fields: Field[],
   locale: Language | null
 ): Record<Field, string> => {
-  // @ts-ignore
-  const res: Record<Field, string> = {}
-
-  for (const field of fields) {
-    res[field] = getTranslatableField(entity, field, locale)
-  }
-  return res
+  return fields.reduce(
+    (prev, field) => {
+      prev[field] = getTranslatableField(entity, field, locale)
+      return prev
+    },
+    {} as Record<Field, string>
+  )
 }
 
+/**
+ * translate a object, entiry the object we need to translate, the fields is array of keys need to translate (need to be exists)
+ *
+ * @constant
+ * @name translateEntity
+ * @kind variable
+ * @type {<ResultT extends { [key: string]: any; : Record<string, any>; }, Fields extends keyof ResultT[""] = keyof ResultT[""], DataT = any>(entity: DataT, fields: Fields[], locale: Language | null) => DataT | (DataT & ResultT)}
+ * @exports
+ */
 export const translateEntity = <
   ResultT extends { $t: Record<string, any>; [key: string]: any },
   Fields extends keyof ResultT['$t'] = keyof ResultT['$t'],
@@ -53,6 +62,15 @@ export const translateEntity = <
   }
 }
 
+/**
+ * translate array of objects
+ *
+ * @constant
+ * @name translateMany
+ * @kind variable
+ * @type {<Result, Data>(func: (data: Data, locale: Language | null) => Result, datas: Data[], locale: Language | null) => Result[]}
+ * @exports
+ */
 export const translateMany = <Result, Data>(
   func: (data: Data, locale: Language | null) => Result,
   datas: Data[],

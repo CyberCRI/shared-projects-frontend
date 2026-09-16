@@ -1,13 +1,18 @@
+import { Language, LocationModel, TranslatedLocation } from '../models'
 import { translateLocation } from './translateLocation'
-import { BaseLocationModel, Language } from '../models'
+import { translateProject } from './translateProject'
 
-export const translateProjectLocation = <Location extends BaseLocationModel>(
+export const translateProjectLocation = <Location extends LocationModel>(
   data: Location,
   locale: Language | null
-) => {
+): TranslatedLocation => {
   if (!data) {
     return data
   }
 
-  return translateLocation(data, locale)
+  const translated = translateLocation<TranslatedLocation>(data, locale)
+  if (data.project) {
+    translated.project = translateProject(data.project, locale)
+  }
+  return translated
 }

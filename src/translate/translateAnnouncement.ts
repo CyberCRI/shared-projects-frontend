@@ -10,9 +10,7 @@ export const translateAnnouncement = (
     return data
   }
 
-  const translated = {
-    ...translateEntity<TranslatedAnnouncement>(data, ['description', 'title'], locale),
-  }
+  const translated = translateEntity<TranslatedAnnouncement>(data, ['description', 'title'], locale)
   if (data.project) {
     translated.project = translateProject(data.project, locale)
   }

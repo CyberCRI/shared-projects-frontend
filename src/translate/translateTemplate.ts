@@ -11,24 +11,22 @@ export const translateTemplate = (
     return data
   }
 
-  const translated = {
-    ...translateEntity<TranslatedTemplate>(
-      data,
-      [
-        'name',
-        'description',
-        'project_title',
-        'project_description',
-        'project_purpose',
-        'blogentry_title',
-        'blogentry_content',
-        'goal_title',
-        'goal_description',
-        'comment_content',
-      ],
-      locale
-    ),
-  }
+  const translated = translateEntity<TranslatedTemplate>(
+    data,
+    [
+      'name',
+      'description',
+      'project_title',
+      'project_description',
+      'project_purpose',
+      'blogentry_title',
+      'blogentry_content',
+      'goal_title',
+      'goal_description',
+      'comment_content',
+    ],
+    locale
+  )
 
   if (data.project_tags) {
     translated.project_tags = translateMany(translateTag, data.project_tags, locale)

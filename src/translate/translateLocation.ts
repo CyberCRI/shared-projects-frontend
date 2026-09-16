@@ -1,6 +1,10 @@
-import { BaseLocationModel, Language, TranslatedLocation } from '../models'
+import { BaseLocationModel, BaseTranslatedLocationModel, Language } from '../models'
+import { translateEntity } from './utils'
 
-export const translateLocation = <Location extends BaseLocationModel>(
+export const translateLocation = <
+  TranslatedLocation extends BaseTranslatedLocationModel = BaseTranslatedLocationModel,
+  Location extends BaseLocationModel = BaseLocationModel,
+>(
   data: Location,
   locale: Language | null
 ): TranslatedLocation => {
@@ -8,7 +12,5 @@ export const translateLocation = <Location extends BaseLocationModel>(
     return data
   }
 
-  const translate = translateLocation(data, locale)
-
-  return translate
+  return translateEntity<TranslatedLocation>(data, ['title', 'description'], locale)
 }

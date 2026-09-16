@@ -9,7 +9,5 @@ export const translateInstruction = (
     return data
   }
 
-  const translated = translateEntity<TranslatedInstruction>(data, ['content', 'title'], locale)
-
-  return translated
+  return translateEntity<TranslatedInstruction>(data, ['content', 'title'], locale)
 }

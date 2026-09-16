@@ -12,9 +12,11 @@ export const translateProject = (
     return data
   }
 
-  const translated = {
-    ...translateEntity<TranslatedProject>(data, ['description', 'title', 'purpose'], locale),
-  }
+  const translated = translateEntity<TranslatedProject>(
+    data,
+    ['description', 'title', 'purpose'],
+    locale
+  )
   if (data.template) {
     translated.template = translateTemplate(data.template, locale)
   }

@@ -9,9 +9,7 @@ export const translateProjectMessage = (
     return data
   }
 
-  const translated = {
-    ...translateEntity<TranslatedProjectMessage>(data, ['content'], locale),
-  }
+  const translated = translateEntity<TranslatedProjectMessage>(data, ['content'], locale)
   if (data.replies) {
     translated.replies = translateMany(translateProjectMessage, data.replies, locale)
   }
