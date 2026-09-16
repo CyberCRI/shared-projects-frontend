@@ -5,19 +5,14 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().absolute().parent.parent / "src"
 
-GENERATES = [
-    "lib", "interfaces", "models", "apis"
-]
+GENERATES = ["lib", "interfaces", "models", "apis", "translate"]
+
 
 def without_base(path: Path, dir: str) -> Path:
     return Path(str(path).removeprefix(str(BASE / dir)))
 
-exports = {
-    ".": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-    }
-}
+
+exports = {".": {"types": "./dist/index.d.ts", "default": "./dist/index.js"}}
 for dir in GENERATES:
     inline = []
     last_folder = None
@@ -39,11 +34,10 @@ for dir in GENERATES:
         last_folder = parents
         inline.append(f"export * from '{name}'")
 
-
     ex = dir
     exports["./" + str(ex)] = {
         "types": f"./dist/{dir}/index.d.ts",
-        "default": f"./dist/{dir}/index.js"
+        "default": f"./dist/{dir}/index.js",
     }
 
     index = Path(BASE / dir / "index.ts")

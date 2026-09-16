@@ -8,6 +8,7 @@ export default defineConfig({
     "src/interfaces/index.ts",
     "src/lib/index.ts",
     "src/models/index.ts",
+    "src/translate/index.ts",
   ],
   external: [
     '@tiptap/core',

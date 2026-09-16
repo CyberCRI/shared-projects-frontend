@@ -44,9 +44,9 @@ export interface ProjectCategoryModel extends BaseModel {
   templates: TemplateModel[]
 }
 
-export type TranslatedProjectCategory = Translated<
-  ProjectCategoryModel,
-  'name' | 'description' | 'hierarchy' | 'templates'
+export type TranslatedProjectCategory = Omit<
+  Translated<ProjectCategoryModel, 'name' | 'description'>,
+  'hierarchy' | 'templates' | 'children' | 'tags'
 > & {
   hierarchy?: TranslatedProjectCategory[]
   children?: TranslatedProjectCategory[]
