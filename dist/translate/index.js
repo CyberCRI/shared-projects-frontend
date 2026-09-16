@@ -27,6 +27,9 @@ var translateEntity = (entity, fields, locale) => {
   };
 };
 var translateMany = (func, datas, locale) => {
+  if (!datas) {
+    return [];
+  }
   return datas.map((data) => func(data, locale));
 };
 

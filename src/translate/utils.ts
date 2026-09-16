@@ -76,5 +76,8 @@ export const translateMany = <Result, Data>(
   datas: Data[],
   locale: Language | null
 ) => {
+  if (!datas) {
+    return []
+  }
   return datas.map((data) => func(data, locale))
 }
