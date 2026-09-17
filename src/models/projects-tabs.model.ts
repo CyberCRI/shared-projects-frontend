@@ -20,6 +20,7 @@ export interface ProjectTab extends BaseModel {
   icon: keyof IconTab | null;
   images?: ImageModel[]
   show_preview: boolean
+  show_tab: boolean
   modules: {
     items: number
   }
@@ -58,6 +59,7 @@ export type QueryFilterProjectTab = Partial<
   {
     type: ProjectTabType
     show_preview: boolean
+    show_tab: boolean
   } & PaginationQuery
 >
 

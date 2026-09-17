@@ -18,6 +18,7 @@ export interface TemplateTab extends BaseModel {
   type: ProjectTab['type']
   icon: ProjectTab['icon']
   show_preview: ProjectTab['show_preview']
+  show_tab: ProjectTab['show_tab']
 
   title_item: ProjectTabItem['title']
   content_item: ProjectTabItem['content']
