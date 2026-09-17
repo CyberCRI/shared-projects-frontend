@@ -5,12 +5,13 @@ import {
   TemplateId,
   TemplateModel,
 } from '../models'
-import { PaginationQuery, PaginationResult } from '../interfaces'
+import { QueryFilterTemplate } from '../models/template.model'
 import { clientAPI, type ClientAPIOptions } from './client'
+import { PaginationResult } from '../interfaces'
 
 export function getTemplates(
   organizationCode: OrganizationModel['code'],
-  config: ClientAPIOptions<PaginationQuery> = {}
+  config: ClientAPIOptions<QueryFilterTemplate> = {}
 ) {
   return clientAPI<PaginationResult<TemplateModel>>(
     `organization/${organizationCode}/template/`,
