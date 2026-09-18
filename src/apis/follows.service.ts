@@ -1,27 +1,30 @@
-import { AddManyFollowedProject, FollowInput, FollowModel, FollowProjectOutput } from '../models'
-import { clientAPI } from './client'
+import { AddManyFollowedProject, FollowInput, FollowModel, OrganizationModel, ProjectSlugOrId, UserSlugOrId } from '../models'
+import { clientAPI, ClientAPIOptions } from './client'
+import { mergeQueryWithOrganization } from './utils.service'
 
-export async function getProjectFollows(body: FollowInput) {
-  return await clientAPI<FollowModel[]>(`project/${body.project_id}/follow/`, {})
+export async function getProjectFollows(organizationCode: OrganizationModel['code'], projectId: ProjectSlugOrId, config: ClientAPIOptions = {}) {
+  return await clientAPI<FollowModel[]>(`project/${projectId}/follow/`, mergeQueryWithOrganization(organizationCode, config))
 }
 
-export async function getUserFollows(body: FollowInput, params: any) {
-  return await clientAPI<FollowModel[]>(`user/${body.follower_id}/follow/`, { params })
+export async function getUserFollows(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, config: ClientAPIOptions = {}) {
+  return await clientAPI<FollowModel[]>(`user/${userId}/follow/`, mergeQueryWithOrganization(organizationCode, config))
 }
 
-export async function postFollow(follow: FollowInput) {
-  return await clientAPI<FollowModel>(`project/${follow.project_id}/follow/`, {
-    body: follow,
+export async function postFollow(organizationCode: OrganizationModel['code'], projectId: ProjectSlugOrId, body: FollowInput, config: ClientAPIOptions = {}) {
+  return await clientAPI<FollowModel>(`project/${projectId}/follow/`, {
+    body,
     method: 'POST',
+    ...mergeQueryWithOrganization(organizationCode, config)
   })
 }
 
-export async function postFollowMany({ id, body }: { id: string; body: AddManyFollowedProject }) {
+export async function postFollowMany(organizationCode: OrganizationModel['code'], { id, body }: { id: string; body: AddManyFollowedProject }) {
   return await clientAPI<FollowModel[]>(`user/${id}/follow/follow-many/`, { body, method: 'POST' })
 }
 
-export async function deleteFollow(follow: FollowInput) {
-  await clientAPI(`project/${follow.project_id}/follow/${follow.follower_id}/`, {
+export async function deleteFollow(organizationCode: OrganizationModel['code'], projectId: ProjectSlugOrId, followerId: number, config: ClientAPIOptions = {}) {
+  await clientAPI(`project/${projectId}/follow/${followerId}/`, {
     method: 'DELETE',
+    ...mergeQueryWithOrganization(organizationCode, config)
   })
 }
