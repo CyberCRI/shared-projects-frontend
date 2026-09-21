@@ -15,16 +15,17 @@ import {
   GroupModel,
 } from '../models'
 import { clientAPI, type ClientAPIOptions } from './client'
-import { _adaptParamsToGetQuery } from './utils.service'
+import { _adaptParamsToGetQuery, mergeQueryWithOrganization } from './utils.service'
 import { PaginationResult } from '../interfaces'
 import { merge } from 'es-toolkit'
 
 // New user service using projects API
 export async function getUser(
+  organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   config: ClientAPIOptions<QueryFilterUser> = {}
 ) {
-  return await clientAPI<UserModel>(`user/${userId}/`, config)
+  return await clientAPI<UserModel>(`user/${userId}/`, mergeQueryWithOrganization(organizationCode, config))
 }
 
 export async function postUser(
@@ -42,7 +43,7 @@ export async function postUser(
           organization: organizationCode,
         },
       },
-      config
+  mergeQueryWithOrganization(organizationCode, config)
     )
   )
 }
@@ -96,73 +97,77 @@ export async function searchUserByExactMail(
 }
 
 export async function patchUser(
+  organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   body: UserPatchModel,
   config: ClientAPIOptions = {}
 ) {
-  return await clientAPI<UserModel>(`user/${userId}/`, { ...config, body, method: 'PATCH' })
+  return await clientAPI<UserModel>(`user/${userId}/`, { ...mergeQueryWithOrganization(organizationCode, config), body, method: 'PATCH' })
 }
 
 export async function patchUserPicture(
+  organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   pictureId: ImageModel['id'],
   body: FormData,
   config: ClientAPIOptions = {}
 ) {
   return await clientAPI<ImageModelCreated>(`user/${userId}/profile-picture/${pictureId}/`, {
-    ...config,
+    ...mergeQueryWithOrganization(organizationCode, config),
     body,
     method: 'PATCH',
   })
 }
 
-export async function deleteUser(userId: UserSlugOrId, config: ClientAPIOptions = {}) {
-  await clientAPI(`user/${userId}/`, { ...config, method: 'DELETE' })
+export async function deleteUser(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, config: ClientAPIOptions = {}) {
+  await clientAPI(`user/${userId}/`, { ...mergeQueryWithOrganization(organizationCode, config), method: 'DELETE' })
 }
 
 export async function postUserPicture(
+  organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   body: FormData,
   config: ClientAPIOptions = {}
 ) {
   return await clientAPI<ImageModelCreated>(`user/${userId}/profile-picture/`, {
-    ...config,
+    ...mergeQueryWithOrganization(organizationCode, config),
     body,
     method: 'POST',
   })
 }
 
 export async function deleteUserPicture(
+  organizationCode: OrganizationModel['code'],
   id: UserSlugOrId,
   imageId: ImageModel['id'],
   config: ClientAPIOptions = {}
 ) {
-  await clientAPI(`user/${id}/profile-picture/${imageId}/`, { ...config, method: 'DELETE' })
+  await clientAPI(`user/${id}/profile-picture/${imageId}/`, { ...mergeQueryWithOrganization(organizationCode, config), method: 'DELETE' })
 }
 
-export async function getUserPrivacy(userId: UserSlugOrId, config: ClientAPIOptions = {}) {
-  return await clientAPI<PrivacySettings>(`privacy-settings/${userId}/`, config)
+export async function getUserPrivacy(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, config: ClientAPIOptions = {}) {
+  return await clientAPI<PrivacySettings>(`privacy-settings/${userId}/`, mergeQueryWithOrganization(organizationCode, config))
 }
 
-export async function putUserPrivacy(
+export async function putUserPrivacy(organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   body: UserPrivacyPatchModel,
   config: ClientAPIOptions = {}
 ) {
   return await clientAPI<PrivacySettings>(`privacy-settings/${userId}/`, {
-    ...config,
+    ...mergeQueryWithOrganization(organizationCode, config),
     body,
     method: 'PUT',
   })
 }
 
-export async function patchUserPrivacy(
+export async function patchUserPrivacy(organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   body: UserPrivacyPatchModel,
   config: ClientAPIOptions = {}
 ) {
   return await clientAPI<PrivacySettings>(`privacy-settings/${userId}/`, {
-    ...config,
+    ...mergeQueryWithOrganization(organizationCode, config),
     body,
     method: 'PATCH',
   })
@@ -193,46 +198,46 @@ export async function removeUserCookie(config: ClientAPIOptions = {}) {
   )
 }
 
-export async function getUserGroups(
+export async function getUserGroups(organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   config: ClientAPIOptions<QueryFilterUser> = {}
 ) {
-  return await clientAPI<PaginationResult<GroupModel>>(`user/${userId}/groups/`, config)
+  return await clientAPI<PaginationResult<GroupModel>>(`user/${userId}/groups/`, mergeQueryWithOrganization(organizationCode, config))
 }
 
-export async function getUserProjectsMember(
+export async function getUserProjectsMember(organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   config: ClientAPIOptions<QueryFilterUser> = {}
 ) {
-  return await clientAPI<PaginationResult<ProjectModel>>(`user/${userId}/projects/member/`, config)
+  return await clientAPI<PaginationResult<ProjectModel>>(`user/${userId}/projects/member/`, mergeQueryWithOrganization(organizationCode, config))
 }
 
-export async function getUserProjectsFollower(
+export async function getUserProjectsFollower(organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   config: ClientAPIOptions<QueryFilterUser> = {}
 ) {
   return await clientAPI<PaginationResult<ProjectModel>>(
     `user/${userId}/projects/follower/`,
-    config
+mergeQueryWithOrganization(organizationCode, config)
   )
 }
 
-export async function getUserProjectsReviewer(
+export async function getUserProjectsReviewer(organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   config: ClientAPIOptions<QueryFilterUser> = {}
 ) {
   return await clientAPI<PaginationResult<ProjectModel>>(
     `user/${userId}/projects/reviewer/`,
-    config
+mergeQueryWithOrganization(organizationCode, config)
   )
 }
 
-export async function getUserCategoriesFollower(
+export async function getUserCategoriesFollower(organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   config: ClientAPIOptions<QueryFilterUser> = {}
 ) {
   return await clientAPI<PaginationResult<ProjectCategoryModel>>(
     `user/${userId}/categories/follower/`,
-    config
+    mergeQueryWithOrganization(organizationCode, config)
   )
 }
