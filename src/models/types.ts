@@ -77,4 +77,6 @@ export type ProjectTabType = 'text' | 'blog' |
   'resources' |
   'blogs' |
   'announcements' |
-  'messages'
+  'messages' |
+  'reviews' |
+  'description'
