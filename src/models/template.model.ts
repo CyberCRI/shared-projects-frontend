@@ -3,6 +3,7 @@ import { ProjectTab, ProjectTabItem } from './projects-tabs.model'
 import type { OrganizationModel } from './organization.model'
 import type { Translated } from '../interfaces/translated'
 import type { TagModel, TranslatedTag } from './tag.model'
+import { Ordering, PaginationQuery } from '../interfaces'
 import type { ImageModel } from './image.model'
 import type { LanguageType } from './types'
 import type BaseModel from './base.model'
@@ -79,3 +80,11 @@ export type TemplateForm = Partial<Omit<TemplateModel, 'tabs'>> & {
   tabs: TemplateTabForm[]
   project_categories_ids: number[]
 }
+
+export type QueryFilterTemplate = Partial<
+  {
+    search: string
+    ordering: Ordering<'updated_at' | 'created_at' | 'title'>
+    categories: ProjectCategoryModel['id'][]
+  } & PaginationQuery
+>
