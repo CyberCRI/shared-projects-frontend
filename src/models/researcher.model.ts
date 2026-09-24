@@ -327,13 +327,6 @@ export type DocumentCrisalidType =
   | 'Presentation'
   | 'UNKNOWN'
 
-export type QueryFilterDocument = Partial<{
-  year: number
-  document_type: DocumentCrisalidType | ''
-  roles: Relators
-  ordering: Ordering<'publication_date'>
-}>
-
 export type HarvesterType =
   | 'orcid'
   | 'idref'
@@ -407,8 +400,6 @@ export type ResearcherLight = Researcher & {
   }
 }
 
-export type ResearcherDocumentType = keyof ResearcherLight['documents']
-
 export type ResearcherDocument = {
   id: number
   title: string
@@ -417,8 +408,12 @@ export type ResearcherDocument = {
   contributors: Researcher[]
   identifiers: ResearcherIdentifier[]
   publication_date: string | null | Date
-  similars: number
+  modules: {
+    similars: number
+  }
 }
+
+export type ResearcherDocumentType = keyof ResearcherLight['documents']
 
 export type TranslatedResearcherDocument = Translated<ResearcherDocument, 'title' | 'description'>
 
@@ -437,3 +432,13 @@ export type QueryFilterResearcher = Partial<
     values: string // TODO: change to string[] (need to update backend)
   } & PaginationQuery
 >
+
+export type DocumentModulesKeys = keyof ResearcherDocument['modules']
+
+export type QueryFilterDocument = Partial<{
+  year: number
+  document_type: DocumentCrisalidType | ''
+  roles: Relators
+  modules: 'none' | DocumentModulesKeys[]
+  ordering: Ordering<'publication_date'>
+}>

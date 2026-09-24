@@ -67,16 +67,18 @@ export type LocationType = 'team' | 'impact' | 'address' | 'news' | 'event'
 
 export type Language = 'en' | 'fr' | 'de' | 'nl' | 'et' | 'ca' | 'es'
 
-export type ProjectTabType = 'text' | 'blog' |
-  'members' |
-  'groups' |
-  'linked_projects' |
-  'locations' |
-  'comments' |
-  'goals' |
-  'resources' |
-  'blogs' |
-  'announcements' |
-  'messages' |
-  'reviews' |
-  'description'
+export type ProjectTabType =
+  | 'text'
+  | 'blog'
+  | 'members'
+  | 'groups'
+  | 'linked_projects'
+  | 'locations'
+  | 'comments'
+  | 'goals'
+  | 'resources'
+  | 'blogs'
+  | 'announcements'
+  | 'messages'
+  | 'reviews'
+  | 'description'
