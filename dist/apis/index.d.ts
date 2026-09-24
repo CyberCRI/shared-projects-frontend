@@ -1,8 +1,9 @@
 import { B as BaseModel, c as Ordering, d as PaginationResult, P as PaginationQuery, f as ImageModelCreated, I as ImageModel, g as ImageOrganizationInput } from '../utils-Def92TDC.js';
-import { a0 as OrganizationModel, by as UserSlugOrId, ao as ProjectSlugOrId, a3 as PeopleGroupIdOrSlug, aO as ResearcherDocumentType, aM as ResearcherDocument, aN as ResearcherDocumentAnalytics, aL as Researcher, aE as QueryFilterResearcher, h as EventInput, j as EventModel, g as EventIdOrSlug, aw as QueryFilterEvent, n as FollowInput, p as FollowModel, A as AddManyFollowedProject, ax as QueryFilterGroup, a4 as PeopleGroupModel, Q as LocationModel, X as NewsModel, ai as ProjectModel, ay as QueryFilterGroupHierarchy, B as BaseLocationModel, y as InstructionInput, z as InstructionModel, x as InstructionId, az as QueryFilterInstruction, O as LocationId, N as LocationGeneral, ag as ProjectLocationForm, aW as SkillModel, V as NewsInput, aA as QueryFilterNews, a2 as OrganizationPatchInput, b5 as TermsAndConditions, a8 as ProjectCategoryCreateInput, aa as ProjectCategoryModel, q as FollowOutput, ac as ProjectCategoryPatchInput, ad as ProjectCategoryPutInput, ar as ProjectTabForm, aq as ProjectTab, aZ as TabSlugOrId, at as ProjectTabItemForm, as as ProjectTabItem, aC as QueryFilterProjectTab, aD as QueryFilterProjectTabItem, aB as QueryFilterProjectSimilars, a as AddManyLinkedProjectInput, J as LinkedProject, ae as ProjectForm, bt as UserModel, aG as QueryFilterSkill, aU as SkillCleanedForm, a_ as TagModel, b1 as TemplateId, b2 as TemplateModel, b0 as TemplateForm, C as LanguageType, ah as ProjectMemberRoleType, aH as QueryFilterUser, a6 as PrivacySettings, bw as UserPatchModel, bx as UserPrivacyPatchModel, aF as QueryFilterResetPassword, aI as QueryFilterUserEmail } from '../instruction.model-Cep24Cil.js';
-import { c as AnnouncementId, A as AnnouncementApplyForm, Q as QueryFilterAnnouncement, e as AnnouncementModel, b as AnnouncementForm, g as AttachmentFileId, h as AttachmentFileInput, i as AttachmentFileModel, k as AttachmentLinkId, l as AttachmentLinkInput, m as AttachmentLinkModel, o as BlogEntryId, t as QueryFilterBlogEntry, p as BlogEntryModel, B as BlogEntryForm, C as CommentModel, u as QueryFilterComments, P as ProjectMessageForm, G as GoalForm, q as GoalModel, N as NewsfeedModel, s as ProjectMessageModel, v as QueryFilterProjectMessage, r as ProjectMessageInputModel, y as ReviewId, w as QueryFilterReviews, z as ReviewModel, R as ReviewForm, T as TagClassificationModel, x as QueryFilterTagClassification } from '../tagclassification.model-DpwNmFRW.js';
+import { a1 as OrganizationModel, bA as UserSlugOrId, ap as ProjectSlugOrId, a4 as PeopleGroupIdOrSlug, aQ as ResearcherDocumentType, aO as ResearcherDocument, aP as ResearcherDocumentAnalytics, aN as Researcher, aF as QueryFilterResearcher, i as EventInput, k as EventModel, h as EventIdOrSlug, ax as QueryFilterEvent, q as FollowModel, o as FollowInput, A as AddManyFollowedProject, ay as QueryFilterGroup, a5 as PeopleGroupModel, R as LocationModel, Y as NewsModel, aj as ProjectModel, az as QueryFilterGroupHierarchy, B as BaseLocationModel, z as InstructionInput, C as InstructionModel, y as InstructionId, aA as QueryFilterInstruction, P as LocationId, O as LocationGeneral, ah as ProjectLocationForm, aY as SkillModel, W as NewsInput, aB as QueryFilterNews, a3 as OrganizationPatchInput, b7 as TermsAndConditions, a9 as ProjectCategoryCreateInput, ab as ProjectCategoryModel, r as FollowOutput, ad as ProjectCategoryPatchInput, ae as ProjectCategoryPutInput, as as ProjectTabForm, ar as ProjectTab, a$ as TabSlugOrId, au as ProjectTabItemForm, at as ProjectTabItem, aD as QueryFilterProjectTab, aE as QueryFilterProjectTabItem, aC as QueryFilterProjectSimilars, a as AddManyLinkedProjectInput, K as LinkedProject, af as ProjectForm, bv as UserModel, aH as QueryFilterSkill, aW as SkillCleanedForm, b0 as TagModel, b3 as TemplateId, b4 as TemplateModel, aI as QueryFilterTemplate, b2 as TemplateForm, J as LanguageType, ai as ProjectMemberRoleType, aJ as QueryFilterUser, a7 as PrivacySettings, by as UserPatchModel, bz as UserPrivacyPatchModel, aG as QueryFilterResetPassword, aK as QueryFilterUserEmail } from '../instruction.model-Cdm_UcJ0.js';
+import { c as AnnouncementId, A as AnnouncementApplyForm, Q as QueryFilterAnnouncement, e as AnnouncementModel, b as AnnouncementForm, g as AttachmentFileId, h as AttachmentFileInput, i as AttachmentFileModel, k as AttachmentLinkId, l as AttachmentLinkInput, m as AttachmentLinkModel, o as BlogEntryId, t as QueryFilterBlogEntry, p as BlogEntryModel, B as BlogEntryForm, C as CommentModel, u as QueryFilterComments, P as ProjectMessageForm, G as GoalForm, q as GoalModel, N as NewsfeedModel, s as ProjectMessageModel, v as QueryFilterProjectMessage, r as ProjectMessageInputModel, y as ReviewId, w as QueryFilterReviews, z as ReviewModel, R as ReviewForm, T as TagClassificationModel, x as QueryFilterTagClassification } from '../tagclassification.model-Cyjz4IxU.js';
+import * as ofetch from 'ofetch';
 import { ResponseType, FetchOptions, $Fetch } from 'ofetch';
-import { b as AttachmentForm, a as AddParentGroupModelInput, G as GroupMember, P as PostGroupData, A as AddGroupMembers, k as PostGroupProjects, R as RemoveGroupMember, I as InvitationModel, g as InvitationModelInput, M as Mentoring, Q as QueryFilterNotification, N as NotificationModel, j as NotificationSettingsModel, i as NotificationSettingsForm, e as GroupModelInput, x as RemoveGroupModelInput, p as ProjectMembersAddInput, q as ProjectMembersDeleteInput, t as QueryFilterProject, u as QueryFilterProjectMembers, l as ProjectMemberModel, v as QueryFilterRecomendation, C as ContactForm, y as ReportForm, S as SearchResultAll, w as QueryFilterSearch, D as SearchResultGroup, E as SearchResultProject, F as SearchResultUser, J as Stats, d as GroupModel } from '../stats.model-BUQw0VyY.js';
+import { b as AttachmentForm, a as AddParentGroupModelInput, G as GroupMember, P as PostGroupData, A as AddGroupMembers, k as PostGroupProjects, R as RemoveGroupMember, I as InvitationModel, g as InvitationModelInput, M as Mentoring, Q as QueryFilterNotification, N as NotificationModel, j as NotificationSettingsModel, i as NotificationSettingsForm, e as GroupModelInput, x as RemoveGroupModelInput, p as ProjectMembersAddInput, q as ProjectMembersDeleteInput, t as QueryFilterProject, u as QueryFilterProjectMembers, l as ProjectMemberModel, v as QueryFilterRecomendation, C as ContactForm, y as ReportForm, S as SearchResultAll, w as QueryFilterSearch, D as SearchResultGroup, E as SearchResultProject, F as SearchResultUser, J as Stats, d as GroupModel } from '../stats.model-DqAJ2ZBC.js';
 
 interface AccessRequestModel extends BaseModel {
     id?: number;
@@ -132,14 +133,14 @@ declare function putEvent(organizationCode: OrganizationModel['code'], idOrSlug:
 declare function patchEvent(organizationCode: OrganizationModel['code'], idOrSlug: EventIdOrSlug, body: EventInput): Promise<EventModel>;
 declare function deleteEvent(organizationCode: OrganizationModel['code'], idOrSlug: EventIdOrSlug): Promise<void>;
 
-declare function getProjectFollows(body: FollowInput): Promise<FollowModel[]>;
-declare function getUserFollows(body: FollowInput, params: any): Promise<FollowModel[]>;
-declare function postFollow(follow: FollowInput): Promise<FollowModel>;
-declare function postFollowMany({ id, body }: {
+declare function getProjectFollows(organizationCode: OrganizationModel['code'], projectId: ProjectSlugOrId, config?: ClientAPIOptions): Promise<FollowModel[]>;
+declare function getUserFollows(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, config?: ClientAPIOptions): Promise<FollowModel[]>;
+declare function postFollow(organizationCode: OrganizationModel['code'], projectId: ProjectSlugOrId, body: FollowInput, config?: ClientAPIOptions): Promise<FollowModel>;
+declare function postFollowMany(organizationCode: OrganizationModel['code'], { id, body }: {
     id: string;
     body: AddManyFollowedProject;
 }): Promise<FollowModel[]>;
-declare function deleteFollow(follow: FollowInput): Promise<void>;
+declare function deleteFollow(organizationCode: OrganizationModel['code'], projectId: ProjectSlugOrId, followerId: number, config?: ClientAPIOptions): Promise<void>;
 
 type ConfigGoal = ClientAPIOptions;
 declare function getProjectGoals(projectId: ProjectSlugOrId, config?: ConfigGoal): Promise<PaginationResult<GoalModel>>;
@@ -351,16 +352,16 @@ declare function getProjectGroups(projectId: ProjectSlugOrId, config?: ConfigPro
 type Config$5 = ClientAPIOptions<QueryFilterRecomendation>;
 type ConfigPagination = ClientAPIOptions<PaginationQuery>;
 declare function getProjectsRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: ConfigPagination): Promise<PaginationResult<ProjectModel>>;
-declare function getRandomProjectsRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: Config$6): Promise<ProjectModel[]>;
+declare function getRandomProjectsRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: Config$5): Promise<ProjectModel[]>;
 declare function getUsersRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: ConfigPagination): Promise<PaginationResult<UserModel>>;
-declare function getRandomUsersRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: Config$6): Promise<UserModel[]>;
+declare function getRandomUsersRecommendationsForUser(organizationCode: OrganizationModel['code'], config?: Config$5): Promise<UserModel[]>;
 
 declare function reportBug(organizationCode: OrganizationModel['code'], body: ReportForm, config?: ClientAPIOptions): Promise<void>;
 declare function reportAbuse(organizationCode: OrganizationModel['code'], body: ReportForm, config?: ClientAPIOptions): Promise<void>;
 declare function contactUs(organizationCode: OrganizationModel['code'], body: ContactForm, config?: ClientAPIOptions): Promise<void>;
 
-type Config$5 = ClientAPIOptions<QueryFilterReviews>;
-declare function getReviews(projectId: ProjectSlugOrId, config?: Config$5): Promise<PaginationResult<ReviewModel>>;
+type Config$4 = ClientAPIOptions<QueryFilterReviews>;
+declare function getReviews(projectId: ProjectSlugOrId, config?: Config$4): Promise<PaginationResult<ReviewModel>>;
 declare function postReview(projectId: ProjectSlugOrId, body: ReviewForm, config?: ClientAPIOptions): Promise<ReviewModel>;
 declare function patchReview(projectId: ProjectSlugOrId, reviewId: ReviewId, body: ReviewForm, config?: ClientAPIOptions): Promise<ReviewModel>;
 declare function deleteReview(projectId: ProjectSlugOrId, reviewId: ReviewId, config?: ClientAPIOptions): Promise<void>;
@@ -378,10 +379,10 @@ declare function postUserSkill(userId: UserSlugOrId, body: SkillCleanedForm, con
 declare function patchUserSkill(userId: UserSlugOrId, skillId: SkillModel['id'], body: SkillCleanedForm, config?: ClientAPIOptions): Promise<SkillModel>;
 declare function deleteUserSkill(userId: UserSlugOrId, skillId: SkillModel['id'], config?: ClientAPIOptions): Promise<void>;
 
-type Config$3 = ClientAPIOptions<{
+type Config$1 = ClientAPIOptions<{
     publication_status: string;
 }>;
-declare function getStats(orgaizationCode: OrganizationModel['code'], config?: Config$3): Promise<Stats>;
+declare function getStats(orgaizationCode: OrganizationModel['code'], config?: Config$1): Promise<Stats>;
 
 type Config = ClientAPIOptions<PaginationQuery>;
 declare function getAllOrgClassifications(organizationCode: OrganizationModel['code'], config?: Config): Promise<PaginationResult<TagClassificationModel>>;
@@ -399,7 +400,7 @@ declare function patchClassificationTag(organizationCode: OrganizationModel['cod
 declare function deleteClassificationTag(organizationCode: OrganizationModel['code'], classificationId: TagClassificationModel['id'], tagtId: TagModel['id']): Promise<void>;
 declare function postClassificationTag(organizationCode: OrganizationModel['code'], classificationId: TagClassificationModel['id'], tag: TagModel): Promise<TagModel>;
 
-declare function getTemplates(organizationCode: OrganizationModel['code'], config?: ClientAPIOptions<PaginationQuery>): Promise<PaginationResult<TemplateModel>>;
+declare function getTemplates(organizationCode: OrganizationModel['code'], config?: ClientAPIOptions<QueryFilterTemplate>): Promise<PaginationResult<TemplateModel>>;
 declare function getTemplate(organizationCode: OrganizationModel['code'], templateId: TemplateId, config?: ClientAPIOptions): Promise<TemplateModel>;
 declare function deleteTemplate(organizationCode: OrganizationModel['code'], templateId: TemplateId, config?: ClientAPIOptions): Promise<void>;
 declare function postTemplate(organizationCode: OrganizationModel['code'], body: TemplateForm, config?: ClientAPIOptions): Promise<TemplateModel>;
@@ -426,33 +427,81 @@ interface SearchParams extends APIParams {
     types?: string;
 }
 
-declare function getUser(userId: UserSlugOrId, config?: ClientAPIOptions<QueryFilterUser>): Promise<UserModel>;
+declare function getUser(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, config?: ClientAPIOptions<QueryFilterUser>): Promise<UserModel>;
 declare function postUser(organizationCode: OrganizationModel['code'], body: FormData, config?: ClientAPIOptions): Promise<void>;
 declare function postUserWithInvitation(organizationCode: OrganizationModel['code'], inviteToken: string, body: FormData, config?: ClientAPIOptions): Promise<UserModel>;
 declare function searchUserAdmin(organizationId: OrganizationModel['id'], config?: ClientAPIOptions<QueryFilterUser>): Promise<PaginationResult<UserModel>>;
 declare function searchUserByExactMail(email: string, config?: ClientAPIOptions<QueryFilterUserEmail>): Promise<UserModel>;
-declare function patchUser(userId: UserSlugOrId, body: UserPatchModel, config?: ClientAPIOptions): Promise<UserModel>;
-declare function patchUserPicture(userId: UserSlugOrId, pictureId: ImageModel['id'], body: FormData, config?: ClientAPIOptions): Promise<ImageModelCreated>;
-declare function deleteUser(userId: UserSlugOrId, config?: ClientAPIOptions): Promise<void>;
-declare function postUserPicture(userId: UserSlugOrId, body: FormData, config?: ClientAPIOptions): Promise<ImageModelCreated>;
-declare function deleteUserPicture(id: UserSlugOrId, imageId: ImageModel['id'], config?: ClientAPIOptions): Promise<void>;
-declare function getUserPrivacy(userId: UserSlugOrId, config?: ClientAPIOptions): Promise<PrivacySettings>;
-declare function putUserPrivacy(userId: UserSlugOrId, body: UserPrivacyPatchModel, config?: ClientAPIOptions): Promise<PrivacySettings>;
-declare function patchUserPrivacy(userId: UserSlugOrId, body: UserPrivacyPatchModel, config?: ClientAPIOptions): Promise<PrivacySettings>;
+declare function patchUser(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, body: UserPatchModel, config?: ClientAPIOptions): Promise<UserModel>;
+declare function patchUserPicture(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, pictureId: ImageModel['id'], body: FormData, config?: ClientAPIOptions): Promise<ImageModelCreated>;
+declare function deleteUser(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, config?: ClientAPIOptions): Promise<void>;
+declare function postUserPicture(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, body: FormData, config?: ClientAPIOptions): Promise<ImageModelCreated>;
+declare function deleteUserPicture(organizationCode: OrganizationModel['code'], id: UserSlugOrId, imageId: ImageModel['id'], config?: ClientAPIOptions): Promise<void>;
+declare function getUserPrivacy(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, config?: ClientAPIOptions): Promise<PrivacySettings>;
+declare function putUserPrivacy(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, body: UserPrivacyPatchModel, config?: ClientAPIOptions): Promise<PrivacySettings>;
+declare function patchUserPrivacy(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, body: UserPrivacyPatchModel, config?: ClientAPIOptions): Promise<PrivacySettings>;
 declare function resetUserPassword(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, config?: ClientAPIOptions<QueryFilterResetPassword>): Promise<{
     detail: "Email sent";
 }>;
 declare function removeUserCookie(config?: ClientAPIOptions): Promise<"Cookie already deleted" | "Cookie deleted">;
-declare function getUserGroups(userId: UserSlugOrId, config?: ClientAPIOptions<QueryFilterUser>): Promise<PaginationResult<GroupModel>>;
-declare function getUserProjectsMember(userId: UserSlugOrId, config?: ClientAPIOptions<QueryFilterUser>): Promise<PaginationResult<ProjectModel>>;
-declare function getUserProjectsFollower(userId: UserSlugOrId, config?: ClientAPIOptions<QueryFilterUser>): Promise<PaginationResult<ProjectModel>>;
-declare function getUserProjectsReviewer(userId: UserSlugOrId, config?: ClientAPIOptions<QueryFilterUser>): Promise<PaginationResult<ProjectModel>>;
-declare function getUserCategoriesFollower(userId: UserSlugOrId, config?: ClientAPIOptions<QueryFilterUser>): Promise<PaginationResult<ProjectCategoryModel>>;
+declare function getUserGroups(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, config?: ClientAPIOptions<QueryFilterUser>): Promise<PaginationResult<GroupModel>>;
+declare function getUserProjectsMember(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, config?: ClientAPIOptions<QueryFilterUser>): Promise<PaginationResult<ProjectModel>>;
+declare function getUserProjectsFollower(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, config?: ClientAPIOptions<QueryFilterUser>): Promise<PaginationResult<ProjectModel>>;
+declare function getUserProjectsReviewer(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, config?: ClientAPIOptions<QueryFilterUser>): Promise<PaginationResult<ProjectModel>>;
+declare function getUserCategoriesFollower(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, config?: ClientAPIOptions<QueryFilterUser>): Promise<PaginationResult<ProjectCategoryModel>>;
 
 declare function _adaptParamsToGetQuery(params: SearchParams): {
     params: {
         [key: string]: string;
     };
 };
+declare const mergeQueryWithOrganization: (organizationCode: OrganizationModel["code"], options?: ClientAPIOptions) => {
+    query: {
+        current_org: string;
+    };
+    baseURL?: string;
+    body?: RequestInit["body"] | Record<string, any>;
+    ignoreResponseError?: boolean;
+    params?: Record<string, any>;
+    parseResponse?: (responseText: string) => any;
+    responseType?: "json" | undefined;
+    duplex?: "half" | undefined;
+    dispatcher?: InstanceType<any>;
+    agent?: unknown;
+    timeout?: number;
+    retry?: number | false;
+    retryDelay?: number | ((context: ofetch.FetchContext<any, "json">) => number) | undefined;
+    retryStatusCodes?: number[];
+    cache?: RequestCache | undefined;
+    credentials?: RequestCredentials | undefined;
+    headers?: HeadersInit | undefined;
+    integrity?: string | undefined;
+    keepalive?: boolean | undefined;
+    method?: string | undefined;
+    mode?: RequestMode | undefined;
+    priority?: RequestPriority | undefined;
+    redirect?: RequestRedirect | undefined;
+    referrer?: string | undefined;
+    referrerPolicy?: ReferrerPolicy | undefined;
+    signal?: (AbortSignal | null) | undefined;
+    window?: null | undefined;
+    onRequest?: (ofetch.FetchHook<ofetch.FetchContext<any, "json">> | ofetch.FetchHook<ofetch.FetchContext<any, "json">>[]) | undefined;
+    onRequestError?: (ofetch.FetchHook<ofetch.FetchContext<any, "json"> & {
+        error: Error;
+    }> | ofetch.FetchHook<ofetch.FetchContext<any, "json"> & {
+        error: Error;
+    }>[]) | undefined;
+    onResponse?: (ofetch.FetchHook<ofetch.FetchContext<any, "json"> & {
+        response: ofetch.FetchResponse<any>;
+    }> | ofetch.FetchHook<ofetch.FetchContext<any, "json"> & {
+        response: ofetch.FetchResponse<any>;
+    }>[]) | undefined;
+    onResponseError?: (ofetch.FetchHook<ofetch.FetchContext<any, "json"> & {
+        response: ofetch.FetchResponse<any>;
+    }> | ofetch.FetchHook<ofetch.FetchContext<any, "json"> & {
+        response: ofetch.FetchResponse<any>;
+    }>[]) | undefined;
+    noError?: boolean;
+};
 
-export { type APIParams, type AccessRequest, type AccessRequestModel, type AccessRequestResult, type ClientAPIOptions, type Config, type ConfigSimilar, type QueryFilterAccessRequests, type SearchParams, _adaptParamsToGetQuery, acceptAccessRequest, addFeaturedProject, addLinkedProject, addOrgMember, addParentGroup, addProjectMembers, applyAnnouncement, askMentorship, clientAPI, configureClientAPI, configureOptionsAPI, contactUs, createEvent, createInstruction, createNews, createProjectCategory, createProjectGoal, createProjectTab, createProjectTabImage, createProjectTabItem, createProjectTabItemImage, declineAccessRequest, deleteAnnouncement, deleteBlogEntry, deleteClassificationTag, deleteComment, deleteEvent, deleteFollow, deleteGroup, deleteGroupGallery, deleteGroupHeader, deleteInstruction, deleteInvitation, deleteLinkedProject, deleteLocation, deleteNews, deleteNewsHeader, deleteOrgClassification, deleteOrganisationBanner, deleteOrganisationLogo, deleteOrganizationFile, deleteProject, deleteProjectAttachmentFile, deleteProjectAttachmentLink, deleteProjectCategory, deleteProjectCategoryBackground, deleteProjectCategoryFollow, deleteProjectGoal, deleteProjectHeader, deleteProjectMembers, deleteProjectMembersSelf, deleteProjectMessage, deleteProjectTab, deleteProjectTabItem, deleteReview, deleteTemplate, deleteUser, deleteUserAttachmentFile, deleteUserAttachmentLink, deleteUserPicture, deleteUserSkill, duplicateProject, getAccessRequests, getAllEvents, getAllInstructions, getAllNews, getAllOrgClassifications, getAllProjectCategories, getAllProjectTab, getAllProjectTabItem, getAllProjects, getAllTagsById, getAnnouncements, getBlogEntries, getBlogEntry, getComment, getComments, getEvent, getFeaturedProjects, getGroup, getGroupAllLocations, getGroupEvent, getGroupGallery, getGroupLocation, getGroupMember, getGroupNews, getGroupProject, getGroupResearchDocument, getGroupResearchDocumentAnalytics, getGroupSimilar, getHierarchyGroups, getInstruction, getInvitation, getInvitations, getLinkedProject, getLocations, getMentorshipDetails, getNews, getNewsfeed, getNotifications, getOrgClassification, getOrgClassificationTags, getOrgUnits, getOrganizationByCode, getOrganizationFile, getOrganizationFiles, getOrganizations, getProject, getProjectAnnouncements, getProjectAttachmentFile, getProjectAttachmentFiles, getProjectAttachmentLink, getProjectAttachmentLinks, getProjectCategoriesFollow, getProjectCategoriesHierarchy, getProjectCategory, getProjectFollows, getProjectGoal, getProjectGoals, getProjectGroups, getProjectLocation, getProjectLocations, getProjectMembers, getProjectMessage, getProjectMessages, getProjectSimilars, getProjectTab, getProjectTabItem, getProjectsRecommendationsForUser, getRandomProjectsRecommendationsForUser, getRandomUsersRecommendationsForUser, getResearchDocumentSimilars, getReviews, getRootProjectCategory, getStats, getSubGroup, getTags, getTemplate, getTemplates, getUser, getUserAttachmentFile, getUserAttachmentLink, getUserCategoriesFollower, getUserFollows, getUserGroups, getUserMentorship, getUserNotificationSettings, getUserPrivacy, getUserProjectsFollower, getUserProjectsMember, getUserProjectsReviewer, getUserResearchDocument, getUserResearchDocumentAnalytics, getUserSkill, getUserSkills, getUsersRecommendationsForUser, lockUnlockProject, offerMentorship, patchAnnouncement, patchBlogEntry, patchClassificationTag, patchComment, patchEvent, patchGroup, patchGroupHeader, patchGroupLocation, patchInstruction, patchLocation, patchNews, patchNewsHeader, patchOrgClassification, patchOrganisationBanner, patchOrganization, patchOrganizationFile, patchProject, patchProjectAttachmentFile, patchProjectAttachmentLink, patchProjectCategory, patchProjectCategoryBackground, patchProjectGoal, patchProjectHeader, patchProjectMessage, patchReview, patchTemplate, patchTermsAndConditions, patchUser, patchUserAttachmentFile, patchUserAttachmentLink, patchUserNotificationSettings, patchUserPicture, patchUserPrivacy, patchUserSkill, postAccessRequest, postAnnouncement, postBlogEntry, postBlogEntryImage, postClassificationTag, postComment, postCommentImage, postFollow, postFollowMany, postGroup, postGroupGallery, postGroupHeader, postGroupLocation, postGroupMembers, postGroupProjects, postInvitation, postLocations, postNewsHeader, postOrgClassification, postOrganisationBanner, postOrganisationLogo, postOrganizationFiles, postOrganizationImage, postProject, postProjectAttachmentFiles, postProjectAttachmentLinks, postProjectCategoryBackground, postProjectCategoryFollow, postProjectHeader, postProjectImage, postProjectMessage, postProjectMessageImage, postReview, postTemplate, postTemplateImage, postUser, postUserAttachmentFile, postUserAttachmentLink, postUserPicture, postUserSkill, postUserWithInvitation, putClassificationTag, putEvent, putInstruction, putNews, putOrgClassification, putProjectCategory, putUserPrivacy, removeFeaturedProject, removeGroupLocation, removeGroupMember, removeGroupProject, removeOrgMember, removeUserCookie, reportAbuse, reportBug, resetUserPassword, respondMentorship, searchAll, searchGroups, searchProjects, searchResearcher, searchUser, searchUserAdmin, searchUserByExactMail, updateProjectTab, updateProjectTabItem };
+export { type APIParams, type AccessRequest, type AccessRequestModel, type AccessRequestResult, type ClientAPIOptions, type Config, type ConfigSimilar, type QueryFilterAccessRequests, type SearchParams, _adaptParamsToGetQuery, acceptAccessRequest, addFeaturedProject, addLinkedProject, addOrgMember, addParentGroup, addProjectMembers, applyAnnouncement, askMentorship, clientAPI, configureClientAPI, configureOptionsAPI, contactUs, createEvent, createInstruction, createNews, createProjectCategory, createProjectGoal, createProjectTab, createProjectTabImage, createProjectTabItem, createProjectTabItemImage, declineAccessRequest, deleteAnnouncement, deleteBlogEntry, deleteClassificationTag, deleteComment, deleteEvent, deleteFollow, deleteGroup, deleteGroupGallery, deleteGroupHeader, deleteInstruction, deleteInvitation, deleteLinkedProject, deleteLocation, deleteNews, deleteNewsHeader, deleteOrgClassification, deleteOrganisationBanner, deleteOrganisationLogo, deleteOrganizationFile, deleteProject, deleteProjectAttachmentFile, deleteProjectAttachmentLink, deleteProjectCategory, deleteProjectCategoryBackground, deleteProjectCategoryFollow, deleteProjectGoal, deleteProjectHeader, deleteProjectMembers, deleteProjectMembersSelf, deleteProjectMessage, deleteProjectTab, deleteProjectTabItem, deleteReview, deleteTemplate, deleteUser, deleteUserAttachmentFile, deleteUserAttachmentLink, deleteUserPicture, deleteUserSkill, duplicateProject, getAccessRequests, getAllEvents, getAllInstructions, getAllNews, getAllOrgClassifications, getAllProjectCategories, getAllProjectTab, getAllProjectTabItem, getAllProjects, getAllTagsById, getAnnouncements, getBlogEntries, getBlogEntry, getComment, getComments, getEvent, getFeaturedProjects, getGroup, getGroupAllLocations, getGroupEvent, getGroupGallery, getGroupLocation, getGroupMember, getGroupNews, getGroupProject, getGroupResearchDocument, getGroupResearchDocumentAnalytics, getGroupSimilar, getHierarchyGroups, getInstruction, getInvitation, getInvitations, getLinkedProject, getLocations, getMentorshipDetails, getNews, getNewsfeed, getNotifications, getOrgClassification, getOrgClassificationTags, getOrgUnits, getOrganizationByCode, getOrganizationFile, getOrganizationFiles, getOrganizations, getProject, getProjectAnnouncements, getProjectAttachmentFile, getProjectAttachmentFiles, getProjectAttachmentLink, getProjectAttachmentLinks, getProjectCategoriesFollow, getProjectCategoriesHierarchy, getProjectCategory, getProjectFollows, getProjectGoal, getProjectGoals, getProjectGroups, getProjectLocation, getProjectLocations, getProjectMembers, getProjectMessage, getProjectMessages, getProjectSimilars, getProjectTab, getProjectTabItem, getProjectsRecommendationsForUser, getRandomProjectsRecommendationsForUser, getRandomUsersRecommendationsForUser, getResearchDocumentSimilars, getReviews, getRootProjectCategory, getStats, getSubGroup, getTags, getTemplate, getTemplates, getUser, getUserAttachmentFile, getUserAttachmentLink, getUserCategoriesFollower, getUserFollows, getUserGroups, getUserMentorship, getUserNotificationSettings, getUserPrivacy, getUserProjectsFollower, getUserProjectsMember, getUserProjectsReviewer, getUserResearchDocument, getUserResearchDocumentAnalytics, getUserSkill, getUserSkills, getUsersRecommendationsForUser, lockUnlockProject, mergeQueryWithOrganization, offerMentorship, patchAnnouncement, patchBlogEntry, patchClassificationTag, patchComment, patchEvent, patchGroup, patchGroupHeader, patchGroupLocation, patchInstruction, patchLocation, patchNews, patchNewsHeader, patchOrgClassification, patchOrganisationBanner, patchOrganization, patchOrganizationFile, patchProject, patchProjectAttachmentFile, patchProjectAttachmentLink, patchProjectCategory, patchProjectCategoryBackground, patchProjectGoal, patchProjectHeader, patchProjectMessage, patchReview, patchTemplate, patchTermsAndConditions, patchUser, patchUserAttachmentFile, patchUserAttachmentLink, patchUserNotificationSettings, patchUserPicture, patchUserPrivacy, patchUserSkill, postAccessRequest, postAnnouncement, postBlogEntry, postBlogEntryImage, postClassificationTag, postComment, postCommentImage, postFollow, postFollowMany, postGroup, postGroupGallery, postGroupHeader, postGroupLocation, postGroupMembers, postGroupProjects, postInvitation, postLocations, postNewsHeader, postOrgClassification, postOrganisationBanner, postOrganisationLogo, postOrganizationFiles, postOrganizationImage, postProject, postProjectAttachmentFiles, postProjectAttachmentLinks, postProjectCategoryBackground, postProjectCategoryFollow, postProjectHeader, postProjectImage, postProjectMessage, postProjectMessageImage, postReview, postTemplate, postTemplateImage, postUser, postUserAttachmentFile, postUserAttachmentLink, postUserPicture, postUserSkill, postUserWithInvitation, putClassificationTag, putEvent, putInstruction, putNews, putOrgClassification, putProjectCategory, putUserPrivacy, removeFeaturedProject, removeGroupLocation, removeGroupMember, removeGroupProject, removeOrgMember, removeUserCookie, reportAbuse, reportBug, resetUserPassword, respondMentorship, searchAll, searchGroups, searchProjects, searchResearcher, searchUser, searchUserAdmin, searchUserByExactMail, updateProjectTab, updateProjectTabItem };

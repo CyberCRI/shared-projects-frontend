@@ -14,8 +14,8 @@ import {
   QueryFilterResetPassword,
   GroupModel,
 } from '../models'
-import { clientAPI, type ClientAPIOptions } from './client'
 import { _adaptParamsToGetQuery, mergeQueryWithOrganization } from './utils.service'
+import { clientAPI, type ClientAPIOptions } from './client'
 import { PaginationResult } from '../interfaces'
 import { merge } from 'es-toolkit'
 
@@ -25,7 +25,10 @@ export async function getUser(
   userId: UserSlugOrId,
   config: ClientAPIOptions<QueryFilterUser> = {}
 ) {
-  return await clientAPI<UserModel>(`user/${userId}/`, mergeQueryWithOrganization(organizationCode, config))
+  return await clientAPI<UserModel>(
+    `user/${userId}/`,
+    mergeQueryWithOrganization(organizationCode, config)
+  )
 }
 
 export async function postUser(
@@ -43,7 +46,7 @@ export async function postUser(
           organization: organizationCode,
         },
       },
-  mergeQueryWithOrganization(organizationCode, config)
+      mergeQueryWithOrganization(organizationCode, config)
     )
   )
 }
@@ -102,7 +105,11 @@ export async function patchUser(
   body: UserPatchModel,
   config: ClientAPIOptions = {}
 ) {
-  return await clientAPI<UserModel>(`user/${userId}/`, { ...mergeQueryWithOrganization(organizationCode, config), body, method: 'PATCH' })
+  return await clientAPI<UserModel>(`user/${userId}/`, {
+    ...mergeQueryWithOrganization(organizationCode, config),
+    body,
+    method: 'PATCH',
+  })
 }
 
 export async function patchUserPicture(
@@ -119,8 +126,15 @@ export async function patchUserPicture(
   })
 }
 
-export async function deleteUser(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, config: ClientAPIOptions = {}) {
-  await clientAPI(`user/${userId}/`, { ...mergeQueryWithOrganization(organizationCode, config), method: 'DELETE' })
+export async function deleteUser(
+  organizationCode: OrganizationModel['code'],
+  userId: UserSlugOrId,
+  config: ClientAPIOptions = {}
+) {
+  await clientAPI(`user/${userId}/`, {
+    ...mergeQueryWithOrganization(organizationCode, config),
+    method: 'DELETE',
+  })
 }
 
 export async function postUserPicture(
@@ -142,14 +156,25 @@ export async function deleteUserPicture(
   imageId: ImageModel['id'],
   config: ClientAPIOptions = {}
 ) {
-  await clientAPI(`user/${id}/profile-picture/${imageId}/`, { ...mergeQueryWithOrganization(organizationCode, config), method: 'DELETE' })
+  await clientAPI(`user/${id}/profile-picture/${imageId}/`, {
+    ...mergeQueryWithOrganization(organizationCode, config),
+    method: 'DELETE',
+  })
 }
 
-export async function getUserPrivacy(organizationCode: OrganizationModel['code'], userId: UserSlugOrId, config: ClientAPIOptions = {}) {
-  return await clientAPI<PrivacySettings>(`privacy-settings/${userId}/`, mergeQueryWithOrganization(organizationCode, config))
+export async function getUserPrivacy(
+  organizationCode: OrganizationModel['code'],
+  userId: UserSlugOrId,
+  config: ClientAPIOptions = {}
+) {
+  return await clientAPI<PrivacySettings>(
+    `privacy-settings/${userId}/`,
+    mergeQueryWithOrganization(organizationCode, config)
+  )
 }
 
-export async function putUserPrivacy(organizationCode: OrganizationModel['code'],
+export async function putUserPrivacy(
+  organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   body: UserPrivacyPatchModel,
   config: ClientAPIOptions = {}
@@ -161,7 +186,8 @@ export async function putUserPrivacy(organizationCode: OrganizationModel['code']
   })
 }
 
-export async function patchUserPrivacy(organizationCode: OrganizationModel['code'],
+export async function patchUserPrivacy(
+  organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   body: UserPrivacyPatchModel,
   config: ClientAPIOptions = {}
@@ -198,41 +224,52 @@ export async function removeUserCookie(config: ClientAPIOptions = {}) {
   )
 }
 
-export async function getUserGroups(organizationCode: OrganizationModel['code'],
+export async function getUserGroups(
+  organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   config: ClientAPIOptions<QueryFilterUser> = {}
 ) {
-  return await clientAPI<PaginationResult<GroupModel>>(`user/${userId}/groups/`, mergeQueryWithOrganization(organizationCode, config))
+  return await clientAPI<PaginationResult<GroupModel>>(
+    `user/${userId}/groups/`,
+    mergeQueryWithOrganization(organizationCode, config)
+  )
 }
 
-export async function getUserProjectsMember(organizationCode: OrganizationModel['code'],
+export async function getUserProjectsMember(
+  organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   config: ClientAPIOptions<QueryFilterUser> = {}
 ) {
-  return await clientAPI<PaginationResult<ProjectModel>>(`user/${userId}/projects/member/`, mergeQueryWithOrganization(organizationCode, config))
+  return await clientAPI<PaginationResult<ProjectModel>>(
+    `user/${userId}/projects/member/`,
+    mergeQueryWithOrganization(organizationCode, config)
+  )
 }
 
-export async function getUserProjectsFollower(organizationCode: OrganizationModel['code'],
+export async function getUserProjectsFollower(
+  organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   config: ClientAPIOptions<QueryFilterUser> = {}
 ) {
   return await clientAPI<PaginationResult<ProjectModel>>(
     `user/${userId}/projects/follower/`,
-mergeQueryWithOrganization(organizationCode, config)
+    mergeQueryWithOrganization(organizationCode, config)
   )
 }
 
-export async function getUserProjectsReviewer(organizationCode: OrganizationModel['code'],
+export async function getUserProjectsReviewer(
+  organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   config: ClientAPIOptions<QueryFilterUser> = {}
 ) {
   return await clientAPI<PaginationResult<ProjectModel>>(
     `user/${userId}/projects/reviewer/`,
-mergeQueryWithOrganization(organizationCode, config)
+    mergeQueryWithOrganization(organizationCode, config)
   )
 }
 
-export async function getUserCategoriesFollower(organizationCode: OrganizationModel['code'],
+export async function getUserCategoriesFollower(
+  organizationCode: OrganizationModel['code'],
   userId: UserSlugOrId,
   config: ClientAPIOptions<QueryFilterUser> = {}
 ) {

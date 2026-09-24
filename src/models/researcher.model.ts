@@ -327,7 +327,6 @@ export type DocumentCrisalidType =
   | 'Presentation'
   | 'UNKNOWN'
 
-
 export type HarvesterType =
   | 'orcid'
   | 'idref'
@@ -432,7 +431,7 @@ export type QueryFilterResearcher = Partial<
     harvester: HarvesterType
     values: string // TODO: change to string[] (need to update backend)
   } & PaginationQuery
-  >
+>
 
 export type DocumentModulesKeys = keyof ResearcherDocument['modules']
 
