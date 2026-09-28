@@ -1226,14 +1226,21 @@ async function getProject(projectSlugOrId, config = {}) {
 function postProject(body, config = {}) {
   return clientAPI(`project/`, { ...config, body, method: "POST" });
 }
-async function patchProject(projectId, project) {
-  return await clientAPI(`project/${projectId}/`, { body: project, method: "PATCH" });
+async function patchProject(projectId, body, config = {}) {
+  return await clientAPI(`project/${projectId}/`, {
+    ...config,
+    body,
+    method: "PATCH"
+  });
 }
-async function deleteProject(projectId) {
+async function deleteProject(projectId, config = {}) {
   await clientAPI(`project/${projectId}/`, { method: "DELETE" });
 }
-async function duplicateProject(projectId) {
-  return await clientAPI(`project/${projectId}/duplicate/`, { method: "POST" });
+async function duplicateProject(projectId, config = {}) {
+  return await clientAPI(`project/${projectId}/duplicate/`, {
+    method: "POST",
+    ...config
+  });
 }
 async function getLinkedProject(projectId, config = {}) {
   return await clientAPI(

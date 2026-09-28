@@ -28,20 +28,31 @@ export async function getProject(projectSlugOrId: ProjectSlugOrId, config: Confi
   return await clientAPI<ProjectModel>(`project/${projectSlugOrId}/`, config)
 }
 
-export function postProject(body: ProjectForm, config: ClientAPIOptions = {}) {
+export function postProject(body: ProjectForm, config: ConfigProject = {}) {
   return clientAPI<ProjectModel>(`project/`, { ...config, body, method: 'POST' })
 }
 
-export async function patchProject(projectId: ProjectSlugOrId, project: ProjectForm) {
-  return await clientAPI<ProjectModel>(`project/${projectId}/`, { body: project, method: 'PATCH' })
+export async function patchProject(
+  projectId: ProjectSlugOrId,
+  body: ProjectForm,
+  config: ConfigProject = {}
+) {
+  return await clientAPI<ProjectModel>(`project/${projectId}/`, {
+    ...config,
+    body,
+    method: 'PATCH',
+  })
 }
 
-export async function deleteProject(projectId: ProjectSlugOrId) {
+export async function deleteProject(projectId: ProjectSlugOrId, config: ClientAPIOptions = {}) {
   await clientAPI(`project/${projectId}/`, { method: 'DELETE' })
 }
 
-export async function duplicateProject(projectId: ProjectSlugOrId) {
-  return await clientAPI<ProjectModel>(`project/${projectId}/duplicate/`, { method: 'POST' })
+export async function duplicateProject(projectId: ProjectSlugOrId, config: ConfigProject = {}) {
+  return await clientAPI<ProjectModel>(`project/${projectId}/duplicate/`, {
+    method: 'POST',
+    ...config,
+  })
 }
 
 export async function getLinkedProject(
