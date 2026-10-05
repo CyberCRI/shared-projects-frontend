@@ -316,53 +316,25 @@ async function deleteEvent(organizationCode, idOrSlug) {
   });
 }
 
-// src/apis/utils.service.ts
-function _adaptParamsToGetQuery(params) {
-  const query = {};
-  Object.entries(params || {}).forEach(([key, value]) => {
-    query[key] = Array.isArray(value) ? value.join(",") : value.toString();
-  });
-  return {
-    params: query
-  };
-}
-var mergeQueryWithOrganization = (organizationCode, options = {}) => {
-  return {
-    ...options || {},
-    query: {
-      ...options?.query || {},
-      current_org: organizationCode
-    }
-  };
-};
-
 // src/apis/follows.service.ts
-async function getProjectFollows(organizationCode, projectId, config = {}) {
-  return await clientAPI(
-    `project/${projectId}/follow/`,
-    mergeQueryWithOrganization(organizationCode, config)
-  );
+async function getProjectFollows(body) {
+  return await clientAPI(`project/${body.project_id}/follow/`, {});
 }
-async function getUserFollows(organizationCode, userId, config = {}) {
-  return await clientAPI(
-    `user/${userId}/follow/`,
-    mergeQueryWithOrganization(organizationCode, config)
-  );
+async function getUserFollows(body, params) {
+  return await clientAPI(`user/${body.follower_id}/follow/`, { params });
 }
-async function postFollow(organizationCode, projectId, body, config = {}) {
-  return await clientAPI(`project/${projectId}/follow/`, {
-    body,
-    method: "POST",
-    ...mergeQueryWithOrganization(organizationCode, config)
+async function postFollow(follow) {
+  return await clientAPI(`project/${follow.project_id}/follow/`, {
+    body: follow,
+    method: "POST"
   });
 }
-async function postFollowMany(organizationCode, { id, body }) {
+async function postFollowMany({ id, body }) {
   return await clientAPI(`user/${id}/follow/follow-many/`, { body, method: "POST" });
 }
-async function deleteFollow(organizationCode, projectId, followerId, config = {}) {
-  await clientAPI(`project/${projectId}/follow/${followerId}/`, {
-    method: "DELETE",
-    ...mergeQueryWithOrganization(organizationCode, config)
+async function deleteFollow(follow) {
+  await clientAPI(`project/${follow.project_id}/follow/${follow.follower_id}/`, {
+    method: "DELETE"
   });
 }
 
@@ -1226,21 +1198,14 @@ async function getProject(projectSlugOrId, config = {}) {
 function postProject(body, config = {}) {
   return clientAPI(`project/`, { ...config, body, method: "POST" });
 }
-async function patchProject(projectId, body, config = {}) {
-  return await clientAPI(`project/${projectId}/`, {
-    ...config,
-    body,
-    method: "PATCH"
-  });
+async function patchProject(projectId, project) {
+  return await clientAPI(`project/${projectId}/`, { body: project, method: "PATCH" });
 }
-async function deleteProject(projectId, config = {}) {
+async function deleteProject(projectId) {
   await clientAPI(`project/${projectId}/`, { method: "DELETE" });
 }
-async function duplicateProject(projectId, config = {}) {
-  return await clientAPI(`project/${projectId}/duplicate/`, {
-    method: "POST",
-    ...config
-  });
+async function duplicateProject(projectId) {
+  return await clientAPI(`project/${projectId}/duplicate/`, { method: "POST" });
 }
 async function getLinkedProject(projectId, config = {}) {
   return await clientAPI(
@@ -1581,11 +1546,8 @@ function patchTemplate(organizationCode, templateId, body, config = {}) {
 }
 
 // src/apis/user.service.ts
-async function getUser(organizationCode, userId, config = {}) {
-  return await clientAPI(
-    `user/${userId}/`,
-    mergeQueryWithOrganization(organizationCode, config)
-  );
+async function getUser(userId, config = {}) {
+  return await clientAPI(`user/${userId}/`, config);
 }
 async function postUser(organizationCode, body, config = {}) {
   await clientAPI(
@@ -1598,7 +1560,7 @@ async function postUser(organizationCode, body, config = {}) {
           organization: organizationCode
         }
       },
-      mergeQueryWithOrganization(organizationCode, config)
+      config
     )
   );
 }
@@ -1631,55 +1593,42 @@ async function searchUserAdmin(organizationId, config = {}) {
 async function searchUserByExactMail(email, config = {}) {
   return await clientAPI(`user/get-by-email/${encodeURIComponent(email)}/`, config);
 }
-async function patchUser(organizationCode, userId, body, config = {}) {
-  return await clientAPI(`user/${userId}/`, {
-    ...mergeQueryWithOrganization(organizationCode, config),
-    body,
-    method: "PATCH"
-  });
+async function patchUser(userId, body, config = {}) {
+  return await clientAPI(`user/${userId}/`, { ...config, body, method: "PATCH" });
 }
-async function patchUserPicture(organizationCode, userId, pictureId, body, config = {}) {
+async function patchUserPicture(userId, pictureId, body, config = {}) {
   return await clientAPI(`user/${userId}/profile-picture/${pictureId}/`, {
-    ...mergeQueryWithOrganization(organizationCode, config),
+    ...config,
     body,
     method: "PATCH"
   });
 }
-async function deleteUser(organizationCode, userId, config = {}) {
-  await clientAPI(`user/${userId}/`, {
-    ...mergeQueryWithOrganization(organizationCode, config),
-    method: "DELETE"
-  });
+async function deleteUser(userId, config = {}) {
+  await clientAPI(`user/${userId}/`, { ...config, method: "DELETE" });
 }
-async function postUserPicture(organizationCode, userId, body, config = {}) {
+async function postUserPicture(userId, body, config = {}) {
   return await clientAPI(`user/${userId}/profile-picture/`, {
-    ...mergeQueryWithOrganization(organizationCode, config),
+    ...config,
     body,
     method: "POST"
   });
 }
-async function deleteUserPicture(organizationCode, id, imageId, config = {}) {
-  await clientAPI(`user/${id}/profile-picture/${imageId}/`, {
-    ...mergeQueryWithOrganization(organizationCode, config),
-    method: "DELETE"
-  });
+async function deleteUserPicture(id, imageId, config = {}) {
+  await clientAPI(`user/${id}/profile-picture/${imageId}/`, { ...config, method: "DELETE" });
 }
-async function getUserPrivacy(organizationCode, userId, config = {}) {
-  return await clientAPI(
-    `privacy-settings/${userId}/`,
-    mergeQueryWithOrganization(organizationCode, config)
-  );
+async function getUserPrivacy(userId, config = {}) {
+  return await clientAPI(`privacy-settings/${userId}/`, config);
 }
-async function putUserPrivacy(organizationCode, userId, body, config = {}) {
+async function putUserPrivacy(userId, body, config = {}) {
   return await clientAPI(`privacy-settings/${userId}/`, {
-    ...mergeQueryWithOrganization(organizationCode, config),
+    ...config,
     body,
     method: "PUT"
   });
 }
-async function patchUserPrivacy(organizationCode, userId, body, config = {}) {
+async function patchUserPrivacy(userId, body, config = {}) {
   return await clientAPI(`privacy-settings/${userId}/`, {
-    ...mergeQueryWithOrganization(organizationCode, config),
+    ...config,
     body,
     method: "PATCH"
   });
@@ -1703,35 +1652,40 @@ async function removeUserCookie(config = {}) {
     config
   );
 }
-async function getUserGroups(organizationCode, userId, config = {}) {
-  return await clientAPI(
-    `user/${userId}/groups/`,
-    mergeQueryWithOrganization(organizationCode, config)
-  );
+async function getUserGroups(userId, config = {}) {
+  return await clientAPI(`user/${userId}/groups/`, config);
 }
-async function getUserProjectsMember(organizationCode, userId, config = {}) {
-  return await clientAPI(
-    `user/${userId}/projects/member/`,
-    mergeQueryWithOrganization(organizationCode, config)
-  );
+async function getUserProjectsMember(userId, config = {}) {
+  return await clientAPI(`user/${userId}/projects/member/`, config);
 }
-async function getUserProjectsFollower(organizationCode, userId, config = {}) {
+async function getUserProjectsFollower(userId, config = {}) {
   return await clientAPI(
     `user/${userId}/projects/follower/`,
-    mergeQueryWithOrganization(organizationCode, config)
+    config
   );
 }
-async function getUserProjectsReviewer(organizationCode, userId, config = {}) {
+async function getUserProjectsReviewer(userId, config = {}) {
   return await clientAPI(
     `user/${userId}/projects/reviewer/`,
-    mergeQueryWithOrganization(organizationCode, config)
+    config
   );
 }
-async function getUserCategoriesFollower(organizationCode, userId, config = {}) {
+async function getUserCategoriesFollower(userId, config = {}) {
   return await clientAPI(
     `user/${userId}/categories/follower/`,
-    mergeQueryWithOrganization(organizationCode, config)
+    config
   );
+}
+
+// src/apis/utils.service.ts
+function _adaptParamsToGetQuery(params) {
+  const query = {};
+  Object.entries(params || {}).forEach(([key, value]) => {
+    query[key] = Array.isArray(value) ? value.join(",") : value.toString();
+  });
+  return {
+    params: query
+  };
 }
 export {
   _adaptParamsToGetQuery,
@@ -1892,7 +1846,6 @@ export {
   getUserSkills,
   getUsersRecommendationsForUser,
   lockUnlockProject,
-  mergeQueryWithOrganization,
   offerMentorship,
   patchAnnouncement,
   patchBlogEntry,
