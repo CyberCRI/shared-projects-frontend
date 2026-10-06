@@ -20,10 +20,14 @@ export interface ProjectTab extends BaseModel {
   icon: keyof IconTab | null;
   images?: ImageModel[]
   show_preview: boolean
+  show_tab: boolean
+  order: number
   modules: {
     items: number
   }
 }
+
+export type ProjectTabModulesKeys = keyof ProjectTab['modules']
 
 export type TabSlugOrId = ProjectTab['slug'] | ProjectTab['id']
 
@@ -56,8 +60,11 @@ export type ProjectTabItemForm = Partial<
 
 export type QueryFilterProjectTab = Partial<
   {
-    type: ProjectTabType
+    ordering: Ordering<'order'>
+    type: ProjectTabType[]
     show_preview: boolean
+    show_tab: boolean
+    modules: 'none' | ProjectTabModulesKeys[]
   } & PaginationQuery
 >
 

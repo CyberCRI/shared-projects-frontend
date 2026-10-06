@@ -57,7 +57,7 @@ export interface ProjectModel extends Omit<BaseModel, 'id'> {
 }
 
 export type ProjectModulesKeys = keyof ProjectModel['modules']
-export type ProjectModuleExtra = ProjectModulesKeys | 'resources'
+export type ProjectModuleExtra = ProjectModulesKeys | 'resources' | 'description'
 
 export type TranslatedProject = Translated<
   Omit<ProjectModel, 'template' | 'categories' | 'tags'>,
