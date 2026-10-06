@@ -551,12 +551,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/core@npm:2.26.3":
-  version: 2.26.3
-  resolution: "@tiptap/core@npm:2.26.3"
+"@tiptap/core@npm:3.30.4":
+  version: 3.30.4
+  resolution: "@tiptap/core@npm:3.30.4"
   peerDependencies:
-    "@tiptap/pm": ^2.7.0
-  checksum: 10c0/fb099dae1b5a989e44c50aa940c45c2e04a6f75eef61c3b12338542fbaee15bbb1aa09333ed6682b83c48522bc1a9bc844741c667791eace72a81e281ac83e86
+    "@tiptap/pm": 3.30.4
+  checksum: 10c0/51cc37a296eee4b1ec0b969bf1c5a95a29793533d976a0085db15b033b4ac6d5e2765a94225a19266fb1c4eec403ec712ea4aa84cb67269d51cd41ce431b28b7
   languageName: node
   linkType: hard
 
@@ -2986,7 +2986,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "shared-projects-frontend@workspace:."
   dependencies:
-    "@tiptap/core": "npm:2.26.3"
+    "@tiptap/core": "npm:3.30.4"
     "@tiptap/extension-blockquote": "npm:2.26.3"
     "@tiptap/extension-bold": "npm:2.26.3"
     "@tiptap/extension-bullet-list": "npm:2.26.3"
@@ -3030,7 +3030,7 @@ __metadata:
     yjs: "npm:13.6.27"
     zod: "npm:^4.4.3"
   peerDependencies:
-    "@tiptap/core": 2.26.3
+    "@tiptap/core": 3.30.4
     "@tiptap/extension-blockquote": 2.26.3
     "@tiptap/extension-bold": 2.26.3
     "@tiptap/extension-bullet-list": 2.26.3
