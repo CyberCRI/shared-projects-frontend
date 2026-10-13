@@ -13,6 +13,7 @@ export const canEditInstruction = (
   organizationId: OrganizationModel['id'],
   instructionId: InstructionModel['id']
 ) => {
+  void instructionId
   return isAdminOrFacilitator(rights, organizationId)
 }
 
@@ -21,5 +22,6 @@ export const canDeleteInstruction = (
   organizationId: OrganizationModel['id'],
   instructionId: InstructionModel['id']
 ) => {
+  void instructionId
   return isAdminOrFacilitator(rights, organizationId)
 }

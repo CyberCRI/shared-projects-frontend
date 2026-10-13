@@ -1,5 +1,6 @@
 import { Language, ResearcherDocument, TranslatedResearcherDocument } from '../models'
-import { translateEntity } from './utils'
+import { translateResearcherDomain } from './translateResearcherDomains'
+import { translateEntity, translateMany } from './utils'
 
 export const translateResearcherDocument = (
   data: ResearcherDocument,
@@ -9,5 +10,13 @@ export const translateResearcherDocument = (
     return data
   }
 
-  return translateEntity<TranslatedResearcherDocument>(data, ['title', 'description'], locale)
+  const entity = translateEntity<TranslatedResearcherDocument>(
+    data,
+    ['title', 'description'],
+    locale
+  )
+  if (entity.domains) {
+    entity.domains = translateMany(translateResearcherDomain, entity.domains, locale)
+  }
+  return entity
 }

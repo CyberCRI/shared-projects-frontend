@@ -1,7 +1,11 @@
 import { PaginationQuery } from '../interfaces/pagination'
 import { Translated } from '../interfaces/translated'
+import { TagModel, TranslatedTag } from './tag.model'
 import { Ordering } from '../interfaces/query'
 import { UserModel } from './user.model'
+
+// meta front DocumentTypeCentralized backend
+export type ResearcherDocumentType = 'publications' | 'conferences'
 
 export type Relators =
   | 'abr'
@@ -385,20 +389,48 @@ export type ResearcherIdentifier = {
   harvester: HarvesterType
 }
 
+export type AbstractDomain<Domain = TagModel> = {
+  id: number
+  level: number
+  domain: Domain
+}
+
+export type TranslatedAbstractDomain<Domain = TranslatedTag> = {
+  id: number
+  level: number
+  domain: Domain
+}
+
+export type ResearcherDomain = AbstractDomain
+export type TranslatedResearcherDomain = TranslatedAbstractDomain
+
 export type Researcher = {
   id: number
   user: null | UserModel
   display_name: string
   identifiers: ResearcherIdentifier[]
-}
+  bio: string | null
 
-export type ResearcherLight = Researcher & {
-  // this is a objects with numbers of each documents
-  documents: {
+  domains: ResearcherDomain[]
+
+  h_index: number | null
+  i10_index: number | null
+
+  modules: {
+    identifiers: number
     publications: number
     conferences: number
+    similars: number
+    affiliated: number
   }
 }
+
+export type TranslatedResearcher = Translated<Omit<Researcher, 'domains'>, 'bio'> & {
+  domains: TranslatedResearcherDomain[]
+}
+
+export type DocumentDomain = AbstractDomain
+export type TranslatedDocumentDomain = TranslatedAbstractDomain
 
 export type ResearcherDocument = {
   id: number
@@ -408,14 +440,19 @@ export type ResearcherDocument = {
   contributors: Researcher[]
   identifiers: ResearcherIdentifier[]
   publication_date: string | null | Date
+  domains: DocumentDomain[]
+
   modules: {
     similars: number
   }
 }
 
-export type ResearcherDocumentType = keyof ResearcherLight['documents']
-
-export type TranslatedResearcherDocument = Translated<ResearcherDocument, 'title' | 'description'>
+export type TranslatedResearcherDocument = Translated<
+  Omit<ResearcherDocument, 'domains'>,
+  'title' | 'description'
+> & {
+  domains: TranslatedDocumentDomain[]
+}
 
 export type ResearcherDocumentAnalytics = {
   document_types: { [key in DocumentCrisalidType]?: number }

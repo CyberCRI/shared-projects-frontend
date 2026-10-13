@@ -2,7 +2,6 @@ import {
   AttachmentFileId,
   AttachmentFileInput,
   AttachmentFileModel,
-  AttachmentForm,
   ProjectSlugOrId,
   UserSlugOrId,
 } from '../models'
@@ -53,7 +52,7 @@ export async function deleteProjectAttachmentFile(
 }
 
 // -- user
-export function getUserAttachmentFile(userId: UserSlugOrId, options: any) {
+export function getUserAttachmentFile(userId: UserSlugOrId, options: ClientAPIOptions) {
   return clientAPI<PaginationResult<AttachmentFileModel>>(`user/${userId}/file/`, options)
 }
 

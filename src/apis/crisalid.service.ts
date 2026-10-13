@@ -82,3 +82,35 @@ export async function searchResearcher(
     config
   )
 }
+
+// documents
+
+export const getResearcherAffiliated = (
+  organizationCode: OrganizationModel['code'],
+  researchId: Researcher['id'],
+  config: ClientAPIOptions<PaginationResult> = {}
+) => {
+  return clientAPI<PaginationResult<Researcher>>(
+    `crisalid/organization/${organizationCode}/researcher/affiliated/`,
+    config
+  )
+}
+
+export const getResearcherSimilar = (
+  organizationCode: OrganizationModel['code'],
+  researchId: Researcher['id'],
+  config: ClientAPIOptions<PaginationResult> = {}
+) => {
+  return clientAPI<PaginationResult<Researcher>>(
+    `crisalid/organization/${organizationCode}/researcher/similar/`,
+    config
+  )
+}
+
+export const generateResearcherBioIa = (
+  organizationCode: OrganizationModel['code'],
+  researchId: Researcher['id'],
+  config: ClientAPIOptions<PaginationResult> = {}
+) => {
+  return clientAPI<string>(`crisalid/organization/${organizationCode}/researcher/bio-ia/`, config)
+}
