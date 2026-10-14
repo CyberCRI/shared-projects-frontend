@@ -83,15 +83,13 @@ export async function searchResearcher(
   )
 }
 
-// documents
-
 export const getResearcherAffiliated = (
   organizationCode: OrganizationModel['code'],
   researchId: Researcher['id'],
   config: ClientAPIOptions<PaginationResult> = {}
 ) => {
   return clientAPI<PaginationResult<Researcher>>(
-    `crisalid/organization/${organizationCode}/researcher/affiliated/`,
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/affiliated/`,
     config
   )
 }
@@ -102,7 +100,7 @@ export const getResearcherSimilar = (
   config: ClientAPIOptions<PaginationResult> = {}
 ) => {
   return clientAPI<PaginationResult<Researcher>>(
-    `crisalid/organization/${organizationCode}/researcher/similar/`,
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/similar/`,
     config
   )
 }
@@ -112,5 +110,5 @@ export const generateResearcherBioIa = (
   researchId: Researcher['id'],
   config: ClientAPIOptions<PaginationResult> = {}
 ) => {
-  return clientAPI<string>(`crisalid/organization/${organizationCode}/researcher/bio-ia/`, config)
+  return clientAPI<string>(`crisalid/organization/${organizationCode}/researcher/${researchId}/bio-ia/`, config)
 }

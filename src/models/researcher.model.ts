@@ -417,7 +417,6 @@ export type Researcher = {
   i10_index: number | null
 
   modules: {
-    identifiers: number
     publications: number
     conferences: number
     similars: number
