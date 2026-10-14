@@ -5,7 +5,7 @@
 import type { ImageModel, ImageSize } from './image.model'
 
 import type { Translated } from '../interfaces/translated'
-import type { ResearcherLight } from './researcher.model'
+import type { Researcher } from './researcher.model'
 
 import { Ordering, PaginationQuery } from '../interfaces'
 import { OrganizationModel } from './organization.model'
@@ -54,7 +54,7 @@ export interface UserModel extends BaseModel {
   mobile_phone: string | null
   skype: string | null
 
-  researcher?: ResearcherLight
+  researcher?: Researcher
 
   signed_terms_and_conditions?: {
     [key: string]: { version: number | null; date: string | null }

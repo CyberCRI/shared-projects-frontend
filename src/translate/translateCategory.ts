@@ -1,4 +1,8 @@
-import { Language, ProjectCategoryModel, TranslatedProjectCategory } from '../models'
+import {
+  Language,
+  ProjectCategoryModel,
+  TranslatedProjectCategory,
+} from '../models'
 import { translateEntity, translateMany } from './utils'
 import { translateTag } from './translateTag'
 
@@ -16,12 +20,12 @@ export const translateCategory = (
     locale
   )
 
-  if (translate.children) {
-    translate.children = translateMany(translateCategory, translate.children, locale)
+  if (data.children) {
+    translate.children = translateMany(translateCategory, data.children, locale)
   }
 
-  if (translate.hierarchy) {
-    translate.hierarchy = translateMany(translateCategory, translate.hierarchy, locale)
+  if (data.hierarchy) {
+    translate.hierarchy = translateMany(translateCategory, data.hierarchy, locale)
   }
 
   if (translate.tags) {
