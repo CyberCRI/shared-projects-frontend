@@ -421,6 +421,7 @@ export type Researcher = {
     conferences: number
     similars: number
     affiliated: number
+    citations: number
   }
 }
 
@@ -443,6 +444,7 @@ export type ResearcherDocument = {
 
   modules: {
     similars: number
+    journals: number
   }
 }
 
@@ -451,6 +453,31 @@ export type TranslatedResearcherDocument = Translated<
   'title' | 'description'
 > & {
   domains: TranslatedDocumentDomain[]
+}
+
+// journal
+
+export type Journal = {
+  uid?: string
+  title: string
+  acronym: string[]
+}
+
+export type DocumentJournal = {
+  journal: Journal
+  document: ResearcherDocument
+
+  pages?: string
+  volume?: string
+  issue?: string
+}
+
+// TODO: journal is not translated field
+export type TranslatedJournal = Journal
+
+export type TranslatedDocumentJournal = Omit<DocumentJournal, 'document' | 'journal'> & {
+  journal: TranslatedJournal
+  document: TranslatedResearcherDocument
 }
 
 export type ResearcherDocumentAnalytics = {
