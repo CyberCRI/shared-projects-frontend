@@ -65,7 +65,6 @@ export interface UserModel extends BaseModel {
   permissions: string[]
 
   modules: {
-    conferences: number
     files: number
     reviews_projects: number
     follows_categories: number
@@ -75,7 +74,6 @@ export interface UserModel extends BaseModel {
     mentor: number
     mentoree: number
     projects: number
-    publications: number
     skills: number
     notifications: number
   }

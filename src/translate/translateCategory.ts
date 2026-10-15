@@ -1,8 +1,4 @@
-import {
-  Language,
-  ProjectCategoryModel,
-  TranslatedProjectCategory,
-} from '../models'
+import { Language, ProjectCategoryModel, TranslatedProjectCategory } from '../models'
 import { translateEntity, translateMany } from './utils'
 import { translateTag } from './translateTag'
 
