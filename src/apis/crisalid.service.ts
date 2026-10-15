@@ -4,9 +4,10 @@ import {
   QueryFilterResearcher,
   Researcher,
   ResearcherDocumentAnalytics,
+  DocumentJournal,
 } from '../models/researcher.model'
+import { PaginationQuery, PaginationResult } from '../interfaces/pagination'
 import { OrganizationModel, PeopleGroupIdOrSlug } from '../models'
-import { PaginationResult } from '../interfaces/pagination'
 import { clientAPI, ClientAPIOptions } from './client'
 
 export async function getUserResearchDocument(
@@ -60,10 +61,21 @@ export async function getGroupResearchDocumentAnalytics(
 export async function getResearchDocumentSimilars(
   organisationCode: string,
   documentId: ResearcherDocument['id'],
-  config: ClientAPIOptions = {}
+  config: ClientAPIOptions<PaginationQuery> = {}
 ) {
   return await clientAPI<PaginationResult<ResearcherDocument>>(
     `crisalid/organization/${organisationCode}/document/${documentId}/similars/`,
+    config
+  )
+}
+
+export async function getResearchDocumentCitations(
+  organisationCode: string,
+  documentId: ResearcherDocument['id'],
+  config: ClientAPIOptions<PaginationQuery> = {}
+) {
+  return await clientAPI<PaginationResult<DocumentJournal>>(
+    `crisalid/organization/${organisationCode}/document/${documentId}/citations/`,
     config
   )
 }
@@ -79,6 +91,50 @@ export async function searchResearcher(
 ) {
   return clientAPI<PaginationResult<ResearcherSearchResponse>>(
     `crisalid/organization/${organizationCode}/researcher/search/`,
+    config
+  )
+}
+
+export const getResearcherAffiliated = (
+  organizationCode: OrganizationModel['code'],
+  researchId: Researcher['id'],
+  config: ClientAPIOptions<PaginationResult> = {}
+) => {
+  return clientAPI<PaginationResult<Researcher>>(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/affiliated/`,
+    config
+  )
+}
+
+export const getResearcherSimilar = (
+  organizationCode: OrganizationModel['code'],
+  researchId: Researcher['id'],
+  config: ClientAPIOptions<PaginationResult> = {}
+) => {
+  return clientAPI<PaginationResult<Researcher>>(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/similar/`,
+    config
+  )
+}
+
+export const generateResearcherBioIa = (
+  organizationCode: OrganizationModel['code'],
+  researchId: Researcher['id'],
+  config: ClientAPIOptions<PaginationResult> = {}
+) => {
+  return clientAPI<string>(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/bio-ia/`,
+    config
+  )
+}
+
+export const getResearcherCitations = (
+  organizationCode: OrganizationModel['code'],
+  researchId: Researcher['id'],
+  config: ClientAPIOptions<PaginationResult> = {}
+) => {
+  return clientAPI<PaginationResult<DocumentJournal>>(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/citations/`,
     config
   )
 }

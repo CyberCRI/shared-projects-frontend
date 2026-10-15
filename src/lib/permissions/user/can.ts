@@ -9,5 +9,6 @@ export const canEditUser = (
   organizationId: OrganizationModel['id'],
   userId: UserModel['id']
 ) => {
+  void userId
   return isAdmin(rights, organizationId)
 }

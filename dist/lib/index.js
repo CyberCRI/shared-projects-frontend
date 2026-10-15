@@ -71,9 +71,11 @@ var canCreateEvent = (rights, organizationId) => {
   return isAdminOrFacilitator(rights, organizationId);
 };
 var canEditEvent = (rights, organizationId, eventId) => {
+  void eventId;
   return isAdminOrFacilitator(rights, organizationId);
 };
 var canDeleteEvent = (rights, organizationId, eventId) => {
+  void eventId;
   return isAdminOrFacilitator(rights, organizationId);
 };
 
@@ -90,9 +92,11 @@ var canCreateInstruction = (rights, organizationId) => {
   return isAdminOrFacilitator(rights, organizationId);
 };
 var canEditInstruction = (rights, organizationId, instructionId) => {
+  void instructionId;
   return isAdminOrFacilitator(rights, organizationId);
 };
 var canDeleteInstruction = (rights, organizationId, instructionId) => {
+  void instructionId;
   return isAdminOrFacilitator(rights, organizationId);
 };
 
@@ -111,9 +115,11 @@ var canCreateNews = (rights, organizationId) => {
   return isAdminOrFacilitator(rights, organizationId);
 };
 var canEditNews = (rights, organizationId, newsId) => {
+  void newsId;
   return isAdminOrFacilitator(rights, organizationId);
 };
 var canDeleteNews = (rights, organizationId, newsId) => {
+  void newsId;
   return isAdminOrFacilitator(rights, organizationId);
 };
 
@@ -174,6 +180,7 @@ var userRights = (user) => {
 
 // src/lib/permissions/user/can.ts
 var canEditUser = (rights, organizationId, userId) => {
+  void userId;
   return isAdmin(rights, organizationId);
 };
 
