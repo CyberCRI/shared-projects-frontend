@@ -422,6 +422,9 @@ export type Researcher = {
     similars: number
     affiliated: number
     citations: number
+    domains: number
+    patents: number
+    awards: number
   }
 }
 
