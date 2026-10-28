@@ -321,6 +321,12 @@ var getResearcherPatent = (organizationCode, researchId, config = {}) => {
     config
   );
 };
+var getResearcherAward = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/awards/`,
+    config
+  );
+};
 
 // src/apis/event.service.ts
 async function getAllEvents(organizationCode, config) {
@@ -1910,6 +1916,7 @@ export {
   getResearchDocumentCitations,
   getResearchDocumentSimilars,
   getResearcherAffiliated,
+  getResearcherAward,
   getResearcherCitations,
   getResearcherPatent,
   getResearcherSimilar,

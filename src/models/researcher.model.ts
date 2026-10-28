@@ -1,4 +1,4 @@
-import { PaginationQuery } from '../interfaces/pagination'
+import { PaginationQuery, PaginationResult } from '../interfaces/pagination'
 import { Translated } from '../interfaces/translated'
 import { TagModel, TranslatedTag } from './tag.model'
 import { Ordering } from '../interfaces/query'
@@ -481,6 +481,15 @@ export type Patent = {
 
 export type TranslatedPatent = Translated<Patent, 'name' | 'description'>
 
+export type Award = {
+  name: string
+  description: string
+  date: string | null
+  link: string | null
+}
+
+export type TranslatedAward = Translated<Patent, 'name' | 'description'>
+
 // TODO: journal is not translated field
 export type TranslatedJournal = Journal
 
@@ -514,3 +523,23 @@ export type QueryFilterDocument = Partial<{
   modules: 'none' | DocumentModulesKeys[]
   ordering: Ordering<'publication_date'>
 }>
+
+export type QueryFilterAward = Partial<
+  {
+    name: string
+    description: string
+    date_after: Date | string
+    date_before: Date | string
+    ordering: Ordering<'date'>
+  } & PaginationResult
+>
+
+export type QueryFilterPatent = Partial<
+  {
+    name: string
+    description: string
+    date_after: Date | string
+    date_before: Date | string
+    ordering: Ordering<'date'>
+  } & PaginationResult
+>
