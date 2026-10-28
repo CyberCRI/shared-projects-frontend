@@ -419,6 +419,14 @@ var translateResearche = (data, locale) => {
   return entity;
 };
 
+// src/translate/translateResearcherPatent.ts
+var translateResearcherPatent = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  return translateEntity(data, ["name", "description"], locale);
+};
+
 // src/translate/translateReview.ts
 var translateReview = (data, locale) => {
   if (!data) {
@@ -497,6 +505,7 @@ export {
   translateResearche,
   translateResearcherDocument,
   translateResearcherDomain,
+  translateResearcherPatent,
   translateReview,
   translateSkill,
   translateTag,

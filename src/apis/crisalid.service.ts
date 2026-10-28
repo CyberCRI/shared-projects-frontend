@@ -5,6 +5,7 @@ import {
   Researcher,
   ResearcherDocumentAnalytics,
   DocumentJournal,
+  Patent,
 } from '../models/researcher.model'
 import { PaginationQuery, PaginationResult } from '../interfaces/pagination'
 import { OrganizationModel, PeopleGroupIdOrSlug } from '../models'
@@ -135,6 +136,17 @@ export const getResearcherCitations = (
 ) => {
   return clientAPI<PaginationResult<DocumentJournal>>(
     `crisalid/organization/${organizationCode}/researcher/${researchId}/citations/`,
+    config
+  )
+}
+
+export const getResearcherPatent = (
+  organizationCode: OrganizationModel['code'],
+  researchId: Researcher['id'],
+  config: ClientAPIOptions<PaginationResult> = {}
+) => {
+  return clientAPI<PaginationResult<Patent>>(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/patents/`,
     config
   )
 }

@@ -472,6 +472,15 @@ export type DocumentJournal = {
   issue?: string
 }
 
+export type Patent = {
+  name: string
+  description: string
+  date: string | null
+  link: string | null
+}
+
+export type TranslatedPatent = Translated<Patent, 'name' | 'description'>
+
 // TODO: journal is not translated field
 export type TranslatedJournal = Journal
 
