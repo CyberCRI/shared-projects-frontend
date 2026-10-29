@@ -410,6 +410,7 @@ export type Researcher = {
   display_name: string
   identifiers: ResearcherIdentifier[]
   bio: string | null
+  short_bio: string | null
 
   domains: ResearcherDomain[]
 
@@ -428,7 +429,7 @@ export type Researcher = {
   }
 }
 
-export type TranslatedResearcher = Translated<Omit<Researcher, 'domains'>, 'bio'> & {
+export type TranslatedResearcher = Translated<Omit<Researcher, 'domains'>, 'bio' | 'short_bio'> & {
   domains: TranslatedResearcherDomain[]
 }
 
@@ -476,22 +477,20 @@ export type DocumentJournal = {
 }
 
 export type Patent = {
+  id: number
   name: string
   description: string
-}
-
-export type TranslatedPatent = Translated<Patent, 'name' | 'description'>
-
-export type ResearcherPatent = {
-  patent: Patent
   date: string | null
   link: string | null
+  researchers: Researcher[]
 }
-export type TranslatedResearcherPatent = Omit<ResearcherPatent, 'patent'> & {
-  patent: TranslatedPatent
+
+export type TranslatedPatent = Translated<Omit<Patent, 'researchers'>, 'name' | 'description'> & {
+  researchers: TranslatedResearcher[]
 }
 
 export type Award = {
+  id: number
   name: string
   description: string
 }
@@ -501,9 +500,13 @@ export type TranslatedAward = Translated<Award, 'name' | 'description'>
 export type ResearcherAward = {
   award: Award
   date: string | null
+  description: string
   link: string | null
 }
-export type TranslatedResearcherAward = Omit<ResearcherAward, 'award'> & {
+export type TranslatedResearcherAward = Translated<
+  Omit<ResearcherAward, 'award'>,
+  'description'
+> & {
   award: TranslatedAward
 }
 

@@ -408,7 +408,7 @@ var translateProjectTabItem = (data, locale) => {
 };
 
 // src/translate/translateResearcher.ts
-var translateResearche = (data, locale) => {
+var translateResearcher = (data, locale) => {
   if (!data) {
     return data;
   }
@@ -431,7 +431,7 @@ var translateResearcherAward = (data, locale) => {
     return data;
   }
   return {
-    ...data,
+    ...translateEntity(data, ["description"], locale),
     award: translateAward(data.award, locale)
   };
 };
@@ -441,16 +441,11 @@ var translatePatent = (data, locale) => {
   if (!data) {
     return data;
   }
-  return translateEntity(data, ["name", "description"], locale);
-};
-var translateResearcherPatent = (data, locale) => {
-  if (!data) {
-    return data;
+  const translated = translateEntity(data, ["name", "description"], locale);
+  if (data.researchers) {
+    translated.researchers = translateMany(translateResearcher, data.researchers, locale);
   }
-  return {
-    ...data,
-    patent: translatePatent(data.patent, locale)
-  };
+  return translated;
 };
 
 // src/translate/translateReview.ts
@@ -530,11 +525,10 @@ export {
   translateProjectMessage,
   translateProjectTab,
   translateProjectTabItem,
-  translateResearche,
+  translateResearcher,
   translateResearcherAward,
   translateResearcherDocument,
   translateResearcherDomain,
-  translateResearcherPatent,
   translateReview,
   translateSkill,
   translateTag,

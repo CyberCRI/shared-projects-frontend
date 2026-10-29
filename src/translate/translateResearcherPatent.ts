@@ -1,30 +1,15 @@
-import {
-  Patent,
-  Language,
-  ResearcherPatent,
-  TranslatedPatent,
-  TranslatedResearcherPatent,
-} from '../models'
-import { translateEntity } from './utils'
+import { Patent, Language, TranslatedPatent } from '../models'
+import { translateResearcher } from './translateResearcher'
+import { translateEntity, translateMany } from './utils'
 
 export const translatePatent = (data: Patent, locale: Language | null): TranslatedPatent => {
   if (!data) {
     return data
   }
 
-  return translateEntity<TranslatedPatent>(data, ['name', 'description'], locale)
-}
-
-export const translateResearcherPatent = (
-  data: ResearcherPatent,
-  locale: Language | null
-): TranslatedResearcherPatent => {
-  if (!data) {
-    return data
+  const translated = translateEntity<TranslatedPatent>(data, ['name', 'description'], locale)
+  if (data.researchers) {
+    translated.researchers = translateMany(translateResearcher, data.researchers, locale)
   }
-
-  return {
-    ...data,
-    patent: translatePatent(data.patent, locale),
-  }
+  return translated
 }

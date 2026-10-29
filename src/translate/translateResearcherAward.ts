@@ -24,7 +24,7 @@ export const translateResearcherAward = (
   }
 
   return {
-    ...data,
+    ...translateEntity(data, ['description'], locale),
     award: translateAward(data.award, locale),
   }
 }

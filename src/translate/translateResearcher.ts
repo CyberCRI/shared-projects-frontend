@@ -1,9 +1,9 @@
-import { Language, ResearcherDocument, TranslatedResearcher } from '../models'
+import { Language, Researcher, ResearcherDocument, TranslatedResearcher } from '../models'
 import { translateResearcherDomain } from './translateResearcherDomains'
 import { translateEntity, translateMany } from './utils'
 
-export const translateResearche = (
-  data: ResearcherDocument,
+export const translateResearcher = (
+  data: Researcher,
   locale: Language | null
 ): TranslatedResearcher => {
   if (!data) {

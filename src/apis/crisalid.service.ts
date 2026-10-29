@@ -8,7 +8,7 @@ import {
   QueryFilterAward,
   QueryFilterPatent,
   ResearcherAward,
-  ResearcherPatent,
+  Patent,
 } from '../models/researcher.model'
 import { PaginationQuery, PaginationResult } from '../interfaces/pagination'
 import { OrganizationModel, PeopleGroupIdOrSlug } from '../models'
@@ -148,7 +148,7 @@ export const getResearcherPatent = (
   researchId: Researcher['id'],
   config: ClientAPIOptions<QueryFilterPatent> = {}
 ) => {
-  return clientAPI<PaginationResult<ResearcherPatent>>(
+  return clientAPI<PaginationResult<Patent>>(
     `crisalid/organization/${organizationCode}/researcher/${researchId}/patents/`,
     config
   )
