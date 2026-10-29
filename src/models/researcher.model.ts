@@ -478,20 +478,34 @@ export type DocumentJournal = {
 export type Patent = {
   name: string
   description: string
-  date: string | null
-  link: string | null
 }
 
 export type TranslatedPatent = Translated<Patent, 'name' | 'description'>
 
-export type Award = {
-  name: string
-  description: string
+export type ResearcherPatent = {
+  patent: Patent
   date: string | null
   link: string | null
 }
+export type TranslatedResearcherPatent = Omit<ResearcherPatent, 'patent'> & {
+  patent: TranslatedPatent
+}
 
-export type TranslatedAward = Translated<Patent, 'name' | 'description'>
+export type Award = {
+  name: string
+  description: string
+}
+
+export type TranslatedAward = Translated<Award, 'name' | 'description'>
+
+export type ResearcherAward = {
+  award: Award
+  date: string | null
+  link: string | null
+}
+export type TranslatedResearcherAward = Omit<ResearcherAward, 'award'> & {
+  award: TranslatedAward
+}
 
 // TODO: journal is not translated field
 export type TranslatedJournal = Journal

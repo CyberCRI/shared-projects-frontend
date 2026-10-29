@@ -420,19 +420,37 @@ var translateResearche = (data, locale) => {
 };
 
 // src/translate/translateResearcherAward.ts
-var translateResearcherAward = (data, locale) => {
+var translateAward = (data, locale) => {
   if (!data) {
     return data;
   }
   return translateEntity(data, ["name", "description"], locale);
 };
+var translateResearcherAward = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  return {
+    ...data,
+    award: translateAward(data.award, locale)
+  };
+};
 
 // src/translate/translateResearcherPatent.ts
-var translateResearcherPatent = (data, locale) => {
+var translatePatent = (data, locale) => {
   if (!data) {
     return data;
   }
   return translateEntity(data, ["name", "description"], locale);
+};
+var translateResearcherPatent = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  return {
+    ...data,
+    patent: translatePatent(data.patent, locale)
+  };
 };
 
 // src/translate/translateReview.ts
@@ -484,6 +502,7 @@ export {
   getTranslatableField,
   getTranslatableFields,
   translateAnnouncement,
+  translateAward,
   translateBlogEntry,
   translateCategory,
   translateClassification,
@@ -504,6 +523,7 @@ export {
   translateOneNews,
   translateOneNewsLocation,
   translateOrganization,
+  translatePatent,
   translatePeopleGroupLocation,
   translateProject,
   translateProjectLocation,

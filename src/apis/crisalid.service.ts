@@ -5,10 +5,10 @@ import {
   Researcher,
   ResearcherDocumentAnalytics,
   DocumentJournal,
-  Patent,
-  Award,
   QueryFilterAward,
   QueryFilterPatent,
+  ResearcherAward,
+  ResearcherPatent,
 } from '../models/researcher.model'
 import { PaginationQuery, PaginationResult } from '../interfaces/pagination'
 import { OrganizationModel, PeopleGroupIdOrSlug } from '../models'
@@ -148,7 +148,7 @@ export const getResearcherPatent = (
   researchId: Researcher['id'],
   config: ClientAPIOptions<QueryFilterPatent> = {}
 ) => {
-  return clientAPI<PaginationResult<Patent>>(
+  return clientAPI<PaginationResult<ResearcherPatent>>(
     `crisalid/organization/${organizationCode}/researcher/${researchId}/patents/`,
     config
   )
@@ -159,7 +159,7 @@ export const getResearcherAward = (
   researchId: Researcher['id'],
   config: ClientAPIOptions<QueryFilterAward> = {}
 ) => {
-  return clientAPI<PaginationResult<Award>>(
+  return clientAPI<PaginationResult<ResearcherAward>>(
     `crisalid/organization/${organizationCode}/researcher/${researchId}/awards/`,
     config
   )
