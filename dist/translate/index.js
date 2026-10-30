@@ -51,11 +51,11 @@ var translateCategory = (data, locale) => {
     ["name", "description"],
     locale
   );
-  if (translate.children) {
-    translate.children = translateMany(translateCategory, translate.children, locale);
+  if (data.children) {
+    translate.children = translateMany(translateCategory, data.children, locale);
   }
-  if (translate.hierarchy) {
-    translate.hierarchy = translateMany(translateCategory, translate.hierarchy, locale);
+  if (data.hierarchy) {
+    translate.hierarchy = translateMany(translateCategory, data.hierarchy, locale);
   }
   if (translate.tags) {
     translate.tags = translateMany(translateTag, translate.tags, locale);
@@ -235,6 +235,52 @@ var translateInstruction = (data, locale) => {
   return translateEntity(data, ["content", "title"], locale);
 };
 
+// src/translate/translateResearcherDomains.ts
+var translateResearcherDomain = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  return {
+    ...data,
+    tag: translateTag(data.domain, locale)
+  };
+};
+
+// src/translate/translateResearcherDocument.ts
+var translateResearcherDocument = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  const entity = translateEntity(
+    data,
+    ["title", "description"],
+    locale
+  );
+  if (entity.domains) {
+    entity.domains = translateMany(translateResearcherDomain, entity.domains, locale);
+  }
+  return entity;
+};
+
+// src/translate/translateJournal.ts
+var translateJournal = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  void locale;
+  return data;
+};
+var translateDocumentJournal = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  return {
+    ...data,
+    journal: translateJournal(data.journal, locale),
+    document: translateResearcherDocument(data.document, locale)
+  };
+};
+
 // src/translate/translateLink.ts
 var translateLink = (data, locale) => {
   if (!data) {
@@ -315,8 +361,8 @@ var translatePeopleGroupLocation = (data, locale) => {
     return data;
   }
   const translate = translateEntity(data, ["title", "description"], locale);
-  if (translate.project) {
-    translate.project = translateProject(translate.project, locale);
+  if (data.project) {
+    translate.project = translateProject(data.project, locale);
   }
   return translate;
 };
@@ -361,12 +407,45 @@ var translateProjectTabItem = (data, locale) => {
   return translateEntity(data, ["title", "content"], locale);
 };
 
-// src/translate/translateResearcherDocument.ts
-var translateResearcherDocument = (data, locale) => {
+// src/translate/translateResearcher.ts
+var translateResearcher = (data, locale) => {
   if (!data) {
     return data;
   }
-  return translateEntity(data, ["title", "description"], locale);
+  const entity = translateEntity(data, ["bio"], locale);
+  if (entity.domains) {
+    entity.domains = translateMany(translateResearcherDomain, entity.domains, locale);
+  }
+  return entity;
+};
+
+// src/translate/translateResearcherAward.ts
+var translateAward = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  return translateEntity(data, ["name", "description"], locale);
+};
+var translateResearcherAward = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  return {
+    ...translateEntity(data, ["description"], locale),
+    award: translateAward(data.award, locale)
+  };
+};
+
+// src/translate/translateResearcherPatent.ts
+var translatePatent = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  const translated = translateEntity(data, ["name", "description"], locale);
+  if (data.researchers) {
+    translated.researchers = translateMany(translateResearcher, data.researchers, locale);
+  }
+  return translated;
 };
 
 // src/translate/translateReview.ts
@@ -418,10 +497,12 @@ export {
   getTranslatableField,
   getTranslatableFields,
   translateAnnouncement,
+  translateAward,
   translateBlogEntry,
   translateCategory,
   translateClassification,
   translateComment,
+  translateDocumentJournal,
   translateEntity,
   translateEvent,
   translateEventsLocation,
@@ -429,6 +510,7 @@ export {
   translateGoal,
   translateGroup,
   translateInstruction,
+  translateJournal,
   translateLink,
   translateLocation,
   translateMany,
@@ -436,13 +518,17 @@ export {
   translateOneNews,
   translateOneNewsLocation,
   translateOrganization,
+  translatePatent,
   translatePeopleGroupLocation,
   translateProject,
   translateProjectLocation,
   translateProjectMessage,
   translateProjectTab,
   translateProjectTabItem,
+  translateResearcher,
+  translateResearcherAward,
   translateResearcherDocument,
+  translateResearcherDomain,
   translateReview,
   translateSkill,
   translateTag,

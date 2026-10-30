@@ -1,7 +1,11 @@
-import { PaginationQuery } from '../interfaces/pagination'
+import { PaginationQuery, PaginationResult } from '../interfaces/pagination'
 import { Translated } from '../interfaces/translated'
+import { TagModel, TranslatedTag } from './tag.model'
 import { Ordering } from '../interfaces/query'
 import { UserModel } from './user.model'
+
+// meta front DocumentTypeCentralized backend
+export type ResearcherDocumentType = 'publications' | 'conferences'
 
 export type Relators =
   | 'abr'
@@ -385,20 +389,52 @@ export type ResearcherIdentifier = {
   harvester: HarvesterType
 }
 
+export type AbstractDomain<Domain = TagModel> = {
+  id: number
+  level: number
+  domain: Domain
+}
+
+export type TranslatedAbstractDomain<Domain = TranslatedTag> = {
+  id: number
+  level: number
+  domain: Domain
+}
+
+export type ResearcherDomain = AbstractDomain
+export type TranslatedResearcherDomain = TranslatedAbstractDomain
+
 export type Researcher = {
   id: number
   user: null | UserModel
   display_name: string
   identifiers: ResearcherIdentifier[]
-}
+  bio: string | null
+  short_bio: string | null
 
-export type ResearcherLight = Researcher & {
-  // this is a objects with numbers of each documents
-  documents: {
+  domains: ResearcherDomain[]
+
+  h_index: number | null
+  i10_index: number | null
+
+  modules: {
     publications: number
     conferences: number
+    similars: number
+    affiliated: number
+    citations: number
+    domains: number
+    patents: number
+    awards: number
   }
 }
+
+export type TranslatedResearcher = Translated<Omit<Researcher, 'domains'>, 'bio' | 'short_bio'> & {
+  domains: TranslatedResearcherDomain[]
+}
+
+export type DocumentDomain = AbstractDomain
+export type TranslatedDocumentDomain = TranslatedAbstractDomain
 
 export type ResearcherDocument = {
   id: number
@@ -408,14 +444,79 @@ export type ResearcherDocument = {
   contributors: Researcher[]
   identifiers: ResearcherIdentifier[]
   publication_date: string | null | Date
+  domains: DocumentDomain[]
+
   modules: {
     similars: number
+    journals: number
   }
 }
 
-export type ResearcherDocumentType = keyof ResearcherLight['documents']
+export type TranslatedResearcherDocument = Translated<
+  Omit<ResearcherDocument, 'domains'>,
+  'title' | 'description'
+> & {
+  domains: TranslatedDocumentDomain[]
+}
 
-export type TranslatedResearcherDocument = Translated<ResearcherDocument, 'title' | 'description'>
+// journal
+
+export type Journal = {
+  uid?: string
+  title: string
+  acronym: string[]
+}
+
+export type DocumentJournal = {
+  journal: Journal
+  document: ResearcherDocument
+
+  pages?: string
+  volume?: string
+  issue?: string
+}
+
+export type Patent = {
+  id: number
+  name: string
+  description: string
+  date: string | null
+  link: string | null
+  researchers: Researcher[]
+}
+
+export type TranslatedPatent = Translated<Omit<Patent, 'researchers'>, 'name' | 'description'> & {
+  researchers: TranslatedResearcher[]
+}
+
+export type Award = {
+  id: number
+  name: string
+  description: string
+}
+
+export type TranslatedAward = Translated<Award, 'name' | 'description'>
+
+export type ResearcherAward = {
+  award: Award
+  date: string | null
+  description: string
+  link: string | null
+}
+export type TranslatedResearcherAward = Translated<
+  Omit<ResearcherAward, 'award'>,
+  'description'
+> & {
+  award: TranslatedAward
+}
+
+// TODO: journal is not translated field
+export type TranslatedJournal = Journal
+
+export type TranslatedDocumentJournal = Omit<DocumentJournal, 'document' | 'journal'> & {
+  journal: TranslatedJournal
+  document: TranslatedResearcherDocument
+}
 
 export type ResearcherDocumentAnalytics = {
   document_types: { [key in DocumentCrisalidType]?: number }
@@ -442,3 +543,23 @@ export type QueryFilterDocument = Partial<{
   modules: 'none' | DocumentModulesKeys[]
   ordering: Ordering<'publication_date'>
 }>
+
+export type QueryFilterAward = Partial<
+  {
+    name: string
+    description: string
+    date_after: Date | string
+    date_before: Date | string
+    ordering: Ordering<'date'>
+  } & PaginationResult
+>
+
+export type QueryFilterPatent = Partial<
+  {
+    name: string
+    description: string
+    date_after: Date | string
+    date_before: Date | string
+    ordering: Ordering<'date'>
+  } & PaginationResult
+>

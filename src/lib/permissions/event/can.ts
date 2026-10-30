@@ -13,6 +13,7 @@ export const canEditEvent = (
   organizationId: OrganizationModel['id'],
   eventId: EventModel['id']
 ) => {
+  void eventId
   return isAdminOrFacilitator(rights, organizationId)
 }
 
@@ -21,5 +22,6 @@ export const canDeleteEvent = (
   organizationId: OrganizationModel['id'],
   eventId: EventModel['id']
 ) => {
+  void eventId
   return isAdminOrFacilitator(rights, organizationId)
 }

@@ -162,7 +162,11 @@ function getUserAttachmentLink(userId, options = {}) {
   return clientAPI(`user/${userId}/link/`, options);
 }
 async function postUserAttachmentLink(userId, body, options = {}) {
-  return await clientAPI(`user/${userId}/link/`, { body, method: "POST" });
+  return await clientAPI(`user/${userId}/link/`, {
+    ...options,
+    body,
+    method: "POST"
+  });
 }
 async function patchUserAttachmentLink(userId, linkId, body) {
   return await clientAPI(`user/${userId}/link/${linkId}/`, {
@@ -275,12 +279,54 @@ async function getResearchDocumentSimilars(organisationCode, documentId, config 
     config
   );
 }
+async function getResearchDocumentCitations(organisationCode, documentId, config = {}) {
+  return await clientAPI(
+    `crisalid/organization/${organisationCode}/document/${documentId}/citations/`,
+    config
+  );
+}
 async function searchResearcher(organizationCode, config = {}) {
   return clientAPI(
     `crisalid/organization/${organizationCode}/researcher/search/`,
     config
   );
 }
+var getResearcherAffiliated = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/affiliated/`,
+    config
+  );
+};
+var getResearcherSimilar = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/similar/`,
+    config
+  );
+};
+var generateResearcherBioIa = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/bio-ia/`,
+    config
+  );
+};
+var getResearcherCitations = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/citations/`,
+    config
+  );
+};
+var getResearcherPatent = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/patents/`,
+    config
+  );
+};
+var getResearcherAward = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/awards/`,
+    config
+  );
+};
 
 // src/apis/event.service.ts
 async function getAllEvents(organizationCode, config) {
@@ -1234,7 +1280,7 @@ async function patchProject(projectId, body, config = {}) {
   });
 }
 async function deleteProject(projectId, config = {}) {
-  await clientAPI(`project/${projectId}/`, { method: "DELETE" });
+  await clientAPI(`project/${projectId}/`, { ...config, method: "DELETE" });
 }
 async function duplicateProject(projectId, config = {}) {
   return await clientAPI(`project/${projectId}/duplicate/`, {
@@ -1797,6 +1843,7 @@ export {
   deleteUserPicture,
   deleteUserSkill,
   duplicateProject,
+  generateResearcherBioIa,
   getAccessRequests,
   getAllEvents,
   getAllInstructions,
@@ -1866,7 +1913,13 @@ export {
   getProjectsRecommendationsForUser,
   getRandomProjectsRecommendationsForUser,
   getRandomUsersRecommendationsForUser,
+  getResearchDocumentCitations,
   getResearchDocumentSimilars,
+  getResearcherAffiliated,
+  getResearcherAward,
+  getResearcherCitations,
+  getResearcherPatent,
+  getResearcherSimilar,
   getReviews,
   getRootProjectCategory,
   getStats,
