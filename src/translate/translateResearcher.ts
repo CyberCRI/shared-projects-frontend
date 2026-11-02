@@ -1,5 +1,5 @@
-import { Language, Researcher, ResearcherDocument, TranslatedResearcher } from '../models'
 import { translateResearcherDomain } from './translateResearcherDomains'
+import { Language, Researcher, TranslatedResearcher } from '../models'
 import { translateEntity, translateMany } from './utils'
 
 export const translateResearcher = (

@@ -9,7 +9,10 @@ import {
   QueryFilterPatent,
   ResearcherAward,
   Patent,
+  ResearcherDomain,
 } from '../models/researcher.model'
+import { QueryFilterStructure, Structure, StructureResearcher } from '../models/structure.model'
+import { AuthorityOrganization } from '../models/authority_organization.model'
 import { PaginationQuery, PaginationResult } from '../interfaces/pagination'
 import { OrganizationModel, PeopleGroupIdOrSlug } from '../models'
 import { clientAPI, ClientAPIOptions } from './client'
@@ -161,6 +164,94 @@ export const getResearcherAward = (
 ) => {
   return clientAPI<PaginationResult<ResearcherAward>>(
     `crisalid/organization/${organizationCode}/researcher/${researchId}/awards/`,
+    config
+  )
+}
+
+// structures
+export const getAllStructures = (
+  organizationCode: OrganizationModel['code'],
+  config: ClientAPIOptions<QueryFilterStructure> = {}
+) => {
+  return clientAPI<PaginationResult<Structure>>(
+    `crisalid/organization/${organizationCode}/structure/`,
+    config
+  )
+}
+
+export const getStructure = (
+  organizationCode: OrganizationModel['code'],
+  structureId: Structure['id'],
+  config: ClientAPIOptions = {}
+) => {
+  return clientAPI<Structure>(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/`,
+    config
+  )
+}
+
+export const getStructureChildren = (
+  organizationCode: OrganizationModel['code'],
+  structureId: Structure['id'],
+  config: ClientAPIOptions<QueryFilterStructure> = {}
+) => {
+  return clientAPI<PaginationResult<Structure>>(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/childrens/`,
+    config
+  )
+}
+
+export const getStructureSupervisingStructures = (
+  organizationCode: OrganizationModel['code'],
+  structureId: Structure['id'],
+  config: ClientAPIOptions<QueryFilterStructure> = {}
+) => {
+  return clientAPI<PaginationResult<Structure>>(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/supervising-structures/`,
+    config
+  )
+}
+
+export const getStructureResearcherDomains = (
+  organizationCode: OrganizationModel['code'],
+  structureId: Structure['id'],
+  config: ClientAPIOptions<QueryFilterStructure> = {}
+) => {
+  return clientAPI<PaginationResult<ResearcherDomain>>(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/research-domains/`,
+    config
+  )
+}
+
+export const getStructureCollaborations = (
+  organizationCode: OrganizationModel['code'],
+  structureId: Structure['id'],
+  config: ClientAPIOptions<QueryFilterStructure> = {}
+) => {
+  return clientAPI<PaginationResult<AuthorityOrganization>>(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/collaborations/`,
+    config
+  )
+}
+
+export const getStructureResearchers = (
+  organizationCode: OrganizationModel['code'],
+  structureId: Structure['id'],
+  config: ClientAPIOptions<QueryFilterStructure> = {}
+) => {
+  return clientAPI<PaginationResult<StructureResearcher>>(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/researchers/`,
+    config
+  )
+}
+
+export const getStructureCitations = (
+  organizationCode: OrganizationModel['code'],
+  structureId: Structure['id'],
+  config: ClientAPIOptions<QueryFilterStructure> = {}
+) => {
+  return clientAPI<PaginationResult<DocumentJournal>>(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/citations/`,
     config
   )
 }

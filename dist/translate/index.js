@@ -467,6 +467,48 @@ var translateSkill = (data, locale) => {
   };
 };
 
+// src/translate/translateStructure.ts
+var translateStructure = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  const translated = {
+    ...data
+  };
+  if (data.organization) {
+    translated.organization = translateOrganization(data.organization, locale);
+  }
+  if (data.people_group) {
+    translated.people_group = translateGroup(data.people_group, locale);
+  }
+  if (data.related_structures) {
+    translated.related_structures = translateMany(translateStructure, data.related_structures, locale);
+  }
+  if (data.researchers) {
+    translated.researchers = translateMany(translateResearcher, data.researchers, locale);
+  }
+  return translated;
+};
+var translateStructureRelation = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  return {
+    ...data,
+    structure: translateStructure(data.structure, locale),
+    related_structure: translateStructure(data.related_structure, locale)
+  };
+};
+var translateStructureResearcher = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  return {
+    ...data,
+    ...translateResearcher(data, locale)
+  };
+};
+
 // src/translate/translateUser.ts
 var translateUser = (data, locale) => {
   if (!data) {
@@ -531,6 +573,9 @@ export {
   translateResearcherDomain,
   translateReview,
   translateSkill,
+  translateStructure,
+  translateStructureRelation,
+  translateStructureResearcher,
   translateTag,
   translateTemplate,
   translateTermsAdnCondition,
