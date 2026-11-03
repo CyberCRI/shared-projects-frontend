@@ -327,6 +327,24 @@ var getResearcherAward = (organizationCode, researchId, config = {}) => {
     config
   );
 };
+var getAllAward = (organizationCode, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/award/`,
+    config
+  );
+};
+var getAward = (organizationCode, awardId, config = {}) => {
+  return clientAPI(`crisalid/organization/${organizationCode}/award/${awardId}/`, config);
+};
+var getAllPatent = (organizationCode, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/patent/`,
+    config
+  );
+};
+var getPatent = (organizationCode, patentId, config = {}) => {
+  return clientAPI(`crisalid/organization/${organizationCode}/patent/${patentId}/`, config);
+};
 
 // src/apis/event.service.ts
 async function getAllEvents(organizationCode, config) {
@@ -1845,16 +1863,19 @@ export {
   duplicateProject,
   generateResearcherBioIa,
   getAccessRequests,
+  getAllAward,
   getAllEvents,
   getAllInstructions,
   getAllNews,
   getAllOrgClassifications,
+  getAllPatent,
   getAllProjectCategories,
   getAllProjectTab,
   getAllProjectTabItem,
   getAllProjects,
   getAllTagsById,
   getAnnouncements,
+  getAward,
   getBlogEntries,
   getBlogEntry,
   getComment,
@@ -1889,6 +1910,7 @@ export {
   getOrganizationFile,
   getOrganizationFiles,
   getOrganizations,
+  getPatent,
   getProject,
   getProjectAnnouncements,
   getProjectAttachmentFile,

@@ -9,6 +9,7 @@ import {
   QueryFilterPatent,
   ResearcherAward,
   Patent,
+  Award,
 } from '../models/researcher.model'
 import { PaginationQuery, PaginationResult } from '../interfaces/pagination'
 import { OrganizationModel, PeopleGroupIdOrSlug } from '../models'
@@ -163,4 +164,42 @@ export const getResearcherAward = (
     `crisalid/organization/${organizationCode}/researcher/${researchId}/awards/`,
     config
   )
+}
+
+// award
+export const getAllAward = (
+  organizationCode: OrganizationModel['code'],
+  config: ClientAPIOptions<QueryFilterAward> = {}
+) => {
+  return clientAPI<PaginationResult<Award>>(
+    `crisalid/organization/${organizationCode}/award/`,
+    config
+  )
+}
+
+export const getAward = (
+  organizationCode: OrganizationModel['code'],
+  awardId: Award['id'],
+  config: ClientAPIOptions = {}
+) => {
+  return clientAPI<Award>(`crisalid/organization/${organizationCode}/award/${awardId}/`, config)
+}
+
+// patent
+export const getAllPatent = (
+  organizationCode: OrganizationModel['code'],
+  config: ClientAPIOptions<QueryFilterPatent> = {}
+) => {
+  return clientAPI<PaginationResult<Patent>>(
+    `crisalid/organization/${organizationCode}/patent/`,
+    config
+  )
+}
+
+export const getPatent = (
+  organizationCode: OrganizationModel['code'],
+  patentId: Patent['id'],
+  config: ClientAPIOptions = {}
+) => {
+  return clientAPI<Award>(`crisalid/organization/${organizationCode}/patent/${patentId}/`, config)
 }

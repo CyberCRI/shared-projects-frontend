@@ -551,6 +551,7 @@ export type QueryFilterAward = Partial<
     date_after: Date | string
     date_before: Date | string
     ordering: Ordering<'date'>
+    serializers: 'light'
   } & PaginationResult
 >
 
@@ -561,5 +562,6 @@ export type QueryFilterPatent = Partial<
     date_after: Date | string
     date_before: Date | string
     ordering: Ordering<'date'>
+    serializers: 'light'
   } & PaginationResult
 >
