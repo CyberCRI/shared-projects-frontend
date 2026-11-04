@@ -297,9 +297,9 @@ var getResearcherAffiliated = (organizationCode, researchId, config = {}) => {
     config
   );
 };
-var getResearcherSimilar = (organizationCode, researchId, config = {}) => {
+var getResearcherSimilars = (organizationCode, researchId, config = {}) => {
   return clientAPI(
-    `crisalid/organization/${organizationCode}/researcher/${researchId}/similar/`,
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/similars/`,
     config
   );
 };
@@ -315,15 +315,27 @@ var getResearcherCitations = (organizationCode, researchId, config = {}) => {
     config
   );
 };
-var getResearcherPatent = (organizationCode, researchId, config = {}) => {
+var getResearcherPatents = (organizationCode, researchId, config = {}) => {
   return clientAPI(
     `crisalid/organization/${organizationCode}/researcher/${researchId}/patents/`,
     config
   );
 };
-var getResearcherAward = (organizationCode, researchId, config = {}) => {
+var getResearcherAwards = (organizationCode, researchId, config = {}) => {
   return clientAPI(
     `crisalid/organization/${organizationCode}/researcher/${researchId}/awards/`,
+    config
+  );
+};
+var getResearcherTeachings = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/teaching/`,
+    config
+  );
+};
+var getResearcherFundings = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/funding/`,
     config
   );
 };
@@ -344,6 +356,27 @@ var getAllPatent = (organizationCode, config = {}) => {
 };
 var getPatent = (organizationCode, patentId, config = {}) => {
   return clientAPI(`crisalid/organization/${organizationCode}/patent/${patentId}/`, config);
+};
+var getAllTeaching = (organizationCode, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/teaching/`,
+    config
+  );
+};
+var getTeaching = (organizationCode, teachingId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/teaching/${teachingId}/`,
+    config
+  );
+};
+var getAllFunding = (organizationCode, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/funding/`,
+    config
+  );
+};
+var getFunding = (organizationCode, fundingId, config = {}) => {
+  return clientAPI(`crisalid/organization/${organizationCode}/funding/${fundingId}/`, config);
 };
 
 // src/apis/event.service.ts
@@ -1865,6 +1898,7 @@ export {
   getAccessRequests,
   getAllAward,
   getAllEvents,
+  getAllFunding,
   getAllInstructions,
   getAllNews,
   getAllOrgClassifications,
@@ -1874,6 +1908,7 @@ export {
   getAllProjectTabItem,
   getAllProjects,
   getAllTagsById,
+  getAllTeaching,
   getAnnouncements,
   getAward,
   getBlogEntries,
@@ -1882,6 +1917,7 @@ export {
   getComments,
   getEvent,
   getFeaturedProjects,
+  getFunding,
   getGroup,
   getGroupAllLocations,
   getGroupEvent,
@@ -1938,15 +1974,18 @@ export {
   getResearchDocumentCitations,
   getResearchDocumentSimilars,
   getResearcherAffiliated,
-  getResearcherAward,
+  getResearcherAwards,
   getResearcherCitations,
-  getResearcherPatent,
-  getResearcherSimilar,
+  getResearcherFundings,
+  getResearcherPatents,
+  getResearcherSimilars,
+  getResearcherTeachings,
   getReviews,
   getRootProjectCategory,
   getStats,
   getSubGroup,
   getTags,
+  getTeaching,
   getTemplate,
   getTemplates,
   getUser,

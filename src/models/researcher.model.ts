@@ -2,7 +2,9 @@ import { PaginationQuery, PaginationResult } from '../interfaces/pagination'
 import { Translated } from '../interfaces/translated'
 import { TagModel, TranslatedTag } from './tag.model'
 import { Ordering } from '../interfaces/query'
+import { ProjectModel } from './project.model'
 import { UserModel } from './user.model'
+import BaseModel from './base.model'
 
 // meta front DocumentTypeCentralized backend
 export type ResearcherDocumentType = 'publications' | 'conferences'
@@ -426,6 +428,8 @@ export type Researcher = {
     domains: number
     patents: number
     awards: number
+    teachings: number
+    fundings: number
   }
 }
 
@@ -451,6 +455,7 @@ export type ResearcherDocument = {
     journals: number
   }
 }
+export type DocumentModulesKeys = keyof ResearcherDocument['modules']
 
 export type TranslatedResearcherDocument = Translated<
   Omit<ResearcherDocument, 'domains'>,
@@ -527,14 +532,54 @@ export type ResearcherDocumentAnalytics = {
   roles: { [key in Relators]?: number }
 }
 
+// fundings/teachings
+
+export type Currency = 'EUR' | 'USD'
+
+export interface Funding extends BaseModel {
+  id: number
+  name: string
+  description: string
+  prices: number | null
+  currency: Currency
+  start_date: number
+  end_date: number
+  project_id?: number
+  researchers?: Researcher[]
+}
+export type TranslatedFunding = Translated<Omit<Funding, 'researchers'>, 'name' | 'description'> & {
+  researchers?: TranslatedResearcher[]
+}
+
+export type TeachingDomain = AbstractDomain
+export type TranslatedTeachingDomain = TranslatedAbstractDomain
+
+export interface Teaching extends BaseModel {
+  id: number
+  name: string
+  description: string
+  spec: string
+  level: string
+  link: string
+  domains: TeachingDomain[]
+  researcher?: Researcher
+}
+export type TranslatedTeaching = Translated<
+  Omit<Teaching, 'researcher' | 'domains'>,
+  'name' | 'description' | 'spec'
+> & {
+  domains: TranslatedTeachingDomain[]
+  researcher?: TranslatedResearcher
+}
+
+// queryfilters
+
 export type QueryFilterResearcher = Partial<
   {
     harvester: HarvesterType
     values: string // TODO: change to string[] (need to update backend)
   } & PaginationQuery
 >
-
-export type DocumentModulesKeys = keyof ResearcherDocument['modules']
 
 export type QueryFilterDocument = Partial<{
   year: number
@@ -562,6 +607,39 @@ export type QueryFilterPatent = Partial<
     date_after: Date | string
     date_before: Date | string
     ordering: Ordering<'date'>
+    serializers: 'light'
+  } & PaginationResult
+>
+
+export type QueryFilterFunding = Partial<
+  {
+    name: string
+    description: string
+    currency: Currency
+    min_price: number
+    max_price: number
+
+    start_date: string
+    start_date_after: string
+    start_date_before: string
+    end_date: string
+    end_date_after: string
+    end_date_before: string
+    project: ProjectModel['id']
+    researcher: Researcher['id'][]
+
+    ordering: Ordering<'price'>
+    serializers: 'light'
+  } & PaginationResult
+>
+
+export type QueryFilterTeaching = Partial<
+  {
+    name: string
+    description: string
+    spec: string
+    level: string
+    researcher: Researcher['id'][]
     serializers: 'light'
   } & PaginationResult
 >

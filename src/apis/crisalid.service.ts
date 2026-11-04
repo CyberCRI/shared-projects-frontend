@@ -10,6 +10,10 @@ import {
   ResearcherAward,
   Patent,
   Award,
+  Teaching,
+  Funding,
+  QueryFilterFunding,
+  QueryFilterTeaching,
 } from '../models/researcher.model'
 import { PaginationQuery, PaginationResult } from '../interfaces/pagination'
 import { OrganizationModel, PeopleGroupIdOrSlug } from '../models'
@@ -111,13 +115,13 @@ export const getResearcherAffiliated = (
   )
 }
 
-export const getResearcherSimilar = (
+export const getResearcherSimilars = (
   organizationCode: OrganizationModel['code'],
   researchId: Researcher['id'],
   config: ClientAPIOptions<PaginationResult> = {}
 ) => {
   return clientAPI<PaginationResult<Researcher>>(
-    `crisalid/organization/${organizationCode}/researcher/${researchId}/similar/`,
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/similars/`,
     config
   )
 }
@@ -144,7 +148,7 @@ export const getResearcherCitations = (
   )
 }
 
-export const getResearcherPatent = (
+export const getResearcherPatents = (
   organizationCode: OrganizationModel['code'],
   researchId: Researcher['id'],
   config: ClientAPIOptions<QueryFilterPatent> = {}
@@ -155,13 +159,35 @@ export const getResearcherPatent = (
   )
 }
 
-export const getResearcherAward = (
+export const getResearcherAwards = (
   organizationCode: OrganizationModel['code'],
   researchId: Researcher['id'],
   config: ClientAPIOptions<QueryFilterAward> = {}
 ) => {
   return clientAPI<PaginationResult<ResearcherAward>>(
     `crisalid/organization/${organizationCode}/researcher/${researchId}/awards/`,
+    config
+  )
+}
+
+export const getResearcherTeachings = (
+  organizationCode: OrganizationModel['code'],
+  researchId: Researcher['id'],
+  config: ClientAPIOptions<QueryFilterTeaching> = {}
+) => {
+  return clientAPI<PaginationResult<Teaching>>(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/teaching/`,
+    config
+  )
+}
+
+export const getResearcherFundings = (
+  organizationCode: OrganizationModel['code'],
+  researchId: Researcher['id'],
+  config: ClientAPIOptions<QueryFilterFunding> = {}
+) => {
+  return clientAPI<PaginationResult<Funding>>(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/funding/`,
     config
   )
 }
@@ -202,4 +228,45 @@ export const getPatent = (
   config: ClientAPIOptions = {}
 ) => {
   return clientAPI<Award>(`crisalid/organization/${organizationCode}/patent/${patentId}/`, config)
+}
+
+// teaching
+export const getAllTeaching = (
+  organizationCode: OrganizationModel['code'],
+  config: ClientAPIOptions<QueryFilterTeaching> = {}
+) => {
+  return clientAPI<PaginationResult<Teaching>>(
+    `crisalid/organization/${organizationCode}/teaching/`,
+    config
+  )
+}
+
+export const getTeaching = (
+  organizationCode: OrganizationModel['code'],
+  teachingId: Teaching['id'],
+  config: ClientAPIOptions = {}
+) => {
+  return clientAPI<Award>(
+    `crisalid/organization/${organizationCode}/teaching/${teachingId}/`,
+    config
+  )
+}
+
+// funding
+export const getAllFunding = (
+  organizationCode: OrganizationModel['code'],
+  config: ClientAPIOptions<QueryFilterFunding> = {}
+) => {
+  return clientAPI<PaginationResult<Funding>>(
+    `crisalid/organization/${organizationCode}/funding/`,
+    config
+  )
+}
+
+export const getFunding = (
+  organizationCode: OrganizationModel['code'],
+  fundingId: Funding['id'],
+  config: ClientAPIOptions = {}
+) => {
+  return clientAPI<Award>(`crisalid/organization/${organizationCode}/funding/${fundingId}/`, config)
 }

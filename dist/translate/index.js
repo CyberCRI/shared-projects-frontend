@@ -436,6 +436,18 @@ var translateResearcherAward = (data, locale) => {
   };
 };
 
+// src/translate/translateResearcherFunding.ts
+var translateFunding = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  const translated = translateEntity(data, ["name", "description"], locale);
+  if (data.researchers) {
+    translated.researchers = translateMany(translateResearcher, data.researchers, locale);
+  }
+  return translated;
+};
+
 // src/translate/translateResearcherPatent.ts
 var translatePatent = (data, locale) => {
   if (!data) {
@@ -444,6 +456,25 @@ var translatePatent = (data, locale) => {
   const translated = translateEntity(data, ["name", "description"], locale);
   if (data.researchers) {
     translated.researchers = translateMany(translateResearcher, data.researchers, locale);
+  }
+  return translated;
+};
+
+// src/translate/translateResearcherTeaching.ts
+var translateTeaching = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  const translated = translateEntity(
+    data,
+    ["name", "description", "spec"],
+    locale
+  );
+  if (data.researcher) {
+    translated.researcher = translateResearcher(data.researcher, locale);
+  }
+  if (data.domains) {
+    translated.domains = translateMany(translateResearcherDomain, translated.domains, locale);
   }
   return translated;
 };
@@ -507,6 +538,7 @@ export {
   translateEvent,
   translateEventsLocation,
   translateFile,
+  translateFunding,
   translateGoal,
   translateGroup,
   translateInstruction,
@@ -532,6 +564,7 @@ export {
   translateReview,
   translateSkill,
   translateTag,
+  translateTeaching,
   translateTemplate,
   translateTermsAdnCondition,
   translateUser,
