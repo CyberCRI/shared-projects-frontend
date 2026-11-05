@@ -407,12 +407,27 @@ var translateProjectTabItem = (data, locale) => {
   return translateEntity(data, ["title", "content"], locale);
 };
 
+// src/translate/translateUser.ts
+var translateUser = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  return translateEntity(
+    data,
+    ["description", "job", "short_description"],
+    locale
+  );
+};
+
 // src/translate/translateResearcher.ts
 var translateResearcher = (data, locale) => {
   if (!data) {
     return data;
   }
-  const entity = translateEntity(data, ["bio"], locale);
+  const entity = translateEntity(data, ["bio", "short_bio"], locale);
+  if (data.user) {
+    entity.user = translateUser(data.user, locale);
+  }
   if (entity.domains) {
     entity.domains = translateMany(translateResearcherDomain, entity.domains, locale);
   }
@@ -496,18 +511,6 @@ var translateSkill = (data, locale) => {
     ...data,
     tag: translateTag(data.tag, locale)
   };
-};
-
-// src/translate/translateUser.ts
-var translateUser = (data, locale) => {
-  if (!data) {
-    return data;
-  }
-  return translateEntity(
-    data,
-    ["description", "job", "short_description"],
-    locale
-  );
 };
 
 // src/translate/translatedProjectLinked.ts

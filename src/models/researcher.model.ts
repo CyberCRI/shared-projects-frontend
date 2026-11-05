@@ -1,9 +1,9 @@
 import { PaginationQuery, PaginationResult } from '../interfaces/pagination'
+import { TranslatedUserModel, UserModel } from './user.model'
 import { Translated } from '../interfaces/translated'
 import { TagModel, TranslatedTag } from './tag.model'
 import { Ordering } from '../interfaces/query'
 import { ProjectModel } from './project.model'
-import { UserModel } from './user.model'
 import BaseModel from './base.model'
 
 // meta front DocumentTypeCentralized backend
@@ -433,8 +433,12 @@ export type Researcher = {
   }
 }
 
-export type TranslatedResearcher = Translated<Omit<Researcher, 'domains'>, 'bio' | 'short_bio'> & {
+export type TranslatedResearcher = Translated<
+  Omit<Researcher, 'domains' | 'user'>,
+  'bio' | 'short_bio'
+> & {
   domains: TranslatedResearcherDomain[]
+  user: null | TranslatedUserModel
 }
 
 export type DocumentDomain = AbstractDomain
@@ -466,13 +470,16 @@ export type TranslatedResearcherDocument = Translated<
 
 // journal
 
-export type Journal = {
+export interface Journal extends BaseModel {
+  id?: number
   uid?: string
   title: string
   acronym: string[]
 }
 
-export type DocumentJournal = {
+export interface DocumentJournal extends BaseModel {
+  id?: number
+
   journal: Journal
   document: ResearcherDocument
 
@@ -481,8 +488,8 @@ export type DocumentJournal = {
   issue?: string
 }
 
-export type Patent = {
-  id: number
+export interface Patent extends BaseModel {
+  id?: number
   name: string
   description: string
   date: string | null
@@ -502,7 +509,8 @@ export type Award = {
 
 export type TranslatedAward = Translated<Award, 'name' | 'description'>
 
-export type ResearcherAward = {
+export interface ResearcherAward extends BaseModel {
+  id?: number
   award: Award
   date: string | null
   description: string
@@ -542,8 +550,8 @@ export interface Funding extends BaseModel {
   description: string
   prices: number | null
   currency: Currency
-  start_date: number
-  end_date: number
+  start_date: string
+  end_date: string
   project_id?: number
   researchers?: Researcher[]
 }

@@ -4,8 +4,8 @@
  */
 import type { ImageModel, ImageSize } from './image.model'
 
+import type { Researcher, TranslatedResearcher } from './researcher.model'
 import type { Translated } from '../interfaces/translated'
-import type { Researcher } from './researcher.model'
 
 import { Ordering, PaginationQuery } from '../interfaces'
 import { OrganizationModel } from './organization.model'
@@ -155,8 +155,10 @@ export interface UserPrivacyPatchModel {
 
 export type TranslatedUserModel = Translated<
   UserModel,
-  'description' | 'short_description' | 'job'
-> & {}
+  'description' | 'short_description' | 'job' | 'researcher'
+> & {
+  translated: TranslatedResearcher
+}
 
 export type QueryFilterUser = Partial<
   {
