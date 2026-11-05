@@ -154,10 +154,10 @@ export interface UserPrivacyPatchModel {
 }
 
 export type TranslatedUserModel = Translated<
-  UserModel,
-  'description' | 'short_description' | 'job' | 'researcher'
+  Omit<UserModel, 'researcher'>,
+  'description' | 'short_description' | 'job'
 > & {
-  translated: TranslatedResearcher
+  researcher: TranslatedResearcher
 }
 
 export type QueryFilterUser = Partial<

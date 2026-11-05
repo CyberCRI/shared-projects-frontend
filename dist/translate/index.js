@@ -412,11 +412,15 @@ var translateUser = (data, locale) => {
   if (!data) {
     return data;
   }
-  return translateEntity(
+  const translated = translateEntity(
     data,
     ["description", "job", "short_description"],
     locale
   );
+  if (data.researcher) {
+    translated.researcher = translateResearcher(data.researcher, locale);
+  }
+  return translated;
 };
 
 // src/translate/translateResearcher.ts
