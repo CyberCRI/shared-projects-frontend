@@ -176,7 +176,7 @@ export const getResearcherTeachings = (
   config: ClientAPIOptions<QueryFilterTeaching> = {}
 ) => {
   return clientAPI<PaginationResult<Teaching>>(
-    `crisalid/organization/${organizationCode}/researcher/${researchId}/teaching/`,
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/teachings/`,
     config
   )
 }
@@ -187,7 +187,7 @@ export const getResearcherFundings = (
   config: ClientAPIOptions<QueryFilterFunding> = {}
 ) => {
   return clientAPI<PaginationResult<Funding>>(
-    `crisalid/organization/${organizationCode}/researcher/${researchId}/funding/`,
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/fundings/`,
     config
   )
 }

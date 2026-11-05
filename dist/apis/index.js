@@ -329,13 +329,13 @@ var getResearcherAwards = (organizationCode, researchId, config = {}) => {
 };
 var getResearcherTeachings = (organizationCode, researchId, config = {}) => {
   return clientAPI(
-    `crisalid/organization/${organizationCode}/researcher/${researchId}/teaching/`,
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/teachings/`,
     config
   );
 };
 var getResearcherFundings = (organizationCode, researchId, config = {}) => {
   return clientAPI(
-    `crisalid/organization/${organizationCode}/researcher/${researchId}/funding/`,
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/fundings/`,
     config
   );
 };
