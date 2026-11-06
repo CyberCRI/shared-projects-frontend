@@ -378,6 +378,54 @@ var getAllFunding = (organizationCode, config = {}) => {
 var getFunding = (organizationCode, fundingId, config = {}) => {
   return clientAPI(`crisalid/organization/${organizationCode}/funding/${fundingId}/`, config);
 };
+var getAllStructures = (organizationCode, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/`,
+    config
+  );
+};
+var getStructure = (organizationCode, structureId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/`,
+    config
+  );
+};
+var getStructureChildren = (organizationCode, structureId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/childrens/`,
+    config
+  );
+};
+var getStructureSupervisingStructures = (organizationCode, structureId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/supervising-structures/`,
+    config
+  );
+};
+var getStructureResearcherDomains = (organizationCode, structureId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/research-domains/`,
+    config
+  );
+};
+var getStructureCollaborations = (organizationCode, structureId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/collaborations/`,
+    config
+  );
+};
+var getStructureResearchers = (organizationCode, structureId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/researchers/`,
+    config
+  );
+};
+var getStructureCitations = (organizationCode, structureId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/citations/`,
+    config
+  );
+};
 
 // src/apis/event.service.ts
 async function getAllEvents(organizationCode, config) {
@@ -1907,6 +1955,7 @@ export {
   getAllProjectTab,
   getAllProjectTabItem,
   getAllProjects,
+  getAllStructures,
   getAllTagsById,
   getAllTeaching,
   getAnnouncements,
@@ -1983,6 +2032,13 @@ export {
   getReviews,
   getRootProjectCategory,
   getStats,
+  getStructure,
+  getStructureChildren,
+  getStructureCitations,
+  getStructureCollaborations,
+  getStructureResearcherDomains,
+  getStructureResearchers,
+  getStructureSupervisingStructures,
   getSubGroup,
   getTags,
   getTeaching,
