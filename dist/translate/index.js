@@ -522,9 +522,7 @@ var translateStructure = (data, locale) => {
   if (!data) {
     return data;
   }
-  const translated = {
-    ...data
-  };
+  const translated = translateEntity(data, ["description"], locale);
   if (data.organization) {
     translated.organization = translateOrganization(data.organization, locale);
   }

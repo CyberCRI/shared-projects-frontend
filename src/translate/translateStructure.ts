@@ -10,7 +10,7 @@ import {
 import { translateOrganization } from './translateOrganization'
 import { translateResearcher } from './translateResearcher'
 import { translateGroup } from './translateGroup'
-import { translateMany } from './utils'
+import { translateEntity, translateMany } from './utils'
 
 export const translateStructure = (
   data: Structure,
@@ -20,10 +20,7 @@ export const translateStructure = (
     return data
   }
 
-  // @ts-expect-error ignore assignable
-  const translated: TranslatedStucture = {
-    ...data,
-  }
+  const translated = translateEntity<TranslatedStucture>(data, ['description'], locale)
   if (data.organization) {
     translated.organization = translateOrganization(data.organization, locale)
   }

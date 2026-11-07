@@ -1,9 +1,9 @@
 import { OrganizationModel, TranslatedOrganizationModel } from './organization.model'
 import { PeopleGroupModel, TranslatedPeopleGroupModel } from './people-group.model'
 import { Researcher, TranslatedResearcher } from './researcher.model'
-import { PaginationQuery } from '../interfaces'
-import { Identifier } from 'typescript'
+import { PaginationQuery, Translated } from '../interfaces'
 import BaseModel from './base.model'
+import { Identifier, StructureIdentifierType } from './identifiers.model'
 
 // Generic organization type from crisalid
 export type GenericType =
@@ -29,15 +29,30 @@ export interface Structure extends BaseModel {
   acronym: string
   description: string
   external: boolean
-  identifiers: Identifier[]
+  identifiers: Identifier<StructureIdentifierType>[]
   related_structures: Structure[]
 
   researchers?: Researcher[]
   people_group?: PeopleGroupModel
+
+  modules: {
+    publications: number
+    conferences: number
+    researchers: number,
+    sub_structures: number,
+    parent_structures: number,
+    supervising_structures: number,
+    supervised_structures: number,
+    research_domains: number,
+    collaborations: number,
+    citations: number,
+  }
 }
 
+export type StructureModules = keyof Structure['modules']
+
 export type TranslatedStucture = Omit<
-  Structure,
+  Translated<Structure, 'description'>,
   'related_structures' | 'researchers' | 'people_group' | 'organization'
 > & {
   related_structures: TranslatedStucture[]
@@ -151,6 +166,7 @@ export type QueryFilterStructure = Partial<
     id: number[]
     people_group: PeopleGroupModel['id']
     generic_type: GenericType
+    modules: 'none' | StructureModules[]
   } & PaginationQuery
 >
 

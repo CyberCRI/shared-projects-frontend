@@ -339,6 +339,12 @@ var getResearcherFundings = (organizationCode, researchId, config = {}) => {
     config
   );
 };
+var getResearcherStructures = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/structures/`,
+    config
+  );
+};
 var getAllAward = (organizationCode, config = {}) => {
   return clientAPI(
     `crisalid/organization/${organizationCode}/award/`,
@@ -2028,6 +2034,7 @@ export {
   getResearcherFundings,
   getResearcherPatents,
   getResearcherSimilars,
+  getResearcherStructures,
   getResearcherTeachings,
   getReviews,
   getRootProjectCategory,

@@ -5,6 +5,7 @@ import { TagModel, TranslatedTag } from './tag.model'
 import { Ordering } from '../interfaces/query'
 import { ProjectModel } from './project.model'
 import BaseModel from './base.model'
+import { Identifier, ResearcherIdentifierType } from './identifiers.model'
 
 // meta front DocumentTypeCentralized backend
 export type ResearcherDocumentType = 'publications' | 'conferences'
@@ -333,63 +334,6 @@ export type DocumentCrisalidType =
   | 'Presentation'
   | 'UNKNOWN'
 
-export type HarvesterType =
-  | 'orcid'
-  | 'idref'
-  | 'hal'
-  | 'idhals'
-  | 'idhali'
-  | 'scopus'
-  | 'scanr'
-  | 'openalex'
-  | 'scienceplus'
-  | 'sudoc'
-  | 'openedition'
-  | 'persee'
-  | 'local'
-  | 'eppn'
-  | 'ror'
-  | 'nns'
-  | 'uai'
-  | 'siren'
-  | 'siret'
-  | 'grid'
-  | 'wikidata'
-  | 'fundref'
-  | 'isni'
-  | 'googlescholar'
-  | 'viaf'
-  | 'doi'
-  | 'issn'
-  | 'arxiv'
-  | 'bibcode'
-  | 'biorxiv'
-  | 'cern'
-  | 'chemrxiv'
-  | 'ensam'
-  | 'ineris'
-  | 'inspire'
-  | 'ird'
-  | 'irstea'
-  | 'meditagri'
-  | 'nnt'
-  | 'okina'
-  | 'oatao'
-  | 'pii'
-  | 'pmid'
-  | 'pmcid'
-  | 'ppn'
-  | 'prodinra'
-  | 'sciencespo'
-  | 'swhid'
-  | 'uri'
-  | 'wos'
-
-export type ResearcherIdentifier = {
-  id: number
-  value: string
-  harvester: HarvesterType
-}
 
 export type AbstractDomain<Domain = TagModel> = {
   id: number
@@ -410,7 +354,7 @@ export type Researcher = {
   id: number
   user: null | UserModel
   display_name: string
-  identifiers: ResearcherIdentifier[]
+  identifiers: Identifier<ResearcherIdentifierType>[]
   bio: string | null
   short_bio: string | null
 
@@ -450,7 +394,7 @@ export type ResearcherDocument = {
   description: string
   document_type: null | string
   contributors: Researcher[]
-  identifiers: ResearcherIdentifier[]
+  identifiers: Identifier<ResearcherIdentifierType>[]
   publication_date: string | null | Date
   domains: DocumentDomain[]
 
@@ -584,7 +528,7 @@ export type TranslatedTeaching = Translated<
 
 export type QueryFilterResearcher = Partial<
   {
-    harvester: HarvesterType
+    harvester: ResearcherIdentifierType
     values: string // TODO: change to string[] (need to update backend)
   } & PaginationQuery
 >
