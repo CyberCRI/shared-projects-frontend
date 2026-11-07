@@ -2,7 +2,6 @@ import { OrganizationModel } from '../../../models/organization.model'
 import { PermissionType } from '../../../models/permissions.model'
 import { ProjectModel } from '../../../models/project.model'
 import { Right } from '../../../interfaces/permissions'
-import { isViewer } from '../isViewer'
 import { canPermission } from '../can'
 
 export const canPermissionProject = (

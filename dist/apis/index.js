@@ -162,7 +162,11 @@ function getUserAttachmentLink(userId, options = {}) {
   return clientAPI(`user/${userId}/link/`, options);
 }
 async function postUserAttachmentLink(userId, body, options = {}) {
-  return await clientAPI(`user/${userId}/link/`, { body, method: "POST" });
+  return await clientAPI(`user/${userId}/link/`, {
+    ...options,
+    body,
+    method: "POST"
+  });
 }
 async function patchUserAttachmentLink(userId, linkId, body) {
   return await clientAPI(`user/${userId}/link/${linkId}/`, {
@@ -275,12 +279,159 @@ async function getResearchDocumentSimilars(organisationCode, documentId, config 
     config
   );
 }
+async function getResearchDocumentCitations(organisationCode, documentId, config = {}) {
+  return await clientAPI(
+    `crisalid/organization/${organisationCode}/document/${documentId}/citations/`,
+    config
+  );
+}
 async function searchResearcher(organizationCode, config = {}) {
   return clientAPI(
     `crisalid/organization/${organizationCode}/researcher/search/`,
     config
   );
 }
+var getResearcherAffiliated = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/affiliated/`,
+    config
+  );
+};
+var getResearcherSimilars = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/similars/`,
+    config
+  );
+};
+var generateResearcherBioIa = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/bio-ia/`,
+    config
+  );
+};
+var getResearcherCitations = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/citations/`,
+    config
+  );
+};
+var getResearcherPatents = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/patents/`,
+    config
+  );
+};
+var getResearcherAwards = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/awards/`,
+    config
+  );
+};
+var getResearcherTeachings = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/teachings/`,
+    config
+  );
+};
+var getResearcherFundings = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/fundings/`,
+    config
+  );
+};
+var getResearcherStructures = (organizationCode, researchId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/researcher/${researchId}/structures/`,
+    config
+  );
+};
+var getAllAward = (organizationCode, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/award/`,
+    config
+  );
+};
+var getAward = (organizationCode, awardId, config = {}) => {
+  return clientAPI(`crisalid/organization/${organizationCode}/award/${awardId}/`, config);
+};
+var getAllPatent = (organizationCode, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/patent/`,
+    config
+  );
+};
+var getPatent = (organizationCode, patentId, config = {}) => {
+  return clientAPI(`crisalid/organization/${organizationCode}/patent/${patentId}/`, config);
+};
+var getAllTeaching = (organizationCode, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/teaching/`,
+    config
+  );
+};
+var getTeaching = (organizationCode, teachingId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/teaching/${teachingId}/`,
+    config
+  );
+};
+var getAllFunding = (organizationCode, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/funding/`,
+    config
+  );
+};
+var getFunding = (organizationCode, fundingId, config = {}) => {
+  return clientAPI(`crisalid/organization/${organizationCode}/funding/${fundingId}/`, config);
+};
+var getAllStructures = (organizationCode, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/`,
+    config
+  );
+};
+var getStructure = (organizationCode, structureId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/`,
+    config
+  );
+};
+var getStructureChildren = (organizationCode, structureId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/childrens/`,
+    config
+  );
+};
+var getStructureSupervisingStructures = (organizationCode, structureId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/supervising-structures/`,
+    config
+  );
+};
+var getStructureResearcherDomains = (organizationCode, structureId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/research-domains/`,
+    config
+  );
+};
+var getStructureCollaborations = (organizationCode, structureId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/collaborations/`,
+    config
+  );
+};
+var getStructureResearchers = (organizationCode, structureId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/researchers/`,
+    config
+  );
+};
+var getStructureCitations = (organizationCode, structureId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/citations/`,
+    config
+  );
+};
 
 // src/apis/event.service.ts
 async function getAllEvents(organizationCode, config) {
@@ -1234,7 +1385,7 @@ async function patchProject(projectId, body, config = {}) {
   });
 }
 async function deleteProject(projectId, config = {}) {
-  await clientAPI(`project/${projectId}/`, { method: "DELETE" });
+  await clientAPI(`project/${projectId}/`, { ...config, method: "DELETE" });
 }
 async function duplicateProject(projectId, config = {}) {
   return await clientAPI(`project/${projectId}/duplicate/`, {
@@ -1797,23 +1948,31 @@ export {
   deleteUserPicture,
   deleteUserSkill,
   duplicateProject,
+  generateResearcherBioIa,
   getAccessRequests,
+  getAllAward,
   getAllEvents,
+  getAllFunding,
   getAllInstructions,
   getAllNews,
   getAllOrgClassifications,
+  getAllPatent,
   getAllProjectCategories,
   getAllProjectTab,
   getAllProjectTabItem,
   getAllProjects,
+  getAllStructures,
   getAllTagsById,
+  getAllTeaching,
   getAnnouncements,
+  getAward,
   getBlogEntries,
   getBlogEntry,
   getComment,
   getComments,
   getEvent,
   getFeaturedProjects,
+  getFunding,
   getGroup,
   getGroupAllLocations,
   getGroupEvent,
@@ -1842,6 +2001,7 @@ export {
   getOrganizationFile,
   getOrganizationFiles,
   getOrganizations,
+  getPatent,
   getProject,
   getProjectAnnouncements,
   getProjectAttachmentFile,
@@ -1866,12 +2026,29 @@ export {
   getProjectsRecommendationsForUser,
   getRandomProjectsRecommendationsForUser,
   getRandomUsersRecommendationsForUser,
+  getResearchDocumentCitations,
   getResearchDocumentSimilars,
+  getResearcherAffiliated,
+  getResearcherAwards,
+  getResearcherCitations,
+  getResearcherFundings,
+  getResearcherPatents,
+  getResearcherSimilars,
+  getResearcherStructures,
+  getResearcherTeachings,
   getReviews,
   getRootProjectCategory,
   getStats,
+  getStructure,
+  getStructureChildren,
+  getStructureCitations,
+  getStructureCollaborations,
+  getStructureResearcherDomains,
+  getStructureResearchers,
+  getStructureSupervisingStructures,
   getSubGroup,
   getTags,
+  getTeaching,
   getTemplate,
   getTemplates,
   getUser,
