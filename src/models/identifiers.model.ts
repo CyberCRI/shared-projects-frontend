@@ -1,4 +1,3 @@
-
 // export type HarvesterType =
 //   | 'orcid'
 //   | 'idref'
@@ -52,23 +51,41 @@
 //   | 'wos'
 
 // OrganizationIdentifierType (structures and authority organizations)
-export type OrganizationHarvesterType = "idref" | "ror" | "nns" | "local" | "uai" | "siren" | "siret" | "wikidata" | "scopus" | "hal" | "openalex" | "isni" | "viaf"
+export type OrganizationHarvesterType =
+  | 'idref'
+  | 'ror'
+  | 'nns'
+  | 'local'
+  | 'uai'
+  | 'siren'
+  | 'siret'
+  | 'wikidata'
+  | 'scopus'
+  | 'hal'
+  | 'openalex'
+  | 'isni'
+  | 'viaf'
 export type StructureIdentifierType = OrganizationHarvesterType
 export type AuthorityOrganizationIdentifierType = OrganizationHarvesterType
 
 // PersonIdentifierType
-export type ResearcherIdentifierType =  "orcid" | "idref" | "idhals" | "idhali" | "scopus" | "local" | "eppn"
+export type ResearcherIdentifierType =
+  'orcid' | 'idref' | 'idhals' | 'idhali' | 'scopus' | 'local' | 'eppn'
 
 // documents are identified by their source records ("recorded_by")
 // https://github.com/CRISalid-esr/crisalid-ikg/blob/dev-main/app/models/harvesters.py
-export type DocumentIdentifierType = "hal" | "scanr" | "idref" | "openalex" | "scopus"
+export type DocumentIdentifierType = 'hal' | 'scanr' | 'idref' | 'openalex' | 'scopus'
 
-export type JournalIdentifierType = "doi" | "isnn"
+export type JournalIdentifierType = 'doi' | 'isnn'
 
 export type Identifier<Harvester> = {
-    id: number
-    value: string
-    harvester: Harvester
-} 
+  id: number
+  value: string
+  harvester: Harvester
+}
 
-export type HarvesterType = OrganizationHarvesterType | StructureIdentifierType | AuthorityOrganizationIdentifierType | ResearcherIdentifierType | DocumentIdentifierType | JournalIdentifierType
+export type HarvesterType =
+  | OrganizationHarvesterType
+  | ResearcherIdentifierType
+  | DocumentIdentifierType
+  | JournalIdentifierType

@@ -16,7 +16,12 @@ import {
   QueryFilterTeaching,
   ResearcherDomain,
 } from '../models/researcher.model'
-import { QueryFilterStructure, ResearcherStructure, Structure, StructureResearcher } from '../models/structure.model'
+import {
+  QueryFilterStructure,
+  ResearcherStructure,
+  Structure,
+  StructureResearcher,
+} from '../models/structure.model'
 import { AuthorityOrganization } from '../models/authority_organization.model'
 import { PaginationQuery, PaginationResult } from '../interfaces/pagination'
 import { OrganizationModel, PeopleGroupIdOrSlug } from '../models'
@@ -200,7 +205,7 @@ export const getResearcherStructures = (
   researchId: Researcher['id'],
   config: ClientAPIOptions<PaginationQuery> = {}
 ) => {
-  return clientAPI<PaginationResult<ResearcherStructure>>(
+  return clientAPI<PaginationResult<Structure>>(
     `crisalid/organization/${organizationCode}/researcher/${researchId}/structures/`,
     config
   )

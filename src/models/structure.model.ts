@@ -1,9 +1,9 @@
 import { OrganizationModel, TranslatedOrganizationModel } from './organization.model'
 import { PeopleGroupModel, TranslatedPeopleGroupModel } from './people-group.model'
+import { Identifier, StructureIdentifierType } from './identifiers.model'
 import { Researcher, TranslatedResearcher } from './researcher.model'
 import { PaginationQuery, Translated } from '../interfaces'
 import BaseModel from './base.model'
-import { Identifier, StructureIdentifierType } from './identifiers.model'
 
 // Generic organization type from crisalid
 export type GenericType =
@@ -38,14 +38,14 @@ export interface Structure extends BaseModel {
   modules: {
     publications: number
     conferences: number
-    researchers: number,
-    sub_structures: number,
-    parent_structures: number,
-    supervising_structures: number,
-    supervised_structures: number,
-    research_domains: number,
-    collaborations: number,
-    citations: number,
+    researchers: number
+    sub_structures: number
+    parent_structures: number
+    supervising_structures: number
+    supervised_structures: number
+    research_domains: number
+    collaborations: number
+    citations: number
   }
 }
 

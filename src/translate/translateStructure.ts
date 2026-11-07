@@ -9,8 +9,8 @@ import {
 } from '../models'
 import { translateOrganization } from './translateOrganization'
 import { translateResearcher } from './translateResearcher'
-import { translateGroup } from './translateGroup'
 import { translateEntity, translateMany } from './utils'
+import { translateGroup } from './translateGroup'
 
 export const translateStructure = (
   data: Structure,

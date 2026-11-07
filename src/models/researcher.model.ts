@@ -1,11 +1,11 @@
 import { PaginationQuery, PaginationResult } from '../interfaces/pagination'
+import { Identifier, ResearcherIdentifierType } from './identifiers.model'
 import { TranslatedUserModel, UserModel } from './user.model'
 import { Translated } from '../interfaces/translated'
 import { TagModel, TranslatedTag } from './tag.model'
 import { Ordering } from '../interfaces/query'
 import { ProjectModel } from './project.model'
 import BaseModel from './base.model'
-import { Identifier, ResearcherIdentifierType } from './identifiers.model'
 
 // meta front DocumentTypeCentralized backend
 export type ResearcherDocumentType = 'publications' | 'conferences'
@@ -333,7 +333,6 @@ export type DocumentCrisalidType =
   | 'BookOfChapters'
   | 'Presentation'
   | 'UNKNOWN'
-
 
 export type AbstractDomain<Domain = TagModel> = {
   id: number
