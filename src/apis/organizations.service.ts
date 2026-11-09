@@ -7,6 +7,7 @@ import {
   OrganizationPatchInput,
   ProjectModel,
   ProjectSlugOrId,
+  QueryFilterOrganization,
   RemoveGroupModelInput,
   TermsAndConditions,
 } from '../models'
@@ -17,9 +18,11 @@ import { PaginationResult } from '../interfaces'
 
 export async function patchOrganization(
   organisationCode: OrganizationModel['code'],
-  organization: OrganizationPatchInput | FormData
+  organization: OrganizationPatchInput | FormData,
+  config: ClientAPIOptions<QueryFilterOrganization> = {}
 ) {
   return await clientAPI<OrganizationModel>(`organization/${organisationCode}/`, {
+    ...config,
     body: organization,
     method: 'PATCH',
   })
@@ -27,12 +30,14 @@ export async function patchOrganization(
 
 export async function getOrganizationByCode(
   organisationCode: OrganizationModel['code'],
-  config: ClientAPIOptions = {}
+  config: ClientAPIOptions<QueryFilterOrganization> = {}
 ) {
   return await clientAPI<OrganizationModel>(`organization/${organisationCode}/`, config)
 }
 
-export async function getOrganizations(config: ClientAPIOptions = {}) {
+export async function getOrganizations(
+  config: ClientAPIOptions<Partial<PaginationResult & QueryFilterOrganization>> = {}
+) {
   return await clientAPI<PaginationResult<OrganizationModel>>(`organization/`, config)
 }
 

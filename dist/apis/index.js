@@ -1011,8 +1011,9 @@ async function deleteOrganizationFile(organizationCode, attachmentId) {
 }
 
 // src/apis/organizations.service.ts
-async function patchOrganization(organisationCode, organization) {
+async function patchOrganization(organisationCode, organization, config = {}) {
   return await clientAPI(`organization/${organisationCode}/`, {
+    ...config,
     body: organization,
     method: "PATCH"
   });
