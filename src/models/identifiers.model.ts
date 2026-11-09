@@ -78,14 +78,14 @@ export type DocumentIdentifierType = 'hal' | 'scanr' | 'idref' | 'openalex' | 's
 
 export type JournalIdentifierType = 'doi' | 'isnn'
 
-export type Identifier<Harvester> = {
-  id: number
-  value: string
-  harvester: Harvester
-}
-
 export type HarvesterType =
   | OrganizationHarvesterType
   | ResearcherIdentifierType
   | DocumentIdentifierType
   | JournalIdentifierType
+
+export type Identifier<Harvester = HarvesterType> = {
+  id: number
+  value: string
+  harvester: Harvester
+}
