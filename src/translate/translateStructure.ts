@@ -1,8 +1,10 @@
 import {
   Language,
+  ResearcherStructure,
   Structure,
   StructureRelation,
   StructureResearcher,
+  TranslatedResearcherStructure,
   TranslatedStructureRelation,
   TranslatedStucture,
   TranslateStructureResearcher,
@@ -11,6 +13,7 @@ import { translateOrganization } from './translateOrganization'
 import { translateResearcher } from './translateResearcher'
 import { translateEntity, translateMany } from './utils'
 import { translateGroup } from './translateGroup'
+import { omit } from 'es-toolkit'
 
 export const translateStructure = (
   data: Structure,
@@ -67,5 +70,20 @@ export const translateStructureResearcher = (
   return {
     ...data,
     ...translateResearcher(data, locale),
+  }
+}
+
+export const translateResearcherStructure = (
+  data: ResearcherStructure,
+  locale: Language | null
+): TranslatedResearcherStructure => {
+  if (!data) {
+    return data
+  }
+
+  return {
+    ...data,
+    researcher: translateResearcher(data.researcher, locale),
+    structure: translateStructure(data.structure, locale),
   }
 }

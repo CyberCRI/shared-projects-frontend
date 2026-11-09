@@ -560,6 +560,16 @@ var translateStructureResearcher = (data, locale) => {
     ...translateResearcher(data, locale)
   };
 };
+var translateResearcherStructure = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  return {
+    ...data,
+    researcher: translateResearcher(data.researcher, locale),
+    structure: translateStructure(data.structure, locale)
+  };
+};
 
 // src/translate/translatedProjectLinked.ts
 var translatedProjectLinked = (data, locale) => {
@@ -612,6 +622,7 @@ export {
   translateResearcherAward,
   translateResearcherDocument,
   translateResearcherDomain,
+  translateResearcherStructure,
   translateReview,
   translateSkill,
   translateStructure,

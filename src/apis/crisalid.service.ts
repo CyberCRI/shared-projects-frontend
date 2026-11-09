@@ -205,7 +205,7 @@ export const getResearcherStructures = (
   researchId: Researcher['id'],
   config: ClientAPIOptions<PaginationQuery> = {}
 ) => {
-  return clientAPI<PaginationResult<Structure>>(
+  return clientAPI<PaginationResult<ResearcherStructure>>(
     `crisalid/organization/${organizationCode}/researcher/${researchId}/structures/`,
     config
   )

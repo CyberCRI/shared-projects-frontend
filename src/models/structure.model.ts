@@ -151,6 +151,7 @@ export interface ResearcherStructure extends BaseModel {
   structure: Structure
   relation_type: RelationType
   position_code: PositionCode
+  position?: string | null
 }
 
 export type TranslatedResearcherStructure = Omit<
