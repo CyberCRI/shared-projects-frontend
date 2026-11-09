@@ -12,8 +12,10 @@ export const translatePeopleGroupLocation = <Location extends BaseLocationModel>
 
   const translate = translateEntity<TranslatedLocation>(data, ['title', 'description'], locale)
 
-  if (translate.project) {
-    translate.project = translateProject(translate.project, locale)
+  // @ts-expect-error ignore project
+  if (data.project) {
+    // @ts-expect-error ignore project
+    translate.project = translateProject(data.project, locale)
   }
 
   return translate

@@ -58,7 +58,7 @@ export type GroupMemberRoleType = 'leaders' | 'managers' | 'members'
 
 export type ProjectRoleType = ProjectMemberRoleType | ProjectGroupRoleType
 
-export type TagType = 'Wikipedia' | 'ESCO' | 'Custom'
+export type TagType = 'Wikipedia' | 'ESCO' | 'openalex' | 'Custom'
 export type SecondaryTagType = 'skill' | 'occupation' | 'tag'
 
 export type StatusType = 'na' | 'ongoing' | 'complete' | 'cancel'

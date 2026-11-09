@@ -5,12 +5,7 @@ import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 
 export default defineConfig({
   rules: {
-    '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/no-unsafe-member-access': 'off',
-    '@typescript-eslint/no-unsafe-call': 'off',
-    '@typescript-eslint/no-unsafe-assignment': 'off',
-    '@typescript-eslint/no-unsafe-return': 'off',
-    '@typescript-eslint/no-unsafe-argument': 'off',
     '@typescript-eslint/no-unsafe': 'off',
     '@typescript-eslint/require-await': 'off',
     'no-debugger': 'error',
