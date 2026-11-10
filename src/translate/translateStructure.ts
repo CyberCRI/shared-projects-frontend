@@ -6,7 +6,7 @@ import {
   StructureResearcher,
   TranslatedResearcherStructure,
   TranslatedStructureRelation,
-  TranslatedStucture,
+  TranslatedStructure,
   TranslateStructureResearcher,
 } from '../models'
 import { translateOrganization } from './translateOrganization'
@@ -17,12 +17,12 @@ import { translateGroup } from './translateGroup'
 export const translateStructure = (
   data: Structure,
   locale: Language | null
-): TranslatedStucture => {
+): TranslatedStructure => {
   if (!data) {
     return data
   }
 
-  const translated = translateEntity<TranslatedStucture>(data, ['description'], locale)
+  const translated = translateEntity<TranslatedStructure>(data, ['description'], locale)
   if (data.organization) {
     translated.organization = translateOrganization(data.organization, locale)
   }

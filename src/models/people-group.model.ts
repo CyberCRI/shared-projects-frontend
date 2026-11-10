@@ -1,4 +1,5 @@
 import type { BaseLocationModel, BaseTranslatedLocationModel } from './location.model'
+import { Structure, TranslatedStructure } from './structure.model'
 import type { OrganizationModel } from './organization.model'
 import type { Translated } from '../interfaces/translated'
 import type { ImageModel } from './image.model'
@@ -28,6 +29,7 @@ export interface PeopleGroupModel {
   sdgs: number[]
   tags: TagModel[]
   locations: BaseLocationModel[]
+  structure?: Structure | null
   modules: {
     members: number
     featured_projects: number
@@ -48,9 +50,10 @@ export type PeopleGroupModulesKeys = keyof PeopleGroupModel['modules']
 
 export type TranslatedPeopleGroupModel = Omit<
   Translated<PeopleGroupModel, 'name' | 'description' | 'short_description'>,
-  'locations'
+  'locations' | 'structure'
 > & {
   locations: BaseTranslatedLocationModel[]
+  structure?: TranslatedStructure | null
 }
 
 export type GeneralLocationPeopleGroup = BaseTranslatedLocationModel & {

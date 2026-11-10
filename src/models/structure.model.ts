@@ -51,11 +51,11 @@ export interface Structure extends BaseModel {
 
 export type StructureModules = keyof Structure['modules']
 
-export type TranslatedStucture = Omit<
+export type TranslatedStructure = Omit<
   Translated<Structure, 'description'>,
   'related_structures' | 'researchers' | 'people_group' | 'organization'
 > & {
-  related_structures: TranslatedStucture[]
+  related_structures: TranslatedStructure[]
   researchers?: TranslatedResearcher[]
   people_group?: TranslatedPeopleGroupModel
   organization?: TranslatedOrganizationModel
@@ -73,8 +73,8 @@ export type TranslatedStructureRelation = Omit<
   StructureRelation,
   'structure' | 'related_structure'
 > & {
-  structure: TranslatedStucture
-  related_structure: TranslatedStucture
+  structure: TranslatedStructure
+  related_structure: TranslatedStructure
 }
 
 export type RelationType = 'membership' | 'employment'
@@ -159,7 +159,7 @@ export type TranslatedResearcherStructure = Omit<
   'researcher' | 'structure'
 > & {
   researcher: TranslatedResearcher
-  structure: TranslatedStucture
+  structure: TranslatedStructure
 }
 
 export type QueryFilterStructure = Partial<

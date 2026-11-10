@@ -211,28 +211,26 @@ var translateGoal = (data, locale) => {
   return translateEntity(data, ["title", "description"], locale);
 };
 
-// src/translate/translateGroup.ts
-var translateGroup = (data, locale) => {
+// src/translate/translateOrganization.ts
+var translateTermsAdnCondition = (data, locale) => {
   if (!data) {
     return data;
   }
-  const translated = translateEntity(
+  return translateEntity(data, ["displayed_content"], locale);
+};
+var translateOrganization = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  const translate = translateEntity(
     data,
-    ["name", "description", "short_description"],
+    ["name", "dashboard_title", "dashboard_subtitle", "description", "chat_button_text"],
     locale
   );
-  if (data.locations) {
-    data.locations = translateMany(translateLocation, data.locations, locale);
+  if (data.terms_and_conditions) {
+    translate.terms_and_conditions = translateTermsAdnCondition(data.terms_and_conditions, locale);
   }
-  return translated;
-};
-
-// src/translate/translateInstruction.ts
-var translateInstruction = (data, locale) => {
-  if (!data) {
-    return data;
-  }
-  return translateEntity(data, ["content", "title"], locale);
+  return translate;
 };
 
 // src/translate/translateResearcherDomains.ts
@@ -244,6 +242,118 @@ var translateResearcherDomain = (data, locale) => {
     ...data,
     tag: translateTag(data.domain, locale)
   };
+};
+
+// src/translate/translateUser.ts
+var translateUser = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  const translated = translateEntity(
+    data,
+    ["description", "job", "short_description"],
+    locale
+  );
+  if (data.researcher) {
+    translated.researcher = translateResearcher(data.researcher, locale);
+  }
+  return translated;
+};
+
+// src/translate/translateResearcher.ts
+var translateResearcher = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  const entity = translateEntity(data, ["bio", "short_bio"], locale);
+  if (data.user) {
+    entity.user = translateUser(data.user, locale);
+  }
+  if (entity.domains) {
+    entity.domains = translateMany(translateResearcherDomain, entity.domains, locale);
+  }
+  return entity;
+};
+
+// src/translate/translateStructure.ts
+var translateStructure = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  const translated = translateEntity(data, ["description"], locale);
+  if (data.organization) {
+    translated.organization = translateOrganization(data.organization, locale);
+  }
+  if (data.people_group) {
+    translated.people_group = translateGroup(data.people_group, locale);
+  }
+  if (data.related_structures) {
+    translated.related_structures = translateMany(
+      translateStructure,
+      data.related_structures,
+      locale
+    );
+  }
+  if (data.researchers) {
+    translated.researchers = translateMany(translateResearcher, data.researchers, locale);
+  }
+  return translated;
+};
+var translateStructureRelation = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  return {
+    ...data,
+    structure: translateStructure(data.structure, locale),
+    related_structure: translateStructure(data.related_structure, locale)
+  };
+};
+var translateStructureResearcher = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  return {
+    ...data,
+    ...translateResearcher(data, locale)
+  };
+};
+var translateResearcherStructure = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  return {
+    ...data,
+    researcher: translateResearcher(data.researcher, locale),
+    structure: translateStructure(data.structure, locale)
+  };
+};
+
+// src/translate/translateGroup.ts
+var translateGroup = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  const translated = translateEntity(
+    data,
+    ["name", "description", "short_description"],
+    locale
+  );
+  if (data.locations) {
+    translated.locations = translateMany(translateLocation, data.locations, locale);
+  }
+  if (data.structure) {
+    translated.structure = translateStructure(data.structure, locale);
+  }
+  return translated;
+};
+
+// src/translate/translateInstruction.ts
+var translateInstruction = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  return translateEntity(data, ["content", "title"], locale);
 };
 
 // src/translate/translateResearcherDocument.ts
@@ -333,28 +443,6 @@ var translateOneNewsLocation = (data, locale) => {
   return translate;
 };
 
-// src/translate/translateOrganization.ts
-var translateTermsAdnCondition = (data, locale) => {
-  if (!data) {
-    return data;
-  }
-  return translateEntity(data, ["displayed_content"], locale);
-};
-var translateOrganization = (data, locale) => {
-  if (!data) {
-    return data;
-  }
-  const translate = translateEntity(
-    data,
-    ["name", "dashboard_title", "dashboard_subtitle", "description", "chat_button_text"],
-    locale
-  );
-  if (data.terms_and_conditions) {
-    translate.terms_and_conditions = translateTermsAdnCondition(data.terms_and_conditions, locale);
-  }
-  return translate;
-};
-
 // src/translate/translatePeopleGroupLocation.ts
 var translatePeopleGroupLocation = (data, locale) => {
   if (!data) {
@@ -405,37 +493,6 @@ var translateProjectTabItem = (data, locale) => {
     return data;
   }
   return translateEntity(data, ["title", "content"], locale);
-};
-
-// src/translate/translateUser.ts
-var translateUser = (data, locale) => {
-  if (!data) {
-    return data;
-  }
-  const translated = translateEntity(
-    data,
-    ["description", "job", "short_description"],
-    locale
-  );
-  if (data.researcher) {
-    translated.researcher = translateResearcher(data.researcher, locale);
-  }
-  return translated;
-};
-
-// src/translate/translateResearcher.ts
-var translateResearcher = (data, locale) => {
-  if (!data) {
-    return data;
-  }
-  const entity = translateEntity(data, ["bio", "short_bio"], locale);
-  if (data.user) {
-    entity.user = translateUser(data.user, locale);
-  }
-  if (entity.domains) {
-    entity.domains = translateMany(translateResearcherDomain, entity.domains, locale);
-  }
-  return entity;
 };
 
 // src/translate/translateResearcherAward.ts
@@ -514,60 +571,6 @@ var translateSkill = (data, locale) => {
   return {
     ...data,
     tag: translateTag(data.tag, locale)
-  };
-};
-
-// src/translate/translateStructure.ts
-var translateStructure = (data, locale) => {
-  if (!data) {
-    return data;
-  }
-  const translated = translateEntity(data, ["description"], locale);
-  if (data.organization) {
-    translated.organization = translateOrganization(data.organization, locale);
-  }
-  if (data.people_group) {
-    translated.people_group = translateGroup(data.people_group, locale);
-  }
-  if (data.related_structures) {
-    translated.related_structures = translateMany(
-      translateStructure,
-      data.related_structures,
-      locale
-    );
-  }
-  if (data.researchers) {
-    translated.researchers = translateMany(translateResearcher, data.researchers, locale);
-  }
-  return translated;
-};
-var translateStructureRelation = (data, locale) => {
-  if (!data) {
-    return data;
-  }
-  return {
-    ...data,
-    structure: translateStructure(data.structure, locale),
-    related_structure: translateStructure(data.related_structure, locale)
-  };
-};
-var translateStructureResearcher = (data, locale) => {
-  if (!data) {
-    return data;
-  }
-  return {
-    ...data,
-    ...translateResearcher(data, locale)
-  };
-};
-var translateResearcherStructure = (data, locale) => {
-  if (!data) {
-    return data;
-  }
-  return {
-    ...data,
-    researcher: translateResearcher(data.researcher, locale),
-    structure: translateStructure(data.structure, locale)
   };
 };
 
