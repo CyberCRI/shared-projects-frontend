@@ -13,7 +13,6 @@ import { translateOrganization } from './translateOrganization'
 import { translateResearcher } from './translateResearcher'
 import { translateEntity, translateMany } from './utils'
 import { translateGroup } from './translateGroup'
-import { omit } from 'es-toolkit'
 
 export const translateStructure = (
   data: Structure,

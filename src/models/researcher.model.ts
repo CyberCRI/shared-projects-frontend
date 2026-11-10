@@ -373,6 +373,7 @@ export type Researcher = {
     awards: number
     teachings: number
     fundings: number
+    structures: number
   }
 }
 
