@@ -140,7 +140,7 @@ var canDeleteReview = (rights, organizationId, projectId) => {
   return canPermissionProject(rights, organizationId, projectId, "delete_review");
 };
 var canCreateComment = (rights, organizationId, projectId) => {
-  return canPermissionProject(rights, organizationId, projectId, "delete_comment");
+  return canPermissionProject(rights, organizationId, projectId, "add_comment");
 };
 var canEditComment = (rights, organizationId, projectId) => {
   return canPermissionProject(rights, organizationId, projectId, "change_comment");
