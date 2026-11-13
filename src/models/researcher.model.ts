@@ -1,5 +1,6 @@
 import { PaginationQuery, PaginationResult } from '../interfaces/pagination'
 import { Identifier, ResearcherIdentifierType } from './identifiers.model'
+import { ResearcherStructure, Structure } from './structure.model'
 import { TranslatedUserModel, UserModel } from './user.model'
 import { Translated } from '../interfaces/translated'
 import { TagModel, TranslatedTag } from './tag.model'
@@ -578,7 +579,7 @@ export type QueryFilterFunding = Partial<
     end_date_after: string
     end_date_before: string
     project: ProjectModel['id']
-    researcher: Researcher['id'][]
+    researcher: Researcher['id']
 
     ordering: Ordering<'price'>
     serializers: 'light'
@@ -591,7 +592,23 @@ export type QueryFilterTeaching = Partial<
     description: string
     spec: string
     level: string
-    researcher: Researcher['id'][]
+    researcher: Researcher['id']
+
+    domain: ResearcherDomain['id']
+    min_domain_level: number
+    max_domain_level: number
     serializers: 'light'
   } & PaginationResult
 >
+
+export type QueryFilterResearcherStructure = Partial<
+  {
+    structure: ResearcherStructure['structure']['id']
+    relation_type: ResearcherStructure['relation_type'][]
+    position_code: ResearcherStructure['position_code'][]
+  } & PaginationResult
+>
+
+export type QueryFilterBioIa = Partial<{
+  short: boolean
+}>

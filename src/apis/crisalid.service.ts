@@ -15,6 +15,8 @@ import {
   QueryFilterFunding,
   QueryFilterTeaching,
   ResearcherDomain,
+  QueryFilterResearcherStructure,
+  QueryFilterBioIa,
 } from '../models/researcher.model'
 import {
   QueryFilterStructure,
@@ -137,7 +139,7 @@ export const getResearcherSimilars = (
 export const generateResearcherBioIa = (
   organizationCode: OrganizationModel['code'],
   researchId: Researcher['id'],
-  config: ClientAPIOptions<PaginationResult> = {}
+  config: ClientAPIOptions<QueryFilterBioIa> = {}
 ) => {
   return clientAPI<string>(
     `crisalid/organization/${organizationCode}/researcher/${researchId}/bio-ia/`,
@@ -203,7 +205,7 @@ export const getResearcherFundings = (
 export const getResearcherStructures = (
   organizationCode: OrganizationModel['code'],
   researchId: Researcher['id'],
-  config: ClientAPIOptions<PaginationQuery> = {}
+  config: ClientAPIOptions<QueryFilterResearcherStructure> = {}
 ) => {
   return clientAPI<PaginationResult<ResearcherStructure>>(
     `crisalid/organization/${organizationCode}/researcher/${researchId}/structures/`,
