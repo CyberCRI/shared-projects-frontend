@@ -1,7 +1,7 @@
-import { PaginationQuery, PaginationResult } from '../interfaces/pagination'
 import { Identifier, ResearcherIdentifierType } from './identifiers.model'
 import { ResearcherStructure, Structure } from './structure.model'
 import { TranslatedUserModel, UserModel } from './user.model'
+import { PaginationQuery } from '../interfaces/pagination'
 import { Translated } from '../interfaces/translated'
 import { TagModel, TranslatedTag } from './tag.model'
 import { Ordering } from '../interfaces/query'
@@ -550,7 +550,7 @@ export type QueryFilterAward = Partial<
     date_before: Date | string
     ordering: Ordering<'date'>
     serializers: 'light'
-  } & PaginationResult
+  } & PaginationQuery
 >
 
 export type QueryFilterPatent = Partial<
@@ -561,7 +561,7 @@ export type QueryFilterPatent = Partial<
     date_before: Date | string
     ordering: Ordering<'date'>
     serializers: 'light'
-  } & PaginationResult
+  } & PaginationQuery
 >
 
 export type QueryFilterFunding = Partial<
@@ -583,7 +583,7 @@ export type QueryFilterFunding = Partial<
 
     ordering: Ordering<'price'>
     serializers: 'light'
-  } & PaginationResult
+  } & PaginationQuery
 >
 
 export type QueryFilterTeaching = Partial<
@@ -598,7 +598,7 @@ export type QueryFilterTeaching = Partial<
     min_domain_level: number
     max_domain_level: number
     serializers: 'light'
-  } & PaginationResult
+  } & PaginationQuery
 >
 
 export type QueryFilterResearcherStructure = Partial<
@@ -606,7 +606,7 @@ export type QueryFilterResearcherStructure = Partial<
     structure: ResearcherStructure['structure']['id']
     relation_type: ResearcherStructure['relation_type'][]
     position_code: ResearcherStructure['position_code'][]
-  } & PaginationResult
+  } & PaginationQuery
 >
 
 export type QueryFilterBioIa = Partial<{
