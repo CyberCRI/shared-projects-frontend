@@ -1,5 +1,5 @@
 import { B as BaseModel, c as Ordering, T as Translated, P as PaginationQuery, I as ImageModel } from './utils-Def92TDC.js';
-import { aA as ProjectModel, aG as ProjectSlugOrId, af as OrganizationModel, c3 as TranslatedProject, f as AttachmentType, cn as UserModel, bu as StatusType, a9 as NewsModel, b_ as TranslatedNews, bD as TagType, bC as TagModel, bq as SecondaryTagType, cf as TranslatedTag } from './instruction.model-DJguDb3q.js';
+import { aA as ProjectModel, aG as ProjectSlugOrId, af as OrganizationModel, c3 as TranslatedProject, f as AttachmentType, cn as UserModel, bu as StatusType, a9 as NewsModel, b_ as TranslatedNews, bD as TagType, bC as TagModel, bq as SecondaryTagType, cf as TranslatedTag } from './instruction.model-Cxf6KAKL.js';
 
 interface AnnouncementModel extends BaseModel {
     id: number;

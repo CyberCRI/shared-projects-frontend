@@ -935,12 +935,12 @@ type TranslatedTemplate = Omit<Translated<TemplateModel, 'name' | 'description' 
     categories: TranslatedProjectCategory[];
 };
 type TemplateTabForm = Partial<TemplateTab>;
-type TemplateForm = Partial<Omit<TemplateModel, 'tabs' | 'categories' | 'tags'>> & {
+type TemplateForm = Partial<Omit<TemplateModel, 'tabs' | 'categories' | 'tags'> & {
     tabs: TemplateTabForm[];
     project_categories_ids: number[];
     categories: TranslatedProjectCategory[] | ProjectCategoryModel[];
     tags: TranslatedTag[] | TagModel[];
-};
+}>;
 type QueryFilterTemplate = Partial<{
     search: string;
     ordering: Ordering<'updated_at' | 'created_at' | 'title'>;

@@ -79,12 +79,14 @@ export type TranslatedTemplate = Omit<
 
 export type TemplateTabForm = Partial<TemplateTab>
 
-export type TemplateForm = Partial<Omit<TemplateModel, 'tabs' | 'categories' | 'tags'>> & {
-  tabs: TemplateTabForm[]
-  project_categories_ids: number[]
-  categories: TranslatedProjectCategory[] | ProjectCategoryModel[]
-  tags: TranslatedTag[] | TagModel[]
-}
+export type TemplateForm = Partial<
+  Omit<TemplateModel, 'tabs' | 'categories' | 'tags'> & {
+    tabs: TemplateTabForm[]
+    project_categories_ids: number[]
+    categories: TranslatedProjectCategory[] | ProjectCategoryModel[]
+    tags: TranslatedTag[] | TagModel[]
+  }
+>
 
 export type QueryFilterTemplate = Partial<
   {
