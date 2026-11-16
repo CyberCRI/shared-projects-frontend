@@ -49,7 +49,7 @@ export interface Structure extends BaseModel {
   }
 }
 
-export type StructureModules = keyof Structure['modules']
+export type StructureModulesKeys = keyof Structure['modules']
 
 export type TranslatedStructure = Omit<
   Translated<Structure, 'description'>,
@@ -171,7 +171,7 @@ export type QueryFilterStructure = Partial<
     national_type: string
     external: boolean
     researcher: Researcher['id']
-    modules: 'none' | StructureModules[]
+    modules: 'none' | StructureModulesKeys[]
   } & PaginationQuery
 >
 
@@ -181,7 +181,7 @@ export type QueryFilterStructureRelation = Partial<
     position: StructureRelation['position'][]
     structure: Structure['id']
     related_structure: Structure['id']
-    modules: 'none' | StructureModules[]
+    modules: 'none' | StructureModulesKeys[]
   } & PaginationQuery
 >
 
