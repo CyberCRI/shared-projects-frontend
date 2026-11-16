@@ -4,7 +4,7 @@
  */
 import type { ImageModel, ImageSize } from './image.model'
 
-import type { Researcher, TranslatedResearcher } from './researcher.model'
+import type { Researcher, ResearcherModulesKeys, TranslatedResearcher } from './researcher.model'
 import type { Translated } from '../interfaces/translated'
 
 import { Ordering, PaginationQuery } from '../interfaces'
@@ -173,7 +173,8 @@ export type QueryFilterUser = Partial<
       | 'created_at'
     >
     search: string
-    modules: 'none' | UserModulesKeys[]
+    // add user + researchers modules keys
+    modules: 'none' | (UserModulesKeys | ResearcherModulesKeys)[]
     serializer: 'light' | 'superlight'
 
     // TODO check if array is need to is csv (separate by coma)

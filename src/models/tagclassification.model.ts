@@ -1,9 +1,9 @@
 import type { OrganizationModel } from './organization.model'
 import { PaginationQuery } from '../interfaces/pagination'
 import type { TagModel, TranslatedTag } from './tag.model'
+import type { SecondaryTagType, TagType } from './types'
 import { Translated } from '../interfaces'
 import type BaseModel from './base.model'
-import type { TagType } from './types'
 
 export type TagClassificationModel = BaseModel & {
   id: number
@@ -24,6 +24,15 @@ export type QueryFilterTagClassification = Partial<
     type: TagType[]
     search: string
     enabled_for: ('projects' | 'skills')[]
+  } & PaginationQuery
+>
+
+export type QueryFilterTag = Partial<
+  {
+    ids: TagModel['id'][]
+    type: TagType[]
+    secondary_type: SecondaryTagType[]
+    external_id: string
   } & PaginationQuery
 >
 

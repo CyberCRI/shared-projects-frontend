@@ -1,5 +1,6 @@
+import { ResearcherStructure, Structure, StructureRelation } from './structure.model'
 import { Identifier, ResearcherIdentifierType } from './identifiers.model'
-import { ResearcherStructure, Structure } from './structure.model'
+import { AuthorityOrganization } from './authority_organization.model'
 import { TranslatedUserModel, UserModel } from './user.model'
 import { PaginationQuery } from '../interfaces/pagination'
 import { Translated } from '../interfaces/translated'
@@ -377,6 +378,7 @@ export type Researcher = {
     structures: number
   }
 }
+export type ResearcherModulesKeys = keyof Researcher['modules']
 
 export type TranslatedResearcher = Translated<
   Omit<Researcher, 'domains' | 'user'>,
@@ -527,7 +529,7 @@ export type TranslatedTeaching = Translated<
 
 // queryfilters
 
-export type QueryFilterResearcher = Partial<
+export type QueryFilterResearcherIdentifier = Partial<
   {
     harvester: ResearcherIdentifierType
     values: string // TODO: change to string[] (need to update backend)
@@ -612,3 +614,28 @@ export type QueryFilterResearcherStructure = Partial<
 export type QueryFilterBioIa = Partial<{
   short: boolean
 }>
+
+export type QueryFilterResearcher = Partial<
+  {
+    given_name: string
+    family_name: string
+
+    h_index: number
+    h_index_min: number
+    h_index_max: number
+    i10_index: number
+    i10_index_min: number
+    i10_index_max: number
+
+    structure: Structure['id']
+
+    modules: 'none' | ResearcherModulesKeys
+  } & PaginationQuery
+>
+
+export type QueryFilterJournal = Partial<
+  {
+    title: string
+    acronym: string
+  } & PaginationQuery
+>

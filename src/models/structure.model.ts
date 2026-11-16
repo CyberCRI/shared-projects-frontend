@@ -164,9 +164,23 @@ export type TranslatedResearcherStructure = Omit<
 
 export type QueryFilterStructure = Partial<
   {
-    id: number[]
-    people_group: PeopleGroupModel['id']
-    generic_type: GenericType
+    generic_type: Structure['generic_type'][]
+    main_mission: Structure['main_mission'][]
+    name: string
+    acronym: string
+    national_type: string
+    external: boolean
+    researcher: Researcher['id']
+    modules: 'none' | StructureModules[]
+  } & PaginationQuery
+>
+
+export type QueryFilterStructureRelation = Partial<
+  {
+    relation_type: StructureRelation['relation_type'][]
+    position: StructureRelation['position'][]
+    structure: Structure['id']
+    related_structure: Structure['id']
     modules: 'none' | StructureModules[]
   } & PaginationQuery
 >

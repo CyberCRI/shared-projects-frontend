@@ -1,5 +1,5 @@
 import { B as BaseModel, c as Ordering, T as Translated, P as PaginationQuery, I as ImageModel } from './utils-Def92TDC.js';
-import { aA as ProjectModel, aG as ProjectSlugOrId, af as OrganizationModel, b$ as TranslatedProject, f as AttachmentType, cj as UserModel, bq as StatusType, a9 as NewsModel, bW as TranslatedNews, bz as TagType, by as TagModel, cb as TranslatedTag } from './instruction.model-BU7-jzAI.js';
+import { aA as ProjectModel, aG as ProjectSlugOrId, af as OrganizationModel, c3 as TranslatedProject, f as AttachmentType, cn as UserModel, bu as StatusType, a9 as NewsModel, b_ as TranslatedNews, bD as TagType, bC as TagModel, bq as SecondaryTagType, cf as TranslatedTag } from './instruction.model-Br7YUwwx.js';
 
 interface AnnouncementModel extends BaseModel {
     id: number;
@@ -254,8 +254,14 @@ type QueryFilterTagClassification = Partial<{
     search: string;
     enabled_for: ('projects' | 'skills')[];
 } & PaginationQuery>;
+type QueryFilterTag = Partial<{
+    ids: TagModel['id'][];
+    type: TagType[];
+    secondary_type: SecondaryTagType[];
+    external_id: string;
+} & PaginationQuery>;
 type TranslatedTagClassification = Translated<Omit<TagClassificationModel, 'tags'>, 'title' | 'description'> & {
     tags: TranslatedTag[];
 };
 
-export type { AnnouncementApplyForm as A, BlogEntryForm as B, CommentModel as C, TranslatedAnnouncement as D, TranslatedAttachmentFile as E, TranslatedAttachmentLink as F, GoalForm as G, TranslatedBlogEntry as H, TranslatedComment as I, TranslatedGoal as J, TranslatedNewsfeed as K, TranslatedProjectMessage as L, TranslatedReview as M, NewsfeedModel as N, TranslatedTagClassification as O, ProjectMessageForm as P, QueryFilterAnnouncement as Q, ReviewForm as R, TagClassificationModel as T, AnnouncementApplyInput as a, AnnouncementForm as b, AnnouncementId as c, AnnouncementInput as d, AnnouncementModel as e, AttachmentFileForm as f, AttachmentFileId as g, AttachmentFileInput as h, AttachmentFileModel as i, AttachmentLinkForm as j, AttachmentLinkId as k, AttachmentLinkInput as l, AttachmentLinkModel as m, AttachmentLinkOutput as n, BlogEntryId as o, BlogEntryModel as p, GoalModel as q, ProjectMessageInputModel as r, ProjectMessageModel as s, QueryFilterBlogEntry as t, QueryFilterComments as u, QueryFilterProjectMessage as v, QueryFilterReviews as w, QueryFilterTagClassification as x, ReviewId as y, ReviewModel as z };
+export type { AnnouncementApplyForm as A, BlogEntryForm as B, CommentModel as C, ReviewModel as D, TranslatedAnnouncement as E, TranslatedAttachmentFile as F, GoalForm as G, TranslatedAttachmentLink as H, TranslatedBlogEntry as I, TranslatedComment as J, TranslatedGoal as K, TranslatedNewsfeed as L, TranslatedProjectMessage as M, NewsfeedModel as N, TranslatedReview as O, ProjectMessageForm as P, QueryFilterAnnouncement as Q, ReviewForm as R, TranslatedTagClassification as S, TagClassificationModel as T, AnnouncementApplyInput as a, AnnouncementForm as b, AnnouncementId as c, AnnouncementInput as d, AnnouncementModel as e, AttachmentFileForm as f, AttachmentFileId as g, AttachmentFileInput as h, AttachmentFileModel as i, AttachmentLinkForm as j, AttachmentLinkId as k, AttachmentLinkInput as l, AttachmentLinkModel as m, AttachmentLinkOutput as n, BlogEntryId as o, BlogEntryModel as p, GoalModel as q, ProjectMessageInputModel as r, ProjectMessageModel as s, QueryFilterBlogEntry as t, QueryFilterComments as u, QueryFilterProjectMessage as v, QueryFilterReviews as w, QueryFilterTag as x, QueryFilterTagClassification as y, ReviewId as z };

@@ -1,7 +1,7 @@
 import {
   ResearcherDocument,
   ResearcherDocumentType,
-  QueryFilterResearcher,
+  QueryFilterResearcherIdentifier,
   Researcher,
   ResearcherDocumentAnalytics,
   DocumentJournal,
@@ -17,6 +17,8 @@ import {
   ResearcherDomain,
   QueryFilterResearcherStructure,
   QueryFilterBioIa,
+  QueryFilterJournal,
+  QueryFilterResearcher,
 } from '../models/researcher.model'
 import {
   QueryFilterStructure,
@@ -24,9 +26,9 @@ import {
   Structure,
   StructureResearcher,
 } from '../models/structure.model'
+import { OrganizationModel, PeopleGroupIdOrSlug, QueryFilterTag } from '../models'
 import { AuthorityOrganization } from '../models/authority_organization.model'
 import { PaginationQuery, PaginationResult } from '../interfaces/pagination'
-import { OrganizationModel, PeopleGroupIdOrSlug } from '../models'
 import { clientAPI, ClientAPIOptions } from './client'
 
 export async function getUserResearchDocument(
@@ -99,7 +101,7 @@ export async function getResearchDocumentCitations(
   )
 }
 
-type ConfigSearch = ClientAPIOptions<QueryFilterResearcher>
+type ConfigSearch = ClientAPIOptions<QueryFilterResearcherIdentifier>
 type ResearcherSearchResponse = {
   // key is harvester values
   [key: string | number]: Researcher
@@ -339,7 +341,7 @@ export const getStructureSupervisingStructures = (
 export const getStructureResearcherDomains = (
   organizationCode: OrganizationModel['code'],
   structureId: Structure['id'],
-  config: ClientAPIOptions<QueryFilterStructure> = {}
+  config: ClientAPIOptions<QueryFilterTag> = {}
 ) => {
   return clientAPI<PaginationResult<ResearcherDomain>>(
     `crisalid/organization/${organizationCode}/structure/${structureId}/research-domains/`,
@@ -361,7 +363,7 @@ export const getStructureCollaborations = (
 export const getStructureResearchers = (
   organizationCode: OrganizationModel['code'],
   structureId: Structure['id'],
-  config: ClientAPIOptions<QueryFilterStructure> = {}
+  config: ClientAPIOptions<QueryFilterResearcher> = {}
 ) => {
   return clientAPI<PaginationResult<StructureResearcher>>(
     `crisalid/organization/${organizationCode}/structure/${structureId}/researchers/`,
@@ -372,7 +374,7 @@ export const getStructureResearchers = (
 export const getStructureCitations = (
   organizationCode: OrganizationModel['code'],
   structureId: Structure['id'],
-  config: ClientAPIOptions<QueryFilterStructure> = {}
+  config: ClientAPIOptions<QueryFilterJournal> = {}
 ) => {
   return clientAPI<PaginationResult<DocumentJournal>>(
     `crisalid/organization/${organizationCode}/structure/${structureId}/citations/`,

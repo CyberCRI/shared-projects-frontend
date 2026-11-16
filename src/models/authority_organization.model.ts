@@ -19,3 +19,8 @@ export interface AuthorityOrganization extends BaseModel {
   type: OrganizationType
   identifiers: Identifier[]
 }
+
+export type QueryFilterAuthorityOrganization = Partial<{
+  type: AuthorityOrganization['type'][]
+  name: string
+}>

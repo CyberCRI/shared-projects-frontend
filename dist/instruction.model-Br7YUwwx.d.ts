@@ -117,19 +117,6 @@ interface TagModel extends BaseModel {
 }
 type TranslatedTag = Translated<TagModel, 'title' | 'description'>;
 
-type OrganizationHarvesterType = 'idref' | 'ror' | 'nns' | 'local' | 'uai' | 'siren' | 'siret' | 'wikidata' | 'scopus' | 'hal' | 'openalex' | 'isni' | 'viaf';
-type StructureIdentifierType = OrganizationHarvesterType;
-type AuthorityOrganizationIdentifierType = OrganizationHarvesterType;
-type ResearcherIdentifierType = 'orcid' | 'idref' | 'idhals' | 'idhali' | 'scopus' | 'local' | 'eppn';
-type DocumentIdentifierType = 'hal' | 'scanr' | 'idref' | 'openalex' | 'scopus';
-type JournalIdentifierType = 'doi' | 'isnn';
-type HarvesterType = OrganizationHarvesterType | ResearcherIdentifierType | DocumentIdentifierType | JournalIdentifierType;
-type Identifier<Harvester = HarvesterType> = {
-    id: number;
-    value: string;
-    harvester: Harvester;
-};
-
 /**
  * @name NewsModel
  * @description News of an organization
@@ -314,6 +301,19 @@ type QueryFilterGroupHierarchy = QueryFilterGroup & Partial<{
     parent: PeopleGroupIdOrSlug;
 }>;
 
+type OrganizationHarvesterType = 'idref' | 'ror' | 'nns' | 'local' | 'uai' | 'siren' | 'siret' | 'wikidata' | 'scopus' | 'hal' | 'openalex' | 'isni' | 'viaf';
+type StructureIdentifierType = OrganizationHarvesterType;
+type AuthorityOrganizationIdentifierType = OrganizationHarvesterType;
+type ResearcherIdentifierType = 'orcid' | 'idref' | 'idhals' | 'idhali' | 'scopus' | 'local' | 'eppn';
+type DocumentIdentifierType = 'hal' | 'scanr' | 'idref' | 'openalex' | 'scopus';
+type JournalIdentifierType = 'doi' | 'isnn';
+type HarvesterType = OrganizationHarvesterType | ResearcherIdentifierType | DocumentIdentifierType | JournalIdentifierType;
+type Identifier<Harvester = HarvesterType> = {
+    id: number;
+    value: string;
+    harvester: Harvester;
+};
+
 type GenericType = 'institution' | 'institution_subdivision' | 'doctoral_school' | 'unit' | 'unit_subdivision' | 'team';
 type MissionType = 'research' | 'scientific_services' | 'administrative_services' | 'teaching';
 interface Structure extends BaseModel {
@@ -378,9 +378,20 @@ type TranslatedResearcherStructure = Omit<ResearcherStructure, 'researcher' | 's
     structure: TranslatedStructure;
 };
 type QueryFilterStructure = Partial<{
-    id: number[];
-    people_group: PeopleGroupModel['id'];
-    generic_type: GenericType;
+    generic_type: Structure['generic_type'][];
+    main_mission: Structure['main_mission'][];
+    name: string;
+    acronym: string;
+    national_type: string;
+    external: boolean;
+    researcher: Researcher['id'];
+    modules: 'none' | StructureModules[];
+} & PaginationQuery>;
+type QueryFilterStructureRelation = Partial<{
+    relation_type: StructureRelation['relation_type'][];
+    position: StructureRelation['position'][];
+    structure: Structure['id'];
+    related_structure: Structure['id'];
     modules: 'none' | StructureModules[];
 } & PaginationQuery>;
 interface StructureResearcher extends Researcher {
@@ -431,6 +442,7 @@ type Researcher = {
         structures: number;
     };
 };
+type ResearcherModulesKeys = keyof Researcher['modules'];
 type TranslatedResearcher = Translated<Omit<Researcher, 'domains' | 'user'>, 'bio' | 'short_bio'> & {
     domains: TranslatedResearcherDomain[];
     user: null | TranslatedUserModel;
@@ -544,7 +556,7 @@ type TranslatedTeaching = Translated<Omit<Teaching, 'researcher' | 'domains'>, '
     domains: TranslatedTeachingDomain[];
     researcher?: TranslatedResearcher;
 };
-type QueryFilterResearcher = Partial<{
+type QueryFilterResearcherIdentifier = Partial<{
     harvester: ResearcherIdentifierType;
     values: string;
 } & PaginationQuery>;
@@ -607,6 +619,22 @@ type QueryFilterResearcherStructure = Partial<{
 type QueryFilterBioIa = Partial<{
     short: boolean;
 }>;
+type QueryFilterResearcher = Partial<{
+    given_name: string;
+    family_name: string;
+    h_index: number;
+    h_index_min: number;
+    h_index_max: number;
+    i10_index: number;
+    i10_index_min: number;
+    i10_index_max: number;
+    structure: Structure['id'];
+    modules: 'none' | ResearcherModulesKeys;
+} & PaginationQuery>;
+type QueryFilterJournal = Partial<{
+    title: string;
+    acronym: string;
+} & PaginationQuery>;
 
 /**
  * @name UserModel
@@ -747,7 +775,7 @@ type TranslatedUserModel = Translated<Omit<UserModel, 'researcher'>, 'descriptio
 type QueryFilterUser = Partial<{
     ordering: Ordering<'given_name' | 'family_name' | 'job' | 'current_org_role' | 'email_verified' | 'password_created' | 'last_login' | 'created_at'>;
     search: string;
-    modules: 'none' | UserModulesKeys[];
+    modules: 'none' | (UserModulesKeys | ResearcherModulesKeys)[];
     serializer: 'light' | 'superlight';
     organizations: string;
     current_org_pk: string | number;
@@ -1145,4 +1173,4 @@ type QueryFilterInstruction = Partial<{
     to_date: string;
 } & PaginationQuery>;
 
-export type { LocationId as $, AbstractDomain as A, BaseLocationModel as B, Currency as C, DocumentCrisalidType as D, EventForm as E, FaqImageModel as F, FollowedModel as G, FollowedProjectRef as H, Funding as I, GeneralLocationPeopleGroup as J, GenericType as K, GroupDataRole as L, GroupMemberRoleType as M, HarvesterType as N, Identifier as O, InstructionForm as P, InstructionId as Q, InstructionInput as R, InstructionModel as S, Journal as T, JournalIdentifierType as U, Language as V, LanguageType as W, LinkedProject as X, LinkedProjectRef as Y, LocationForm as Z, LocationGeneral as _, AddManyFollowedProject as a, QueryFilterProjectTabItem as a$, LocationInput as a0, LocationModel as a1, LocationOutput as a2, LocationType as a3, MissionType as a4, NewsForm as a5, NewsImageModel as a6, NewsInput as a7, NewsLocation as a8, NewsModel as a9, ProjectModel as aA, ProjectModuleExtra as aB, ProjectModulesKeys as aC, ProjectOutput as aD, ProjectPublicationStatusType as aE, ProjectRoleType as aF, ProjectSlugOrId as aG, ProjectStatusType as aH, ProjectTab as aI, ProjectTabForm as aJ, ProjectTabItem as aK, ProjectTabItemForm as aL, ProjectTabModulesKeys as aM, ProjectTabType as aN, QueryFilterAward as aO, QueryFilterBioIa as aP, QueryFilterDocument as aQ, QueryFilterEvent as aR, QueryFilterFunding as aS, QueryFilterGroup as aT, QueryFilterGroupHierarchy as aU, QueryFilterInstruction as aV, QueryFilterNews as aW, QueryFilterOrganization as aX, QueryFilterPatent as aY, QueryFilterProjectSimilars as aZ, QueryFilterProjectTab as a_, NewsOutput as aa, NotificationType as ab, NotificationsSettings as ac, OrganizationDirectoryModel as ad, OrganizationHarvesterType as ae, OrganizationModel as af, OrganizationModulesKey as ag, OrganizationOutput as ah, OrganizationPatchInput as ai, Patent as aj, PeopleGroupIdOrSlug as ak, PeopleGroupModel as al, PeopleGroupModulesKeys as am, PositionCode as an, PrivacySettings as ao, PrivacyValue as ap, ProjectCategoryCreateInput as aq, ProjectCategoryForm as ar, ProjectCategoryModel as as, ProjectCategoryOutput as at, ProjectCategoryPatchInput as au, ProjectCategoryPutInput as av, ProjectForm as aw, ProjectGroupRoleType as ax, ProjectLocationForm as ay, ProjectMemberRoleType as az, AddManyLinkedProjectInput as b, TranslatedProject as b$, QueryFilterResearcher as b0, QueryFilterResearcherStructure as b1, QueryFilterResetPassword as b2, QueryFilterSkill as b3, QueryFilterStructure as b4, QueryFilterTeaching as b5, QueryFilterTemplate as b6, QueryFilterUser as b7, QueryFilterUserEmail as b8, RelationType as b9, Teaching as bA, TeachingDomain as bB, TemplateForm as bC, TemplateId as bD, TemplateModel as bE, TemplateTab as bF, TemplateTabForm as bG, TermsAndConditions as bH, TransaltedTermsAndConditions as bI, TranslateStructureResearcher as bJ, TranslatedAbstractDomain as bK, TranslatedAward as bL, TranslatedDocumentDomain as bM, TranslatedDocumentJournal as bN, TranslatedEventLocation as bO, TranslatedEventModel as bP, TranslatedFunding as bQ, TranslatedInstruction as bR, TranslatedJournal as bS, TranslatedLinkedProject as bT, TranslatedLocation as bU, TranslatedLocationGeneral as bV, TranslatedNews as bW, TranslatedNewsLocation as bX, TranslatedOrganizationModel as bY, TranslatedPatent as bZ, TranslatedPeopleGroupModel as b_, Relators as ba, RemoveLinkedProjectInput as bb, Researcher as bc, ResearcherAward as bd, ResearcherDocument as be, ResearcherDocumentAnalytics as bf, ResearcherDocumentType as bg, ResearcherDomain as bh, ResearcherIdentifierType as bi, ResearcherStructure as bj, Roles as bk, SearchObjectType as bl, SecondaryTagType as bm, SkillCleanedForm as bn, SkillForm as bo, SkillModel as bp, StatusType as bq, Structure as br, StructureIdentifierType as bs, StructureModules as bt, StructureRelation as bu, StructureResearcher as bv, SubGroup as bw, TabSlugOrId as bx, TagModel as by, TagType as bz, AnyLocation as c, TranslatedProjectCategory as c0, TranslatedProjectTab as c1, TranslatedProjectTabItem as c2, TranslatedResearcher as c3, TranslatedResearcherAward as c4, TranslatedResearcherDocument as c5, TranslatedResearcherDomain as c6, TranslatedResearcherStructure as c7, TranslatedSkill as c8, TranslatedStructure as c9, TranslatedStructureRelation as ca, TranslatedTag as cb, TranslatedTeaching as cc, TranslatedTeachingDomain as cd, TranslatedTemplate as ce, TranslatedUserModel as cf, UnfollowCategoryInput as cg, UserForm as ch, UserFromJWTModel as ci, UserModel as cj, UserModuleExtra as ck, UserModulesKeys as cl, UserPatchModel as cm, UserPrivacyPatchModel as cn, UserSlugOrId as co, AnyProject as d, AnyTranslatedLocation as e, AttachmentType as f, AuthorityOrganizationIdentifierType as g, Award as h, BaseTranslatedLocationModel as i, DocumentDomain as j, DocumentIdentifierType as k, DocumentJournal as l, DocumentModulesKeys as m, EventIdOrSlug as n, EventInput as o, EventLocation as p, EventModel as q, FaqInput as r, FaqModel as s, FollowCategoryInput as t, FollowInput as u, FollowManyOutput as v, FollowModel as w, FollowOutput as x, FollowOutputList as y, FollowProjectOutput as z };
+export type { LocationId as $, AbstractDomain as A, BaseLocationModel as B, Currency as C, DocumentCrisalidType as D, EventForm as E, FaqImageModel as F, FollowedModel as G, FollowedProjectRef as H, Funding as I, GeneralLocationPeopleGroup as J, GenericType as K, GroupDataRole as L, GroupMemberRoleType as M, HarvesterType as N, Identifier as O, InstructionForm as P, InstructionId as Q, InstructionInput as R, InstructionModel as S, Journal as T, JournalIdentifierType as U, Language as V, LanguageType as W, LinkedProject as X, LinkedProjectRef as Y, LocationForm as Z, LocationGeneral as _, AddManyFollowedProject as a, QueryFilterProjectTab as a$, LocationInput as a0, LocationModel as a1, LocationOutput as a2, LocationType as a3, MissionType as a4, NewsForm as a5, NewsImageModel as a6, NewsInput as a7, NewsLocation as a8, NewsModel as a9, ProjectModel as aA, ProjectModuleExtra as aB, ProjectModulesKeys as aC, ProjectOutput as aD, ProjectPublicationStatusType as aE, ProjectRoleType as aF, ProjectSlugOrId as aG, ProjectStatusType as aH, ProjectTab as aI, ProjectTabForm as aJ, ProjectTabItem as aK, ProjectTabItemForm as aL, ProjectTabModulesKeys as aM, ProjectTabType as aN, QueryFilterAward as aO, QueryFilterBioIa as aP, QueryFilterDocument as aQ, QueryFilterEvent as aR, QueryFilterFunding as aS, QueryFilterGroup as aT, QueryFilterGroupHierarchy as aU, QueryFilterInstruction as aV, QueryFilterJournal as aW, QueryFilterNews as aX, QueryFilterOrganization as aY, QueryFilterPatent as aZ, QueryFilterProjectSimilars as a_, NewsOutput as aa, NotificationType as ab, NotificationsSettings as ac, OrganizationDirectoryModel as ad, OrganizationHarvesterType as ae, OrganizationModel as af, OrganizationModulesKey as ag, OrganizationOutput as ah, OrganizationPatchInput as ai, Patent as aj, PeopleGroupIdOrSlug as ak, PeopleGroupModel as al, PeopleGroupModulesKeys as am, PositionCode as an, PrivacySettings as ao, PrivacyValue as ap, ProjectCategoryCreateInput as aq, ProjectCategoryForm as ar, ProjectCategoryModel as as, ProjectCategoryOutput as at, ProjectCategoryPatchInput as au, ProjectCategoryPutInput as av, ProjectForm as aw, ProjectGroupRoleType as ax, ProjectLocationForm as ay, ProjectMemberRoleType as az, AddManyLinkedProjectInput as b, TranslatedNewsLocation as b$, QueryFilterProjectTabItem as b0, QueryFilterResearcher as b1, QueryFilterResearcherIdentifier as b2, QueryFilterResearcherStructure as b3, QueryFilterResetPassword as b4, QueryFilterSkill as b5, QueryFilterStructure as b6, QueryFilterStructureRelation as b7, QueryFilterTeaching as b8, QueryFilterTemplate as b9, SubGroup as bA, TabSlugOrId as bB, TagModel as bC, TagType as bD, Teaching as bE, TeachingDomain as bF, TemplateForm as bG, TemplateId as bH, TemplateModel as bI, TemplateTab as bJ, TemplateTabForm as bK, TermsAndConditions as bL, TransaltedTermsAndConditions as bM, TranslateStructureResearcher as bN, TranslatedAbstractDomain as bO, TranslatedAward as bP, TranslatedDocumentDomain as bQ, TranslatedDocumentJournal as bR, TranslatedEventLocation as bS, TranslatedEventModel as bT, TranslatedFunding as bU, TranslatedInstruction as bV, TranslatedJournal as bW, TranslatedLinkedProject as bX, TranslatedLocation as bY, TranslatedLocationGeneral as bZ, TranslatedNews as b_, QueryFilterUser as ba, QueryFilterUserEmail as bb, RelationType as bc, Relators as bd, RemoveLinkedProjectInput as be, Researcher as bf, ResearcherAward as bg, ResearcherDocument as bh, ResearcherDocumentAnalytics as bi, ResearcherDocumentType as bj, ResearcherDomain as bk, ResearcherIdentifierType as bl, ResearcherModulesKeys as bm, ResearcherStructure as bn, Roles as bo, SearchObjectType as bp, SecondaryTagType as bq, SkillCleanedForm as br, SkillForm as bs, SkillModel as bt, StatusType as bu, Structure as bv, StructureIdentifierType as bw, StructureModules as bx, StructureRelation as by, StructureResearcher as bz, AnyLocation as c, TranslatedOrganizationModel as c0, TranslatedPatent as c1, TranslatedPeopleGroupModel as c2, TranslatedProject as c3, TranslatedProjectCategory as c4, TranslatedProjectTab as c5, TranslatedProjectTabItem as c6, TranslatedResearcher as c7, TranslatedResearcherAward as c8, TranslatedResearcherDocument as c9, TranslatedResearcherDomain as ca, TranslatedResearcherStructure as cb, TranslatedSkill as cc, TranslatedStructure as cd, TranslatedStructureRelation as ce, TranslatedTag as cf, TranslatedTeaching as cg, TranslatedTeachingDomain as ch, TranslatedTemplate as ci, TranslatedUserModel as cj, UnfollowCategoryInput as ck, UserForm as cl, UserFromJWTModel as cm, UserModel as cn, UserModuleExtra as co, UserModulesKeys as cp, UserPatchModel as cq, UserPrivacyPatchModel as cr, UserSlugOrId as cs, AnyProject as d, AnyTranslatedLocation as e, AttachmentType as f, AuthorityOrganizationIdentifierType as g, Award as h, BaseTranslatedLocationModel as i, DocumentDomain as j, DocumentIdentifierType as k, DocumentJournal as l, DocumentModulesKeys as m, EventIdOrSlug as n, EventInput as o, EventLocation as p, EventModel as q, FaqInput as r, FaqModel as s, FollowCategoryInput as t, FollowInput as u, FollowManyOutput as v, FollowModel as w, FollowOutput as x, FollowOutputList as y, FollowProjectOutput as z };
