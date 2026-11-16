@@ -65,7 +65,7 @@ export const canCreateComment = (
   organizationId: OrganizationModel['id'],
   projectId: ProjectModel['id']
 ): boolean => {
-  return canPermissionProject(rights, organizationId, projectId, 'delete_comment')
+  return canPermissionProject(rights, organizationId, projectId, 'add_comment')
 }
 
 export const canEditComment = (
