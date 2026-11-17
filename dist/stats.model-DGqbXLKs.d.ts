@@ -1,4 +1,4 @@
-import { aG as ProjectSlugOrId, cv as UserSlugOrId, cq as UserModel, M as GroupMemberRoleType, cp as UserFromJWTModel, al as PeopleGroupModel, c4 as TranslatedPeopleGroupModel, af as OrganizationModel, bu as SkillModel, ab as NotificationType, aA as ProjectModel, az as ProjectMemberRoleType, ak as PeopleGroupIdOrSlug, ax as ProjectGroupRoleType, aH as ProjectStatusType, aC as ProjectModulesKeys, cm as TranslatedUserModel, bq as SearchObjectType, V as Language, as as ProjectCategoryModel, bE as TagModel, am as PeopleGroupModulesKeys, cs as UserModulesKeys, c5 as TranslatedProject } from './instruction.model-CXRziDmb.js';
+import { aG as ProjectSlugOrId, cv as UserSlugOrId, cq as UserModel, M as GroupMemberRoleType, cp as UserFromJWTModel, al as PeopleGroupModel, c4 as TranslatedPeopleGroupModel, af as OrganizationModel, bu as SkillModel, ab as NotificationType, aA as ProjectModel, az as ProjectMemberRoleType, ak as PeopleGroupIdOrSlug, ax as ProjectGroupRoleType, aH as ProjectStatusType, aC as ProjectModulesKeys, cm as TranslatedUserModel, bq as SearchObjectType, V as Language, as as ProjectCategoryModel, bE as TagModel, am as PeopleGroupModulesKeys, bz as StructureModulesKeys, cs as UserModulesKeys, bn as ResearcherModulesKeys, c5 as TranslatedProject } from './instruction.model-CXRziDmb.js';
 import { Identifier } from 'typescript';
 import { B as BaseModel, T as Translated, I as ImageModel, c as Ordering, O as Optional, P as PaginationQuery } from './utils-Def92TDC.js';
 
@@ -321,7 +321,7 @@ type QueryFilterSearch = Partial<{
     tags: TagModel['id'][];
     projects: ProjectSlugOrId[];
     people_group: PeopleGroupIdOrSlug[];
-    modules: 'none' | ProjectModulesKeys[] | PeopleGroupModulesKeys[] | UserModulesKeys[];
+    modules: 'none' | (ProjectModulesKeys | PeopleGroupModulesKeys | StructureModulesKeys | UserModulesKeys | ResearcherModulesKeys)[];
     exclude_projects: ProjectModel['id'][];
     exclude_projects_in_project: ProjectModel['id'];
     exclude_groups_in_project: ProjectModel['id'];

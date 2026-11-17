@@ -14,7 +14,9 @@ import type { TranslatedUserModel, UserModel, UserModulesKeys } from './user.mod
 import type { ProjectCategoryModel } from './project-category.model'
 import type { OrganizationModel } from './organization.model'
 import { PaginationQuery } from '../interfaces/pagination'
+import { ResearcherModulesKeys } from './researcher.model'
 import type { Language, SearchObjectType } from './types'
+import { StructureModulesKeys } from './structure.model'
 import type { Ordering } from '../interfaces/query'
 import type { TagModel } from './tag.model'
 import { SkillModel } from './skill.model'
@@ -92,7 +94,15 @@ export type QueryFilterSearch = Partial<
     people_group: PeopleGroupIdOrSlug[]
 
     // modules filtereds
-    modules: 'none' | ProjectModulesKeys[] | PeopleGroupModulesKeys[] | UserModulesKeys[]
+    modules:
+      | 'none'
+      | (
+          | ProjectModulesKeys
+          | PeopleGroupModulesKeys
+          | StructureModulesKeys
+          | UserModulesKeys
+          | ResearcherModulesKeys
+        )[]
 
     // extras
 
