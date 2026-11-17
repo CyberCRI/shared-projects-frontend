@@ -22,8 +22,10 @@ import {
 } from '../models/researcher.model'
 import {
   QueryFilterStructure,
+  QueryFilterStructureDomain,
   ResearcherStructure,
   Structure,
+  StructureDomain,
   StructureResearcher,
 } from '../models/structure.model'
 import { OrganizationModel, PeopleGroupIdOrSlug, QueryFilterTag } from '../models'
@@ -338,13 +340,13 @@ export const getStructureSupervisingStructures = (
   )
 }
 
-export const getStructureResearcherDomains = (
+export const getStructureDomains = (
   organizationCode: OrganizationModel['code'],
   structureId: Structure['id'],
-  config: ClientAPIOptions<QueryFilterTag> = {}
+  config: ClientAPIOptions<QueryFilterStructureDomain> = {}
 ) => {
-  return clientAPI<PaginationResult<ResearcherDomain>>(
-    `crisalid/organization/${organizationCode}/structure/${structureId}/research-domains/`,
+  return clientAPI<PaginationResult<StructureDomain>>(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/domains/`,
     config
   )
 }
@@ -378,6 +380,28 @@ export const getStructureCitations = (
 ) => {
   return clientAPI<PaginationResult<DocumentJournal>>(
     `crisalid/organization/${organizationCode}/structure/${structureId}/citations/`,
+    config
+  )
+}
+
+export const getStructureAwards = (
+  organizationCode: OrganizationModel['code'],
+  structureId: Structure['id'],
+  config: ClientAPIOptions<QueryFilterAward> = {}
+) => {
+  return clientAPI<PaginationResult<ResearcherAward>>(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/awards/`,
+    config
+  )
+}
+
+export const getStructureTeachings = (
+  organizationCode: OrganizationModel['code'],
+  structureId: Structure['id'],
+  config: ClientAPIOptions<QueryFilterTeaching> = {}
+) => {
+  return clientAPI<PaginationResult<Teaching>>(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/teachings/`,
     config
   )
 }

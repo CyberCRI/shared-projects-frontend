@@ -8,11 +8,28 @@ import {
   TranslatedStructureRelation,
   TranslatedStructure,
   TranslateStructureResearcher,
+  StructureDomain,
+  TranslatedStructureDomain,
 } from '../models'
 import { translateOrganization } from './translateOrganization'
 import { translateResearcher } from './translateResearcher'
 import { translateEntity, translateMany } from './utils'
 import { translateGroup } from './translateGroup'
+import { translateTag } from './translateTag'
+
+export const translateStructureDomain = (
+  data: StructureDomain,
+  locale: Language | null
+): TranslatedStructureDomain => {
+  if (!data) {
+    return data
+  }
+
+  return {
+    ...data,
+    domain: translateTag(data.domain, locale),
+  }
+}
 
 export const translateStructure = (
   data: Structure,

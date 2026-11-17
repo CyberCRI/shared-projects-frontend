@@ -1,7 +1,12 @@
+import {
+  AbstractDomain,
+  Researcher,
+  TranslatedAbstractDomain,
+  TranslatedResearcher,
+} from './researcher.model'
 import { OrganizationModel, TranslatedOrganizationModel } from './organization.model'
 import { PeopleGroupModel, TranslatedPeopleGroupModel } from './people-group.model'
 import { Identifier, StructureIdentifierType } from './identifiers.model'
-import { Researcher, TranslatedResearcher } from './researcher.model'
 import { PaginationQuery, Translated } from '../interfaces'
 import BaseModel from './base.model'
 
@@ -16,6 +21,9 @@ export type GenericType =
 
 export type MissionType =
   'research' | 'scientific_services' | 'administrative_services' | 'teaching'
+
+export type StructureDomain = AbstractDomain
+export type TranslatedStructureDomain = TranslatedAbstractDomain
 
 // Represents a research structure (or 'OrganizationUnit') in the Crisalid system.
 export interface Structure extends BaseModel {
@@ -43,9 +51,11 @@ export interface Structure extends BaseModel {
     parent_structures: number
     supervising_structures: number
     supervised_structures: number
-    research_domains: number
+    domains: number
     collaborations: number
     citations: number
+    awards: number
+    teachings: number
   }
 }
 
@@ -174,6 +184,8 @@ export type QueryFilterStructure = Partial<
     modules: 'none' | StructureModulesKeys[]
   } & PaginationQuery
 >
+
+export type QueryFilterStructureDomain = Partial<{} & PaginationQuery>
 
 export type QueryFilterStructureRelation = Partial<
   {

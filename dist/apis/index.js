@@ -408,9 +408,9 @@ var getStructureSupervisingStructures = (organizationCode, structureId, config =
     config
   );
 };
-var getStructureResearcherDomains = (organizationCode, structureId, config = {}) => {
+var getStructureDomains = (organizationCode, structureId, config = {}) => {
   return clientAPI(
-    `crisalid/organization/${organizationCode}/structure/${structureId}/research-domains/`,
+    `crisalid/organization/${organizationCode}/structure/${structureId}/domains/`,
     config
   );
 };
@@ -429,6 +429,18 @@ var getStructureResearchers = (organizationCode, structureId, config = {}) => {
 var getStructureCitations = (organizationCode, structureId, config = {}) => {
   return clientAPI(
     `crisalid/organization/${organizationCode}/structure/${structureId}/citations/`,
+    config
+  );
+};
+var getStructureAwards = (organizationCode, structureId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/awards/`,
+    config
+  );
+};
+var getStructureTeachings = (organizationCode, structureId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/teachings/`,
     config
   );
 };
@@ -2041,12 +2053,14 @@ export {
   getRootProjectCategory,
   getStats,
   getStructure,
+  getStructureAwards,
   getStructureChildren,
   getStructureCitations,
   getStructureCollaborations,
-  getStructureResearcherDomains,
+  getStructureDomains,
   getStructureResearchers,
   getStructureSupervisingStructures,
+  getStructureTeachings,
   getSubGroup,
   getTags,
   getTeaching,

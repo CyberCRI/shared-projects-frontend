@@ -276,6 +276,15 @@ var translateResearcher = (data, locale) => {
 };
 
 // src/translate/translateStructure.ts
+var translateStructureDomain = (data, locale) => {
+  if (!data) {
+    return data;
+  }
+  return {
+    ...data,
+    domain: translateTag(data.domain, locale)
+  };
+};
 var translateStructure = (data, locale) => {
   if (!data) {
     return data;
@@ -629,6 +638,7 @@ export {
   translateReview,
   translateSkill,
   translateStructure,
+  translateStructureDomain,
   translateStructureRelation,
   translateStructureResearcher,
   translateTag,
