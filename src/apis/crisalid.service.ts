@@ -14,7 +14,6 @@ import {
   Funding,
   QueryFilterFunding,
   QueryFilterTeaching,
-  ResearcherDomain,
   QueryFilterResearcherStructure,
   QueryFilterBioIa,
   QueryFilterJournal,
@@ -28,9 +27,9 @@ import {
   StructureDomain,
   StructureResearcher,
 } from '../models/structure.model'
-import { OrganizationModel, PeopleGroupIdOrSlug, QueryFilterTag } from '../models'
 import { AuthorityOrganization } from '../models/authority_organization.model'
 import { PaginationQuery, PaginationResult } from '../interfaces/pagination'
+import { OrganizationModel, PeopleGroupIdOrSlug } from '../models'
 import { clientAPI, ClientAPIOptions } from './client'
 
 export async function getUserResearchDocument(
@@ -402,6 +401,17 @@ export const getStructureTeachings = (
 ) => {
   return clientAPI<PaginationResult<Teaching>>(
     `crisalid/organization/${organizationCode}/structure/${structureId}/teachings/`,
+    config
+  )
+}
+
+export const getStructureFundings = (
+  organizationCode: OrganizationModel['code'],
+  structureId: Structure['id'],
+  config: ClientAPIOptions<QueryFilterFunding> = {}
+) => {
+  return clientAPI<PaginationResult<Funding>>(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/fundings/`,
     config
   )
 }

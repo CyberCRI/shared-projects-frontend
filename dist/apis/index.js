@@ -444,6 +444,12 @@ var getStructureTeachings = (organizationCode, structureId, config = {}) => {
     config
   );
 };
+var getStructureFundings = (organizationCode, structureId, config = {}) => {
+  return clientAPI(
+    `crisalid/organization/${organizationCode}/structure/${structureId}/fundings/`,
+    config
+  );
+};
 
 // src/apis/event.service.ts
 async function getAllEvents(organizationCode, config) {
@@ -2058,6 +2064,7 @@ export {
   getStructureCitations,
   getStructureCollaborations,
   getStructureDomains,
+  getStructureFundings,
   getStructureResearchers,
   getStructureSupervisingStructures,
   getStructureTeachings,

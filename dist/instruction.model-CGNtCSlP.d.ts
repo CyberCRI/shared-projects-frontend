@@ -117,6 +117,19 @@ interface TagModel extends BaseModel {
 }
 type TranslatedTag = Translated<TagModel, 'title' | 'description'>;
 
+type OrganizationHarvesterType = 'idref' | 'ror' | 'nns' | 'local' | 'uai' | 'siren' | 'siret' | 'wikidata' | 'scopus' | 'hal' | 'openalex' | 'isni' | 'viaf';
+type StructureIdentifierType = OrganizationHarvesterType;
+type AuthorityOrganizationIdentifierType = OrganizationHarvesterType;
+type ResearcherIdentifierType = 'orcid' | 'idref' | 'idhals' | 'idhali' | 'scopus' | 'local' | 'eppn';
+type DocumentIdentifierType = 'hal' | 'scanr' | 'idref' | 'openalex' | 'scopus';
+type JournalIdentifierType = 'doi' | 'isnn';
+type HarvesterType = OrganizationHarvesterType | ResearcherIdentifierType | DocumentIdentifierType | JournalIdentifierType;
+type Identifier<Harvester = HarvesterType> = {
+    id: number;
+    value: string;
+    harvester: Harvester;
+};
+
 /**
  * @name NewsModel
  * @description News of an organization
@@ -301,19 +314,6 @@ type QueryFilterGroupHierarchy = QueryFilterGroup & Partial<{
     parent: PeopleGroupIdOrSlug;
 }>;
 
-type OrganizationHarvesterType = 'idref' | 'ror' | 'nns' | 'local' | 'uai' | 'siren' | 'siret' | 'wikidata' | 'scopus' | 'hal' | 'openalex' | 'isni' | 'viaf';
-type StructureIdentifierType = OrganizationHarvesterType;
-type AuthorityOrganizationIdentifierType = OrganizationHarvesterType;
-type ResearcherIdentifierType = 'orcid' | 'idref' | 'idhals' | 'idhali' | 'scopus' | 'local' | 'eppn';
-type DocumentIdentifierType = 'hal' | 'scanr' | 'idref' | 'openalex' | 'scopus';
-type JournalIdentifierType = 'doi' | 'isnn';
-type HarvesterType = OrganizationHarvesterType | ResearcherIdentifierType | DocumentIdentifierType | JournalIdentifierType;
-type Identifier<Harvester = HarvesterType> = {
-    id: number;
-    value: string;
-    harvester: Harvester;
-};
-
 type GenericType = 'institution' | 'institution_subdivision' | 'doctoral_school' | 'unit' | 'unit_subdivision' | 'team';
 type MissionType = 'research' | 'scientific_services' | 'administrative_services' | 'teaching';
 type StructureDomain = AbstractDomain;
@@ -345,6 +345,7 @@ interface Structure extends BaseModel {
         citations: number;
         awards: number;
         teachings: number;
+        fundings: number;
     };
 }
 type StructureModulesKeys = keyof Structure['modules'];

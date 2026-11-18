@@ -56,6 +56,7 @@ export interface Structure extends BaseModel {
     citations: number
     awards: number
     teachings: number
+    fundings: number
   }
 }
 

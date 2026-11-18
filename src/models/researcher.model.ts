@@ -1,6 +1,5 @@
-import { ResearcherStructure, Structure, StructureRelation } from './structure.model'
 import { Identifier, ResearcherIdentifierType } from './identifiers.model'
-import { AuthorityOrganization } from './authority_organization.model'
+import { ResearcherStructure, Structure } from './structure.model'
 import { TranslatedUserModel, UserModel } from './user.model'
 import { PaginationQuery } from '../interfaces/pagination'
 import { Translated } from '../interfaces/translated'
