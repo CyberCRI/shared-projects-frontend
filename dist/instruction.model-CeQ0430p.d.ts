@@ -502,8 +502,11 @@ type Award = {
     id: number;
     name: string;
     description: string;
+    researchers?: Researcher[];
 };
-type TranslatedAward = Translated<Award, 'name' | 'description'>;
+type TranslatedAward = Translated<Omit<Award, 'researchers'>, 'name' | 'description'> & {
+    researchers?: TranslatedResearcher[];
+};
 interface ResearcherAward extends BaseModel {
     id?: number;
     award: Award;

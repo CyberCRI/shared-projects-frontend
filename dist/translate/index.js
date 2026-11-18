@@ -509,7 +509,11 @@ var translateAward = (data, locale) => {
   if (!data) {
     return data;
   }
-  return translateEntity(data, ["name", "description"], locale);
+  const translated = translateEntity(data, ["name", "description"], locale);
+  if (data.researchers) {
+    translated.researchers = translateMany(translateResearcher, data.researchers, locale);
+  }
+  return translated;
 };
 var translateResearcherAward = (data, locale) => {
   if (!data) {

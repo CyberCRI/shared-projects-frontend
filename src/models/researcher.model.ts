@@ -451,9 +451,12 @@ export type Award = {
   id: number
   name: string
   description: string
+  researchers?: Researcher[]
 }
 
-export type TranslatedAward = Translated<Award, 'name' | 'description'>
+export type TranslatedAward = Translated<Omit<Award, 'researchers'>, 'name' | 'description'> & {
+  researchers?: TranslatedResearcher[]
+}
 
 export interface ResearcherAward extends BaseModel {
   id?: number

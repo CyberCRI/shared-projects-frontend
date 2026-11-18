@@ -5,14 +5,19 @@ import {
   TranslatedAward,
   TranslatedResearcherAward,
 } from '../models'
-import { translateEntity } from './utils'
+import { translateResearcher } from './translateResearcher'
+import { translateEntity, translateMany } from './utils'
 
 export const translateAward = (data: Award, locale: Language | null): TranslatedAward => {
   if (!data) {
     return data
   }
 
-  return translateEntity<TranslatedAward>(data, ['name', 'description'], locale)
+  const translated = translateEntity<TranslatedAward>(data, ['name', 'description'], locale)
+  if (data.researchers) {
+    translated.researchers = translateMany(translateResearcher, data.researchers, locale)
+  }
+  return translated
 }
 
 export const translateResearcherAward = (
