@@ -3,6 +3,7 @@ import { Structure, TranslatedStructure } from './structure.model'
 import type { OrganizationModel } from './organization.model'
 import type { Translated } from '../interfaces/translated'
 import type { ImageModel } from './image.model'
+import { ModulesQuery } from '../interfaces'
 import type { GroupDataRole } from './types'
 import type { TagModel } from './tag.model'
 
@@ -61,7 +62,7 @@ export type GeneralLocationPeopleGroup = BaseTranslatedLocationModel & {
 }
 
 export type QueryFilterGroup = Partial<{
-  modules: PeopleGroupModulesKeys[] | 'none'
+  modules: ModulesQuery<PeopleGroupModulesKeys>
   serializer: 'light' | 'superlight'
 }>
 

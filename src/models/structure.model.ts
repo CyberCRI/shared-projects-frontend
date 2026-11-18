@@ -7,7 +7,7 @@ import {
 import { OrganizationModel, TranslatedOrganizationModel } from './organization.model'
 import { PeopleGroupModel, TranslatedPeopleGroupModel } from './people-group.model'
 import { Identifier, StructureIdentifierType } from './identifiers.model'
-import { PaginationQuery, Translated } from '../interfaces'
+import { ModulesQuery, PaginationQuery, Translated } from '../interfaces'
 import BaseModel from './base.model'
 
 // Generic organization type from crisalid
@@ -182,7 +182,7 @@ export type QueryFilterStructure = Partial<
     national_type: string
     external: boolean
     researcher: Researcher['id']
-    modules: 'none' | StructureModulesKeys[]
+    modules: ModulesQuery<StructureModulesKeys>
   } & PaginationQuery
 >
 
@@ -194,7 +194,7 @@ export type QueryFilterStructureRelation = Partial<
     position: StructureRelation['position'][]
     structure: Structure['id']
     related_structure: Structure['id']
-    modules: 'none' | StructureModulesKeys[]
+    modules: ModulesQuery<StructureModulesKeys>
   } & PaginationQuery
 >
 

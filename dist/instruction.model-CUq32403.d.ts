@@ -1,4 +1,4 @@
-import { B as BaseModel, b as IconTab, I as ImageModel, c as Ordering, P as PaginationQuery, T as Translated, O as Optional, h as ImageSize } from './utils-Def92TDC.js';
+import { B as BaseModel, b as IconTab, I as ImageModel, c as Ordering, M as ModulesQuery, P as PaginationQuery, T as Translated, O as Optional, h as ImageSize } from './utils-BmWqX80r.js';
 
 type LanguageType = string;
 type AttachmentType = 'file' | 'image' | 'video';
@@ -61,7 +61,7 @@ type QueryFilterProjectTab = Partial<{
     type: ProjectTabType[];
     show_preview: boolean;
     show_tab: boolean;
-    modules: 'none' | ProjectTabModulesKeys[];
+    modules: ModulesQuery<ProjectTabModulesKeys>;
 } & PaginationQuery>;
 type QueryFilterProjectTabItem = Partial<{
     ordering: Ordering<'created_at' | 'updated_at'>;
@@ -306,7 +306,7 @@ type GeneralLocationPeopleGroup = BaseTranslatedLocationModel & {
     people_group: TranslatedPeopleGroupModel;
 };
 type QueryFilterGroup = Partial<{
-    modules: PeopleGroupModulesKeys[] | 'none';
+    modules: ModulesQuery<PeopleGroupModulesKeys>;
     serializer: 'light' | 'superlight';
 }>;
 type QueryFilterGroupHierarchy = QueryFilterGroup & Partial<{
@@ -390,7 +390,7 @@ type QueryFilterStructure = Partial<{
     national_type: string;
     external: boolean;
     researcher: Researcher['id'];
-    modules: 'none' | StructureModulesKeys[];
+    modules: ModulesQuery<StructureModulesKeys>;
 } & PaginationQuery>;
 type QueryFilterStructureDomain = Partial<{} & PaginationQuery>;
 type QueryFilterStructureRelation = Partial<{
@@ -398,7 +398,7 @@ type QueryFilterStructureRelation = Partial<{
     position: StructureRelation['position'][];
     structure: Structure['id'];
     related_structure: Structure['id'];
-    modules: 'none' | StructureModulesKeys[];
+    modules: ModulesQuery<StructureModulesKeys>;
 } & PaginationQuery>;
 interface StructureResearcher extends Researcher {
     position_code: PositionCode;
@@ -570,7 +570,7 @@ type QueryFilterDocument = Partial<{
     year: number;
     document_type: DocumentCrisalidType | '';
     roles: Relators;
-    modules: 'none' | DocumentModulesKeys[];
+    modules: ModulesQuery<DocumentModulesKeys>;
     ordering: Ordering<'publication_date'>;
 }>;
 type QueryFilterAward = Partial<{
@@ -635,7 +635,7 @@ type QueryFilterResearcher = Partial<{
     i10_index_min: number;
     i10_index_max: number;
     structure: Structure['id'];
-    modules: 'none' | ResearcherModulesKeys;
+    modules: ModulesQuery<ResearcherModulesKeys>;
 } & PaginationQuery>;
 type QueryFilterJournal = Partial<{
     title: string;
@@ -781,7 +781,7 @@ type TranslatedUserModel = Translated<Omit<UserModel, 'researcher'>, 'descriptio
 type QueryFilterUser = Partial<{
     ordering: Ordering<'given_name' | 'family_name' | 'job' | 'current_org_role' | 'email_verified' | 'password_created' | 'last_login' | 'created_at'>;
     search: string;
-    modules: 'none' | (UserModulesKeys | ResearcherModulesKeys)[];
+    modules: ModulesQuery<UserModulesKeys | ResearcherModulesKeys>;
     serializer: 'light' | 'superlight';
     organizations: string;
     current_org_pk: string | number;
@@ -892,7 +892,7 @@ type TranslatedOrganizationModel = Translated<Omit<OrganizationOutput, 'terms_an
     terms_and_conditions: TransaltedTermsAndConditions;
 };
 type QueryFilterOrganization = Partial<{
-    modules: 'none' | OrganizationModulesKey[];
+    modules: ModulesQuery<OrganizationModulesKey>;
 }>;
 
 interface TemplateTab extends BaseModel {

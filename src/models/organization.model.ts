@@ -6,6 +6,7 @@ import type BaseModel from './base.model'
 
 import type { Translated } from '../interfaces/translated'
 
+import { ModulesQuery } from '../interfaces'
 import type { TagModel } from './tag.model'
 import { SkillModel } from './skill.model'
 
@@ -89,5 +90,5 @@ export type TranslatedOrganizationModel = Translated<
 }
 
 export type QueryFilterOrganization = Partial<{
-  modules: 'none' | OrganizationModulesKey[]
+  modules: ModulesQuery<OrganizationModulesKey>
 }>

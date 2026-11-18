@@ -1,10 +1,10 @@
 import { Identifier, ResearcherIdentifierType } from './identifiers.model'
 import { ResearcherStructure, Structure } from './structure.model'
 import { TranslatedUserModel, UserModel } from './user.model'
+import { ModulesQuery, Ordering } from '../interfaces/query'
 import { PaginationQuery } from '../interfaces/pagination'
 import { Translated } from '../interfaces/translated'
 import { TagModel, TranslatedTag } from './tag.model'
-import { Ordering } from '../interfaces/query'
 import { ProjectModel } from './project.model'
 import BaseModel from './base.model'
 
@@ -539,7 +539,7 @@ export type QueryFilterDocument = Partial<{
   year: number
   document_type: DocumentCrisalidType | ''
   roles: Relators
-  modules: 'none' | DocumentModulesKeys[]
+  modules: ModulesQuery<DocumentModulesKeys>
   ordering: Ordering<'publication_date'>
 }>
 
@@ -628,7 +628,7 @@ export type QueryFilterResearcher = Partial<
 
     structure: Structure['id']
 
-    modules: 'none' | ResearcherModulesKeys
+    modules: ModulesQuery<ResearcherModulesKeys>
   } & PaginationQuery
 >
 
