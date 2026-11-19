@@ -1,5 +1,6 @@
-import { ap as ProjectSlugOrId, bB as UserSlugOrId, bw as UserModel, x as GroupMemberRoleType, bv as UserFromJWTModel, a5 as PeopleGroupModel, bj as TranslatedPeopleGroupModel, a1 as OrganizationModel, aZ as SkillModel, _ as NotificationType, aj as ProjectModel, ai as ProjectMemberRoleType, a4 as PeopleGroupIdOrSlug, ag as ProjectGroupRoleType, aq as ProjectStatusType, al as ProjectModulesKeys, bs as TranslatedUserModel, aV as SearchObjectType, L as Language, ab as ProjectCategoryModel, b1 as TagModel, a6 as PeopleGroupModulesKeys, by as UserModulesKeys, bk as TranslatedProject } from './instruction.model-9lq0nOax.js';
-import { T as Translated, I as ImageModel, B as BaseModel, c as Ordering, O as Optional, P as PaginationQuery } from './utils-Def92TDC.js';
+import { aG as ProjectSlugOrId, cv as UserSlugOrId, cq as UserModel, M as GroupMemberRoleType, cp as UserFromJWTModel, al as PeopleGroupModel, c4 as TranslatedPeopleGroupModel, af as OrganizationModel, bu as SkillModel, ab as NotificationType, aA as ProjectModel, az as ProjectMemberRoleType, ak as PeopleGroupIdOrSlug, ax as ProjectGroupRoleType, aH as ProjectStatusType, aC as ProjectModulesKeys, cm as TranslatedUserModel, bq as SearchObjectType, V as Language, as as ProjectCategoryModel, bE as TagModel, am as PeopleGroupModulesKeys, bz as StructureModulesKeys, cs as UserModulesKeys, bn as ResearcherModulesKeys, c5 as TranslatedProject } from './instruction.model-CD_5_LDc.js';
+import { Identifier } from 'typescript';
+import { B as BaseModel, T as Translated, I as ImageModel, c as Ordering, O as Optional, M as ModulesQuery, P as PaginationQuery } from './utils-BmWqX80r.js';
 
 type AttachmentForm = {
     id?: number;
@@ -11,6 +12,19 @@ type AttachmentForm = {
     profile_id?: UserSlugOrId;
     user_id?: UserSlugOrId;
 };
+
+type OrganizationType = 'organization' | 'institution' | 'institution_group' | 'laboratory' | 'laboratory_group' | 'research_team' | 'research_team_group';
+interface AuthorityOrganization extends BaseModel {
+    id: number;
+    crisalid_uid: string;
+    name: string;
+    type: OrganizationType;
+    identifiers: Identifier[];
+}
+type QueryFilterAuthorityOrganization = Partial<{
+    type: AuthorityOrganization['type'][];
+    name: string;
+}>;
 
 /**
  * @name GroupModel
@@ -219,7 +233,7 @@ type QueryFilterProject = Partial<{
     life_status: ProjectStatusType[];
     creation_year: string[];
     ids: ProjectModel['id'][];
-    modules: 'none' | ProjectModulesKeys[];
+    modules: ModulesQuery<ProjectModulesKeys>;
     serializer: 'light' | 'superlight';
 } & PaginationQuery>;
 type QueryFilterProjectMembers = Partial<{
@@ -307,7 +321,7 @@ type QueryFilterSearch = Partial<{
     tags: TagModel['id'][];
     projects: ProjectSlugOrId[];
     people_group: PeopleGroupIdOrSlug[];
-    modules: 'none' | ProjectModulesKeys[] | PeopleGroupModulesKeys[] | UserModulesKeys[];
+    modules: ModulesQuery<ProjectModulesKeys | PeopleGroupModulesKeys | StructureModulesKeys | UserModulesKeys | ResearcherModulesKeys>;
     exclude_projects: ProjectModel['id'][];
     exclude_projects_in_project: ProjectModel['id'];
     exclude_groups_in_project: ProjectModel['id'];
@@ -334,4 +348,4 @@ type Stats = {
     })[];
 };
 
-export type { AddGroupMembers as A, BaseSearchResult as B, ContactForm as C, SearchResultGroup as D, SearchResultProject as E, SearchResultUser as F, GroupMember as G, HierarchyGroupModel as H, InvitationModel as I, Stats as J, TranslatedProjectMember as K, TranslatedSearchResultAll as L, Mentoring as M, NotificationModel as N, TranslatedSearchResultGroup as O, PostGroupData as P, QueryFilterNotification as Q, RemoveGroupMember as R, SearchResultAll as S, TranslatedGroupMember as T, TranslatedSearchResultProject as U, TranslatedSearchResultUser as V, TrasnlatedHierarchyGroupModel as W, AddParentGroupModelInput as a, AttachmentForm as b, ContactModel as c, GroupModel as d, GroupModelInput as e, GroupOuput as f, InvitationModelInput as g, MentoringContactForm as h, NotificationSettingsForm as i, NotificationSettingsModel as j, PostGroupProjects as k, ProjectMemberModel as l, ProjectMemberOutput as m, ProjectMemberPeopleGroupOutput as n, ProjectMembersAddEntry as o, ProjectMembersAddInput as p, ProjectMembersDeleteInput as q, ProjectTeamModel as r, ProjectTeamOutput as s, QueryFilterProject as t, QueryFilterProjectMembers as u, QueryFilterRecomendation as v, QueryFilterSearch as w, RemoveGroupModelInput as x, ReportForm as y, ReportModel as z };
+export type { AddGroupMembers as A, BaseSearchResult as B, ContactForm as C, ReportForm as D, ReportModel as E, SearchResultGroup as F, GroupMember as G, HierarchyGroupModel as H, InvitationModel as I, SearchResultProject as J, SearchResultUser as K, Stats as L, Mentoring as M, NotificationModel as N, OrganizationType as O, PostGroupData as P, QueryFilterAuthorityOrganization as Q, RemoveGroupMember as R, SearchResultAll as S, TranslatedGroupMember as T, TranslatedProjectMember as U, TranslatedSearchResultAll as V, TranslatedSearchResultGroup as W, TranslatedSearchResultProject as X, TranslatedSearchResultUser as Y, TrasnlatedHierarchyGroupModel as Z, AddParentGroupModelInput as a, AttachmentForm as b, AuthorityOrganization as c, ContactModel as d, GroupModel as e, GroupModelInput as f, GroupOuput as g, InvitationModelInput as h, MentoringContactForm as i, NotificationSettingsForm as j, NotificationSettingsModel as k, PostGroupProjects as l, ProjectMemberModel as m, ProjectMemberOutput as n, ProjectMemberPeopleGroupOutput as o, ProjectMembersAddEntry as p, ProjectMembersAddInput as q, ProjectMembersDeleteInput as r, ProjectTeamModel as s, ProjectTeamOutput as t, QueryFilterNotification as u, QueryFilterProject as v, QueryFilterProjectMembers as w, QueryFilterRecomendation as x, QueryFilterSearch as y, RemoveGroupModelInput as z };

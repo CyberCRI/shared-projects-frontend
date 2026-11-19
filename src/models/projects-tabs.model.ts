@@ -1,6 +1,6 @@
+import type { ModulesQuery, Ordering } from '../interfaces/query'
 import type { Translated } from '../interfaces/translated'
 import { PaginationQuery } from '../interfaces/pagination'
-import type { Ordering } from '../interfaces/query'
 import type { ProjectModel } from './project.model'
 import type { ImageModel } from './image.model'
 import { IconTab } from '../interfaces/icons'
@@ -64,7 +64,7 @@ export type QueryFilterProjectTab = Partial<
     type: ProjectTabType[]
     show_preview: boolean
     show_tab: boolean
-    modules: 'none' | ProjectTabModulesKeys[]
+    modules: ModulesQuery<ProjectTabModulesKeys>
   } & PaginationQuery
 >
 

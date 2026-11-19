@@ -1,6 +1,6 @@
-import { e as AnnouncementModel, D as TranslatedAnnouncement, p as BlogEntryModel, H as TranslatedBlogEntry, T as TagClassificationModel, O as TranslatedTagClassification, C as CommentModel, I as TranslatedComment, i as AttachmentFileModel, E as TranslatedAttachmentFile, q as GoalModel, J as TranslatedGoal, m as AttachmentLinkModel, F as TranslatedAttachmentLink, N as NewsfeedModel, K as TranslatedNewsfeed, s as ProjectMessageModel, L as TranslatedProjectMessage, z as ReviewModel, M as TranslatedReview } from '../tagclassification.model-C7m14KsW.js';
-import { L as Language, ab as ProjectCategoryModel, bl as TranslatedProjectCategory, k as EventModel, bb as TranslatedEventModel, B as BaseLocationModel, ba as TranslatedEventLocation, a5 as PeopleGroupModel, bj as TranslatedPeopleGroupModel, C as InstructionModel, bc as TranslatedInstruction, f as BaseTranslatedLocationModel, Y as NewsModel, bg as TranslatedNews, bh as TranslatedNewsLocation, a1 as OrganizationModel, bi as TranslatedOrganizationModel, b8 as TermsAndConditions, b9 as TransaltedTermsAndConditions, be as TranslatedLocation, aj as ProjectModel, bk as TranslatedProject, R as LocationModel, ar as ProjectTab, bm as TranslatedProjectTab, at as ProjectTabItem, bn as TranslatedProjectTabItem, aP as ResearcherDocument, bo as TranslatedResearcherDocument, aZ as SkillModel, bp as TranslatedSkill, b1 as TagModel, bq as TranslatedTag, b5 as TemplateModel, br as TranslatedTemplate, bw as UserModel, bs as TranslatedUserModel, K as LinkedProject, bd as TranslatedLinkedProject } from '../instruction.model-9lq0nOax.js';
-import '../utils-Def92TDC.js';
+import { e as AnnouncementModel, E as TranslatedAnnouncement, p as BlogEntryModel, I as TranslatedBlogEntry, T as TagClassificationModel, S as TranslatedTagClassification, C as CommentModel, J as TranslatedComment, i as AttachmentFileModel, F as TranslatedAttachmentFile, q as GoalModel, K as TranslatedGoal, m as AttachmentLinkModel, H as TranslatedAttachmentLink, N as NewsfeedModel, L as TranslatedNewsfeed, s as ProjectMessageModel, M as TranslatedProjectMessage, D as ReviewModel, O as TranslatedReview } from '../tagclassification.model-CXNpJaZS.js';
+import { V as Language, as as ProjectCategoryModel, c6 as TranslatedProjectCategory, q as EventModel, bV as TranslatedEventModel, B as BaseLocationModel, bU as TranslatedEventLocation, al as PeopleGroupModel, c4 as TranslatedPeopleGroupModel, S as InstructionModel, bX as TranslatedInstruction, l as DocumentJournal, bT as TranslatedDocumentJournal, T as Journal, bY as TranslatedJournal, i as BaseTranslatedLocationModel, a9 as NewsModel, c0 as TranslatedNews, c1 as TranslatedNewsLocation, af as OrganizationModel, c2 as TranslatedOrganizationModel, bN as TermsAndConditions, bO as TransaltedTermsAndConditions, b_ as TranslatedLocation, aA as ProjectModel, c5 as TranslatedProject, a1 as LocationModel, aI as ProjectTab, c7 as TranslatedProjectTab, aK as ProjectTabItem, c8 as TranslatedProjectTabItem, bg as Researcher, c9 as TranslatedResearcher, h as Award, bR as TranslatedAward, bh as ResearcherAward, ca as TranslatedResearcherAward, bi as ResearcherDocument, cb as TranslatedResearcherDocument, bQ as TranslatedAbstractDomain, I as Funding, bW as TranslatedFunding, aj as Patent, c3 as TranslatedPatent, bG as Teaching, cj as TranslatedTeaching, bu as SkillModel, ce as TranslatedSkill, bo as ResearcherStructure, cd as TranslatedResearcherStructure, bw as Structure, cf as TranslatedStructure, bx as StructureDomain, cg as TranslatedStructureDomain, bA as StructureRelation, ch as TranslatedStructureRelation, bB as StructureResearcher, bP as TranslateStructureResearcher, bE as TagModel, ci as TranslatedTag, bK as TemplateModel, cl as TranslatedTemplate, cq as UserModel, cm as TranslatedUserModel, X as LinkedProject, bZ as TranslatedLinkedProject } from '../instruction.model-CD_5_LDc.js';
+import '../utils-BmWqX80r.js';
 
 declare const translateAnnouncement: (data: AnnouncementModel, locale: Language | null) => TranslatedAnnouncement;
 
@@ -23,6 +23,9 @@ declare const translateGoal: (data: GoalModel, locale: Language | null) => Trans
 declare const translateGroup: (data: PeopleGroupModel, locale: Language | null) => TranslatedPeopleGroupModel;
 
 declare const translateInstruction: (data: InstructionModel, locale: Language | null) => TranslatedInstruction;
+
+declare const translateJournal: (data: Journal, locale: Language | null) => TranslatedJournal;
+declare const translateDocumentJournal: (data: DocumentJournal, locale: Language | null) => TranslatedDocumentJournal;
 
 declare const translateLink: (data: AttachmentLinkModel, locale: Language | null) => TranslatedAttachmentLink;
 
@@ -49,11 +52,30 @@ declare const translateProjectTab: (data: ProjectTab, locale: Language | null) =
 
 declare const translateProjectTabItem: (data: ProjectTabItem, locale: Language | null) => TranslatedProjectTabItem;
 
+declare const translateResearcher: (data: Researcher, locale: Language | null) => TranslatedResearcher;
+
+declare const translateAward: (data: Award, locale: Language | null) => TranslatedAward;
+declare const translateResearcherAward: (data: ResearcherAward, locale: Language | null) => TranslatedResearcherAward;
+
 declare const translateResearcherDocument: (data: ResearcherDocument, locale: Language | null) => TranslatedResearcherDocument;
+
+declare const translateResearcherDomain: <T extends TranslatedAbstractDomain>(data: T, locale: Language | null) => TranslatedAbstractDomain;
+
+declare const translateFunding: (data: Funding, locale: Language | null) => TranslatedFunding;
+
+declare const translatePatent: (data: Patent, locale: Language | null) => TranslatedPatent;
+
+declare const translateTeaching: (data: Teaching, locale: Language | null) => TranslatedTeaching;
 
 declare const translateReview: (data: ReviewModel, locale: Language | null) => TranslatedReview;
 
 declare const translateSkill: (data: SkillModel, locale: Language | null) => TranslatedSkill;
+
+declare const translateStructureDomain: (data: StructureDomain, locale: Language | null) => TranslatedStructureDomain;
+declare const translateStructure: (data: Structure, locale: Language | null) => TranslatedStructure;
+declare const translateStructureRelation: (data: StructureRelation, locale: Language | null) => TranslatedStructureRelation;
+declare const translateStructureResearcher: (data: StructureResearcher, locale: Language | null) => TranslateStructureResearcher;
+declare const translateResearcherStructure: (data: ResearcherStructure, locale: Language | null) => TranslatedResearcherStructure;
 
 declare const translateTag: (data: TagModel, locale: Language | null) => TranslatedTag;
 
@@ -77,7 +99,7 @@ declare const getTranslatableFields: <DataT extends Record<string, any>, Field e
 declare const translateEntity: <ResultT extends {
     $t: Record<string, any>;
     [key: string]: any;
-}, Fields extends keyof ResultT["$t"] = keyof ResultT["$t"], DataT = any>(entity: DataT, fields: Fields[], locale: Language | null) => DataT | (DataT & ResultT);
+}, Fields extends keyof ResultT["$t"] = keyof ResultT["$t"]>(entity: any, fields: Fields[], locale: Language | null) => ResultT;
 /**
  * translate array of objects
  *
@@ -89,4 +111,4 @@ declare const translateEntity: <ResultT extends {
  */
 declare const translateMany: <Result, Data>(func: (data: Data, locale: Language | null) => Result, datas: Data[], locale: Language | null) => Result[];
 
-export { getTranslatableField, getTranslatableFields, translateAnnouncement, translateBlogEntry, translateCategory, translateClassification, translateComment, translateEntity, translateEvent, translateEventsLocation, translateFile, translateGoal, translateGroup, translateInstruction, translateLink, translateLocation, translateMany, translateNewsFeed, translateOneNews, translateOneNewsLocation, translateOrganization, translatePeopleGroupLocation, translateProject, translateProjectLocation, translateProjectMessage, translateProjectTab, translateProjectTabItem, translateResearcherDocument, translateReview, translateSkill, translateTag, translateTemplate, translateTermsAdnCondition, translateUser, translatedProjectLinked };
+export { getTranslatableField, getTranslatableFields, translateAnnouncement, translateAward, translateBlogEntry, translateCategory, translateClassification, translateComment, translateDocumentJournal, translateEntity, translateEvent, translateEventsLocation, translateFile, translateFunding, translateGoal, translateGroup, translateInstruction, translateJournal, translateLink, translateLocation, translateMany, translateNewsFeed, translateOneNews, translateOneNewsLocation, translateOrganization, translatePatent, translatePeopleGroupLocation, translateProject, translateProjectLocation, translateProjectMessage, translateProjectTab, translateProjectTabItem, translateResearcher, translateResearcherAward, translateResearcherDocument, translateResearcherDomain, translateResearcherStructure, translateReview, translateSkill, translateStructure, translateStructureDomain, translateStructureRelation, translateStructureResearcher, translateTag, translateTeaching, translateTemplate, translateTermsAdnCondition, translateUser, translatedProjectLinked };

@@ -117,7 +117,6 @@ export type ProjectForm = Partial<
     | 'is_shareable'
     | 'publication_status'
     | 'life_status'
-    | 'template'
   > & {
     imageSizes: any
     file: ImageModel | File
@@ -127,6 +126,7 @@ export type ProjectForm = Partial<
     project_categories_ids: TranslatedProjectCategory['id'][]
     template_id: number
     tags: TranslatedTag[]
+    template: TranslatedTemplate | TemplateModel
   }
 >
 

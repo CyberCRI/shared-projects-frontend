@@ -4,10 +4,10 @@
  */
 import type { ImageModel, ImageSize } from './image.model'
 
+import type { Researcher, ResearcherModulesKeys, TranslatedResearcher } from './researcher.model'
 import type { Translated } from '../interfaces/translated'
-import type { ResearcherLight } from './researcher.model'
 
-import { Ordering, PaginationQuery } from '../interfaces'
+import { ModulesQuery, Ordering, PaginationQuery } from '../interfaces'
 import { OrganizationModel } from './organization.model'
 import type BaseModel from './base.model'
 import { Roles } from './types'
@@ -54,7 +54,7 @@ export interface UserModel extends BaseModel {
   mobile_phone: string | null
   skype: string | null
 
-  researcher?: ResearcherLight
+  researcher?: Researcher
 
   signed_terms_and_conditions?: {
     [key: string]: { version: number | null; date: string | null }
@@ -65,7 +65,6 @@ export interface UserModel extends BaseModel {
   permissions: string[]
 
   modules: {
-    conferences: number
     files: number
     reviews_projects: number
     follows_categories: number
@@ -75,7 +74,6 @@ export interface UserModel extends BaseModel {
     mentor: number
     mentoree: number
     projects: number
-    publications: number
     skills: number
     notifications: number
   }
@@ -156,9 +154,11 @@ export interface UserPrivacyPatchModel {
 }
 
 export type TranslatedUserModel = Translated<
-  UserModel,
+  Omit<UserModel, 'researcher'>,
   'description' | 'short_description' | 'job'
-> & {}
+> & {
+  researcher: TranslatedResearcher
+}
 
 export type QueryFilterUser = Partial<
   {
@@ -173,7 +173,8 @@ export type QueryFilterUser = Partial<
       | 'created_at'
     >
     search: string
-    modules: 'none' | UserModulesKeys[]
+    // add user + researchers modules keys
+    modules: ModulesQuery<UserModulesKeys | ResearcherModulesKeys>
     serializer: 'light' | 'superlight'
 
     // TODO check if array is need to is csv (separate by coma)

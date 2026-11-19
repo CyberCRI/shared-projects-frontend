@@ -13,6 +13,7 @@ export const canEditNews = (
   organizationId: OrganizationModel['id'],
   newsId: NewsModel['id']
 ) => {
+  void newsId
   return isAdminOrFacilitator(rights, organizationId)
 }
 
@@ -21,5 +22,6 @@ export const canDeleteNews = (
   organizationId: OrganizationModel['id'],
   newsId: NewsModel['id']
 ) => {
+  void newsId
   return isAdminOrFacilitator(rights, organizationId)
 }

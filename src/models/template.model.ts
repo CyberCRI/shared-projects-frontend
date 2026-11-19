@@ -1,4 +1,4 @@
-import type { ProjectCategoryModel } from './project-category.model'
+import type { ProjectCategoryModel, TranslatedProjectCategory } from './project-category.model'
 import { ProjectTab, ProjectTabItem } from './projects-tabs.model'
 import type { OrganizationModel } from './organization.model'
 import type { Translated } from '../interfaces/translated'
@@ -71,17 +71,22 @@ export type TranslatedTemplate = Omit<
     | 'review_description'
     | 'comment_content'
   >,
-  'project_tags'
+  'project_tags' | 'categories'
 > & {
   project_tags: TranslatedTag[]
+  categories: TranslatedProjectCategory[]
 }
 
 export type TemplateTabForm = Partial<TemplateTab>
 
-export type TemplateForm = Partial<Omit<TemplateModel, 'tabs'>> & {
-  tabs: TemplateTabForm[]
-  project_categories_ids: number[]
-}
+export type TemplateForm = Partial<
+  Omit<TemplateModel, 'tabs' | 'categories' | 'tags'> & {
+    tabs: TemplateTabForm[]
+    project_categories_ids: number[]
+    categories: TranslatedProjectCategory[] | ProjectCategoryModel[]
+    tags: TranslatedTag[] | TagModel[]
+  }
+>
 
 export type QueryFilterTemplate = Partial<
   {

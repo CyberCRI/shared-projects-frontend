@@ -1,3 +1,6 @@
+type Ordering<T extends string> = `-${T}` | T;
+type ModulesQuery<T extends string> = 'none' | 'all' | T[];
+
 /**
  * Type to modify interface with auto translate fields
  * use like Translated<BlogEntries, 'title' | 'content'>
@@ -51,8 +54,6 @@ type PaginationResult<T = any> = {
     total_page?: number;
 };
 
-type Ordering<T extends string> = `-${T}` | T;
-
 interface BaseModel {
 }
 
@@ -103,4 +104,4 @@ interface IconTab {
 
 type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
-export type { BaseModel as B, ImageModel as I, Optional as O, PaginationQuery as P, Translated as T, Icon as a, IconTab as b, Ordering as c, PaginationResult as d, ImageInput as e, ImageModelCreated as f, ImageOrganizationInput as g, ImageSize as h, ImageTemplateInput as i, ImageVariations as j };
+export type { BaseModel as B, ImageModel as I, ModulesQuery as M, Optional as O, PaginationQuery as P, Translated as T, Icon as a, IconTab as b, Ordering as c, PaginationResult as d, ImageInput as e, ImageModelCreated as f, ImageOrganizationInput as g, ImageSize as h, ImageTemplateInput as i, ImageVariations as j };

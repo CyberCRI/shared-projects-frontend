@@ -1,9 +1,9 @@
 import type { ProjectGroupRoleType, ProjectMemberRoleType, ProjectStatusType } from './types'
 import type { ProjectModel, ProjectModulesKeys } from './project.model'
 import type { TranslatedUserModel, UserModel } from './user.model'
+import type { ModulesQuery, Ordering } from '../interfaces/query'
 import type { PeopleGroupIdOrSlug } from './people-group.model'
 import { PaginationQuery } from '../interfaces/pagination'
-import type { Ordering } from '../interfaces/query'
 import type BaseModel from './base.model'
 
 /**
@@ -68,7 +68,7 @@ export type QueryFilterProject = Partial<
     life_status: ProjectStatusType[]
     creation_year: string[]
     ids: ProjectModel['id'][]
-    modules: 'none' | ProjectModulesKeys[]
+    modules: ModulesQuery<ProjectModulesKeys>
     serializer: 'light' | 'superlight'
   } & PaginationQuery
 >

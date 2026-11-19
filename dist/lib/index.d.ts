@@ -1,10 +1,10 @@
 import { P as ProviderParams, R as Right } from '../permissions-CUX6tqOY.js';
-import { a1 as OrganizationModel, aU as Roles, k as EventModel, a5 as PeopleGroupModel, C as InstructionModel, Y as NewsModel, aj as ProjectModel, bw as UserModel } from '../instruction.model-9lq0nOax.js';
+import { af as OrganizationModel, bp as Roles, q as EventModel, al as PeopleGroupModel, S as InstructionModel, a9 as NewsModel, aA as ProjectModel, cq as UserModel } from '../instruction.model-CD_5_LDc.js';
 import { P as PermissionType } from '../permissions.model-DCQ_saKg.js';
 import * as _tiptap_core from '@tiptap/core';
 import { Node, Extensions } from '@tiptap/core';
 import { CodeBlockLowlightOptions } from '@tiptap/extension-code-block-lowlight';
-import { j as ImageVariations } from '../utils-Def92TDC.js';
+import { j as ImageVariations } from '../utils-BmWqX80r.js';
 import * as _tiptap_extension_table_cell from '@tiptap/extension-table-cell';
 import { Attrs } from '@tiptap/pm/model';
 import * as highlight_js from 'highlight.js';

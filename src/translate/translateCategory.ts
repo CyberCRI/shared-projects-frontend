@@ -16,12 +16,12 @@ export const translateCategory = (
     locale
   )
 
-  if (translate.children) {
-    translate.children = translateMany(translateCategory, translate.children, locale)
+  if (data.children) {
+    translate.children = translateMany(translateCategory, data.children, locale)
   }
 
-  if (translate.hierarchy) {
-    translate.hierarchy = translateMany(translateCategory, translate.hierarchy, locale)
+  if (data.hierarchy) {
+    translate.hierarchy = translateMany(translateCategory, data.hierarchy, locale)
   }
 
   if (translate.tags) {

@@ -1,7 +1,15 @@
+import { Identifier, ResearcherIdentifierType } from './identifiers.model'
+import { ResearcherStructure, Structure } from './structure.model'
+import { TranslatedUserModel, UserModel } from './user.model'
+import { ModulesQuery, Ordering } from '../interfaces/query'
 import { PaginationQuery } from '../interfaces/pagination'
 import { Translated } from '../interfaces/translated'
-import { Ordering } from '../interfaces/query'
-import { UserModel } from './user.model'
+import { TagModel, TranslatedTag } from './tag.model'
+import { ProjectModel } from './project.model'
+import BaseModel from './base.model'
+
+// meta front DocumentTypeCentralized backend
+export type ResearcherDocumentType = 'publications' | 'conferences'
 
 export type Relators =
   | 'abr'
@@ -327,78 +335,60 @@ export type DocumentCrisalidType =
   | 'Presentation'
   | 'UNKNOWN'
 
-export type HarvesterType =
-  | 'orcid'
-  | 'idref'
-  | 'hal'
-  | 'idhals'
-  | 'idhali'
-  | 'scopus'
-  | 'scanr'
-  | 'openalex'
-  | 'scienceplus'
-  | 'sudoc'
-  | 'openedition'
-  | 'persee'
-  | 'local'
-  | 'eppn'
-  | 'ror'
-  | 'nns'
-  | 'uai'
-  | 'siren'
-  | 'siret'
-  | 'grid'
-  | 'wikidata'
-  | 'fundref'
-  | 'isni'
-  | 'googlescholar'
-  | 'viaf'
-  | 'doi'
-  | 'issn'
-  | 'arxiv'
-  | 'bibcode'
-  | 'biorxiv'
-  | 'cern'
-  | 'chemrxiv'
-  | 'ensam'
-  | 'ineris'
-  | 'inspire'
-  | 'ird'
-  | 'irstea'
-  | 'meditagri'
-  | 'nnt'
-  | 'okina'
-  | 'oatao'
-  | 'pii'
-  | 'pmid'
-  | 'pmcid'
-  | 'ppn'
-  | 'prodinra'
-  | 'sciencespo'
-  | 'swhid'
-  | 'uri'
-  | 'wos'
-
-export type ResearcherIdentifier = {
+export type AbstractDomain<Domain = TagModel> = {
   id: number
-  value: string
-  harvester: HarvesterType
+  level: number
+  domain: Domain
 }
+
+export type TranslatedAbstractDomain<Domain = TranslatedTag> = {
+  id: number
+  level: number
+  domain: Domain
+}
+
+export type ResearcherDomain = AbstractDomain
+export type TranslatedResearcherDomain = TranslatedAbstractDomain
 
 export type Researcher = {
   id: number
   user: null | UserModel
   display_name: string
-  identifiers: ResearcherIdentifier[]
-}
+  identifiers: Identifier<ResearcherIdentifierType>[]
+  bio: string | null
+  short_bio: string | null
 
-export type ResearcherLight = Researcher & {
-  // this is a objects with numbers of each documents
-  documents: {
+  domains: ResearcherDomain[]
+
+  h_index: number | null
+  i10_index: number | null
+
+  modules: {
     publications: number
     conferences: number
+    similars: number
+    affiliated: number
+    citations: number
+    domains: number
+    patents: number
+    awards: number
+    teachings: number
+    fundings: number
+    structures: number
   }
 }
+export type ResearcherModulesKeys = keyof Researcher['modules']
+
+export type TranslatedResearcher = Translated<
+  Omit<Researcher, 'domains' | 'user'>,
+  'bio' | 'short_bio'
+> & {
+  domains: TranslatedResearcherDomain[]
+  user: null | TranslatedUserModel
+}
+
+export type DocumentDomain = AbstractDomain
+export type TranslatedDocumentDomain = TranslatedAbstractDomain
 
 export type ResearcherDocument = {
   id: number
@@ -406,16 +396,96 @@ export type ResearcherDocument = {
   description: string
   document_type: null | string
   contributors: Researcher[]
-  identifiers: ResearcherIdentifier[]
+  identifiers: Identifier<ResearcherIdentifierType>[]
   publication_date: string | null | Date
+  domains: DocumentDomain[]
+
   modules: {
     similars: number
+    journals: number
   }
 }
+export type DocumentModulesKeys = keyof ResearcherDocument['modules']
 
-export type ResearcherDocumentType = keyof ResearcherLight['documents']
+export type TranslatedResearcherDocument = Translated<
+  Omit<ResearcherDocument, 'domains'>,
+  'title' | 'description'
+> & {
+  domains: TranslatedDocumentDomain[]
+}
 
-export type TranslatedResearcherDocument = Translated<ResearcherDocument, 'title' | 'description'>
+// journal
+
+export interface Journal extends BaseModel {
+  id?: number
+  uid?: string
+  title: string
+  acronym: string[]
+}
+
+export interface DocumentJournal extends BaseModel {
+  id?: number
+
+  journal: Journal
+  document: ResearcherDocument
+
+  pages?: string
+  volume?: string
+  issue?: string
+}
+
+export interface Patent extends BaseModel {
+  id?: number
+  name: string
+  description: string
+  date: string | null
+  link: string | null
+  researchers: Researcher[]
+}
+
+export type TranslatedPatent = Translated<Omit<Patent, 'researchers'>, 'name' | 'description'> & {
+  researchers: TranslatedResearcher[]
+}
+
+export type Award = {
+  id: number
+  name: string
+  description: string
+  researchers?: Researcher[]
+  contributors?: ResearcherAward[]
+}
+
+export type TranslatedAward = Translated<
+  Omit<Award, 'researchers' | 'contributors'>,
+  'name' | 'description'
+> & {
+  researchers?: TranslatedResearcher[]
+  contributors?: TranslatedResearcherAward[]
+}
+
+export interface ResearcherAward extends BaseModel {
+  id?: number
+  award?: Award
+  researcher?: Researcher
+  date: string | null
+  description: string
+  link: string | null
+}
+export type TranslatedResearcherAward = Translated<
+  Omit<ResearcherAward, 'award' | 'researcher'>,
+  'description'
+> & {
+  award: TranslatedAward
+  researcher: TranslatedResearcher
+}
+
+// TODO: journal is not translated field
+export type TranslatedJournal = Journal
+
+export type TranslatedDocumentJournal = Omit<DocumentJournal, 'document' | 'journal'> & {
+  journal: TranslatedJournal
+  document: TranslatedResearcherDocument
+}
 
 export type ResearcherDocumentAnalytics = {
   document_types: { [key in DocumentCrisalidType]?: number }
@@ -426,19 +496,155 @@ export type ResearcherDocumentAnalytics = {
   roles: { [key in Relators]?: number }
 }
 
-export type QueryFilterResearcher = Partial<
+// fundings/teachings
+
+export type Currency = 'EUR' | 'USD'
+
+export interface Funding extends BaseModel {
+  id: number
+  name: string
+  description: string
+  prices: number | null
+  currency: Currency
+  start_date: string
+  end_date: string
+  project_id?: number
+  researchers?: Researcher[]
+}
+export type TranslatedFunding = Translated<Omit<Funding, 'researchers'>, 'name' | 'description'> & {
+  researchers?: TranslatedResearcher[]
+}
+
+export type TeachingDomain = AbstractDomain
+export type TranslatedTeachingDomain = TranslatedAbstractDomain
+
+export interface Teaching extends BaseModel {
+  id: number
+  name: string
+  description: string
+  spec: string
+  level: string
+  link: string
+  domains: TeachingDomain[]
+  researcher?: Researcher
+}
+export type TranslatedTeaching = Translated<
+  Omit<Teaching, 'researcher' | 'domains'>,
+  'name' | 'description' | 'spec'
+> & {
+  domains: TranslatedTeachingDomain[]
+  researcher?: TranslatedResearcher
+}
+
+// queryfilters
+
+export type QueryFilterResearcherIdentifier = Partial<
   {
-    harvester: HarvesterType
+    harvester: ResearcherIdentifierType
     values: string // TODO: change to string[] (need to update backend)
   } & PaginationQuery
 >
-
-export type DocumentModulesKeys = keyof ResearcherDocument['modules']
 
 export type QueryFilterDocument = Partial<{
   year: number
   document_type: DocumentCrisalidType | ''
   roles: Relators
-  modules: 'none' | DocumentModulesKeys[]
+  modules: ModulesQuery<DocumentModulesKeys>
   ordering: Ordering<'publication_date'>
 }>
+
+export type QueryFilterAward = Partial<
+  {
+    name: string
+    description: string
+    date_after: Date | string
+    date_before: Date | string
+    ordering: Ordering<'date'>
+    serializers: 'light'
+  } & PaginationQuery
+>
+
+export type QueryFilterPatent = Partial<
+  {
+    name: string
+    description: string
+    date_after: Date | string
+    date_before: Date | string
+    ordering: Ordering<'date'>
+    serializers: 'light'
+  } & PaginationQuery
+>
+
+export type QueryFilterFunding = Partial<
+  {
+    name: string
+    description: string
+    currency: Currency
+    min_price: number
+    max_price: number
+
+    start_date: string
+    start_date_after: string
+    start_date_before: string
+    end_date: string
+    end_date_after: string
+    end_date_before: string
+    project: ProjectModel['id']
+    researcher: Researcher['id']
+
+    ordering: Ordering<'price'>
+    serializers: 'light'
+  } & PaginationQuery
+>
+
+export type QueryFilterTeaching = Partial<
+  {
+    name: string
+    description: string
+    spec: string
+    level: string
+    researcher: Researcher['id']
+
+    domain: ResearcherDomain['id']
+    min_domain_level: number
+    max_domain_level: number
+    serializers: 'light'
+  } & PaginationQuery
+>
+
+export type QueryFilterResearcherStructure = Partial<
+  {
+    structure: ResearcherStructure['structure']['id']
+    relation_type: ResearcherStructure['relation_type'][]
+    position_code: ResearcherStructure['position_code'][]
+  } & PaginationQuery
+>
+
+export type QueryFilterBioIa = Partial<{
+  short: boolean
+}>
+
+export type QueryFilterResearcher = Partial<
+  {
+    given_name: string
+    family_name: string
+
+    h_index: number
+    h_index_min: number
+    h_index_max: number
+    i10_index: number
+    i10_index_min: number
+    i10_index_max: number
+
+    structure: Structure['id']
+
+    modules: ModulesQuery<ResearcherModulesKeys>
+  } & PaginationQuery
+>
+
+export type QueryFilterJournal = Partial<
+  {
+    title: string
+    acronym: string
+  } & PaginationQuery
+>

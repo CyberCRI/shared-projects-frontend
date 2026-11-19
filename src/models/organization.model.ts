@@ -6,6 +6,7 @@ import type BaseModel from './base.model'
 
 import type { Translated } from '../interfaces/translated'
 
+import { ModulesQuery } from '../interfaces'
 import type { TagModel } from './tag.model'
 import { SkillModel } from './skill.model'
 
@@ -43,7 +44,23 @@ export interface OrganizationModel extends BaseModel {
   auto_translate_content: boolean
   onboarding_enabled: boolean
   chat_url?: string
+
+  modules: {
+    projects: number
+    groups: number
+    announcements: number
+    events: number
+    news: number
+    instructions: number
+    structures: number
+    users: number
+    researchers: number
+    files: number
+    categories: number
+  }
 }
+
+export type OrganizationModulesKey = keyof OrganizationModel['modules']
 
 export type OrganizationPatchInput = Partial<OrganizationModel> & {
   tags?: number[]
@@ -71,3 +88,7 @@ export type TranslatedOrganizationModel = Translated<
 > & {
   terms_and_conditions: TransaltedTermsAndConditions
 }
+
+export type QueryFilterOrganization = Partial<{
+  modules: ModulesQuery<OrganizationModulesKey>
+}>

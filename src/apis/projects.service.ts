@@ -45,7 +45,7 @@ export async function patchProject(
 }
 
 export async function deleteProject(projectId: ProjectSlugOrId, config: ClientAPIOptions = {}) {
-  await clientAPI(`project/${projectId}/`, { method: 'DELETE' })
+  await clientAPI(`project/${projectId}/`, { ...config, method: 'DELETE' })
 }
 
 export async function duplicateProject(projectId: ProjectSlugOrId, config: ConfigProject = {}) {

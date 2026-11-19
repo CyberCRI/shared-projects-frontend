@@ -47,12 +47,11 @@ export const getTranslatableFields = <
 export const translateEntity = <
   ResultT extends { $t: Record<string, any>; [key: string]: any },
   Fields extends keyof ResultT['$t'] = keyof ResultT['$t'],
-  DataT = any,
 >(
-  entity: DataT,
+  entity: any,
   fields: Fields[],
   locale: Language | null
-): DataT | (DataT & ResultT) => {
+): ResultT => {
   if (!entity) {
     return entity
   }
@@ -75,7 +74,7 @@ export const translateMany = <Result, Data>(
   func: (data: Data, locale: Language | null) => Result,
   datas: Data[],
   locale: Language | null
-) => {
+): Result[] => {
   if (!datas) {
     return []
   }

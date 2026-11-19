@@ -61,7 +61,11 @@ export async function postUserAttachmentLink(
   body: AttachmentForm,
   options: ClientAPIOptions = {}
 ) {
-  return await clientAPI<AttachmentLinkModel>(`user/${userId}/link/`, { body, method: 'POST' })
+  return await clientAPI<AttachmentLinkModel>(`user/${userId}/link/`, {
+    ...options,
+    body,
+    method: 'POST',
+  })
 }
 
 export async function patchUserAttachmentLink(
