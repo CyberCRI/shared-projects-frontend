@@ -1,5 +1,5 @@
 import { P as ProviderParams, R as Right } from '../permissions-CUX6tqOY.js';
-import { af as OrganizationModel, bp as Roles, q as EventModel, al as PeopleGroupModel, S as InstructionModel, a9 as NewsModel, aA as ProjectModel, cq as UserModel } from '../instruction.model-CeQ0430p.js';
+import { af as OrganizationModel, bp as Roles, q as EventModel, al as PeopleGroupModel, S as InstructionModel, a9 as NewsModel, aA as ProjectModel, cq as UserModel } from '../instruction.model-CD_5_LDc.js';
 import { P as PermissionType } from '../permissions.model-DCQ_saKg.js';
 import * as _tiptap_core from '@tiptap/core';
 import { Node, Extensions } from '@tiptap/core';

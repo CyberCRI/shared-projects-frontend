@@ -17,6 +17,9 @@ export const translateAward = (data: Award, locale: Language | null): Translated
   if (data.researchers) {
     translated.researchers = translateMany(translateResearcher, data.researchers, locale)
   }
+  if (data.contributors) {
+    translated.contributors = translateMany(translateResearcherAward, data.contributors, locale)
+  }
   return translated
 }
 
@@ -28,8 +31,13 @@ export const translateResearcherAward = (
     return data
   }
 
-  return {
-    ...translateEntity(data, ['description'], locale),
-    award: translateAward(data.award, locale),
+  const translated = translateEntity<TranslatedResearcherAward>(data, ['description'], locale)
+  if (data.award) {
+    translated.award = translateAward(data.award, locale)
   }
+  if (data.researcher) {
+    translated.researcher = translateResearcher(data.researcher, locale)
+  }
+
+  return translated
 }

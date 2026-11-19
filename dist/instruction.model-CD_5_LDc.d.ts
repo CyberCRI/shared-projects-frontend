@@ -503,19 +503,23 @@ type Award = {
     name: string;
     description: string;
     researchers?: Researcher[];
+    contributors?: ResearcherAward[];
 };
-type TranslatedAward = Translated<Omit<Award, 'researchers'>, 'name' | 'description'> & {
+type TranslatedAward = Translated<Omit<Award, 'researchers' | 'contributors'>, 'name' | 'description'> & {
     researchers?: TranslatedResearcher[];
+    contributors?: TranslatedResearcherAward[];
 };
 interface ResearcherAward extends BaseModel {
     id?: number;
-    award: Award;
+    award?: Award;
+    researcher?: Researcher;
     date: string | null;
     description: string;
     link: string | null;
 }
-type TranslatedResearcherAward = Translated<Omit<ResearcherAward, 'award'>, 'description'> & {
+type TranslatedResearcherAward = Translated<Omit<ResearcherAward, 'award' | 'researcher'>, 'description'> & {
     award: TranslatedAward;
+    researcher: TranslatedResearcher;
 };
 type TranslatedJournal = Journal;
 type TranslatedDocumentJournal = Omit<DocumentJournal, 'document' | 'journal'> & {

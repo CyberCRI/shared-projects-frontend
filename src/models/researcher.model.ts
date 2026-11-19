@@ -452,24 +452,31 @@ export type Award = {
   name: string
   description: string
   researchers?: Researcher[]
+  contributors?: ResearcherAward[]
 }
 
-export type TranslatedAward = Translated<Omit<Award, 'researchers'>, 'name' | 'description'> & {
+export type TranslatedAward = Translated<
+  Omit<Award, 'researchers' | 'contributors'>,
+  'name' | 'description'
+> & {
   researchers?: TranslatedResearcher[]
+  contributors?: TranslatedResearcherAward[]
 }
 
 export interface ResearcherAward extends BaseModel {
   id?: number
-  award: Award
+  award?: Award
+  researcher?: Researcher
   date: string | null
   description: string
   link: string | null
 }
 export type TranslatedResearcherAward = Translated<
-  Omit<ResearcherAward, 'award'>,
+  Omit<ResearcherAward, 'award' | 'researcher'>,
   'description'
 > & {
   award: TranslatedAward
+  researcher: TranslatedResearcher
 }
 
 // TODO: journal is not translated field
