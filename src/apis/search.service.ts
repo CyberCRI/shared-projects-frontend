@@ -1,4 +1,5 @@
 import {
+  OrganizationModel,
   QueryFilterSearch,
   SearchResultAll,
   SearchResultGroup,
@@ -10,13 +11,21 @@ import { PaginationResult } from '../interfaces'
 
 type Config = ClientAPIOptions<QueryFilterSearch>
 
-export async function searchAll<T = SearchResultAll>(search: string, config: Config = {}) {
-  const url = `search/${search ? `${encodeURIComponent(search)}/` : ''}`
+export async function searchAll<T = SearchResultAll>(
+  organizationCode: OrganizationModel['code'],
+  search: string,
+  config: Config = {}
+) {
+  const url = `organization/${organizationCode}/search/${search ? `${encodeURIComponent(search)}/` : ''}`
   return clientAPI<PaginationResult<T>>(url, config)
 }
 
-export function searchProjects(search: string, config: Config = {}) {
-  return searchAll<SearchResultProject>(search, {
+export function searchProjects(
+  organizationCode: OrganizationModel['code'],
+  search: string,
+  config: Config = {}
+) {
+  return searchAll<SearchResultProject>(organizationCode, search, {
     ...config,
     query: {
       ...(config.query || {}),
@@ -25,8 +34,12 @@ export function searchProjects(search: string, config: Config = {}) {
   })
 }
 
-export function searchUser(search: string, config: Config = {}) {
-  return searchAll<SearchResultUser>(search, {
+export function searchUser(
+  organizationCode: OrganizationModel['code'],
+  search: string,
+  config: Config = {}
+) {
+  return searchAll<SearchResultUser>(organizationCode, search, {
     ...config,
     query: {
       ...(config.query || {}),
@@ -35,8 +48,12 @@ export function searchUser(search: string, config: Config = {}) {
   })
 }
 
-export function searchGroups(search: string, config: Config = {}) {
-  return searchAll<SearchResultGroup>(search, {
+export function searchGroups(
+  organizationCode: OrganizationModel['code'],
+  search: string,
+  config: Config = {}
+) {
+  return searchAll<SearchResultGroup>(organizationCode, search, {
     ...config,
     query: {
       ...(config.query || {}),

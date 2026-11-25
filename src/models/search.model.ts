@@ -78,7 +78,6 @@ export type QueryFilterSearch = Partial<
     search_type: 'most_fields' | 'best_fields'
 
     // filters
-    organizations: OrganizationModel['code'][]
     sdgs: number[]
     skills: SkillModel['tag']['id'][]
     can_mentor: boolean
