@@ -308,7 +308,6 @@ type QueryFilterSearch = Partial<{
     types: ('user' | 'project' | 'people_group')[];
     fuzziness: number;
     search_type: 'most_fields' | 'best_fields';
-    organizations: OrganizationModel['code'][];
     sdgs: number[];
     skills: SkillModel['tag']['id'][];
     can_mentor: boolean;

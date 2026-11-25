@@ -496,12 +496,15 @@ function _adaptParamsToGetQuery(params) {
   };
 }
 var mergeQueryWithOrganization = (organizationCode, options = {}) => {
+  const query = {
+    ...options?.query || {}
+  };
+  if (organizationCode) {
+    query.current_org = organizationCode;
+  }
   return {
     ...options || {},
-    query: {
-      ...options?.query || {},
-      current_org: organizationCode
-    }
+    query
   };
 };
 
@@ -1541,12 +1544,12 @@ async function deleteReview(projectId, reviewId, config = {}) {
 }
 
 // src/apis/search.service.ts
-async function searchAll(search, config = {}) {
-  const url = `search/${search ? `${encodeURIComponent(search)}/` : ""}`;
+async function searchAll(organizationCode, search, config = {}) {
+  const url = `organization/${organizationCode}/search/${search ? `${encodeURIComponent(search)}/` : ""}`;
   return clientAPI(url, config);
 }
-function searchProjects(search, config = {}) {
-  return searchAll(search, {
+function searchProjects(organizationCode, search, config = {}) {
+  return searchAll(organizationCode, search, {
     ...config,
     query: {
       ...config.query || {},
@@ -1554,8 +1557,8 @@ function searchProjects(search, config = {}) {
     }
   });
 }
-function searchUser(search, config = {}) {
-  return searchAll(search, {
+function searchUser(organizationCode, search, config = {}) {
+  return searchAll(organizationCode, search, {
     ...config,
     query: {
       ...config.query || {},
@@ -1563,8 +1566,8 @@ function searchUser(search, config = {}) {
     }
   });
 }
-function searchGroups(search, config = {}) {
-  return searchAll(search, {
+function searchGroups(organizationCode, search, config = {}) {
+  return searchAll(organizationCode, search, {
     ...config,
     query: {
       ...config.query || {},
@@ -1599,10 +1602,10 @@ async function deleteUserSkill(userId, skillId, config = {}) {
 }
 
 // src/apis/stats.service.ts
-async function getStats(orgaizationCode, config = {
+async function getStats(organizationCode, config = {
   query: { publication_status: "all" }
 }) {
-  return await clientAPI(`organization/${orgaizationCode}/stats/`, config);
+  return await clientAPI(`organization/${organizationCode}/stats/`, config);
 }
 
 // src/apis/tag-classification.service.ts
