@@ -320,6 +320,7 @@ type QueryFilterSearch = Partial<{
     tags: TagModel['id'][];
     projects: ProjectSlugOrId[];
     people_group: PeopleGroupIdOrSlug[];
+    only_group_parent_child: boolean;
     modules: ModulesQuery<ProjectModulesKeys | PeopleGroupModulesKeys | StructureModulesKeys | UserModulesKeys | ResearcherModulesKeys>;
     exclude_projects: ProjectModel['id'][];
     exclude_projects_in_project: ProjectModel['id'];

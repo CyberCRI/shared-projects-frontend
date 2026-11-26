@@ -92,6 +92,9 @@ export type QueryFilterSearch = Partial<
     projects: ProjectSlugOrId[]
     people_group: PeopleGroupIdOrSlug[]
 
+    // return only first child parent
+    only_group_parent_child: boolean
+
     // modules filtereds
     modules: ModulesQuery<
       | ProjectModulesKeys
