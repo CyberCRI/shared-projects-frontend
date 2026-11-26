@@ -308,7 +308,6 @@ type QueryFilterSearch = Partial<{
     types: ('user' | 'project' | 'people_group')[];
     fuzziness: number;
     search_type: 'most_fields' | 'best_fields';
-    organizations: OrganizationModel['code'][];
     sdgs: number[];
     skills: SkillModel['tag']['id'][];
     can_mentor: boolean;
@@ -321,6 +320,8 @@ type QueryFilterSearch = Partial<{
     tags: TagModel['id'][];
     projects: ProjectSlugOrId[];
     people_group: PeopleGroupIdOrSlug[];
+    only_group_parent_child: boolean;
+    group_childs: PeopleGroupIdOrSlug;
     modules: ModulesQuery<ProjectModulesKeys | PeopleGroupModulesKeys | StructureModulesKeys | UserModulesKeys | ResearcherModulesKeys>;
     exclude_projects: ProjectModel['id'][];
     exclude_projects_in_project: ProjectModel['id'];

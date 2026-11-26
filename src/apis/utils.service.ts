@@ -20,11 +20,17 @@ export const mergeQueryWithOrganization = (
   organizationCode: OrganizationModel['code'],
   options: ClientAPIOptions = {}
 ) => {
+  const query = {
+    ...(options?.query || {}),
+  }
+
+  // add current org code only if orgacode is not empty string (for hocuspocus)
+  if (organizationCode) {
+    query.current_org = organizationCode
+  }
+
   return {
     ...(options || {}),
-    query: {
-      ...(options?.query || {}),
-      current_org: organizationCode,
-    },
+    query,
   }
 }

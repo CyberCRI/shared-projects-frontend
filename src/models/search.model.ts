@@ -78,7 +78,6 @@ export type QueryFilterSearch = Partial<
     search_type: 'most_fields' | 'best_fields'
 
     // filters
-    organizations: OrganizationModel['code'][]
     sdgs: number[]
     skills: SkillModel['tag']['id'][]
     can_mentor: boolean
@@ -92,6 +91,10 @@ export type QueryFilterSearch = Partial<
 
     projects: ProjectSlugOrId[]
     people_group: PeopleGroupIdOrSlug[]
+
+    // return only first child parent
+    only_group_parent_child: boolean
+    group_childs: PeopleGroupIdOrSlug
 
     // modules filtereds
     modules: ModulesQuery<

@@ -3,7 +3,7 @@ import { af as OrganizationModel, cv as UserSlugOrId, aG as ProjectSlugOrId, bg 
 import { c as AnnouncementId, A as AnnouncementApplyForm, Q as QueryFilterAnnouncement, e as AnnouncementModel, b as AnnouncementForm, g as AttachmentFileId, h as AttachmentFileInput, i as AttachmentFileModel, k as AttachmentLinkId, l as AttachmentLinkInput, m as AttachmentLinkModel, o as BlogEntryId, t as QueryFilterBlogEntry, p as BlogEntryModel, B as BlogEntryForm, C as CommentModel, u as QueryFilterComments, P as ProjectMessageForm, G as GoalForm, q as GoalModel, N as NewsfeedModel, s as ProjectMessageModel, v as QueryFilterProjectMessage, r as ProjectMessageInputModel, z as ReviewId, w as QueryFilterReviews, D as ReviewModel, R as ReviewForm, T as TagClassificationModel, y as QueryFilterTagClassification } from '../tagclassification.model-CXNpJaZS.js';
 import * as ofetch from 'ofetch';
 import { ResponseType, FetchOptions, $Fetch } from 'ofetch';
-import { b as AttachmentForm, c as AuthorityOrganization, a as AddParentGroupModelInput, G as GroupMember, P as PostGroupData, A as AddGroupMembers, l as PostGroupProjects, R as RemoveGroupMember, I as InvitationModel, h as InvitationModelInput, M as Mentoring, u as QueryFilterNotification, N as NotificationModel, k as NotificationSettingsModel, j as NotificationSettingsForm, f as GroupModelInput, z as RemoveGroupModelInput, q as ProjectMembersAddInput, r as ProjectMembersDeleteInput, v as QueryFilterProject, w as QueryFilterProjectMembers, m as ProjectMemberModel, x as QueryFilterRecomendation, C as ContactForm, D as ReportForm, S as SearchResultAll, y as QueryFilterSearch, F as SearchResultGroup, J as SearchResultProject, K as SearchResultUser, L as Stats, e as GroupModel } from '../stats.model-BRExqs-x.js';
+import { b as AttachmentForm, c as AuthorityOrganization, a as AddParentGroupModelInput, G as GroupMember, P as PostGroupData, A as AddGroupMembers, l as PostGroupProjects, R as RemoveGroupMember, I as InvitationModel, h as InvitationModelInput, M as Mentoring, u as QueryFilterNotification, N as NotificationModel, k as NotificationSettingsModel, j as NotificationSettingsForm, f as GroupModelInput, z as RemoveGroupModelInput, q as ProjectMembersAddInput, r as ProjectMembersDeleteInput, v as QueryFilterProject, w as QueryFilterProjectMembers, m as ProjectMemberModel, x as QueryFilterRecomendation, C as ContactForm, D as ReportForm, S as SearchResultAll, y as QueryFilterSearch, F as SearchResultGroup, J as SearchResultProject, K as SearchResultUser, L as Stats, e as GroupModel } from '../stats.model-vl1eP-RO.js';
 import 'typescript';
 
 interface AccessRequestModel extends BaseModel {
@@ -397,10 +397,10 @@ declare function patchReview(projectId: ProjectSlugOrId, reviewId: ReviewId, bod
 declare function deleteReview(projectId: ProjectSlugOrId, reviewId: ReviewId, config?: ClientAPIOptions): Promise<void>;
 
 type Config$3 = ClientAPIOptions<QueryFilterSearch>;
-declare function searchAll<T = SearchResultAll>(search: string, config?: Config$3): Promise<PaginationResult<T>>;
-declare function searchProjects(search: string, config?: Config$3): Promise<PaginationResult<SearchResultProject>>;
-declare function searchUser(search: string, config?: Config$3): Promise<PaginationResult<SearchResultUser>>;
-declare function searchGroups(search: string, config?: Config$3): Promise<PaginationResult<SearchResultGroup>>;
+declare function searchAll<T = SearchResultAll>(organizationCode: OrganizationModel['code'], search: string, config?: Config$3): Promise<PaginationResult<T>>;
+declare function searchProjects(organizationCode: OrganizationModel['code'], search: string, config?: Config$3): Promise<PaginationResult<SearchResultProject>>;
+declare function searchUser(organizationCode: OrganizationModel['code'], search: string, config?: Config$3): Promise<PaginationResult<SearchResultUser>>;
+declare function searchGroups(organizationCode: OrganizationModel['code'], search: string, config?: Config$3): Promise<PaginationResult<SearchResultGroup>>;
 
 type Config$2 = ClientAPIOptions<QueryFilterSkill>;
 declare function getUserSkills(userId: UserSlugOrId, options?: Config$2): Promise<PaginationResult<SkillModel>>;
@@ -412,7 +412,7 @@ declare function deleteUserSkill(userId: UserSlugOrId, skillId: SkillModel['id']
 type Config$1 = ClientAPIOptions<{
     publication_status: string;
 }>;
-declare function getStats(orgaizationCode: OrganizationModel['code'], config?: Config$1): Promise<Stats>;
+declare function getStats(organizationCode: OrganizationModel['code'], config?: Config$1): Promise<Stats>;
 
 type Config = ClientAPIOptions<PaginationQuery>;
 declare function getAllOrgClassifications(organizationCode: OrganizationModel['code'], config?: Config): Promise<PaginationResult<TagClassificationModel>>;
@@ -487,7 +487,7 @@ declare function _adaptParamsToGetQuery(params: SearchParams): {
 };
 declare const mergeQueryWithOrganization: (organizationCode: OrganizationModel["code"], options?: ClientAPIOptions) => {
     query: {
-        current_org: string;
+        [x: string]: any;
     };
     baseURL?: string;
     body?: RequestInit["body"] | Record<string, any>;
