@@ -321,6 +321,7 @@ type QueryFilterSearch = Partial<{
     projects: ProjectSlugOrId[];
     people_group: PeopleGroupIdOrSlug[];
     only_group_parent_child: boolean;
+    group_childs: PeopleGroupIdOrSlug;
     modules: ModulesQuery<ProjectModulesKeys | PeopleGroupModulesKeys | StructureModulesKeys | UserModulesKeys | ResearcherModulesKeys>;
     exclude_projects: ProjectModel['id'][];
     exclude_projects_in_project: ProjectModel['id'];

@@ -94,6 +94,7 @@ export type QueryFilterSearch = Partial<
 
     // return only first child parent
     only_group_parent_child: boolean
+    group_childs: PeopleGroupIdOrSlug
 
     // modules filtereds
     modules: ModulesQuery<
